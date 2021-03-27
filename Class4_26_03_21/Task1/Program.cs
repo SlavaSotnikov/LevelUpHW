@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task1
+namespace Even_Odd_Numbers
 {
     class Program
     {
