@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binary_number", "Binary num
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "One_count", "One_count\One_count.csproj", "{A5358FDA-D24B-43B0-BD73-6D1E4018ED9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schedule", "Schedule\Schedule.csproj", "{2EB67705-5732-4A5E-968E-343ED64315FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A5358FDA-D24B-43B0-BD73-6D1E4018ED9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5358FDA-D24B-43B0-BD73-6D1E4018ED9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5358FDA-D24B-43B0-BD73-6D1E4018ED9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB67705-5732-4A5E-968E-343ED64315FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB67705-5732-4A5E-968E-343ED64315FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB67705-5732-4A5E-968E-343ED64315FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB67705-5732-4A5E-968E-343ED64315FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

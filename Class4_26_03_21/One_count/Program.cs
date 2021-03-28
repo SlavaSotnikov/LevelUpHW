@@ -18,7 +18,7 @@ namespace One_count
 
             while (decimalNumber > 0)
             {
-                if (decimalNumber % 2 == 0)
+                if ((decimalNumber & 1) == 0)
                 {
                     int remainder = decimalNumber % 2;
                     decimalNumber /= 2;
