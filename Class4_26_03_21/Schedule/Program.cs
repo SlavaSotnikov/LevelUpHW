@@ -74,7 +74,7 @@ namespace Schedule
             if ((schedule & MONDAY) > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(("Monday   " + "\t").ToUpper());
+                Console.Write(("MONDAY   " + "\t"));
             }
             else
             {
@@ -83,7 +83,7 @@ namespace Schedule
             if ((schedule & TUESDAY) > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(("Tuesday  " + "\t").ToUpper());
+                Console.Write(("TUESDAY  " + "\t"));
             }
             else
             {
@@ -93,7 +93,7 @@ namespace Schedule
             if ((schedule & WEDNESDAY) > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(("Wednesday" + "\t").ToUpper());
+                Console.Write(("WEDNESDAY" + "\t"));
             }
             else
             {
@@ -103,7 +103,7 @@ namespace Schedule
             if ((schedule & THURSDAY) > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(("Thursday " + "\t").ToUpper());
+                Console.Write(("THURSDAY " + "\t"));
             }
             else
             {
@@ -113,7 +113,7 @@ namespace Schedule
             if ((schedule & FRIDAY) > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(("Friday   " + "\t").ToUpper());
+                Console.Write(("FRIDAY   " + "\t"));
             }
             else
             {
@@ -123,7 +123,7 @@ namespace Schedule
             if ((schedule & SATURDAY) > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(("Saturday " + "\t").ToUpper());
+                Console.Write(("SATURDAY " + "\t"));
             }
             else
             {
@@ -133,7 +133,7 @@ namespace Schedule
             if ((schedule & SUNDAY) > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(("Sunday   " + "\t").ToUpper());
+                Console.Write(("SUNDAY   " + "\t"));
             }
             else
             {

@@ -10,11 +10,10 @@ namespace Binary_number
             int decimalNumber = int.Parse(Console.ReadLine());
             
             string binaryNumber = string.Empty;
-            int remainder;
 
             while (decimalNumber > 0)
             {
-                remainder = decimalNumber % 2;
+                int remainder = decimalNumber % 2;
                 decimalNumber /= 2;
                 binaryNumber = remainder.ToString() + binaryNumber;
             }
