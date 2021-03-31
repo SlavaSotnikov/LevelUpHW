@@ -159,6 +159,7 @@ namespace Schedule
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.WriteLine($"This '{password}' password is incorrect, try again.");
                     }
                     if (password.ToLower() == "q")
