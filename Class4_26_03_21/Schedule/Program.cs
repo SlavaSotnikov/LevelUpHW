@@ -9,14 +9,17 @@ namespace Schedule
             string password = String.Empty;
             int count = -1;
             byte schedule = 0;
-            const byte EMPTYSCHEDULE = (byte)0x00;
-            const byte MONDAY = (byte)0x01;     //gym on Monday
-            const byte TUESDAY = (byte)0x02;    //gym on Tuesday
-            const byte WEDNESDAY = (byte)0x04;  //gym on Wednesday
-            const byte THURSDAY = (byte)0x08;   //gym on Thursday
-            const byte FRIDAY = (byte)0x10;     //gym on Friday
-            const byte SATURDAY = (byte)0x20;   //gym on Saturday
-            const byte SUNDAY = (byte)0x40;     //gym on Sunday
+            const byte EMPTYSCHEDULE = 0x00;
+            const byte MONDAY = 0x01;     //gym on Monday
+            const byte TUESDAY = 0x02;    //gym on Tuesday
+            const byte WEDNESDAY = 0x04;  //gym on Wednesday
+            const byte THURSDAY = 0x08;   //gym on Thursday
+            const byte FRIDAY = 0x10;     //gym on Friday
+            const byte SATURDAY = 0x20;   //gym on Saturday
+            const byte SUNDAY = 0x40;     //gym on Sunday
+            const byte PASSWORDKEY = 0x1D;
+            const int PASSWORD = 12345;     //Password
+            const int KEY = (PASSWORD ^ PASSWORDKEY);
 
             schedule = EMPTYSCHEDULE;
 
@@ -145,7 +148,6 @@ namespace Schedule
                     Console.WriteLine("Sunday   " + "\t");
                 }
                 Console.WriteLine();
-
                 
                 do
                 {
@@ -153,7 +155,7 @@ namespace Schedule
                     Console.Write("If you want to change the schedule please enter a password or quit(q): ");
                     password = Console.ReadLine();
 
-                    if (password == "123456")
+                    if ((Convert.ToInt32(password) ^ KEY) == PASSWORDKEY)
                     {
                         Console.Write("Welcome! ");
                     }
@@ -167,7 +169,7 @@ namespace Schedule
                         break;
                     }
 
-                } while (password != "123456");
+                } while (Convert.ToInt32(password) != PASSWORD);
 
                 Console.Clear();
             }
