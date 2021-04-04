@@ -37,7 +37,7 @@ namespace Min_Max
 
             // Do While()
 
-            /*
+            
             int number = 0;
 
             Console.Write("Enter a number: ");
@@ -62,7 +62,7 @@ namespace Min_Max
                 number = int.Parse(Console.ReadLine());
 
             } while (number != -1);
-            */
+            
 
             // For(;;)
 

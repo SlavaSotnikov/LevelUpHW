@@ -6,8 +6,11 @@ namespace DoWhile_For_While
     {
         static void Main()
         {
-            string input = "It's a big deal!";
+            string input = Console.ReadLine();
             string output = String.Empty;
+
+
+
 
             // For using While
             /*
@@ -51,20 +54,20 @@ namespace DoWhile_For_While
 
             //For using DoWhile 
 
-            /*
+            
             int i = 0;
             do
             {
                 output += input[i];
                 i++;
             } while (i < input.Length);
-            */
+            
 
             //DoWhile using While
 
             // We can use <= or >= with While cycle. In these cases we have a one cycle, then false and quite.
 
-            //Console.WriteLine(output);
+            Console.WriteLine(output);
             Console.ReadKey();
         }
     }
