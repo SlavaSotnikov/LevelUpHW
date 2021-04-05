@@ -4,36 +4,48 @@ namespace Task3
 {
     class Program
     {
+        static void GetMaxMinNumber(double a, double b, double c, double d, double e, ref double max, ref double min)
+        {            
+            if (a > b)
+                max = a;
+            else
+                min = a;
+            if (b > max)
+                max = b;
+            else
+                min = b;
+            if (c > max)
+                max = c;
+            else
+                min = c;
+            if (d > max)
+                max = d;
+            else
+                min = d;
+            if (e > max)
+                max = e;
+            else
+                min = e;
+        }
+
         static void Main()
         {
             Console.WriteLine("Please, enter five numbers: ");
+
             double a = double.Parse(Console.ReadLine());
             double b = double.Parse(Console.ReadLine());
             double c = double.Parse(Console.ReadLine());
             double d = double.Parse(Console.ReadLine());
             double e = double.Parse(Console.ReadLine());
 
-            if (a > b)
-                b = a;
-            if (b > c)
-                c = b;
-            if (c > d)
-                d = c;
-            if (d > e)
-                e = d;
 
-            Console.WriteLine($"The biggest number is: {e}");
+            double max = 0;
+            double min = 0;
 
-            if (a < b)
-                b = a;
-            if (b < c)
-                c = b;
-            if (c < d)
-                d = c;
-            if (d < e)
-                e = d;
+            GetMaxMinNumber(a, b, c, d, e, ref max, ref min);
 
-            Console.WriteLine($"The lower number is: {e}");
+            Console.WriteLine($"The max number is: {max}, the min: {min}");
+
             Console.ReadLine();
 
             
