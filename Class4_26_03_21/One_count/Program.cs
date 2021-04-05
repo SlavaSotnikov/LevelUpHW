@@ -5,11 +5,8 @@ namespace One_count
 {
     class Program
     {
-        static void Main()
+        static void GetBinaryNumber(int yourNumber)
         {
-            Console.Write("Enter a decimal number: ");
-            int yourNumber = int.Parse(Console.ReadLine());
-
             int decimalNumber = yourNumber;
             string binaryNumber = string.Empty;
 
@@ -29,10 +26,18 @@ namespace One_count
                     int remainder = decimalNumber % 2;
                     decimalNumber /= 2;
                     count1++;
-                }                
+                }
             }
 
             Console.WriteLine($"Number {decimalNumber} contains {count0} zeros and {count1} units.");
+        }
+        static void Main()
+        {
+            Console.Write("Enter a decimal number: ");
+            int yourNumber = int.Parse(Console.ReadLine());
+
+            GetBinaryNumber(yourNumber);
+
             Console.ReadLine();
         }
     }

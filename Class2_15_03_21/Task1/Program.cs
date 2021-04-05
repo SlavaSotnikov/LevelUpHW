@@ -4,6 +4,20 @@ namespace Task1
 {
     class Program
     {
+        static void GetCharSymbols(ushort column, ushort str, ushort symbolFirst, ushort symbolLast)
+        {
+            for (ushort i = 0; i<str; i++)
+            {
+                for (ushort j = 0; j<column; j++)
+                {
+                    if (symbolLast > symbolFirst)
+                        Console.Write($"{(char)symbolFirst++} "); 
+                    else
+                        Console.Write("* ");
+                }
+                Console.WriteLine();
+            }
+        }
         static void Main()
         {
             Console.Write("Enter the quantity of columns: ");
@@ -19,18 +33,9 @@ namespace Task1
             ushort symbolLast = ushort.Parse(Console.ReadLine());
 
             Console.WriteLine();
-           
-            for (ushort i = 0; i < str; i++)
-            {
-                for (ushort j = 0; j < column; j++)
-                {
-                    if (symbolLast > symbolFirst)
-                        Console.Write($"{(char)symbolFirst++} "); 
-                    else
-                        Console.Write("* ");
-                }
-                Console.WriteLine();
-            }
+
+            GetCharSymbols(column, str, symbolFirst, symbolLast);
+            
             Console.ReadLine();
         }
     }

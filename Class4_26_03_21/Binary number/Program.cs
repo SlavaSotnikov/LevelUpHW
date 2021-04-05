@@ -4,11 +4,8 @@ namespace Binary_number
 {
     class Program
     {
-        static void Main()
+        static void GetBinaryNumber(int decimalNumber)
         {
-            Console.Write("Enter a decimal number: ");
-            int decimalNumber = int.Parse(Console.ReadLine());
-            
             string binaryNumber = string.Empty;
 
             while (decimalNumber > 0)
@@ -19,6 +16,14 @@ namespace Binary_number
             }
 
             Console.WriteLine($"Binary number: {binaryNumber}");
+        }
+        static void Main()
+        {
+            Console.Write("Enter a decimal number: ");
+            int decimalNumber = int.Parse(Console.ReadLine());
+
+            GetBinaryNumber(decimalNumber);
+
             Console.ReadLine();
         }
     }

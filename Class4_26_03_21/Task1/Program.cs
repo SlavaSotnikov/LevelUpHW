@@ -4,11 +4,8 @@ namespace Even_Odd_Numbers
 {
     class Program
     {
-        static void Main()
+        static void GetEvenOddNumber(byte decimalNumber)
         {
-            Console.Write("Enter a value: ");
-            byte decimalNumber = byte.Parse(Console.ReadLine());
-
             if ((decimalNumber & 1) == 0)
             {
                 Console.WriteLine($"{decimalNumber} - is even number.");
@@ -17,6 +14,13 @@ namespace Even_Odd_Numbers
             {
                 Console.WriteLine($"{decimalNumber} - is odd number.");
             }
+        }
+        static void Main()
+        {
+            Console.Write("Enter a value: ");
+            byte decimalNumber = byte.Parse(Console.ReadLine());
+
+            GetEvenOddNumber(decimalNumber);
 
             Console.ReadLine();
         }
