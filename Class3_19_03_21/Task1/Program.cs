@@ -4,30 +4,21 @@ namespace Task1
 {
     class Program
     {
-        static void Main()
+        static void GetWordOrder(string firstString, string secondString)
         {
-            Console.Write("Enter first name: ");
-            string firstString = Console.ReadLine();
-
-            Console.Write("Enter second name: ");
-            string secondString = Console.ReadLine();
-
             int firstStringChar = 0;
             int secondStringChar = 0;
             int i = -1;
-            int j = -1;
-            int countChars = 0;
+            int j = -1;            
             int firstCount = 0;
             int secondCount = 0;
-
-            Console.WriteLine();
 
             do
             {
                 firstStringChar = 0;
                 for (i++; i < firstString.Length;)
                 {
-                    
+
                     firstStringChar = firstString[i]; // Ask a question about this cast.
                     firstCount++;
                     break;
@@ -36,12 +27,12 @@ namespace Task1
                 secondStringChar = 0;
                 for (j++; j < secondString.Length;)
                 {
-                   
+
                     secondStringChar = secondString[j];
                     secondCount++;
                     break;
                 }
-                
+
                 if (firstStringChar < secondStringChar)
                 {
                     Console.WriteLine($"The word '{firstString}' is first in word order.");
@@ -52,7 +43,8 @@ namespace Task1
                     Console.WriteLine($"The word '{secondString}' is first in word order.");
                     break;
                 }
-                
+
+                int countChars = 0;
                 if (countChars == firstString.Length && countChars == secondString.Length)
                 {
                     Console.WriteLine($"The words '{firstString}' and '{secondString}' are completely the same.");
@@ -71,10 +63,23 @@ namespace Task1
                         break;
                     }
                 }
-                countChars++;
-            } while (firstStringChar == secondStringChar);            
 
-            Console.ReadLine();
+                countChars++;
+            } while (firstStringChar == secondStringChar);
+        }
+        static void Main()
+        {
+            Console.Write("Enter first name: ");
+            string firstString = Console.ReadLine();
+
+            Console.Write("Enter second name: ");
+            string secondString = Console.ReadLine();
+
+            Console.WriteLine();
+
+            GetWordOrder(firstString, secondString);
+                      
+            Console.ReadKey();
         }
     }
 }

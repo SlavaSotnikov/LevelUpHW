@@ -4,16 +4,15 @@ namespace Task2
 {
     class Program
     {
-        static void Main()
+        static void GetBrackets(string sentence)
         {
-            string sentence = "It's not a piece ()of cake.";
-            int count  = 0;
+            int count = 0;
             int count1 = 0;
             int count2 = 0;
             int count3 = 0;
             int count4 = 0;
             int count5 = 0;
-            string index  = String.Empty;
+            string index = String.Empty;
             string index1 = String.Empty;
             string index2 = String.Empty;
             string index3 = String.Empty;
@@ -75,7 +74,7 @@ namespace Task2
                     Console.WriteLine($"You have to add {count1 - count} '{symbol}' symbol.");
                 }
             }
-            
+
             if (count2 != count3)
             {
                 if (count2 > count3)
@@ -103,8 +102,13 @@ namespace Task2
             {
                 Console.WriteLine("All your brackets are even.");
             }
+        }
+        static void Main()
+        {
+            string sentence = "It's not a piece ()of cake.";
 
-            
+            GetBrackets(sentence);
+
             Console.ReadLine();
         }
     }
