@@ -4,6 +4,15 @@ namespace Task1
 {
     class Program
     {
+        static void ShowFirstWord(string firstString)
+        {
+            Console.WriteLine($"The word '{firstString}' is first in word order.");
+        }
+        static void ShowSecondWord(string secondString)
+        {
+            Console.WriteLine($"The word '{secondString}' is first in word order.");
+        }
+
         static void GetWordOrder(string firstString, string secondString)
         {
             int firstStringChar = 0;
@@ -35,12 +44,12 @@ namespace Task1
 
                 if (firstStringChar < secondStringChar)
                 {
-                    Console.WriteLine($"The word '{firstString}' is first in word order.");
+                    ShowFirstWord(firstString);
                     break;
                 }
                 if (firstStringChar > secondStringChar)
                 {
-                    Console.WriteLine($"The word '{secondString}' is first in word order.");
+                    ShowSecondWord(secondString);
                     break;
                 }
 
@@ -54,12 +63,12 @@ namespace Task1
                 {
                     if (firstString.Length > secondString.Length && firstCount != secondCount)
                     {
-                        Console.WriteLine($"The word '{secondString}' is first in word order.");
+                        ShowSecondWord(secondString);
                         break;
                     }
                     if (firstString.Length < secondString.Length && firstCount != secondCount)
                     {
-                        Console.WriteLine($"The word '{firstString}' is first in word order.");
+                        ShowFirstWord(firstString);
                         break;
                     }
                 }

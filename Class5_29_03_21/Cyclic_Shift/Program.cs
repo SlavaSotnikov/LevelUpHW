@@ -4,16 +4,9 @@ namespace Cyclic_Shift
 {
     class Program
     {
-        static void Main()
+        static byte GetRightCycleShift(byte number, byte MASKRIGHT)
         {
-            // Right Cycle Shift
-
-            byte number = 6;
             byte resultRight = 0;
-            byte resultLeft = 0;
-            const byte MASKRIGHT = 0x80;
-            const byte MASKLEFT = 0x01;
-
             if ((number & 1) == 0)
             {
                 resultRight = (byte)(number >> 1);
@@ -22,9 +15,12 @@ namespace Cyclic_Shift
             {
                 resultRight = (byte)((number >> 1) ^ MASKRIGHT);
             }
+            return resultRight;
+        }
 
-            // Left Cycle Shift
-
+        static byte GetLeftCycleShift(byte number, byte MASKLEFT, byte MASKRIGHT)
+        {
+            byte resultLeft = 0;
             if (number >= MASKRIGHT)
             {
                 resultLeft = (byte)((number << 1) ^ MASKLEFT);
@@ -33,9 +29,17 @@ namespace Cyclic_Shift
             {
                 resultLeft = (byte)(number << 1);
             }
-
+            return resultLeft;
+        }
+        static void Main()
+        {
+            byte number = byte.Parse(Console.ReadLine());
+            
+            const byte MASKRIGHT = 0x80;
+            const byte MASKLEFT = 0x01;
+           
             Console.WriteLine($"Figure {number}" + "\n" 
-                +$"Right Shift: {resultRight} Left Shift: {resultLeft}");
+                +$"Right Shift: {GetRightCycleShift(number, MASKRIGHT)} Left Shift: {GetLeftCycleShift(number, MASKLEFT, MASKRIGHT)}");
             Console.ReadKey();
         }
     }

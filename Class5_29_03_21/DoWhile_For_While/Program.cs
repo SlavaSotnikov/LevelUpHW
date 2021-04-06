@@ -18,14 +18,18 @@ namespace DoWhile_For_While
             {
                  output += input[i];
             }
-
-            int i = 0;
-            while (i < input.Length)
-            {
-                output += input[i];
-                i++;
-            }
             */
+            int i = 0;
+            if (input.Length > 0)
+            {
+                while (i < input.Length)
+                {
+                    output += input[i];
+                    i++;
+                }
+            }
+            
+            
 
             //While using For
 
@@ -54,14 +58,18 @@ namespace DoWhile_For_While
 
             //For using DoWhile 
 
-            
+            /*
             int i = 0;
             do
             {
-                output += input[i];
-                i++;
+                if (input.Length > 0)
+                {
+                    output += input[i];
+                    i++;
+                }                
+                
             } while (i < input.Length);
-            
+            */
 
             //DoWhile using While
 

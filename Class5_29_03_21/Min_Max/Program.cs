@@ -37,11 +37,13 @@ namespace Min_Max
 
             // Do While()
 
-            
-            int number = 0;
 
-            Console.Write("Enter a number: ");
-            number = int.Parse(Console.ReadLine());
+            string yourString = String.Empty;
+
+            Console.Write("Enter first number: ");
+            yourString = Console.ReadLine();            
+
+            int number = int.Parse(yourString);
 
             int max = number;
             int min = number;
@@ -59,9 +61,16 @@ namespace Min_Max
 
                 Console.Write("Max: {0}  Min: {1}   ", max, min);
 
-                number = int.Parse(Console.ReadLine());
+                yourString = Console.ReadLine();
 
-            } while (number != -1);
+                if (yourString == "q")
+                {
+                    break;
+                }
+
+                number = int.Parse(yourString);
+
+            } while (yourString != "q");
             
 
             // For(;;)
