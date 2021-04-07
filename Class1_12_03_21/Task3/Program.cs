@@ -7,24 +7,30 @@ namespace Task3
         static void GetMaxMinNumber(double a, double b, double c, double d, double e, ref double max, ref double min)
         {            
             if (a > b)
+            {
                 max = a;
+                min = b;
+            }
             else
+            {
+                max = b;
                 min = a;
+            }                
             if (b > max)
                 max = b;
-            else
-                min = b;
+            if (b < min)
+                min = b;                
             if (c > max)
                 max = c;
-            else
+            if (c < min)
                 min = c;
             if (d > max)
                 max = d;
-            else
+            if (d < min)
                 min = d;
             if (e > max)
                 max = e;
-            else
+            if (e < min)
                 min = e;
         }
 

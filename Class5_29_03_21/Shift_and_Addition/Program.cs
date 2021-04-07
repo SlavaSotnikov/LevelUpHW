@@ -20,6 +20,7 @@ namespace Shift_and_Addition
         {
             ushort multiplier1 = 5;
             int multiplier2 = 2;
+
             int result = 0;
             ushort shift = 0;
             ushort balance = 0;

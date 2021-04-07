@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1", "Task1\Task1.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2", "Task2\Task2.csproj", "{A7492CDA-93BA-49D5-8532-76F36C6D9A20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task3", "Task3\Task3.csproj", "{1A34F740-4A46-41DD-95B7-6E7D4BCB1231}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Min_Max", "Task3\Min_Max.csproj", "{1A34F740-4A46-41DD-95B7-6E7D4BCB1231}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
