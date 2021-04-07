@@ -5,10 +5,13 @@ namespace One_count
 {
     class Program
     {
+        static int GetShift(int decimalNumber)
+        {
+            return decimalNumber >>= 1;
+        }
         static void GetBinaryNumber(int yourNumber)
         {
             int decimalNumber = yourNumber;
-            string binaryNumber = string.Empty;
 
             int count0 = 0;
             int count1 = 0;
@@ -17,19 +20,17 @@ namespace One_count
             {
                 if ((decimalNumber & 0x00000001) == 0)
                 {
-                    int remainder = decimalNumber % 2;
-                    decimalNumber /= 2;
+                    decimalNumber = GetShift(decimalNumber);
                     count0++;
                 }
                 else
                 {
-                    int remainder = decimalNumber % 2;
-                    decimalNumber /= 2;
+                    decimalNumber = GetShift(decimalNumber);
                     count1++;
                 }
             }
 
-            Console.WriteLine($"Number {decimalNumber} contains {count0} zeros and {count1} units.");
+            Console.WriteLine($"Number {yourNumber} contains {count0} zeros and {count1} units.");
         }
         static void Main()
         {
