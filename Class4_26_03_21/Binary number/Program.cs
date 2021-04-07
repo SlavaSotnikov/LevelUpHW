@@ -11,7 +11,7 @@ namespace Binary_number
             while (decimalNumber > 0)
             {
                 int remainder = decimalNumber % 2;
-                decimalNumber /= 2;
+                decimalNumber >>= 1;
                 binaryNumber = remainder.ToString() + binaryNumber;
             }
 
