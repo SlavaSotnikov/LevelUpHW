@@ -4,6 +4,10 @@ namespace Swap_Method
 {
     class Program
     {
+        static void Swap11(ref int num1, ref int num2)
+        {
+            num2 = num1 + num2 - (num1 = num2);
+        }
         static int Swap10(int num1, ref int num2)
         {
             int temp = num2;
@@ -106,6 +110,8 @@ namespace Swap_Method
 
             //Swap9(b, ref num1, out num2);
 
+            Swap11(ref num1, ref num2);
+
 
             Console.WriteLine("IN num1 = {0} num2 = {1}", 10, 5);
 
@@ -134,8 +140,11 @@ namespace Swap_Method
 
             //Console.WriteLine("OUT Swap9() num1 = {0} num2 = {1}", num1, num2);
 
-            num1 = Swap10(num1, ref num2);
-            Console.WriteLine("OUT Swap10() num1 = {0} num2 = {1}", num1, num2);
+            //num1 = Swap10(num1, ref num2);
+            //Console.WriteLine("OUT Swap10() num1 = {0} num2 = {1}", num1, num2);
+
+            Console.WriteLine("OUT Swap11() num1 = {0} num2 = {1}", num1, num2);
+
            
             Console.ReadKey();
         }
