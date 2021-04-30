@@ -27,7 +27,6 @@ namespace Task1
                 firstStringChar = 0;
                 for (i++; i < firstString.Length;)
                 {
-
                     firstStringChar = firstString[i]; // Ask a question about this cast.
                     firstCount++;
                     break;
@@ -36,7 +35,6 @@ namespace Task1
                 secondStringChar = 0;
                 for (j++; j < secondString.Length;)
                 {
-
                     secondStringChar = secondString[j];
                     secondCount++;
                     break;

@@ -15,6 +15,7 @@ namespace Cyclic_Shift
             {
                 resultRight = (byte)((number >> 1) ^ MASKRIGHT);
             }
+
             return resultRight;
         }
 
@@ -29,6 +30,7 @@ namespace Cyclic_Shift
             {
                 resultLeft = (byte)(number << 1);
             }
+
             return resultLeft;
         }
         static void Main()

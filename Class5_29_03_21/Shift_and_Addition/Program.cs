@@ -14,12 +14,13 @@ namespace Shift_and_Addition
                 shift++;
             }
             shift--;
+
             return (ushort)(rate >> 1);
         }
         static void Main()
         {
-            ushort multiplier1 = 5;
-            int multiplier2 = 2;
+            ushort multiplier1 = 15;
+            int multiplier2 = 23;
 
             int result = 0;
             ushort shift = 0;

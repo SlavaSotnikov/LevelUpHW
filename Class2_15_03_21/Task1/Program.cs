@@ -4,16 +4,20 @@ namespace Task1
 {
     class Program
     {
-        static void GetCharSymbols(ushort column, ushort str, ushort symbolFirst, ushort symbolLast)
+        static void ShowCharmap(ushort column, ushort str, ushort symbolFirst, ushort symbolLast)
         {
             for (ushort i = 0; i<str; i++)
             {
                 for (ushort j = 0; j<column; j++)
                 {
                     if (symbolLast > symbolFirst)
-                        Console.Write($"{(char)symbolFirst++} "); 
+                    {
+                        Console.Write($"{(char)symbolFirst++} ");
+                    }
                     else
+                    {
                         Console.Write("* ");
+                    }                        
                 }
                 Console.WriteLine();
             }
@@ -34,7 +38,7 @@ namespace Task1
 
             Console.WriteLine();
 
-            GetCharSymbols(column, str, symbolFirst, symbolLast);
+            ShowCharmap(column, str, symbolFirst, symbolLast);
             
             Console.ReadLine();
         }

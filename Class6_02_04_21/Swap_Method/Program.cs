@@ -8,17 +8,20 @@ namespace Swap_Method
         {
             num2 = num1 + num2 - (num1 = num2);
         }
+
         static int Swap10(int num1, ref int num2)
         {
             int temp = num2;
+
             num2 = num1;
+
             return temp;
         }
 
-        static void Swap9(int b, ref int num1, out int num2)
+        static void Swap9(int num2, ref int num1, out int num2Res)
         {
-            num2 = num1;
-            num1 = b; 
+            num2Res = num1;
+            num1 = num2; 
         }
 
         static int Swap8(int a, int b, out int num1)
@@ -26,6 +29,7 @@ namespace Swap_Method
             num1 = b;
             return a;
         }
+
         static void Swap7(int a, int b, out int num1, out int num2)
         {
             num1 = b;
@@ -108,12 +112,12 @@ namespace Swap_Method
 
             //Swap7(a, b, out num1, out num2);
 
-            //Swap9(b, ref num1, out num2);
+            Swap9(num2, ref num1, out num2);
 
-            Swap11(ref num1, ref num2);
+            //Swap11(ref num1, ref num2);
 
 
-            Console.WriteLine("IN num1 = {0} num2 = {1}", 10, 5);
+            //Console.WriteLine("IN num1 = {0} num2 = {1}", 10, 5);
 
             // ref
 
@@ -143,9 +147,13 @@ namespace Swap_Method
             //num1 = Swap10(num1, ref num2);
             //Console.WriteLine("OUT Swap10() num1 = {0} num2 = {1}", num1, num2);
 
-            Console.WriteLine("OUT Swap11() num1 = {0} num2 = {1}", num1, num2);
+            //Console.WriteLine("OUT Swap11() num1 = {0} num2 = {1}", num1, num2);
+            
+              
 
-           
+
+
+            Console.WriteLine();
             Console.ReadKey();
         }
     }

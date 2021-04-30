@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1", "Task1\Task1.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2", "Task2\Task2.csproj", "{A59FCAC9-5420-4879-9B78-0648806208FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountBrackets", "CountBrackets\CountBrackets.csproj", "{D263F820-D59A-4B90-A4D5-F938040CB97A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{4F8DF344-4E67-487E-9694-3E59B6EC41CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A59FCAC9-5420-4879-9B78-0648806208FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A59FCAC9-5420-4879-9B78-0648806208FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A59FCAC9-5420-4879-9B78-0648806208FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D263F820-D59A-4B90-A4D5-F938040CB97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D263F820-D59A-4B90-A4D5-F938040CB97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D263F820-D59A-4B90-A4D5-F938040CB97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D263F820-D59A-4B90-A4D5-F938040CB97A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8DF344-4E67-487E-9694-3E59B6EC41CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8DF344-4E67-487E-9694-3E59B6EC41CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8DF344-4E67-487E-9694-3E59B6EC41CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8DF344-4E67-487E-9694-3E59B6EC41CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

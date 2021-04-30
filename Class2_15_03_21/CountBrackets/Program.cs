@@ -1,54 +1,53 @@
 ﻿using System;
 
-namespace Task2
+namespace CountBrackets
 {
     class Program
-    {        
+    {
         static void Main()
         {
-            char[] charArr = new char[6];
+            char a = '(';
+            char b = ')';
+            char c = ')';
+            char d = ']';
+            char e = '[';
+            char f = '}';
+
             int count = 0;
             int count1 = 0;
             int count2 = 0;
+            int index = 0;
+            int index2 = 0;
 
-            string sign = String.Empty;
-            string index = String.Empty;
-            string index1 = String.Empty;
+            string str = a.ToString() + b.ToString() + c.ToString() + 
+                d.ToString() + e.ToString() + f.ToString();
 
-            charArr[0] = '{';
-            charArr[1] = '}';
-            charArr[2] = '[';
-            charArr[3] = '[';
-            charArr[4] = '(';
-            charArr[5] = ']';
-            
-
-            for (int i = 0; i < charArr.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                if (charArr[i] == '(')
+                if (str[i] == '(')
                 {
                     count++;
                 }
-                if (charArr[i] == ')')
-                {
+                if (str[i] == ')')
+                {                    
                     count--;
                 }
-                if (charArr[i] == '{')
+                if (str[i] == '{')
                 {
                     count1++;
                 }
-                if (charArr[i] == '}')
+                if (str[i] == '}')
                 {
                     count1--;
                 }
-                if (charArr[i] == '[')
+                if (str[i] == '[')
                 {
                     count2++;
                 }
-                if (charArr[i] == ']')
+                if (str[i] == ']')
                 {
                     count2--;
-                }                
+                }
             }
             if (count == 0 && count1 == 0 && count2 == 0)
             {
@@ -67,6 +66,9 @@ namespace Task2
                 Console.WriteLine($"You have to close {count2} '[' brackets.");
             }
             Console.ReadLine();
+
+
+            Console.ReadKey();
         }
     }
 }
