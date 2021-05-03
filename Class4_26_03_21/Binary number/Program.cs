@@ -4,7 +4,7 @@ namespace Binary_number
 {
     class Program
     {
-        static void GetBinaryNumber(int decimalNumber)
+        static string GetBinaryNumber(int decimalNumber)
         {
             string binaryNumber = string.Empty;
 
@@ -15,14 +15,14 @@ namespace Binary_number
                 binaryNumber = remainder.ToString() + binaryNumber;
             }
 
-            Console.WriteLine($"Binary number: {binaryNumber}");
+            return binaryNumber;
         }
         static void Main()
         {
             Console.Write("Enter a decimal number: ");
             int decimalNumber = int.Parse(Console.ReadLine());
 
-            GetBinaryNumber(decimalNumber);
+            Console.WriteLine(GetBinaryNumber(decimalNumber));
 
             Console.ReadLine();
         }

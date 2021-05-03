@@ -9,35 +9,37 @@ namespace One_count
         {
             return decimalNumber >>= 1;
         }
-        static void GetBinaryNumber(int yourNumber)
+        static int GetBinaryNumber(int yourNumber, ref int units)
         {
             int decimalNumber = yourNumber;
 
-            int count0 = 0;
-            int count1 = 0;
+            int zeros = 0;
 
             while (decimalNumber > 0)
             {
                 if ((decimalNumber & 0x00000001) == 0)
                 {
                     decimalNumber = GetShift(decimalNumber);
-                    count0++;
+                    zeros++;
                 }
                 else
                 {
                     decimalNumber = GetShift(decimalNumber);
-                    count1++;
+                    units++;
                 }
             }
 
-            Console.WriteLine($"Number {yourNumber} contains {count0} zeros and {count1} units.");
+            return zeros;
         }
         static void Main()
         {
+            int units = 0;
+
             Console.Write("Enter a decimal number: ");
             int yourNumber = int.Parse(Console.ReadLine());
 
-            GetBinaryNumber(yourNumber);
+            Console.WriteLine("Number {0} contains {1} zeros and {2} units.", 
+                yourNumber, GetBinaryNumber(yourNumber, ref units), units );
 
             Console.ReadLine();
         }
