@@ -18,7 +18,7 @@ namespace Check_Palindrome
             if (str == back)
             {
                 return true;
-            }
+            }                                                                                                      
             else
             {
                 return false;
@@ -49,6 +49,6 @@ namespace Check_Palindrome
             }
 
             Console.ReadKey();
-        }
+        }       
     }
 }

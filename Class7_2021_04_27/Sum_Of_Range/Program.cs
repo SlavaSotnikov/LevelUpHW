@@ -57,7 +57,7 @@ namespace Sum_Of_Range
 
 
             Console.WriteLine("Recursion sum: {0} ", GetSumRange(num1, num2));
-            Console.WriteLine("Cycle sum: {0} ", GetSum(num1, num2));
+            Console.WriteLine("Cycle sum:   {0} ", GetSum(num1, num2));
             Console.ReadKey();
         }
     }

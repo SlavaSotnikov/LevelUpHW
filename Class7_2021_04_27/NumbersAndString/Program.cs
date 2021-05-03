@@ -6,7 +6,7 @@ namespace NumbersAndString
     {
         static void Main()
         {
-            string str = "It costs just 500 dollars";
+            string str = "My phone number is 000000";
             string numbers = String.Empty;
             string words = String.Empty;
             int i = 0;
@@ -43,7 +43,7 @@ namespace NumbersAndString
                 if (str[i] == ' ' || str[i] == ',' || str[i] == '.')
                 {
                     GetNumbersAndString(str, ref words, ref numbers, i + 1);
-                }
+                } 
             }                        
         }
     }
