@@ -6,45 +6,35 @@ namespace NumbersAndString
     {
         static void Main()
         {
-            string str = "My phone number is 000000";
-            string numbers = String.Empty;
+            string str = "My phone number is 0123456";
+            string digits = String.Empty;
             string words = String.Empty;
-            int i = 0;
-            
-            GetNumbersAndString(str, ref words, ref numbers, i);
 
-            Console.WriteLine("{0}\t{1}", numbers, words);
+            Console.WriteLine("{0} ", GetNumbersAndString(str, ref digits, ref words));
             Console.ReadKey();
         }
 
-        static void GetNumbersAndString(string str, ref string words, ref string numbers, int i)
-        {
-            const int FIRST_DIGIT = 48;
-            const int LAST_DIGIT = 57;
-            const int FIRST_CHAR = 65;
-            const int LAST_CHAR = 122;
-
-            if (i <= str.Length - 1)
+        static string GetNumbersAndString(string str, ref string digits, ref string words, int i=-1)
+        {            
+            i++;
+            if (i >= str.Length)
             {
-                if (FIRST_DIGIT <= str[i] && str[i] <= LAST_DIGIT)
-                {
-                    numbers += Convert.ToString(str[i]);
+                return "";
+            }
 
-                    GetNumbersAndString(str, ref words, ref numbers, i + 1);
-                }
+            if (char.IsDigit(str[i]))
+            {
 
-                if (FIRST_CHAR <= str[i] && str[i] <= LAST_CHAR)
-                {
-                    words += Convert.ToString(str[i]);
-
-                    GetNumbersAndString(str, ref words, ref numbers, i + 1);
-                }
-
-                if (str[i] == ' ' || str[i] == ',' || str[i] == '.')
-                {
-                    GetNumbersAndString(str, ref words, ref numbers, i + 1);
-                } 
-            }                        
+                digits += Convert.ToString(str[i]);
+            }
+            else
+            {
+                words += Convert.ToString(str[i]);
+            }
+            
+            GetNumbersAndString(str, ref digits, ref words, i);
+                      
+            return digits + " " + words;
         }
     }
 }

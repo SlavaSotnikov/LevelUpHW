@@ -1,53 +1,52 @@
 ﻿using System;
+using System.Text;
 
 namespace Check_Palindrome
 {
     class Program
     {
-        static bool CheckPalindrome(string str, int i, ref string back)
+        static bool CheckPalindrome(string text, ref string first, ref string second, int i=0)
         {
-            if (i >= str.Length)
+            string textLower = text.ToLower();
+            if (i == textLower.Length - 1)
             {
                 return false;
             }
 
-            CheckPalindrome(str, i + 1, ref back);
+            while (textLower[i] == ' ' || textLower[i] == ',' || textLower[i] == '.' || textLower[i] == '!') { i++; }
 
-            back += Convert.ToString(str[i]);
+            first += textLower[i];
 
-            if (str == back)
+            CheckPalindrome(text, ref first, ref second, i + 1);
+
+            second += textLower[i];
+
+            if (first == second)
             {
                 return true;
-            }                                                                                                      
+            }
             else
             {
                 return false;
             }
         }
+        
         static void Main()
         {
-            string str = "level";
-            string back = String.Empty;
-            int i = 0;
-            bool res;
+            string text = "Never, odd or even!";
+            string first = String.Empty;
+            string second = String.Empty;
 
-            res = CheckPalindrome(str, i, ref back);
+            bool res = CheckPalindrome(text, ref first, ref second);
 
             switch (res)
             {
                 case true:
-                    {
-                        Console.WriteLine($"The word '{str}' is a palindrome.");
-                        break;
-                    }
-
+                    Console.WriteLine("'{0}' \n is a palindrome.", text); break;
                 case false:
-                    {
-                        Console.WriteLine($"The word '{str}' isn't a palindrome.");
-                        break;
-                    }
+                    Console.WriteLine("'{0}' \n isn't a palindrome.", text); break;
             }
-
+            
             Console.ReadKey();
         }       
     }
