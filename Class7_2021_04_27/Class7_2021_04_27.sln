@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Check_Palindrome", "Check_P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tower_Of_Hanoi", "Tower_Of_Hanoi\Tower_Of_Hanoi.csproj", "{0F3A5FD1-7CC1-4C35-82F2-D4A3A85229FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movement", "Movement\Movement.csproj", "{8A591CF6-4A6B-4195-95A1-567325715555}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitMethod", "SplitMethod\SplitMethod.csproj", "{66AC525B-DDF0-4D23-9BFC-DDE0D07FE8DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{0F3A5FD1-7CC1-4C35-82F2-D4A3A85229FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F3A5FD1-7CC1-4C35-82F2-D4A3A85229FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F3A5FD1-7CC1-4C35-82F2-D4A3A85229FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A591CF6-4A6B-4195-95A1-567325715555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A591CF6-4A6B-4195-95A1-567325715555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A591CF6-4A6B-4195-95A1-567325715555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A591CF6-4A6B-4195-95A1-567325715555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66AC525B-DDF0-4D23-9BFC-DDE0D07FE8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66AC525B-DDF0-4D23-9BFC-DDE0D07FE8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66AC525B-DDF0-4D23-9BFC-DDE0D07FE8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66AC525B-DDF0-4D23-9BFC-DDE0D07FE8DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

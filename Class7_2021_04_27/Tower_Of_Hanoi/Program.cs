@@ -1,28 +1,28 @@
 ﻿using System;
-using static System.Console;
 
 namespace Tower_Of_Hanoi
 {
     class Program
     {
-        static void towerOfHanoi(int amount, char from, char to, char aux)
+        static void SolveTowerOfHanoi(int amount, char fromA, char toC, char auxB)
         {
             if (amount == 1)
             {
-                WriteLine($"Move disc 1 from {from} to {to}");
+                Console.WriteLine($"Move disc 1 from {fromA} to {toC}");
+
                 return;
             }
 
-            towerOfHanoi(amount - 1, from, aux, to);
+            SolveTowerOfHanoi(amount - 1, fromA, auxB, toC);
 
-            WriteLine($"Move disk {amount} form {from} to {to}");
+            Console.WriteLine($"Move disk {amount} form {fromA} to {toC}");
 
-            towerOfHanoi(amount - 1, aux, to, from);
+            SolveTowerOfHanoi(amount - 1, auxB, toC, fromA);
         }
         static void Main()
         {
-            towerOfHanoi(5, 'A', 'C', 'B');
-            ReadKey();
+            SolveTowerOfHanoi(5, 'A', 'C', 'B');
+            Console.ReadKey();
         }
     }
 }

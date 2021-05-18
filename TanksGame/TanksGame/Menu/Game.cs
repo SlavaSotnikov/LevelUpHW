@@ -12,20 +12,24 @@ namespace Menu
         public void Start()
         {
 
-            Title = "Battle City - Tanks!";
+            Title = "Space Invaders";
 
             RunMainMenu();
         }
 
         private void RunMainMenu()
         {
-            string prompt = @" 
-                       ██████╗ █████╗██████████████████╗    ███████╗     ██████████████████╗   ██╗
-                       ██╔══████╔══██╚══██╔══╚══██╔══██║    ██╔════╝    ██╔════██╚══██╔══╚██╗ ██╔╝
-                       ██████╔███████║  ██║     ██║  ██║    █████╗      ██║    ██║  ██║   ╚████╔╝ 
-                       ██╔══████╔══██║  ██║     ██║  ██║    ██╔══╝      ██║    ██║  ██║    ╚██╔╝  
-                       ██████╔██║  ██║  ██║     ██║  ██████████████╗    ╚████████║  ██║     ██║   
-                       ╚═════╝╚═╝  ╚═╝  ╚═╝     ╚═╝  ╚══════╚══════╝     ╚═════╚═╝  ╚═╝     ╚═╝   
+            CursorVisible = false;
+
+            string prompt = @"
+                      _____                        _____                     _               
+                     / ____|                      |_   _|                   | |              
+                    | (___  _ __   __ _  ___ ___    | |  _ ____   ____ _  __| | ___ _ __ ___ 
+                     \___ \| '_ \ / _` |/ __/ _ \   | | | '_ \ \ / / _` |/ _` |/ _ \ '__/ __|
+                     ____) | |_) | (_| | (_|  __/  _| |_| | | \ V / (_| | (_| |  __/ |  \__ \
+                    |_____/| .__/ \__,_|\___\___| |_____|_| |_|\_/ \__,_|\__,_|\___|_|  |___/
+                           | |                                                               
+                           |_|                                                               
 ";
             
             string[] options = { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
@@ -58,10 +62,14 @@ namespace Menu
 
         private void DisplayAboutInfo()
         {
+            CursorVisible = false;
             Clear();
-            WriteLine("\t\t\t\t This game was created by Slava Sotnikov.");
-            WriteLine("\t\t\t\t It uses assets from http://patorjk.com.");
-            WriteLine("\n\t\t\t\t Press any key to return to the menu.");
+            SetCursorPosition(35, 10);
+            WriteLine("This game was created by Slava Sotnikov.");
+            SetCursorPosition(35, 11);
+            WriteLine("It uses assets from http://patorjk.com.");
+            SetCursorPosition(35, 12);
+            WriteLine("Press any key to return to the menu.");
             ReadKey(true);
             RunMainMenu();
         }

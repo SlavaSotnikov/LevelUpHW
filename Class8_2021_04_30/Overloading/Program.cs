@@ -1,5 +1,4 @@
 ﻿using System;
-using static System.Console;
 
 namespace Overloading
 {    
@@ -7,23 +6,23 @@ namespace Overloading
     {
         public static void ShowErrorMessage(string message = "Error!!!")
         {
-            int oldX = CursorLeft;
-            int oldY = CursorTop;
+            int oldX = Console.CursorLeft;
+            int oldY = Console.CursorTop;
 
-            int lastWindowRow = WindowHeight - 1;
+            int lastWindowRow = Console.WindowHeight - 1;
 
-            int leftPosition = (WindowWidth - message.Length) / 2;
+            int leftPosition = (Console.WindowWidth - message.Length) / 2;
 
-            SetCursorPosition(leftPosition, lastWindowRow);
+            Console.SetCursorPosition(leftPosition, lastWindowRow);
 
-            ForegroundColor = ConsoleColor.Red;
-            BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.Yellow;
 
-            Write(message);
+            Console.Write(message);
 
-            SetCursorPosition(oldX, oldY);
+            Console.SetCursorPosition(oldX, oldY);
 
-            ResetColor();
+            Console.ResetColor();
         }
 
         static int GetSum(int a, int b)
@@ -49,8 +48,8 @@ namespace Overloading
         {
             ShowErrorMessage("Press any key...");
 
-            WriteLine(GetSum(2, 5, 2, 2, 2));
-            ReadKey();
+            Console.WriteLine(GetSum(2, 5, 2, 2, 2));
+            Console.ReadKey();
         }
     }
 }

@@ -36,18 +36,23 @@ namespace Sum_Of_Range
         // Recursion
         static int GetSumRange(int num1, int num2)
         {
+            int res;
+
             if (num1 == num2)
             {
                 return num1;
             }
+
             if (num1 <= num2)
             {
-                return num2 + GetSumRange(num1, num2 - 1);
+                res = num2 + GetSumRange(num1, num2 - 1);                
             }
             else
             {
-                return num2 + GetSumRange(num1, num2 + 1);
+                res = num2 + GetSumRange(num1, num2 + 1);
             }
+
+            return res;
         }
 
         static void Main()
