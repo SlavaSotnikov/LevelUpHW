@@ -10,29 +10,32 @@ namespace NumbersAndString
         {
             string str = "My phone number is 123456";
 
-            StringBuilder sb = new StringBuilder(str);
+            StringBuilder sb = new StringBuilder(String.Empty, str.Length);
 
-            Console.WriteLine("{0} ", GetNumbersAndString(sb));
+            Console.WriteLine("{0} ", GetNumbersAndString(str, sb));
             Console.ReadKey();
         }
 
-        static string GetNumbersAndString(StringBuilder str, int i=0)
+        static string GetNumbersAndString(string str, StringBuilder sb, int i=0)
         {
             if (i >= str.Length)
             {
-                return "";
+                return sb.ToString();
             }
 
             if (char.IsDigit(str[i]))
-            {                
-                str.Insert(0, str[i]);
-
-                str.Remove(i + 1, 1);
+            {
+                sb.Append(str[i]);
             }
 
-            GetNumbersAndString(str, i + 1);
+            GetNumbersAndString(str, sb, i + 1);
 
-            return str.ToString();
+            if (char.IsDigit(str[i]) != true)
+            {
+                sb.Append(str[i]);
+            }
+
+            return sb.ToString();
         }
     }
 }

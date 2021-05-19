@@ -4,56 +4,68 @@ namespace Enum
 {
     class Program
     {
-        
+        static double GetAddition(double num1, double num2)
+        {
+            return num1 + num2;
+        }
+
+        static double GetSubtraction(double num1, double num2)
+        {
+            return num1 - num2;
+        }
+
+        static double GetMultiplication(double num1, double num2)
+        {
+            return num1 * num2;
+        }
+
+        static double GetDivision(double num1, double num2)
+        {
+            return num1 / num2;
+        }
 
         static void Main()
         {
-            MonthsOfYear month = MonthsOfYear.None;
+            Console.Title = "Simple Calculator";
 
-            Console.WriteLine("Enter month's number: ? ");
-            string value = Console.ReadLine();
+            Console.SetBufferSize(120, 40);
 
-            if (System.Enum.TryParse(value, out month))
+            Console.WriteLine("Enter an expression: ");
+            double num1 = double.Parse(Console.ReadLine());
+
+            string sign = Console.ReadLine();
+
+            double num2 = double.Parse(Console.ReadLine());
+
+            MathOperations m = MathOperations.None;
+
+            double res = 0.0;
+
+            if (System.Enum.TryParse(sign, out m))
             {
-                switch (month)
+                switch (m)
                 {
-                    case MonthsOfYear.None:
+                    case MathOperations.None:
                         break;
-                    case MonthsOfYear.January:
+                    case MathOperations.Addition:
+                        res = GetAddition(num1, num2);
                         break;
-                    case MonthsOfYear.Fabruary:
+                    case MathOperations.Subtraction:
+                        res = GetSubtraction(num1, num2);
                         break;
-                    case MonthsOfYear.March:
+                    case MathOperations.Multiplication:
+                        res = GetMultiplication(num1, num2);
                         break;
-                    case MonthsOfYear.April:
-                        break;
-                    case MonthsOfYear.May:
-                        break;
-                    case MonthsOfYear.June:
-                        break;
-                    case MonthsOfYear.July:
-                        break;
-                    case MonthsOfYear.August:
-                        break;
-                    case MonthsOfYear.September:
-                        break;
-                    case MonthsOfYear.October:
-                        break;
-                    case MonthsOfYear.November:
-                        break;
-                    case MonthsOfYear.December:
+                    case MathOperations.Division:
+                        res = GetDivision(num1, num2);
                         break;
                     default:
                         break;
                 }
             }
-            else
-            {
-                Console.WriteLine("This value doesn't exist.");
-            }
-            
 
-            Console.WriteLine(month);
+
+            Console.WriteLine("The result is {0}", res);
             Console.ReadKey();
         }
     }

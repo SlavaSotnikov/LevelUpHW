@@ -24,18 +24,15 @@ namespace Check_Palindrome
                     --back;
                 }
 
-
                 if (text[ahead] == text[back])
                 {
-                    IsPalindrome(text, back - 1, ahead + 1);
+                    return IsPalindrome(text, back - 1, ahead + 1);
                 }
                 else
                 {
                     return false;
                 }
             }
-
-            return true; 
         }
         
         static void Main()
