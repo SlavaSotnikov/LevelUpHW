@@ -51,8 +51,6 @@ namespace Enum
                     default:
                         break;
                 }
-
-                return e;
             }
 
             return e;   
