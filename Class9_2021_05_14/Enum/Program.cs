@@ -56,6 +56,53 @@ namespace Enum
             return e;   
         }
 
+        static void ShowError(string sign)
+        {
+            Errors e = Errors.None;
+            Errors errorNum = GetError(GetStringForEnum(sign), e);
+
+            Console.SetCursorPosition(20, 5);
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Error: '{0}' isn't a math operation.", errorNum);
+            Console.ResetColor();
+        }
+
+        static double GetResult(string sign, double num1, double num2)
+        {
+
+            MathOperations m = MathOperations.None;            
+
+            double res = 0.0;
+
+            if (System.Enum.TryParse(GetStringForEnum(sign), out m))
+            { 
+                switch (m)
+                {
+                    case MathOperations.None:
+                        break;
+                    case MathOperations.Addition:
+                        res = GetAddition(num1, num2);
+                        break;
+                    case MathOperations.Subtraction:
+                        res = GetSubtraction(num1, num2);
+                        break;
+                    case MathOperations.Multiplication:
+                        res = GetMultiplication(num1, num2);
+                        break;
+                    case MathOperations.Division:
+                        res = GetDivision(num1, num2);
+                        break;
+                    default:
+                        ShowError(sign);
+                        break;
+                }
+            }
+
+            Console.SetCursorPosition(35, 3);
+
+            return res;
+        } 
+
         static string GetStringForEnum(string sign)
         {
             char toChar = Convert.ToChar(sign);
@@ -84,50 +131,10 @@ namespace Enum
 
             Console.SetCursorPosition(34, 3);
             double num2 = double.Parse(Console.ReadLine());
-
-            MathOperations m = MathOperations.None;
-            Errors e = Errors.None;
-
-            double res = 0.0;
-
-            if (System.Enum.TryParse(GetStringForEnum(sign), out m))
-            {
-                switch (m)
-                {
-                    case MathOperations.None:
-                        break;
-                    case MathOperations.Addition:
-                        res = GetAddition(num1, num2);
-                        break;
-                    case MathOperations.Subtraction:
-                        res = GetSubtraction(num1, num2);
-                        break;
-                    case MathOperations.Multiplication:
-                        res = GetMultiplication(num1, num2);
-                        break;
-                    case MathOperations.Division:
-                        res = GetDivision(num1, num2);
-                        break;
-                    default:
-                        Errors errorNum = GetError(GetStringForEnum(sign), e);
-
-                        Console.SetCursorPosition(20, 5);
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Error: '{0}' isn't a math operation.", errorNum);
-                        Console.ResetColor();
-                        break;
-                }
-            }
-            else
-            {
-                Console.SetCursorPosition(35, 4);
-                Console.WriteLine("Ooops!");
-            }
-
-            Console.SetCursorPosition(35, 3);
-            Console.WriteLine(" = {0}", res);
+            
+            Console.WriteLine(" = {0}", GetResult(sign, num1, num2));
             Console.SetCursorPosition(40, 3);
-
+            
             Console.ReadKey();
         }
     }

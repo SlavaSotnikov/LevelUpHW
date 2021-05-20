@@ -10,23 +10,21 @@ namespace Schedule
             int count = -1;
             byte schedule = 0;
             const byte EMPTYSCHEDULE = 0x00;
-            const byte MONDAY = 0x01;     //gym on Monday
-            const byte TUESDAY = 0x02;    //gym on Tuesday
-            const byte WEDNESDAY = 0x04;  //gym on Wednesday
-            const byte THURSDAY = 0x08;   //gym on Thursday
-            const byte FRIDAY = 0x10;     //gym on Friday
-            const byte SATURDAY = 0x20;   //gym on Saturday
-            const byte SUNDAY = 0x40;     //gym on Sunday
-            const byte PASSWORDKEY = 0x1D;
-            const int PASSWORD = 12345;     //Password
+            const byte MONDAY        = 0x01;    //gym on Monday
+            const byte TUESDAY       = 0x02;    //gym on Tuesday
+            const byte WEDNESDAY     = 0x04;    //gym on Wednesday
+            const byte THURSDAY      = 0x08;    //gym on Thursday
+            const byte FRIDAY        = 0x10;    //gym on Friday
+            const byte SATURDAY      = 0x20;    //gym on Saturday
+            const byte SUNDAY        = 0x40;    //gym on Sunday
+            const byte PASSWORDKEY   = 0x1D;
+            const int PASSWORD       = 12345;   //Password
             const int KEY = (PASSWORD ^ PASSWORDKEY);
-
-            schedule = EMPTYSCHEDULE;
 
             while (password != "q")
             {
                 schedule = EMPTYSCHEDULE;
-                char weekDay = ' ';
+                char weekDay = '\0';
                 Console.WriteLine("Set up your gym schedule: ");
                 Console.WriteLine("1-Mon  2-Tue  3-Wed  4-Thu  5-Fri  6-Sat  7-Sun");
 
@@ -56,9 +54,6 @@ namespace Schedule
                             break;
                         case '7':
                             schedule = (byte)(schedule | SUNDAY);
-                            break;
-                        case '0':
-                            Console.WriteLine("Exit");
                             break;
                         default:
                             Console.WriteLine("\n" + "You should use only 1-7 keys. Try again, please.");

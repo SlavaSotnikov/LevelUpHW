@@ -10,9 +10,10 @@ namespace NumbersAndString
         {
             string str = "My phone number is 123456";
 
-            StringBuilder sb = new StringBuilder(String.Empty, str.Length);
+            StringBuilder sb = new StringBuilder(String.Empty, 0);
 
             Console.WriteLine("{0} ", GetNumbersAndString(str, sb));
+
             Console.ReadKey();
         }
 
@@ -30,7 +31,7 @@ namespace NumbersAndString
 
             GetNumbersAndString(str, sb, i + 1);
 
-            if (char.IsDigit(str[i]) != true)
+            if (!char.IsDigit(str[i]))
             {
                 sb.Append(str[i]);
             }
