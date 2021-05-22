@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selection_Sort", "Selection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insertion_Sort", "Insertion_Sort\Insertion_Sort.csproj", "{6D83A1C3-3D45-43D1-B64F-3C8A667BD98A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Min_Max", "Min_Max\Min_Max.csproj", "{670891B3-8DBC-4645-8D8D-55C1523CFEF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6D83A1C3-3D45-43D1-B64F-3C8A667BD98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D83A1C3-3D45-43D1-B64F-3C8A667BD98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D83A1C3-3D45-43D1-B64F-3C8A667BD98A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{670891B3-8DBC-4645-8D8D-55C1523CFEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{670891B3-8DBC-4645-8D8D-55C1523CFEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{670891B3-8DBC-4645-8D8D-55C1523CFEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{670891B3-8DBC-4645-8D8D-55C1523CFEF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
