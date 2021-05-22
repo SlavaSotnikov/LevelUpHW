@@ -112,6 +112,12 @@ namespace Enum
             return toStr;
         }
 
+
+        static MathOperations ConvertStringToEnum(char sign)
+        {           
+            return (MathOperations)sign;
+        }
+
         static void Main()
         {
             Console.Title = "Simple Calculator";

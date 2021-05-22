@@ -8,35 +8,40 @@ namespace NumbersAndString
     {
         static void Main()
         {
-            string str = "My phone number is 123456";
+            string source = "My phone number is 123456";
 
-            StringBuilder sb = new StringBuilder(String.Empty, 0);
-
-            Console.WriteLine("{0} ", GetNumbersAndString(str, sb));
+            GetNumbersAndString(source);
 
             Console.ReadKey();
         }
 
-        static string GetNumbersAndString(string str, StringBuilder sb, int i=0)
+        public static void GetNumbersAndString(string source)
         {
-            if (i >= str.Length)
+            StringBuilder sb = new StringBuilder(source.Length);
+
+            GetNumbersAndString(source, sb);
+
+            Console.WriteLine("{0} ", sb.ToString());
+        }
+
+        private static void GetNumbersAndString(string source, StringBuilder destination, int i=0)
+        {
+            if (i >= source.Length)
             {
-                return sb.ToString();
+                return;
             }
 
-            if (char.IsDigit(str[i]))
+            if (char.IsDigit(source[i]))
             {
-                sb.Append(str[i]);
+                destination.Append(source[i]);
             }
 
-            GetNumbersAndString(str, sb, i + 1);
+            GetNumbersAndString(source, destination, i + 1);
 
-            if (!char.IsDigit(str[i]))
+            if (!char.IsDigit(source[i]))
             {
-                sb.Append(str[i]);
+                destination.Append(source[i]);
             }
-
-            return sb.ToString();
         }
     }
 }
