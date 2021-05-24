@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insertion_Sort", "Insertion
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Min_Max", "Min_Max\Min_Max.csproj", "{670891B3-8DBC-4645-8D8D-55C1523CFEF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Array Cycle Shift", "Array Cycle Shift\Array Cycle Shift.csproj", "{3FAB671F-A75E-482C-8B22-6D0C8A14BD43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swap_Min_Max", "Swap_Min_Max\Swap_Min_Max.csproj", "{15C03162-8870-4A2E-B163-6C1CF8591736}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{670891B3-8DBC-4645-8D8D-55C1523CFEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{670891B3-8DBC-4645-8D8D-55C1523CFEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{670891B3-8DBC-4645-8D8D-55C1523CFEF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FAB671F-A75E-482C-8B22-6D0C8A14BD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FAB671F-A75E-482C-8B22-6D0C8A14BD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FAB671F-A75E-482C-8B22-6D0C8A14BD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FAB671F-A75E-482C-8B22-6D0C8A14BD43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15C03162-8870-4A2E-B163-6C1CF8591736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C03162-8870-4A2E-B163-6C1CF8591736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15C03162-8870-4A2E-B163-6C1CF8591736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15C03162-8870-4A2E-B163-6C1CF8591736}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

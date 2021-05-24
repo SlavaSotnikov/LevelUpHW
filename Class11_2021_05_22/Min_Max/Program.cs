@@ -6,10 +6,12 @@ namespace Min_Max
     {
         private static Random rnd = new Random();
 
-        private static void GetTwoMinMax(int[] arr, out int min, out int max, out int min2, out int max2, ref int indexMin, ref int indexMax, ref int indexMin2, ref int indexMax2)
+        private static void GetTwoMinMax(int[] arr, out int min, out int max, out int min2, out int max2, out int indexMin, out int indexMax, out int indexMin2, out int indexMax2)
         {
             min = arr[0];
             max = arr[0];
+            indexMin = 0;
+            indexMax = 0;
 
             for (int i = 1; i < arr.Length; i++)        //Looking for min, max and indexMin, indexMax values.
             {
@@ -26,14 +28,15 @@ namespace Min_Max
             }
 
             int j = arr.Length - 1;
-            while (arr[j] == min
-                || max == arr[j])                      //It helps us to avoid initializing min2, max2 like min, max. 
+            while (arr[j] == min || max == arr[j])      //It helps us to avoid initializing min2, max2 like min, max. 
             {
                 --j;
             }
 
             min2 = arr[j];                              //Initializing min2, max2 non min, max values.           
             max2 = arr[j];
+            indexMin2 = 0;
+            indexMax2 = 0;
 
             for (int i = arr.Length - 1; i >= 0; i--)
             {
@@ -79,16 +82,16 @@ namespace Min_Max
             
             Console.WriteLine();
 
-            int min = 0;                           //Initially we can pick any array's index and initialize min, max.
-            int max = 0;
-            int min2 = 0;                               //Initializing min2, max2 non min, max values.           
-            int max2 = 0;
-            int indexMin = 0;
-            int indexMax = 0;
-            int indexMin2 = 0;
-            int indexMax2 = 0;
+            int min;                                //Initially we can pick any array's index and initialize min, max.
+            int max;
+            int min2;                               //Initializing min2, max2 non min, max values.           
+            int max2;
+            int indexMin;
+            int indexMax;
+            int indexMin2;
+            int indexMax2;
 
-            GetTwoMinMax(arr, out min, out max, out min2, out max2, ref indexMin, ref indexMax, ref indexMin2, ref indexMax2);
+            GetTwoMinMax(arr, out min, out max, out min2, out max2, out indexMin, out indexMax, out indexMin2, out indexMax2);
 
             Console.WriteLine("\nInd:  ({0})     ({1})", indexMin, indexMax);
             Console.WriteLine("Min:   {0} Max: {1}", min, max);
