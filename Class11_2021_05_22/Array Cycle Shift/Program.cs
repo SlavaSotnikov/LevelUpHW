@@ -16,7 +16,7 @@ namespace Array_Cycle_Shift
         {
             int ind = source.Length - shift;
 
-            Array.Copy(source, ind, dest, 0, shift);          
+            Array.Copy(source, ind, dest, 0, shift);
             Array.Copy(source, 0, dest, shift, ind);
         }
        
@@ -26,13 +26,32 @@ namespace Array_Cycle_Shift
 
             int[] dest = new int [10];                          //Destination array
 
-            Console.WriteLine("Left or Right shift? <<  >> Press Left, Right");
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            Console.WriteLine("How many shifts? \n<<   >> Press Left, Right");
+            ConsoleKeyInfo keyInfo;
+
+            int shift = 0;
+
+            keyInfo = Console.ReadKey();
+
+            while (keyInfo.Key != ConsoleKey.Enter)
+            {
+                ++shift;
+                Console.SetCursorPosition(3, 2);
+                Console.Write("{0}", shift);
+                keyInfo = Console.ReadKey();
+            }
 
             Console.WriteLine();
 
-            Console.Write("How many shifts: ? ");               //The amount of shifts
-            int shift = int.Parse(Console.ReadLine());
+            Console.Write("Pick the shift: ");
+
+            keyInfo = Console.ReadKey();
+
+            Console.WriteLine();
+
+            Console.Write(keyInfo.KeyChar);
+
+            Console.WriteLine();
 
             while (shift > source.Length)                       //Any shifts
             {
