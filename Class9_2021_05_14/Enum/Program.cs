@@ -4,121 +4,79 @@ namespace Enum
 {
     class Program
     {
-        static double GetAddition(double num1, double num2)
+        private static double GetAddition(double num1, double num2)
         {
             return num1 + num2;
         }
 
-        static double GetSubtraction(double num1, double num2)
+        private static double GetSubtraction(double num1, double num2)
         {
             return num1 - num2;
         }
 
-        static double GetMultiplication(double num1, double num2)
+        private static double GetMultiplication(double num1, double num2)
         {
             return num1 * num2;
         }
 
-        static double GetDivision(double num1, double num2)
+        private static double GetDivision(double num1, double num2)
         {
             return num1 / num2;
         }
 
-        static Errors GetError(string sign, Errors e)
+        private static void ShowError(string sign)
         {
-            if (System.Enum.TryParse(sign, out e))
-            {
-                switch (e)
-                {
-                    case Errors.None:
-                        break;
-                    case Errors.Exclame:
-                        break;
-                    case Errors.At:
-                        break;
-                    case Errors.Pound:
-                        break;
-                    case Errors.Dollar:
-                        break;
-                    case Errors.XOR:
-                        break;
-                    case Errors.And:
-                        break;
-                    case Errors.Open_Bracket:
-                        break;
-                    case Errors.Close_Bracket:
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            return e;   
-        }
-
-        static void ShowError(string sign)
-        {
-            Errors e = Errors.None;
-            Errors errorNum = GetError(GetStringForEnum(sign), e);
-
             Console.SetCursorPosition(20, 5);
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("Error: '{0}' isn't a math operation.", errorNum);
+            Console.WriteLine("Error: '{0}' isn't a math operation.", GetError(sign));
             Console.ResetColor();
         }
 
-        static double GetResult(string sign, double num1, double num2)
-        {
-
-            MathOperations m = MathOperations.None;            
-
+        private static double GetResult(string sign, double num1, double num2)
+        {           
             double res = 0.0;
 
-            if (System.Enum.TryParse(GetStringForEnum(sign), out m))
-            { 
-                switch (m)
-                {
-                    case MathOperations.None:
-                        break;
-                    case MathOperations.Addition:
-                        res = GetAddition(num1, num2);
-                        break;
-                    case MathOperations.Subtraction:
-                        res = GetSubtraction(num1, num2);
-                        break;
-                    case MathOperations.Multiplication:
-                        res = GetMultiplication(num1, num2);
-                        break;
-                    case MathOperations.Division:
-                        res = GetDivision(num1, num2);
-                        break;
-                    default:
-                        ShowError(sign);
-                        break;
-                }
+            switch (GetMathOperation(sign))
+            {
+                case MathOperations.None:
+                    break;
+                case MathOperations.Addition:
+                    res = GetAddition(num1, num2);
+                    break;
+                case MathOperations.Subtraction:
+                    res = GetSubtraction(num1, num2);
+                    break;
+                case MathOperations.Multiplication:
+                    res = GetMultiplication(num1, num2);
+                    break;
+                case MathOperations.Division:
+                    res = GetDivision(num1, num2);
+                    break;
+                default:
+                    ShowError(sign);
+                    break;
             }
 
             Console.SetCursorPosition(35, 3);
 
             return res;
-        } 
+        }
 
-        static string GetStringForEnum(string sign)
+        private static MathOperations GetMathOperation(string sign)
         {
-            char toChar = Convert.ToChar(sign);
-            byte toByte = Convert.ToByte(toChar);
-            string toStr = Convert.ToString(toByte);
+            char signChar = Convert.ToChar(sign);
 
-            return toStr;
+            return (MathOperations)signChar;
         }
 
+        private static Errors GetError(string sign)
+        {
+            char signChar = Convert.ToChar(sign);
 
-        static MathOperations ConvertStringToEnum(char sign)
-        {           
-            return (MathOperations)sign;
+            return (Errors)signChar;
         }
 
-        static void Main()
+        private static void Main()
         {
             Console.Title = "Simple Calculator";
 
