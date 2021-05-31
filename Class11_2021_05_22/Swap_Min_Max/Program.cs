@@ -55,10 +55,13 @@ namespace Swap_Min_Max
 
             int min = GetMin(sourceArr, out indexMin);
 
-            int max = GetMax(sourceArr, out indexMax);    
+            int max = GetMax(sourceArr, out indexMax);
 
-            sourceArr.SetValue(min, indexMax);            //Set Min value instead Max one
-            sourceArr.SetValue(max, indexMin);            //Set Max value instead Min one
+            //Set Min value instead Max one
+            sourceArr.SetValue(min, indexMax);
+
+            //Set Max value instead Min one
+            sourceArr.SetValue(max, indexMin);            
 
             Console.Write("Destination array: ");
             for (int i = 0; i < sourceArr.Length; i++)

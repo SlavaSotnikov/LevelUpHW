@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{405FC1BE-23FA-4A07-8B58-F7F018F0FEBE}</ProjectGuid>
+    <ProjectGuid>{D3F24624-9E40-45C6-8F75-DA876A5DA9B0}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Menu</RootNamespace>
-    <AssemblyName>Menu</AssemblyName>
+    <RootNamespace>_2DArray_MinMax</RootNamespace>
+    <AssemblyName>2DArray_MinMax</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShipModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

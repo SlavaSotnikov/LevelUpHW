@@ -22,9 +22,9 @@ namespace Array_Cycle_Shift
        
         static void Main()
         {
-            int[] source = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };    //Source array
+            int[] source = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };    // Source array
 
-            int[] dest = new int [10];                          //Destination array
+            int[] dest = new int [10];                          // Destination array
 
             Console.WriteLine("How many shifts? \n<<   >> Press Left, Right");
             ConsoleKeyInfo keyInfo;
@@ -53,12 +53,12 @@ namespace Array_Cycle_Shift
 
             Console.WriteLine();
 
-            while (shift > source.Length)                       //Any shifts
+            while (shift > source.Length)                       // Any shifts
             {
                 shift -= source.Length;
             }
 
-            switch (keyInfo.Key)                                //Pick shift
+            switch (keyInfo.Key)                                // Pick shift
             {
                 case ConsoleKey.LeftArrow:
                     GetLeftShift(source, ref dest, shift);
@@ -70,7 +70,7 @@ namespace Array_Cycle_Shift
                     break;
             }
 
-            for (int i = 0; i < dest.Length; i++)               //Show dest array numbers
+            for (int i = 0; i < dest.Length; i++)               // Show dest array numbers
             {
                 Console.Write("{0} ", dest[i]);
             }

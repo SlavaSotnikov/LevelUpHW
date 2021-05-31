@@ -8,19 +8,27 @@ namespace Intro
 {
     class Program
     {
+        static string[,] shipLight = new string[5, 1]
+        {
+            {"    ▲    "},
+            {"    Ο    "},
+            {"  ║ Ο ║  "},
+            {"╱╲╲╲Λ╱╱╱╲"},
+            {"  <╱╦╲>  "}
+        };
 
         static int SelectedIndex = 0;
         static string[] Options = { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
-        static string Prompt = @"
-                      _____                        _____                     _               
-                     / ____|                      |_   _|                   | |              
-                    | (___  _ __   __ _  ___ ___    | |  _ ____   ____ _  __| | ___ _ __ ___ 
-                     \___ \| '_ \ / _` |/ __/ _ \   | | | '_ \ \ / / _` |/ _` |/ _ \ '__/ __|
-                     ____) | |_) | (_| | (_|  __/  _| |_| | | \ V / (_| | (_| |  __/ |  \__ \
-                    |_____/| .__/ \__,_|\___\___| |_____|_| |_|\_/ \__,_|\__,_|\___|_|  |___/
-                           | |                                                               
-                           |_|                                                               ";
-
+        static string Name = @"
+                         _____                        _____                     _               
+                        / ____|                      |_   _|                   | |              
+                       | (___  _ __   __ _  ___ ___    | |  _ ____   ____ _  __| | ___ _ __ ___ 
+                        \___ \| '_ \ / _` |/ __/ _ \   | | | '_ \ \ / / _` |/ _` |/ _ \ '__/ __|
+                        ____) | |_) | (_| | (_|  __/  _| |_| | | \ V / (_| | (_| |  __/ |  \__ \
+                       |_____/| .__/ \__,_|\___\___| |_____|_| |_|\_/ \__,_|\__,_|\___|_|  |___/
+                              | |                                                               
+                              |_|                                                               ";
+                        
         static string introduction = "AD2030. Human scientists discovered that they are not the\n" +
                 "only intelligence in the galaxy....\n" +
 
@@ -57,12 +65,13 @@ namespace Intro
 
             int redo = 0;
             int sides = 52;
-            int updown = 24;
+            int updown = 44;
             ConsoleKeyInfo Keyinfo;
 
             do
             {
                 Keyinfo = Console.ReadKey(true);
+
                 Console.Clear();
 
                 switch (Keyinfo.Key)
@@ -73,12 +82,10 @@ namespace Intro
                         {
                             sides = 90;
                             Console.SetCursorPosition(sides, updown);
-                            UI.ShowLightStarShip(sides, updown);
                         }
                         else
                         {
                             Console.SetCursorPosition(sides, updown);
-                            UI.ShowLightStarShip(sides, updown);
                         }
                         break;
                     case ConsoleKey.LeftArrow:
@@ -87,12 +94,10 @@ namespace Intro
                         {
                             sides = 20;
                             Console.SetCursorPosition(sides, updown);
-                            ShowLightStarShip(sides, updown);
                         }
                         else
                         {
                             Console.SetCursorPosition(sides, updown);
-                            ShowLightStarShip(sides, updown);
                         }
                         break;
                     case ConsoleKey.UpArrow:
@@ -101,31 +106,29 @@ namespace Intro
                         {
                             updown = 0;
                             Console.SetCursorPosition(sides, updown);
-                            UI.ShowLightStarShip(sides, updown);
                         }
                         else
                         {
                             Console.SetCursorPosition(sides, updown);
-                            UI.ShowLightStarShip(sides, updown);
                         }
                         break;
                     case ConsoleKey.DownArrow:
                         updown++;
-                        if (updown >= 24)
+                        if (updown >= 34)
                         {
-                            updown = 24;
+                            updown = 34;
                             Console.SetCursorPosition(sides, updown);
-                            UI.ShowLightStarShip(sides, updown);
                         }
                         else
                         {
                             Console.SetCursorPosition(sides, updown);
-                            UI.ShowLightStarShip(sides, updown);
                         }
                         break;
                     default:
                         break;
                 }
+
+                UI.ShowShip(shipLight, sides, updown);
 
             } while (redo == 0);
         }
@@ -136,7 +139,6 @@ namespace Intro
         {
             Console.SetCursorPosition(left, top);
             Console.CursorVisible = false;
-            Console.WriteLine("Press <Enter> to start...");
 
             ConsoleKeyInfo keyInfo;
 
@@ -147,7 +149,7 @@ namespace Intro
                 if (keyInfo.Key == ConsoleKey.Enter)
                 {
                     Console.Clear();
-                    Console.SetCursorPosition(50, 15);
+                    Console.SetCursorPosition(left, top);
                     Console.WriteLine("Start Game");
                     Thread.Sleep(2000);
                     Console.Clear();
@@ -155,7 +157,7 @@ namespace Intro
                 }
                 else
                 {
-                    Console.SetCursorPosition(left, top);
+                    Console.SetCursorPosition(50, 18);
                     Console.WriteLine("Press <Enter> to start...");
                 }
 
@@ -165,8 +167,8 @@ namespace Intro
 
         static void ExitGame()
         {
-            Console.SetCursorPosition(45, 20);
             Console.CursorVisible = false;
+            Console.SetCursorPosition(43, 20);
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey(true);
             Environment.Exit(0);
@@ -175,7 +177,7 @@ namespace Intro
         static void DisplayAboutInfo(string aboutText)
         {
             Console.Clear();
-            Console.SetCursorPosition(35, 10);
+            Console.SetCursorPosition(38, 10);
 
             int count = 0;
 
@@ -184,7 +186,7 @@ namespace Intro
                 if (aboutText[i] == '\n')
                 {
                     count++;
-                    Console.SetCursorPosition(35, 10 + count);
+                    Console.SetCursorPosition(38, 10 + count);
                 }
                 else
                 {
@@ -198,14 +200,14 @@ namespace Intro
 
         static void RunFirstChoice()
         {
-            Console.SetCursorPosition(45, 18);
+            Console.SetCursorPosition(50, 18);
             Print(introduction, 50);
         }
 
         static void RunSecondChoice()
         {
-            Console.SetCursorPosition(45, 18);
-            Console.WriteLine("\n\t\t\t\t\t   Placeholder for 2nd choice");
+            Console.SetCursorPosition(42, 18);
+            Console.WriteLine("Placeholder for 2nd choice");
             ExitGame();
         }
 
@@ -215,35 +217,40 @@ namespace Intro
 
             ConsoleColor prevColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(Prompt);
+            Console.WriteLine(Name);
             Console.ForegroundColor = prevColor;
+
+            int count = 0;
 
             for (int i = 0; i < Options.Length; i++)
             {
+                ++count;
                 string currentOption = Options[i];
-                string prefix;
+                string pointer;
 
                 if (i == SelectedIndex)
                 {
-                    prefix = "\u2192";
+                    pointer = "\u2192";
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                 }
                 else
                 {
                     Console.ResetColor();
-                    prefix = " ";
+                    pointer = " ";
                 }
-                Console.WriteLine($"\t\t\t\t\t\t{prefix} {currentOption} ");
+                Console.SetCursorPosition(50, 8 + count);
+                Console.WriteLine($"{pointer} {currentOption} ");
             }
             Console.ResetColor();
 
-            Console.SetCursorPosition(46, 25);
+            Console.SetCursorPosition(47, 25);
             Console.WriteLine("\xA9 2021 LevelUp\x2122");
         }
 
         static int Run()
         {
             ConsoleKey keyPressed;
+
             do
             {
                 Console.Clear();
@@ -279,19 +286,23 @@ namespace Intro
            
             int selectedIndex = Run();
 
-            switch (selectedIndex)
+            Menu menu = (Menu)selectedIndex;
+
+            switch (menu)
             {
-                case 0:
+                case Menu.OnePlayer:
                     RunFirstChoice();
                     break;
-                case 1:
+                case Menu.TwoPlayers:
                     RunSecondChoice();
                     break;
-                case 2:
+                case Menu.About:
                     DisplayAboutInfo(aboutText);
                     break;
-                case 3:
+                case Menu.Exit:
                     ExitGame();
+                    break;
+                default:
                     break;
             }
         }
@@ -348,15 +359,14 @@ namespace Intro
                 }
                 
             }
-            StartGame(45, 27);
+            StartGame(100, 15);
         }
         static void Main()
         {
-            Start();
+            Console.SetBufferSize(120, 40);
 
-
+            UI.Start();
             
-
             Console.ReadKey();
         }
     }

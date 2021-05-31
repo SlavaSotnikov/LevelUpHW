@@ -10,5 +10,4 @@ namespace Enum
         Multiplication = 0x002A,
         Division       = 0x002F
     }
-        // Ask a question about dec/0x00.
 }

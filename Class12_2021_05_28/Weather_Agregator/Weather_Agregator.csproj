@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{405FC1BE-23FA-4A07-8B58-F7F018F0FEBE}</ProjectGuid>
+    <ProjectGuid>{E3076F33-43D1-4652-B80E-0DB2B50ADDAB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Menu</RootNamespace>
-    <AssemblyName>Menu</AssemblyName>
+    <RootNamespace>Weather_Agregator</RootNamespace>
+    <AssemblyName>Weather_Agregator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,9 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Period.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShipModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
