@@ -6,7 +6,7 @@ namespace Weather_Agregator
     {
         static void Main()
         {
-            int[][] weatherAgr = new int[4][];
+            int[,][] weatherAgr = new int[4][];
 
             weatherAgr[(int)Period.Year]  = new int[10];
             weatherAgr[(int)Period.Month] = new int[12];
