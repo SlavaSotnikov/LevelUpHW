@@ -194,7 +194,7 @@ namespace From_1D_to_2D
             {
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
-                    Console.Write("{0} ", array[i, j]);
+                    Console.Write("{0}", array[i, j]);
                 }
 
                 Console.WriteLine();
@@ -270,9 +270,58 @@ namespace From_1D_to_2D
 
             name = "Diagonal zig zag fill in: \n";
             Print2DArray(dest, name);
-            
+
             #endregion
 
+            #region Spiral fill in
+
+            int[,] arr = new int[5, 5];
+
+            int x = 0;
+            int y = 0;
+            int n = 0;
+            int ind = -1;
+
+            while (true)
+            {
+                while (y < (arr.GetLength(0) - 1) - n)
+                {
+                    y++;
+
+                    arr[x, y] = ++ind;
+
+                    
+                }
+                x++;
+                while (x < (arr.GetLength(1) - 1) - n)
+                {
+                    x++;
+                    arr[x, y] = ++ind;
+
+                    
+                }
+                y++;
+                while (y > n)
+                {
+                    y--;
+
+                    arr[x, y] = ++ind;
+                }
+
+                n++;
+                while (x > n)
+                {
+                    x--;
+
+                    arr[x, y] = ++ind;
+                }
+
+            }
+
+            name = "Spiral fill in: \n";
+            Print2DArray(arr, name);
+
+            #endregion
             Console.ReadKey();
         }
     }
