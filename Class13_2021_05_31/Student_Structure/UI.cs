@@ -4,6 +4,16 @@ namespace Student_Structure
 {
     class UI
     {
+        public static void PrintYear(Student person)
+        {
+            Console.Write("Year: {0}\n", BL.GetYear(person));
+        }
+
+        public static void PrintShortName(Student person)
+        {
+            Console.Write("Short name: {0}\n", BL.GetShortName(person));
+        }
+
         public static string GetName(string text="Enter student's name: ")
         {
             Console.Write(text);
@@ -39,17 +49,15 @@ namespace Student_Structure
         public static void PrintStudent(Student person)
         {
             Console.Write($"\nStudent: {person.name} {person.lastName} \nId: {person.studNum}" +
-                    $"\nStudent since: {person.enterDate.ToShortDateString()}\nYear: {person.course}" +
-                    $"\nShort name: {person.shortName}");
+                    $"\nStudent since: {person.enterDate.ToShortDateString()}");
         }
 
         public static ConsoleKey ChooseMenu()
         {
-            Console.WriteLine("Would you like to enter a new student by hand or use a random one?");
+            Console.WriteLine("Would you like to enter a new student's data by hand or use a random one?");
             Console.WriteLine("Press 1 or 2");
 
-            ConsoleKey key = ConsoleKey.Backspace;
-            key = Console.ReadKey().Key;
+            ConsoleKey key = Console.ReadKey().Key;
             Console.WriteLine();
 
             return key;
@@ -72,7 +80,7 @@ namespace Student_Structure
             return yourAlter;
         }
 
-        public static void GetWarning()
+        public static void PrintWarning()
         {
             Console.WriteLine("Try again!");
         }

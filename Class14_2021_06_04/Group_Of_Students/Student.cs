@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Student_Structure
+namespace Group_Of_Students
 {
     struct Student
     {
@@ -8,5 +8,6 @@ namespace Student_Structure
         public string lastName;
         public int studNum;
         public DateTime enterDate;
+        public byte[] marks;
     }
 }

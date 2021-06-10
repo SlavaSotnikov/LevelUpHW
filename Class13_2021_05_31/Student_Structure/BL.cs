@@ -34,22 +34,19 @@ namespace Student_Structure
             return start.AddDays(BLRnd.rnd.Next(range));
         }
 
-        public static Student GetRandomStudent(Student person)
+        public static void GetRandomStudent(ref Student person)
         {
-            person = new Student()
             {
-                name      = GetRandomName(),
-                lastName  = GetRandomLastName(),
-                studNum   = GetRandomStudNumber(),
-                enterDate = GetRandomEnterDate()
+                person.name = GetRandomName();
+                person.lastName = GetRandomLastName();
+                person.studNum = GetRandomStudNumber();
+                person.enterDate = GetRandomEnterDate();
             };
-
-            return person;
         }
 
         public static int GetYear(Student person)
         {
-            return (DateTime.Today.Year - person.enterDate.Year) + 1;
+            return DateTime.Today.Year - person.enterDate.Year + 1;
         }
 
         public static string GetShortName(Student person)

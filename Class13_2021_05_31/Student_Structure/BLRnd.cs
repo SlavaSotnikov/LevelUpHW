@@ -6,7 +6,7 @@ namespace Student_Structure
     {
         public static Random rnd = new Random();
 
-        public static string GetName(int index)
+        public static string GetName(int index) // Ask a question about protection.
         {
             string[] name = new string[10];
 

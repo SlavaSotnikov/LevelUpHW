@@ -5,46 +5,39 @@ namespace Student_Structure
     class Program
     {
         // Depends on your choice, enter student's data by hand or by Random.
-        public static Student ChooseEnter(ConsoleKey key)
+        public static void ChooseEnter(ConsoleKey key, ref Student source)
         {
-            Student person = new Student();
-
             switch (key)
             {
                 case ConsoleKey.D1:
-                    person = GetCustomStudent(person);
+                    GetCustomStudent(ref source);
                     break;
                 case ConsoleKey.D2:
-                    person = BL.GetRandomStudent(person);
+                    BL.GetRandomStudent(ref source);
                     break;
                 default:
                     break;
             }
-
-            return person;
         }
 
-        public static Student GetCustomStudent(Student person)
+        public static void GetCustomStudent(ref Student person)
         {
-            person = new Student()
             {
-                name      = UI.GetName(),
-                lastName  = UI.GetLastName(),
-                studNum   = UI.GetId(),
-                enterDate = UI.GetDateOfEnter()
+                person.name = UI.GetName();
+                person.lastName = UI.GetLastName();
+                person.studNum = UI.GetId();
+                person.enterDate = UI.GetDateOfEnter();
             };
-
-            return person;
         }
 
         public static void GetAlterChoice(Student person)
         {
             Alter alt = Alter.none;
 
-            string choiceAlt = UI.AlterDataOfStudent();
-
             while (alt != Alter.exit)
             {
+                string choiceAlt = UI.AlterDataOfStudent();
+
                 if (Enum.TryParse(choiceAlt, out alt))
                 {
                     switch (alt)
@@ -62,38 +55,35 @@ namespace Student_Structure
                             person.enterDate = UI.GetDateOfEnter("Enter date: ");
                             break;
                         case Alter.year:
-                            person.course = BL.GetYear(person);
+                            UI.PrintYear(person);
                             break;
                         case Alter.shortname:
-                            person.shortName = BL.GetShortName(person);
+                            UI.PrintShortName(person);
                             break;
-                        //case Alter.exit:
-                        //    Environment.Exit(0);
-                        //    break;
+                        case Alter.exit:
+                            break;
                         default:
                             break;
                     }
-
-                    UI.PrintStudent(person);
                 }
                 else
                 {
-                    UI.GetWarning();
+                    UI.PrintWarning();
                 }
 
-                choiceAlt = UI.AskAgain();
+                UI.PrintStudent(person);
             }
         }
 
         static void Main()
         {
-            Student person = ChooseEnter(UI.ChooseMenu());
+            Student person = new Student();
+
+            ChooseEnter(UI.ChooseMenu(), ref person);
 
             UI.PrintStudent(person);
 
             GetAlterChoice(person);
-
-            
 
             Console.ReadKey();
         }
