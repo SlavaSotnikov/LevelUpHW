@@ -6,8 +6,8 @@ A spaceship can move left-right, top-down. It's also able to shoot.
 Hostile spaceships move from top to bottom line they're able to shoot as well.
 Your major goal is killing and avoiding the hostile ships. 
 You must avoid bumping into the enemiy's ships and fire.
-If the enemies ship hit you, you lose hit points. In case you bumped into the enemies ship, you lose one 
-life point. In case you skip one enemy's ship, and it crosses the bottom line, you lose one life point.
+If the enemies ship hit you, you lose 10% of hit points. In case you bumped into the enemies ship, you lose one 
+life point. Although you can skip the enemy spacecraft.
 You have to kill 20 enemies ships, it allows you to fight against the boss. 
 If you beat the boss It allows you to go to the next level. You have three life points and 100% of hit points.
 
