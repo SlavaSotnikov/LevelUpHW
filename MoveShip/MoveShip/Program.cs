@@ -19,7 +19,6 @@ namespace MoveShip
          * Input:
          * Output:  
          */
-
         static void RunSpaceship()
         {
             Console.OutputEncoding = Encoding.UTF8;

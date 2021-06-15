@@ -31,11 +31,11 @@ namespace Group_Of_Students
         {
             for (int i = 0; i < group.countOfStudents; i++)
             {
-                ShowStudent(group.person[i]);
+                ShowStudent(group.persons[i]);
             }
         }
 
-        public static void PrintGroup(Department source, int num=0)
+        public static void PrintGroup(Department source, int num = 0)
         {
             Console.Clear();
 
@@ -50,7 +50,7 @@ namespace Group_Of_Students
                 PrintStudent(source.groups[i]);
             }
 
-            
+
         }
 
         private static void ShowStudent(Student person)

@@ -10,16 +10,16 @@ namespace Group_Of_Students
         {
             string[] name = new string[20];
 
-            name[0]  = "Oliver";
-            name[1]  = "William";
-            name[2]  = "James";
-            name[3]  = "Henry";
-            name[4]  = "Michael";
-            name[5]  = "Jacob";
-            name[6]  = "Jack";
-            name[7]  = "John";
-            name[8]  = "David";
-            name[9]  = "Thomas";
+            name[0] = "Oliver";
+            name[1] = "William";
+            name[2] = "James";
+            name[3] = "Henry";
+            name[4] = "Michael";
+            name[5] = "Jacob";
+            name[6] = "Jack";
+            name[7] = "John";
+            name[8] = "David";
+            name[9] = "Thomas";
             name[10] = "Jaxon";
             name[11] = "Harvey";
             name[12] = "Jude";
@@ -38,16 +38,16 @@ namespace Group_Of_Students
         {
             string[] lastName = new string[20];
 
-            lastName[0]  = "Adams";
-            lastName[1]  = "Armstrong";
-            lastName[2]  = "Baker";
-            lastName[3]  = "Brown";
-            lastName[4]  = "Cole";
-            lastName[5]  = "Edwards";
-            lastName[6]  = "Evans";
-            lastName[7]  = "Fox";
-            lastName[8]  = "Gibson";
-            lastName[9]  = "Gray";
+            lastName[0] = "Adams";
+            lastName[1] = "Armstrong";
+            lastName[2] = "Baker";
+            lastName[3] = "Brown";
+            lastName[4] = "Cole";
+            lastName[5] = "Edwards";
+            lastName[6] = "Evans";
+            lastName[7] = "Fox";
+            lastName[8] = "Gibson";
+            lastName[9] = "Gray";
             lastName[10] = "Ferguson";
             lastName[11] = "Goodwin";
             lastName[12] = "Johnson";

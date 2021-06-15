@@ -9,7 +9,7 @@ namespace Group_Of_Students
         {
             Group first = new Group();
 
-            first.person = new Student[capacity];
+            first.persons = new Student[capacity];
             first.countOfStudents = 0;
 
             return first;
@@ -17,12 +17,12 @@ namespace Group_Of_Students
 
         public static void AddStudent(ref Group group, Student person)
         {
-            if (group.countOfStudents >= group.person.Length)
+            if (group.countOfStudents >= group.persons.Length)
             {
-                Array.Resize(ref group.person, group.person.Length + 1);
+                Array.Resize(ref group.persons, group.persons.Length + 1);
             }
 
-            group.person[group.countOfStudents] = GetFullCopy(person);
+            group.persons[group.countOfStudents] = GetFullCopy(person);
             ++group.countOfStudents;
         }
 
@@ -66,7 +66,7 @@ namespace Group_Of_Students
             Group destination = new Group()
             {
                 countOfStudents = source.countOfStudents,
-                person = source.person
+                persons = source.persons
             };
 
             return destination;
@@ -79,12 +79,12 @@ namespace Group_Of_Students
                 return; // TODO Enum error.
             }
 
-            group.person[index] = person;
+            group.persons[index] = person;
         }
 
         public static Student DeleteStudent(ref Group group, int index)
         {
-            Student deletedStudent = group.person[index];
+            Student deletedStudent = group.persons[index];
 
             index -= 1; // Adjust index
             if (index >= group.countOfStudents || index < 0)
@@ -94,7 +94,7 @@ namespace Group_Of_Students
 
             for (int i = index; i < group.countOfStudents - 1; i++)
             {
-                group.person[i] = group.person[i + 1];
+                group.persons[i] = group.persons[i + 1];
             }
 
             // Just alter the countOfStudents
@@ -169,12 +169,12 @@ namespace Group_Of_Students
             Group destination = new Group()
             {
                 countOfStudents = source.countOfStudents,
-                person = source.person
+                persons = new Student[source.persons.Length]
             };
 
             for (int i = 0; i < destination.countOfStudents; i++)
             {
-                destination.person[i] = ZeroingCopy(destination.person[i]);
+                destination.persons[i] = ZeroingCopy(source.persons[i]);
             }
 
             return destination;

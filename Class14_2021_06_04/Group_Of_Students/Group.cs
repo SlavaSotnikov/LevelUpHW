@@ -4,7 +4,7 @@ namespace Group_Of_Students
 {
     struct Group
     {
-        public Student[] person;
+        public Student[] persons;
 
         public int countOfStudents;
     }

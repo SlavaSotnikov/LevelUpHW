@@ -18,10 +18,10 @@ namespace Group_Of_Students
             return person;
         }
 
-        public static void ChooseEnter(ConsoleKey key, ref Group group, int count=0)
+        public static void ChooseEnter(ConsoleKey key, ref Group group, int count = 0)
         {
             Student person = new Student()
-            { 
+            {
                 marks = new byte[10]
             };
 
@@ -62,7 +62,7 @@ namespace Group_Of_Students
 
             Group nextLevel = BL.GoToNextLevel(first);
 
-            
+
             //BL.AddStudent(ref first, st);
             //BL.AddStudent(ref first, st2);
             UI.PrintStudent(nextLevel);
@@ -91,9 +91,10 @@ namespace Group_Of_Students
 
             //UI.PrintGroup(faculty);
 
-            
+
 
             Console.ReadKey();
         }
     }
 }
+
