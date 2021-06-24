@@ -13,20 +13,16 @@ namespace MoveShip
         const int WIDTH = 120;         // Width of buffer of consol window.
         const int HEIGHT = 40;         // Height of buffer of console window.
 
-        const int INITIAL_X = 53;      // Initial X position of Spaceship.
-        const int INITIAL_Y = 33;      // Initial Y position of Spaceship.
-
-        const byte HITPOINTS = 100;    // Initial value of Hit Points.
-        const byte LIFES = 3;          // Initial value of Life.
+       
 
         const int RESET = 0;           // Initial value.
 
-        private static string[] lightShip = new string[5] 
+        private static string[] lightShip = new string[5]
         { "    ▲    ",
           "    Ο    ",
           "  ║ Ο ║  ",
           "╱╲╲╲Λ╱╱╱╲",
-          "  <╱╦╲>  " 
+          "  <╱╦╲>  "
         };
 
         private static string[] heavyShip = new string[5]
@@ -37,7 +33,12 @@ namespace MoveShip
           " <╱*╦*╲> "
         };
 
-        
+        public static string[] fly = new string[3]
+        {
+            "╲(|-|)╱",
+            "˂=-O-=˃",
+            "   ˅   "
+        };
 
         /// <summary>
         /// Print a spacecraft.
@@ -95,7 +96,7 @@ namespace MoveShip
                 Console.SetCursorPosition(70, battle.bottomBorder);
                 Console.Write("MyKills: {0}", battle.killed);
                 Console.SetCursorPosition(81, battle.bottomBorder);
-                Console.Write("Enemies: {0}", battle.enemies); 
+                Console.Write("Enemies: {0}", battle.enemies);
             }
         }
 
@@ -172,7 +173,7 @@ namespace MoveShip
                     default:
                         userEvent = Actions.NoDirection;
                         break;
-                } 
+                }
             }
 
             return userEvent;
@@ -180,11 +181,11 @@ namespace MoveShip
 
         public static void PrintShots(ref Cartridge source)
         {
-            ++source.methodCounter;
+            ++source.methodCounterPrintShot;
 
-            if (source.methodCounter == 7000)
+            if (source.methodCounterPrintShot == 5000)
             {
-                source.methodCounter = RESET;
+                source.methodCounterPrintShot = RESET;
 
                 for (int i = 0; i < source.countOfShots; i++)
                 {
@@ -204,11 +205,11 @@ namespace MoveShip
                 PrintBullet(bullet);
 
                 bullet.oldCoordinateX = bullet.coordinateX;
-                bullet.oldCoordinateY = bullet.coordinateY; 
+                bullet.oldCoordinateY = bullet.coordinateY;
             }
         }
 
-        public static void HideBullet(Shot bullet, char invisible='\0') // Is it correct?
+        public static void HideBullet(Shot bullet, char invisible = '\0') // Is it correct?
         {
             Console.SetCursorPosition(bullet.oldCoordinateX, bullet.oldCoordinateY);
             Console.Write(invisible);
@@ -260,24 +261,7 @@ namespace MoveShip
                 }
             }
 
-            return InitSpacecraft(viewShip);
-        }
-
-        public static Spacecraft InitSpacecraft(string[] source)
-        {
-            Spacecraft ship = new Spacecraft()
-            {
-                сoordinateX = INITIAL_X,
-                сoordinateY = INITIAL_Y,
-                oldCoordinateX = INITIAL_X + 1,     // Is it correct?
-                oldCoordinateY = INITIAL_Y + 1,
-                view = source,
-                alive = true,
-                hitPoints = HITPOINTS,
-                life = LIFES
-            };
-
-            return ship;
+            return BL.InitSpacecraft(viewShip);
         }
 
         public static void ShowHideSpacecraft(Spacecraft ship)
@@ -286,9 +270,61 @@ namespace MoveShip
             {
                 // Hide previous coordinates of the Spaceship.
                 HideSpacecraft(ship, ConsoleColor.Black);
-            
+
                 // Show the Spaceship.
                 PrintSpacecraft(ship, ConsoleColor.Gray);
+            }
+        }
+
+        public static void PrintEnemies(ref Swarm source)
+        {
+            ++source.methodCounterPrintSwarm;
+
+            if (source.methodCounterPrintSwarm == 90000)
+            {
+                source.methodCounterPrintSwarm = RESET;
+
+                for (int i = 0; i < source.countOfFly; i++)
+                {
+                    ShowHideEnemies(ref source.enemyFly[i]);
+                }
+            }
+        }
+
+        public static void ShowHideEnemies(ref Fly enemy)
+        {
+            HideEnemy(enemy);
+
+            if (enemy.active == true)
+            {
+                BL.ModifyFlyCoordinate(ref enemy);
+
+                PrintEnemy(enemy);
+
+                enemy.oldCoordinateX = enemy.coordinateX;
+                enemy.oldCoordinateY = enemy.coordinateY;
+            }
+        }
+
+        public static void HideEnemy(Fly enemy, ConsoleColor color=ConsoleColor.Black) // Is it correct?
+        {
+            for (int i = enemy.view.Length - 1; i >= 0; i--)
+            {
+                Console.SetCursorPosition(enemy.oldCoordinateX, enemy.oldCoordinateY + i);
+
+                Console.ForegroundColor = color;
+                Console.Write(enemy.view[i]);
+            }
+        }
+
+        public static void PrintEnemy(Fly enemy, ConsoleColor color=ConsoleColor.White)
+        {
+            for (int i = enemy.view.Length - 1; i >= 0; i--)
+            {
+                Console.SetCursorPosition(enemy.coordinateX, enemy.coordinateY + i);
+
+                Console.ForegroundColor = color;
+                Console.Write(enemy.view[i]);
             }
         }
     }

@@ -13,20 +13,21 @@ namespace MoveShip
             Console.OutputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
 
-            //
-
             Actions userEvent; // Do we have to hand 'userDirection' to 'UI.AskConsole()'?
             Display battle = BL.CreateButtleDisplay();
             Cartridge shipMag = BL.CreateCartridge(10);
-
-            //TODO: It must have an instance after the spacebar was pressed.
             
+            Swarm enemies = BL.CreateSwarm(10);
 
             UI.ShowBattleMenu(ref battle);
 
             do
             {
                 UI.ShowHideSpacecraft(ship);
+
+                BL.ProduceEnemies(ref enemies);
+
+                UI.PrintEnemies(ref enemies);
 
                 ship.oldCoordinateX = ship.сoordinateX;
                 ship.oldCoordinateY = ship.сoordinateY;
@@ -36,9 +37,9 @@ namespace MoveShip
 
                 BL.EventProcessing(ref ship, borders, userEvent, ref shipMag);
 
-                UI.PrintShots(ref shipMag);
-
                 BL.CheckAllObjects(ref shipMag, borders);
+
+                UI.PrintShots(ref shipMag);
 
                 //BL.CleanStructures(ref shipMag);
 
