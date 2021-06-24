@@ -5,58 +5,55 @@ namespace MoveShip
 {
     class Program
     {
-        static string[,] shipLight = new string[5, 1]    
-        {
-            {"    ▲    "},
-            {"    Ο    "},
-            {"  ║ Ο ║  "},
-            {"╱╲╲╲Λ╱╱╱╲"},
-            {"  <╱╦╲>  "}
-        };
-
-        /*
-         * RunSpaceship - Allows a user to run the Spaceship.
-         * Input:
-         * Output:  
-         */
-        static void RunSpaceship()
+        /// <summary>
+        /// Allows a user to run the Spaceship.
+        /// </summary>
+        static void RunSpaceship(GameField borders, Spacecraft ship)
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
 
-            int leftRight = 53;    // Initial Left-Right position of Spaceship.
-            int topBottom = 33;    // Initial Top-Bottom position of Spaceship.
-            int oldLeftRight = leftRight;
-            int oldTopBottom = topBottom;
+            //
 
-            UI.ShowBattleMenu("Slava", "Ukraine", 100, 3, 0, 0, 20);
-            UI.PrintSpacecraft(shipLight, ConsoleColor.DarkGray, leftRight, topBottom);
+            Actions userEvent; // Do we have to hand 'userDirection' to 'UI.AskConsole()'?
+            Display battle = BL.CreateButtleDisplay();
+            Cartridge shipMag = BL.CreateCartridge(10);
 
-            ConsoleKeyInfo keyInfo = UI.AskConsole();
+            //TODO: It must have an instance after the spacebar was pressed.
+            
+
+            UI.ShowBattleMenu(ref battle);
 
             do
             {
-                BL.ModifyCoordinates(keyInfo, ref leftRight, ref topBottom);
+                UI.ShowHideSpacecraft(ship);
 
-                UI.ShowHideSpacecraft(shipLight, leftRight, topBottom, oldLeftRight, oldTopBottom);
+                ship.oldCoordinateX = ship.сoordinateX;
+                ship.oldCoordinateY = ship.сoordinateY;
 
-                // Set previous coordinates
-                oldLeftRight = leftRight;  
-                oldTopBottom = topBottom;
+                // Get new coordinates or an event.
+                userEvent = UI.AskConsole();
 
-                // Get new coordinates
-                keyInfo = UI.AskConsole(); 
+                BL.EventProcessing(ref ship, borders, userEvent, ref shipMag);
 
-            } while (keyInfo.Key != ConsoleKey.Escape);
+                UI.PrintShots(ref shipMag);
+
+                BL.CheckAllObjects(ref shipMag, borders);
+
+                //BL.CleanStructures(ref shipMag);
+
+            } while (userEvent != Actions.Exit);
         }
 
         static void Main()
         {
-            UI.SetBufferSize(120, 40);
+            UI.SetBufferSize();
 
-            RunSpaceship();
+            GameField borders = UI.SetGameFieldBorders();
 
-            Console.ReadKey();
+            Spacecraft ship = UI.AskShipModel();
+
+            RunSpaceship(borders, ship);
         }
     }
 }
