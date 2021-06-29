@@ -14,20 +14,23 @@ namespace MoveShip
             Console.CursorVisible = false;
 
             Actions userEvent; // Do we have to hand 'userDirection' to 'UI.AskConsole()'?
-            Display battle = BL.CreateButtleDisplay();
-            Cartridge shipMag = BL.CreateCartridge(10);
-            
-            Swarm enemies = BL.CreateSwarm(10);
-
-            UI.ShowBattleMenu(ref battle);
+            Display battle = UI.CreateButtleDisplay();
+            Cartridge shipMag = BL.CreateCartridge(16);
+            Swarm enemies = BL.CreateSwarm(5);
 
             do
             {
+                UI.ShowBattleMenu(ref battle);
+
                 UI.ShowHideSpacecraft(ship);
+
+                UI.PrintEnemies(ref enemies);
+
+
 
                 BL.ProduceEnemies(ref enemies);
 
-                UI.PrintEnemies(ref enemies);
+                
 
                 ship.oldCoordinateX = ship.сoordinateX;
                 ship.oldCoordinateY = ship.сoordinateY;
@@ -37,11 +40,13 @@ namespace MoveShip
 
                 BL.EventProcessing(ref ship, borders, userEvent, ref shipMag);
 
-                BL.CheckAllObjects(ref shipMag, borders);
-
                 UI.PrintShots(ref shipMag);
 
-                //BL.CleanStructures(ref shipMag);
+                
+
+                BL.CheckAllObjects(ref shipMag, ref enemies, borders, battle);
+
+                
 
             } while (userEvent != Actions.Exit);
         }

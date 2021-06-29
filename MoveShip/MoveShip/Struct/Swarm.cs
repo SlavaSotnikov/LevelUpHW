@@ -7,6 +7,7 @@ namespace MoveShip
 
         public int methodCounterPrintSwarm;
         public int methodCounterProduceFly;
+        public uint speed;
         public int countOfFly;
     }
 }

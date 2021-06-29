@@ -4,9 +4,9 @@ namespace MoveShip
 {
     struct GameField
     {
-        public int leftBorder;
-        public int rightBorder;
-        public int topBorder;
-        public int bottomBorder;
+        public int left;
+        public int right;
+        public int top;
+        public int bottom;
     }
 }

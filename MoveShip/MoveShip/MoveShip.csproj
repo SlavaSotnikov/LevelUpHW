@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL.cs" />
+    <Compile Include="BL_Random.cs" />
     <Compile Include="Enum\Bullets.cs" />
     <Compile Include="Enum\Actions.cs" />
     <Compile Include="Struct\Fly.cs" />

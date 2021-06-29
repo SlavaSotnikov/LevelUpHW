@@ -4,13 +4,15 @@ namespace MoveShip
 {
     class BL
     {
+        #region Constants
+
         const int INITIAL_X = 53;      // Initial X position of Spaceship.
         const int INITIAL_Y = 33;      // Initial Y position of Spaceship.
 
         const byte HITPOINTS = 100;    // Initial value of Hit Points.
         const byte LIFES = 3;          // Initial value of Life.
 
-        public static char bulletLeft  = '│';
+        public static char bulletLeft = '│';
         public static char bulletRight = '│';
 
         const int RESET = 0;
@@ -23,6 +25,9 @@ namespace MoveShip
         const byte BOTTOM_BORDER = 39;
         const byte LEFT_BORDER = 30;
         const byte RIGHT_BORDER = 83;
+
+        #endregion
+
 
         /// <summary>
         /// It alters the coordinates X or Y.
@@ -37,44 +42,236 @@ namespace MoveShip
             {
                 case Actions.Left:
                     --ship.сoordinateX;
-                    if (ship.сoordinateX <= borders.leftBorder)
+                    if (ship.сoordinateX <= borders.left)
                     {
-                        ship.сoordinateX = borders.leftBorder;
+                        ship.сoordinateX = borders.left;
                     }
                     break;
 
                 case Actions.Right:
                     ++ship.сoordinateX;
-                    if (ship.сoordinateX >= borders.rightBorder)
+                    if (ship.сoordinateX >= borders.right)
                     {
-                        ship.сoordinateX = borders.rightBorder;
+                        ship.сoordinateX = borders.right;
                     }
                     break;
 
                 case Actions.Up:
                     --ship.сoordinateY;
-                    if (ship.сoordinateY <= borders.topBorder)
+                    if (ship.сoordinateY <= borders.top)
                     {
-                        ship.сoordinateY = borders.topBorder;
+                        ship.сoordinateY = borders.top;
                     }
                     break;
 
                 case Actions.Down:
                     ++ship.сoordinateY;
-                    if (ship.сoordinateY >= borders.bottomBorder)
+                    if (ship.сoordinateY >= borders.bottom)
                     {
-                        ship.сoordinateY = borders.bottomBorder;
+                        ship.сoordinateY = borders.bottom;
                     }
                     break;
 
                 case Actions.Spacebar:
-                    Shooting(ref shipMag, ship);
+                    Shooting(ref shipMag, ref ship);
                     break;
 
                 default:
                     break;
             }
         }
+
+        #region Shooting
+
+        public static Cartridge CreateCartridge(int capacity)
+        {
+            Cartridge clip = new Cartridge
+            {
+                mag = new Shot[capacity],
+                countOfShots = 0,
+                methodCounterPrintShot = 0
+            };
+
+            return clip;
+        }
+
+        public static void AddShotToMag(ref Cartridge source, ref Spacecraft ship, Shot left, Shot right, byte count=0)
+        {
+            if (source.countOfShots < source.mag.Length)
+            {
+                source.mag[source.countOfShots] = left;
+                ++source.countOfShots;
+
+                source.mag[source.countOfShots] = right;
+                ++source.countOfShots;
+            }
+        }
+
+        public static void CleanMag(ref Cartridge source, int i)
+        {
+            if (!source.mag[i].active)
+            {
+                for (int j = i; j < source.countOfShots - 1; j++)
+                {
+                    source.mag[j] = source.mag[j + 1];
+
+                    break;
+                }
+
+                --source.countOfShots;
+            }
+        }
+
+        public static Shot CreateLeftShot(ref Spacecraft ship)
+        {
+            Shot leftBullet = new Shot()
+            {
+                coordinateX = ship.сoordinateX + LEFT_SHIFT,
+                coordinateY = ship.сoordinateY + 1,
+                oldCoordinateX = ship.сoordinateX,
+                oldCoordinateY = ship.oldCoordinateY,
+                view = bulletLeft,
+                active = true,
+                speed = 5000,
+                counter = 0
+            };
+
+            return leftBullet;
+        }
+
+        public static Shot CreateRightShot(ref Spacecraft ship)
+        {
+            Shot rightBullet = new Shot()
+            {
+                coordinateX = ship.сoordinateX + RIGHT_SHIFT,
+                coordinateY = ship.сoordinateY + 1,
+                oldCoordinateX = ship.сoordinateX,
+                oldCoordinateY = ship.oldCoordinateY,
+                view = bulletRight,
+                active = true,
+                speed = 5000,
+                counter = 0
+            };
+
+            return rightBullet;
+        }
+
+        public static void ModifyBulletCoordinate(ref Shot bullet)
+        {
+            bullet.coordinateY -= STEP;
+        }
+
+        public static void Shooting(ref Cartridge shipMag, ref Spacecraft ship)
+        {
+            Shot left = CreateLeftShot(ref ship);
+            Shot right = CreateRightShot(ref ship);
+
+            AddShotToMag(ref shipMag, ref ship, left, right);
+        }
+
+        #endregion
+
+        #region Enemies
+
+        public static Swarm CreateSwarm(int capacity)
+        {
+            Swarm enemies = new Swarm
+            {
+                enemyFly = new Fly[capacity],
+                countOfFly = 0,
+                methodCounterPrintSwarm = 0,
+                speed = 400000
+            };
+
+            return enemies;
+        }
+
+        public static Fly GetFullCopy(Fly source)
+        {
+            Fly destination = new Fly()
+            {
+                coordinateX = source.coordinateX,
+                coordinateY = source.coordinateY,
+                oldCoordinateX = source.oldCoordinateX,
+                oldCoordinateY = source.oldCoordinateY,
+                active = source.active,
+                counter = source.counter,
+                speed = source.speed,
+                view = (string[])source.view.Clone()
+            };
+
+            return destination;
+        }
+
+        public static Fly CreateFly()
+        {
+            Fly enemy = new Fly()
+            {
+                coordinateX = BL_Random.GetCoordinateX(),
+                coordinateY = 1,
+                oldCoordinateX = 58 - 1,
+                oldCoordinateY = 2 - 1,
+                view = UI.fly,
+                active = true,
+                speed = BL_Random.GetSpeed(),
+                counter = 0
+            };
+
+            return enemy;
+        }
+
+        public static void ProduceEnemies(ref Swarm enemies)
+        {
+            ++enemies.methodCounterProduceFly;
+
+            if (enemies.methodCounterProduceFly == enemies.speed)
+            {
+                enemies.methodCounterProduceFly = RESET;
+
+                Fly enemy = CreateFly();
+
+                AddFlyToSwarm(ref enemies, ref enemy);
+            }
+        }
+
+        public static void AddFlyToSwarm(ref Swarm source, ref Fly enemy)
+        {
+            if (source.countOfFly < source.enemyFly.Length)
+            {
+                source.enemyFly[source.countOfFly] = GetFullCopy(enemy);
+                ++source.countOfFly;
+            }
+            else
+            {
+                for (int i = 0; i < source.countOfFly; i++)
+                {
+                    if (!source.enemyFly[i].active)
+                    {
+                        source.enemyFly[i] = GetFullCopy(enemy);
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        public static void CleanSwarm(ref Swarm source)
+        {
+            for (int i = 0; i < source.countOfFly - 1; i++)
+            {
+                if (!source.enemyFly[i].active)
+                {
+                    for (int j = i; j < source.countOfFly - 1; j++)
+                    {
+                        source.enemyFly[j] = source.enemyFly[j + 1];
+                    }
+
+                    --source.countOfFly;
+                }
+            }
+        }
+
+        #endregion
 
         public static Spacecraft InitSpacecraft(string[] source)
         {
@@ -93,214 +290,57 @@ namespace MoveShip
             return ship;
         }
 
-        public static Display CreateButtleDisplay()
-        {
-            Display battle = new Display
-            {
-                topBorder = TOP_BORDER,
-                bottomBorder = BOTTOM_BORDER,
-                leftBorder = LEFT_BORDER,
-                rightBorder = RIGHT_BORDER,
-                name = "Slava",
-                country = "Ukraine",
-                hp = 100,
-                life = 3,
-                enemies = 20,
-                skip = 0,
-                killed = 0
-            };
-
-            return battle;
-        }
-
-        public static Cartridge CreateCartridge(int capacity)
-        {
-            Cartridge clip = new Cartridge
-            {
-                mag = new Shot[capacity],
-                countOfShots = 0,
-                methodCounterPrintShot = 0
-            };
-
-            return clip;
-        }
-
-        public static void AddShotToMag(ref Cartridge source, Shot left, Shot right)
-        {
-            if (source.countOfShots >= source.mag.Length)
-            {
-                Array.Resize(ref source.mag, source.mag.Length + 10);
-            }
-
-            source.mag[source.countOfShots] = left;
-            ++source.countOfShots;
-
-            source.mag[source.countOfShots] = right;
-            ++source.countOfShots;
-        }
-
-        public static Shot CreateLeftShot(Spacecraft ship)
-        {
-            Shot leftBullet = new Shot()
-            {
-                coordinateX = ship.сoordinateX + LEFT_SHIFT,
-                coordinateY = ship.сoordinateY + 1,
-                oldCoordinateX = ship.сoordinateX,
-                oldCoordinateY = ship.oldCoordinateY,
-                view = bulletLeft,
-                active = true
-            };
-
-            return leftBullet;
-        }
-
-        public static Shot CreateRightShot(Spacecraft ship)
-        {
-            Shot rightBullet = new Shot()
-            {
-                coordinateX = ship.сoordinateX + RIGHT_SHIFT,
-                coordinateY = ship.сoordinateY + 1,
-                oldCoordinateX = ship.сoordinateX,
-                oldCoordinateY = ship.oldCoordinateY,
-                view = bulletRight,
-                active = true
-            };
-
-            return rightBullet;
-        }
-
-        public static void ModifyBulletCoordinate(ref Shot bullet)
-        {
-            bullet.coordinateY -= STEP;
-        }
-
         public static void ModifyFlyCoordinate(ref Fly enemy)
         {
             enemy.coordinateY += STEP;
         }
 
-        public static void CheckAllObjects(ref Cartridge source, GameField borders)
+        public static void CheckAllObjects(ref Cartridge source, ref Swarm enemies, GameField borders, Display battle)
         {
             for (int i = 0; i < source.countOfShots; i++)
             {
                 CheckShot(ref source.mag[i], borders);
             }
+
+            for (int i = 0; i < enemies.countOfFly; i++)
+            {
+                CheckFly(ref enemies.enemyFly[i], ref enemies, borders);
+            }
+        }
+
+        public static void CheckShotAndFly(ref Shot bullet, ref Fly enemy)
+        {
+            if (bullet.coordinateY == enemy.coordinateY)
+            {
+                bullet.active = false;
+                enemy.active = false;
+            }
         }
 
         public static void CheckShot(ref Shot bullet, GameField borders)
         {
-            if (bullet.coordinateY <= borders.topBorder)
+            if (bullet.coordinateY <= borders.top)
             {
                 bullet.active = false;
             }
+
+            //if (bullet.coordinateY == enemy.coordinateY)
+            //{
+            //    bullet.active = false;
+            //}
         }
 
-        public static void CleanStructures(ref Cartridge source)
+        public static void CheckFly(ref Fly enemy, ref Swarm enemies, GameField borders)
         {
-            byte deletedObjects = 0;
-
-            for (int i = 0; i < source.countOfShots; i++)
+            if (enemy.coordinateY >= borders.bottom + 2) // TODO Fix +2
             {
-                //if ((false == source.mag[i].active) & (source.mag[i + 1].active == false) & 
-                //      (true == source.mag[i + 2].active) & (source.mag[i + 3].active == true))
-                //{
-                //    source.mag[i] = source.mag[i + 2];
-                //    source.mag[i + 1] = source.mag[i + 3];
-
-                //    deletedObjects += 2;
-                //}
-
-                if ((source.mag[i].active == false) & (source.mag[i + 1].active == true))
-                {
-                    source.mag[i] = source.mag[i + 1];
-
-                    ++deletedObjects;
-                }
-
-                source.countOfShots -= deletedObjects;
-            }
-        }
-
-        public static void Shooting(ref Cartridge shipMag, Spacecraft ship)
-        {
-            ++shipMag.methodCounterShot;
-
-            if (shipMag.methodCounterShot == 4)
-            {
-                shipMag.methodCounterShot = RESET;
-
-                Shot leftBullet = CreateLeftShot(ship);
-                Shot rightBullet = CreateRightShot(ship);
-
-                AddShotToMag(ref shipMag, leftBullet, rightBullet); 
-            }
-        }
-
-        public static Swarm CreateSwarm(int capacity)
-        {
-            Swarm enemies = new Swarm
-            {
-                enemyFly = new Fly[capacity],
-                countOfFly = 0,
-                methodCounterPrintSwarm = 0
-            };
-
-            return enemies;
-        }
-
-        public static void AddFlyToSwarm(ref Swarm source, ref Fly enemy)
-        {
-            if (source.countOfFly >= source.enemyFly.Length)
-            {
-                Array.Resize(ref source.enemyFly, source.enemyFly.Length + 10);
+                enemy.active = false;
             }
 
-            source.enemyFly[source.countOfFly] = GetFullCopy(enemy);
-            ++source.countOfFly;
-        }
-
-        public static Fly GetFullCopy(Fly source)
-        {
-            Fly destination = new Fly()
-            {
-                coordinateX = source.coordinateX,
-                coordinateY = source.coordinateY,
-                oldCoordinateX = source.oldCoordinateX,
-                oldCoordinateY = source.oldCoordinateY,
-                active = source.active,
-                view = (string[])source.view.Clone()
-            };
-
-            return destination;
-        }
-
-        public static Fly CreateFly()
-        {
-            Fly enemy = new Fly()
-            {
-                coordinateX = 58,
-                coordinateY = 2,
-                oldCoordinateX = 58 - 1,
-                oldCoordinateY = 2 - 1,
-                view = UI.fly,
-                active = true
-            };
-
-            return enemy;
-        }
-
-        public static void ProduceEnemies(ref Swarm enemies)
-        {
-            ++enemies.methodCounterProduceFly;
-
-            if (enemies.methodCounterProduceFly == 10000)
-            {
-                //enemies.methodCounterProduceFly = RESET;
-
-                Fly enemy = CreateFly();
-
-                AddFlyToSwarm(ref enemies, ref enemy); 
-            }
+            //if (enemy.coordinateY == bullet.coordinateY)
+            //{
+            //    enemy.active = false;
+            //}
         }
     }
 }
