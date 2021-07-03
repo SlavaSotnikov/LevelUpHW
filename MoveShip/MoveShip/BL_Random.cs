@@ -11,9 +11,9 @@ namespace MoveShip
             return value.Next(30, 83);
         }
 
-        public static int GetSpeed()
+        public static int GetFlySpeed()
         {
-            return value.Next(20000, 30000);
+            return value.Next(40000, 50000);
         }
 
         public static uint GetProduceSpeed()

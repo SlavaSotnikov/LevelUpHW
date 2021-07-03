@@ -15,38 +15,32 @@ namespace MoveShip
 
             Actions userEvent; // Do we have to hand 'userDirection' to 'UI.AskConsole()'?
             Display battle = UI.CreateButtleDisplay();
-            Cartridge shipMag = BL.CreateCartridge(16);
+            Cartridge shipMag = BL.CreateCartridge(20);
             Swarm enemies = BL.CreateSwarm(5);
+            Fly enemy = BL.CreateFly();
 
             do
             {
-                UI.ShowBattleMenu(ref battle);
+                UI.ShowBattleMenu(ref battle); //TODO: BL vs UI
 
                 UI.ShowHideSpacecraft(ship);
-
-                UI.PrintEnemies(ref enemies);
-
-
-
-                BL.ProduceEnemies(ref enemies);
-
-                
 
                 ship.oldCoordinateX = ship.сoordinateX;
                 ship.oldCoordinateY = ship.сoordinateY;
 
-                // Get new coordinates or an event.
-                userEvent = UI.AskConsole();
+                UI.PrintEnemies(ref enemies);
+
+                BL.ProduceEnemies(ref enemies, ref enemy);
+
+                userEvent = UI.AskConsole();    // Get new coordinates or an event.
 
                 BL.EventProcessing(ref ship, borders, userEvent, ref shipMag);
 
                 UI.PrintShots(ref shipMag);
 
-                
+                BL.CleanDataStructures(ref enemies, ref shipMag);
 
-                BL.CheckAllObjects(ref shipMag, ref enemies, borders, battle);
-
-                
+                BL.CheckAllObjects(ref shipMag, ref enemies, ref battle, borders);
 
             } while (userEvent != Actions.Exit);
         }

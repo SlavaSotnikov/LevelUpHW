@@ -12,5 +12,6 @@ namespace MoveShip
         public int oldCounter;
         public bool active;
         public string[] view;
+        public byte hit;
     }
 }

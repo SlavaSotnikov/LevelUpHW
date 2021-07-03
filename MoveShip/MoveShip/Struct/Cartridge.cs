@@ -5,8 +5,10 @@ namespace MoveShip
     {
         public Shot[] mag;
 
-        public int countOfShots;
-        public int methodCounterPrintShot;
-        public int methodCounterShot;
+        public uint countOfShots;
+        public uint methodCounterPrintShot;
+        public uint methodCounterShot;
+        public uint counterShooting;
+        public uint shooting;
     }
 }

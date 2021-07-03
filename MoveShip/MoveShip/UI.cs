@@ -126,36 +126,36 @@ namespace MoveShip
             {
                 ++source.enemyFly[i].counter;
 
-                if (source.enemyFly[i].counter == source.enemyFly[i].speed)
+                if (source.enemyFly[i].counter % source.enemyFly[i].speed == 0)
                 {
-                    source.enemyFly[i].oldCounter = source.enemyFly[i].counter;
-                    source.enemyFly[i].counter = RESET;
-
-                    ShowHideEnemies(ref source.enemyFly[i], ref source);
+                    ShowHideEnemies(ref source.enemyFly[i]);
                 }
             }
         }
 
-        public static void ShowHideEnemies(ref Fly enemy, ref Swarm source)
+        public static void ShowHideEnemies(ref Fly enemy)
         {
-            HideEnemy(enemy);
+            HideEnemy(ref enemy);
 
             if (enemy.active)
             {
                 BL.ModifyFlyCoordinate(ref enemy);
 
-                PrintEnemy(enemy);
+                if (enemy.hit >= 4)
+                {
+                    PrintEnemy(enemy, ConsoleColor.DarkRed);
+                }
+                else
+                {
+                    PrintEnemy(enemy);
+                }
 
                 enemy.oldCoordinateX = enemy.coordinateX;
                 enemy.oldCoordinateY = enemy.coordinateY;
             }
-            else
-            {
-                BL.CleanSwarm(ref source);    // TODO Fix BL in UI.
-            }
         }
 
-        public static void HideEnemy(Fly enemy, ConsoleColor color = ConsoleColor.Black) // Is it correct?
+        public static void HideEnemy(ref Fly enemy, ConsoleColor color=ConsoleColor.Black) // Is it correct?
         {
             for (int i = enemy.view.Length - 1; i >= 0; i--)
             {
@@ -166,15 +166,17 @@ namespace MoveShip
             }
         }
 
-        public static void PrintEnemy(Fly enemy, ConsoleColor color = ConsoleColor.White)
+        public static void PrintEnemy(Fly enemy, ConsoleColor color=ConsoleColor.White)
         {
-            for (int i = enemy.view.Length - 1; i >= 0; i--)
+            for (int i = 0; i < enemy.view.Length; i++)
             {
                 Console.SetCursorPosition(enemy.coordinateX, enemy.coordinateY + i);
 
                 Console.ForegroundColor = color;
                 Console.Write(enemy.view[i]);
             }
+
+            Console.ResetColor();
         }
 
         #endregion
@@ -187,7 +189,7 @@ namespace MoveShip
             {
                 ++source.mag[i].counter;
 
-                if (source.mag[i].counter == source.mag[i].speed)
+                if (source.mag[i].counter % source.mag[i].speed == 0)
                 {
                     source.mag[i].counter = RESET;
 
@@ -208,10 +210,6 @@ namespace MoveShip
 
                 bullet.oldCoordinateX = bullet.coordinateX;
                 bullet.oldCoordinateY = bullet.coordinateY;
-            }
-            else
-            {
-                BL.CleanMag(ref source, i);
             }
         }
 
@@ -283,7 +281,7 @@ namespace MoveShip
                 Console.SetCursorPosition(51, battle.bottomBorder);
                 Console.Write("Missed Enemies: {0}", battle.skip);
                 Console.SetCursorPosition(70, battle.bottomBorder);
-                Console.Write("MyKills: {0}", battle.killed);
+                Console.Write("Killed: {0}", battle.killed);
                 Console.SetCursorPosition(81, battle.bottomBorder);
                 Console.Write("Enemies: {0}", battle.enemies);
 
@@ -320,8 +318,6 @@ namespace MoveShip
             return borders;
         }
 
-        
-
         #endregion
 
         /// <summary>
@@ -339,19 +335,19 @@ namespace MoveShip
                 switch (key)
                 {
                     case ConsoleKey.LeftArrow:
-                        userEvent = Actions.Left;
+                        userEvent = Actions.LeftMove;
                         break;
                     case ConsoleKey.RightArrow:
-                        userEvent = Actions.Right;
+                        userEvent = Actions.RightMove;
                         break;
                     case ConsoleKey.UpArrow:
-                        userEvent = Actions.Up;
+                        userEvent = Actions.UpMove;
                         break;
                     case ConsoleKey.DownArrow:
-                        userEvent = Actions.Down;
+                        userEvent = Actions.DownMove;
                         break;
                     case ConsoleKey.Spacebar:
-                        userEvent = Actions.Spacebar;
+                        userEvent = Actions.Shooting;
                         break;
                     case ConsoleKey.Escape:
                         userEvent = Actions.Exit;
@@ -365,17 +361,28 @@ namespace MoveShip
             return userEvent;
         }
 
-        public void KeyPressed()
+        public static Actions GetAction(Actions source)
         {
-            if (true)
+            Actions userEvent = Actions.NoDirection;
+
+            if (source.HasFlag(Actions.UpMove))
             {
-
+                userEvent = Actions.UpMove;
             }
-        }
+            if (source.HasFlag(Actions.DownMove))
+            {
+                userEvent |= Actions.DownMove;
+            }
+            if (source.HasFlag(Actions.LeftMove))
+            {
+                userEvent |= Actions.LeftMove;
+            }
+            if (source.HasFlag(Actions.RightMove))
+            {
+                userEvent |= Actions.RightMove;
+            }
 
-        public void KeyReleased()
-        {
-
+            return userEvent;
         }
     }
 }

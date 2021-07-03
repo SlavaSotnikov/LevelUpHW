@@ -5,8 +5,8 @@ namespace MoveShip
     {
         public Fly[] enemyFly;
 
-        public int methodCounterPrintSwarm;
-        public int methodCounterProduceFly;
+        public uint methodCounterPrintSwarm;
+        public uint methodCounterProduceFly;
         public uint speed;
         public int countOfFly;
     }

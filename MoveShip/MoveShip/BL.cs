@@ -21,10 +21,7 @@ namespace MoveShip
         const byte LEFT_SHIFT = 2;   // This shift tunes the Left bullet. 
         const byte RIGHT_SHIFT = 6;   // This shift tunes the Right bullet. 
 
-        const byte TOP_BORDER = 38;
-        const byte BOTTOM_BORDER = 39;
-        const byte LEFT_BORDER = 30;
-        const byte RIGHT_BORDER = 83;
+        const byte HITS = 6;
 
         #endregion
 
@@ -40,7 +37,7 @@ namespace MoveShip
         {
             switch (userAction)
             {
-                case Actions.Left:
+                case Actions.LeftMove:
                     --ship.сoordinateX;
                     if (ship.сoordinateX <= borders.left)
                     {
@@ -48,7 +45,7 @@ namespace MoveShip
                     }
                     break;
 
-                case Actions.Right:
+                case Actions.RightMove:
                     ++ship.сoordinateX;
                     if (ship.сoordinateX >= borders.right)
                     {
@@ -56,7 +53,7 @@ namespace MoveShip
                     }
                     break;
 
-                case Actions.Up:
+                case Actions.UpMove:
                     --ship.сoordinateY;
                     if (ship.сoordinateY <= borders.top)
                     {
@@ -64,7 +61,7 @@ namespace MoveShip
                     }
                     break;
 
-                case Actions.Down:
+                case Actions.DownMove:
                     ++ship.сoordinateY;
                     if (ship.сoordinateY >= borders.bottom)
                     {
@@ -72,7 +69,7 @@ namespace MoveShip
                     }
                     break;
 
-                case Actions.Spacebar:
+                case Actions.Shooting:
                     Shooting(ref shipMag, ref ship);
                     break;
 
@@ -89,13 +86,13 @@ namespace MoveShip
             {
                 mag = new Shot[capacity],
                 countOfShots = 0,
-                methodCounterPrintShot = 0
+                methodCounterPrintShot = 0,
             };
 
             return clip;
         }
 
-        public static void AddShotToMag(ref Cartridge source, ref Spacecraft ship, Shot left, Shot right, byte count=0)
+        public static void AddShotToMag(ref Cartridge source, Shot left, Shot right)
         {
             if (source.countOfShots < source.mag.Length)
             {
@@ -107,18 +104,22 @@ namespace MoveShip
             }
         }
 
-        public static void CleanMag(ref Cartridge source, int i)
+        public static void CleanMag(ref Cartridge source)
         {
-            if (!source.mag[i].active)
+            for (int i = 0; i < source.countOfShots; i++)
             {
-                for (int j = i; j < source.countOfShots - 1; j++)
+                if (source.mag[i].counter % source.mag[i].speed == 0)
                 {
-                    source.mag[j] = source.mag[j + 1];
+                    while (!source.mag[i].active && source.countOfShots > 0)
+                    {
+                        for (int j = i; j < source.countOfShots - 1; j++)
+                        {
+                            source.mag[j] = source.mag[j + 1];
+                        }
 
-                    break;
+                        --source.countOfShots;
+                    }
                 }
-
-                --source.countOfShots;
             }
         }
 
@@ -166,7 +167,7 @@ namespace MoveShip
             Shot left = CreateLeftShot(ref ship);
             Shot right = CreateRightShot(ref ship);
 
-            AddShotToMag(ref shipMag, ref ship, left, right);
+            AddShotToMag(ref shipMag, left, right);
         }
 
         #endregion
@@ -180,7 +181,7 @@ namespace MoveShip
                 enemyFly = new Fly[capacity],
                 countOfFly = 0,
                 methodCounterPrintSwarm = 0,
-                speed = 400000
+                speed = 350000
             };
 
             return enemies;
@@ -190,13 +191,13 @@ namespace MoveShip
         {
             Fly destination = new Fly()
             {
-                coordinateX = source.coordinateX,
-                coordinateY = source.coordinateY,
+                coordinateX = BL_Random.GetCoordinateX(),
+                coordinateY = 1,
                 oldCoordinateX = source.oldCoordinateX,
                 oldCoordinateY = source.oldCoordinateY,
                 active = source.active,
                 counter = source.counter,
-                speed = source.speed,
+                speed = BL_Random.GetFlySpeed(),
                 view = (string[])source.view.Clone()
             };
 
@@ -213,22 +214,20 @@ namespace MoveShip
                 oldCoordinateY = 2 - 1,
                 view = UI.fly,
                 active = true,
-                speed = BL_Random.GetSpeed(),
+                speed = BL_Random.GetFlySpeed(),
                 counter = 0
             };
 
             return enemy;
         }
 
-        public static void ProduceEnemies(ref Swarm enemies)
+        public static void ProduceEnemies(ref Swarm enemies, ref Fly enemy)
         {
             ++enemies.methodCounterProduceFly;
 
-            if (enemies.methodCounterProduceFly == enemies.speed)
+            if (enemies.methodCounterProduceFly % enemies.speed == 0)
             {
                 enemies.methodCounterProduceFly = RESET;
-
-                Fly enemy = CreateFly();
 
                 AddFlyToSwarm(ref enemies, ref enemy);
             }
@@ -241,32 +240,23 @@ namespace MoveShip
                 source.enemyFly[source.countOfFly] = GetFullCopy(enemy);
                 ++source.countOfFly;
             }
-            else
-            {
-                for (int i = 0; i < source.countOfFly; i++)
-                {
-                    if (!source.enemyFly[i].active)
-                    {
-                        source.enemyFly[i] = GetFullCopy(enemy);
-
-                        break;
-                    }
-                }
-            }
         }
 
         public static void CleanSwarm(ref Swarm source)
         {
             for (int i = 0; i < source.countOfFly - 1; i++)
             {
-                if (!source.enemyFly[i].active)
+                if (source.enemyFly[i].counter % source.enemyFly[i].speed == 0)
                 {
-                    for (int j = i; j < source.countOfFly - 1; j++)
+                    if (!source.enemyFly[i].active)
                     {
-                        source.enemyFly[j] = source.enemyFly[j + 1];
-                    }
+                        for (int j = i; j < source.countOfFly - 1; j++)
+                        {
+                            source.enemyFly[j] = source.enemyFly[j + 1];
+                        }
 
-                    --source.countOfFly;
+                        --source.countOfFly;
+                    }
                 }
             }
         }
@@ -295,52 +285,75 @@ namespace MoveShip
             enemy.coordinateY += STEP;
         }
 
-        public static void CheckAllObjects(ref Cartridge source, ref Swarm enemies, GameField borders, Display battle)
+        public static void CheckAllObjects(ref Cartridge source, ref Swarm enemies, ref Display battle, GameField borders)
+        {
+            CheckShot(ref source, borders);
+
+            CheckFly(ref enemies, ref battle, borders);
+
+            CheckShotAndFly(ref enemies, ref source, ref battle);
+        }
+
+        public static void CheckShotAndFly(ref Swarm enemies, ref Cartridge source, ref Display battle)
+        {
+            for (int i = 0; i < enemies.countOfFly; i++)
+            {
+                for (int j = 0; j < source.countOfShots; j++)
+                {
+                    if ((enemies.enemyFly[i].coordinateY == source.mag[j].coordinateY) && // TODO: Add method
+                            (enemies.enemyFly[i].coordinateX < source.mag[j].coordinateX) &&
+                                (source.mag[j].coordinateX < enemies.enemyFly[i].coordinateX + 6))
+                    {
+                        if (source.mag[j].active)
+                        {
+                            source.mag[j].active = false;
+                            enemies.enemyFly[i].hit += 1;
+
+                            if (enemies.enemyFly[i].hit >= HITS)
+                            {
+                                enemies.enemyFly[i].active = false;
+                                battle.killed += 1;
+                                //battle.enemies -= 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void CheckShot(ref Cartridge source, GameField borders)
         {
             for (int i = 0; i < source.countOfShots; i++)
             {
-                CheckShot(ref source.mag[i], borders);
+                if (source.mag[i].coordinateY <= borders.top)
+                {
+                    source.mag[i].active = false;
+                }
             }
+            
+        }
 
+        public static void CheckFly(ref Swarm enemies, ref Display battle, GameField borders)
+        {
             for (int i = 0; i < enemies.countOfFly; i++)
             {
-                CheckFly(ref enemies.enemyFly[i], ref enemies, borders);
+                if (enemies.enemyFly[i].coordinateY >= borders.bottom + 2) // TODO: Fix +2
+                {
+                    enemies.enemyFly[i].active = false;
+
+                    if (enemies.enemyFly[i].counter % enemies.enemyFly[i].speed == 0)
+                    {
+                        battle.skip += 1;
+                    }
+                }
             }
         }
 
-        public static void CheckShotAndFly(ref Shot bullet, ref Fly enemy)
+        public static void CleanDataStructures(ref Swarm enemies, ref Cartridge shipMag)
         {
-            if (bullet.coordinateY == enemy.coordinateY)
-            {
-                bullet.active = false;
-                enemy.active = false;
-            }
-        }
+            CleanSwarm(ref enemies);
 
-        public static void CheckShot(ref Shot bullet, GameField borders)
-        {
-            if (bullet.coordinateY <= borders.top)
-            {
-                bullet.active = false;
-            }
-
-            //if (bullet.coordinateY == enemy.coordinateY)
-            //{
-            //    bullet.active = false;
-            //}
-        }
-
-        public static void CheckFly(ref Fly enemy, ref Swarm enemies, GameField borders)
-        {
-            if (enemy.coordinateY >= borders.bottom + 2) // TODO Fix +2
-            {
-                enemy.active = false;
-            }
-
-            //if (enemy.coordinateY == bullet.coordinateY)
-            //{
-            //    enemy.active = false;
-            //}
+            CleanMag(ref shipMag);
         }
     }
 }
