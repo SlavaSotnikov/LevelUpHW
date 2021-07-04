@@ -13,5 +13,6 @@ namespace MoveShip
         public bool active;
         public string[] view;
         public byte hit;
+        public int wide;
     }
 }

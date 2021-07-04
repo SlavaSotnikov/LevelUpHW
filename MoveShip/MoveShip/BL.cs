@@ -215,7 +215,8 @@ namespace MoveShip
                 view = UI.fly,
                 active = true,
                 speed = BL_Random.GetFlySpeed(),
-                counter = 0
+                counter = 0,
+                wide = 6
             };
 
             return enemy;
@@ -291,18 +292,16 @@ namespace MoveShip
 
             CheckFly(ref enemies, ref battle, borders);
 
-            CheckShotAndFly(ref enemies, ref source, ref battle);
+            ShotAndFlyProcessing(ref enemies, ref source, ref battle);
         }
 
-        public static void CheckShotAndFly(ref Swarm enemies, ref Cartridge source, ref Display battle)
+        public static void ShotAndFlyProcessing(ref Swarm enemies, ref Cartridge source, ref Display battle)
         {
             for (int i = 0; i < enemies.countOfFly; i++)
             {
                 for (int j = 0; j < source.countOfShots; j++)
                 {
-                    if ((enemies.enemyFly[i].coordinateY == source.mag[j].coordinateY) && // TODO: Add method
-                            (enemies.enemyFly[i].coordinateX < source.mag[j].coordinateX) &&
-                                (source.mag[j].coordinateX < enemies.enemyFly[i].coordinateX + 6))
+                    if (IsHit(enemies.enemyFly[i], source.mag[i]))
                     {
                         if (source.mag[j].active)
                         {
@@ -319,6 +318,20 @@ namespace MoveShip
                     }
                 }
             }
+        }
+
+        public static bool IsHit(Fly enemy, Shot bullet)
+        {
+            bool result = false;
+
+            if ((enemy.coordinateY == bullet.coordinateY) && 
+                    (enemy.coordinateX < bullet.coordinateX) && 
+                        (bullet.coordinateX < enemy.coordinateX + enemy.wide))
+            {
+                result = true;
+            }
+
+            return result;
         }
 
         public static void CheckShot(ref Cartridge source, GameField borders)

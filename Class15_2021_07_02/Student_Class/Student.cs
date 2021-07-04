@@ -37,10 +37,5 @@ namespace Student_Class
             _studNum = studNum;
             _enterDate = enterDate;
         }
-
-        public Student()
-        {
-
-        }
     }
 }

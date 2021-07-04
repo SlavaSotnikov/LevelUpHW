@@ -4,8 +4,10 @@ namespace Student_Class
 {
     class Program
     {
-        public static Student ChooseEnter(ConsoleKey key, Student person)
+        public static Student ChooseEnter(ConsoleKey key)
         {
+            Student person = null;
+
             switch (key)
             {
                 case ConsoleKey.D1:
@@ -76,9 +78,7 @@ namespace Student_Class
 
         static void Main()
         {
-            Student person = new Student();
-
-            person = ChooseEnter(UI.ChooseMenu(), person);
+            Student person = ChooseEnter(UI.ChooseMenu());
 
             UI.PrintStudent(person);
 
