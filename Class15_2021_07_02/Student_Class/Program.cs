@@ -44,16 +44,16 @@ namespace Student_Class
                     switch (alt)
                     {
                         case Alter.name:
-                            person._name = UI.GetName("New Name: ");
+                            person.SetName(UI.GetName("New Name: "));
                             break;
                         case Alter.lastname:
-                            person._lastName = UI.GetLastName("New Last Name: ");
+                            person.SetLastName(UI.GetLastName("New Last Name: "));
                             break;
                         case Alter.id:
-                            person._studNum = UI.GetStudNumber("New Id: ");
+                            person.SetStudNumber(UI.GetStudNumber("New Id: "));
                             break;
                         case Alter.enterdate:
-                            person._enterDate = UI.GetEnterDate("Enter date: ");
+                            person.SetEnterDate(UI.GetEnterDate("Enter date: "));
                             break;
                         case Alter.year:
                             UI.PrintYear(person);

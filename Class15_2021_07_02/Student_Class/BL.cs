@@ -44,13 +44,13 @@ namespace Student_Class
 
         public static int GetYear(Student person)
         {
-            return DateTime.Today.Year - person._enterDate.Year + 1;
+            return DateTime.Today.Year - person.GetEnterDate().Year + 1;
         }
 
         public static string GetShortName(Student person)
         {
-            StringBuilder shortName = new StringBuilder(person._lastName + " ");
-            shortName.Append(person._name[0] + ".");
+            StringBuilder shortName = new StringBuilder(person.GetLastName() + " ");
+            shortName.Append(person.GetName()[0] + ".");
 
             return shortName.ToString();
         }
