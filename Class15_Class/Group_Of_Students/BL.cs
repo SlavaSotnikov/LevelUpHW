@@ -4,10 +4,8 @@ namespace Group_Of_Students
 {
     class BL
     {
-        public static Group CreateGroup()
+        public static Group CreateGroup(int students)
         {
-            int students = 10;
-
             Group one = new Group(students);
 
             return one;

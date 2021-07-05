@@ -14,6 +14,7 @@ namespace Group_Of_Students
                 {
                     case ConsoleKey.D1:
                         // Create by hand.
+                        myGroup.AddStudent(UI.CreateCustomStudent());
                         break;
                     case ConsoleKey.D2:
                         // Create by random.
@@ -30,7 +31,7 @@ namespace Group_Of_Students
 
         static void Main()
         {
-            Group myGroup = BL.CreateGroup();
+            Group myGroup = BL.CreateGroup(10);
 
             ChooseEnter(UI.ChooseMenu(), myGroup);
 

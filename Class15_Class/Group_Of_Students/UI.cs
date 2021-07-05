@@ -4,6 +4,60 @@ namespace Group_Of_Students
 {
     class UI
     {
+        public static string GetName(string text = "Enter student's name: ")
+        {
+            Console.Write(text);
+            string name = Console.ReadLine();
+
+            return name;
+        }
+
+        public static string GetLastName(string text = "Last Name: ")
+        {
+            Console.Write(text);
+            string lastName = Console.ReadLine();
+
+            return lastName;
+        }
+
+        public static uint GetId(string text = "Id: ")
+        {
+            Console.Write(text);
+            uint number = uint.Parse(Console.ReadLine());
+
+            return number;
+        }
+
+        public static DateTime GetDateOfEnter(string text = "Date of entering: ")
+        {
+            Console.Write(text);
+            DateTime.TryParse(Console.ReadLine(), out DateTime result);
+
+            return result;
+        }
+
+        public static Student CreateCustomStudent()
+        {
+            int capacity = 10; // Amount of marks.
+
+            Student person = new Student(GetName(), GetLastName(),
+                    GetId(), GetDateOfEnter(), capacity);
+
+            person.SetMarks(InitCustomMarks(person.GetMarks()));
+
+            return person;
+        }
+
+        public static byte[] InitCustomMarks(byte[] input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                input[i] = byte.Parse(Console.ReadLine());
+            }
+
+            return input;
+        }
+
         public static ConsoleKey ChooseMenu()
         {
             Console.WriteLine("Would you like to enter a new student's data by hand or use a random one?");
