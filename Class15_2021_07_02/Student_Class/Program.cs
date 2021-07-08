@@ -6,7 +6,7 @@ namespace Student_Class
     {
         public static Student ChooseEnter(ConsoleKey key)
         {
-            Student person = null;
+            Student person = null; // Protect it.
 
             switch (key)
             {

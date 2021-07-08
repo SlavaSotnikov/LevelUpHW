@@ -4,21 +4,24 @@ namespace Group_Of_Students
 {
     class BL
     {
-        public static Group CreateGroup(int students)
+        public static Group CreateGroup() // TODO: Constr
         {
-            Group one = new Group(students);
+            Group one = new Group();
 
             return one;
         }
 
         public static Student CreateRandomStudent()
         {
-           int capacity = 10;
+            string name     = GetRandomName();
+            string lastName = GetRandomLastName();
+            uint Id         = GetRandomStudNumber();
+            string country  = GetCountry();
+            DateTime date   = GetRandomEnterDate();
 
-            Student person = new Student(GetRandomName(), GetRandomLastName(),
-                    GetRandomStudNumber(), GetRandomEnterDate(), capacity);
+            Student person = new Student(name, lastName, Id, country, date);
 
-            person.SetMarks(InitRandomMarks(person.GetMarks()));
+            person.InitRandomMarks();
 
             return person;
         }
@@ -52,14 +55,11 @@ namespace Group_Of_Students
             return start.AddDays(BL_Random.rnd.Next(range));
         }
 
-        public static byte[] InitRandomMarks(byte[] input)
-        {
-            for (int i = 0; i < input.Length; i++)
-            {
-                input[i] = (byte)BL_Random.rnd.Next(2, 6);
-            }
+        
 
-            return input;
+        public static string GetCountry()
+        {
+            return "Ukraine";
         }
     }
 }

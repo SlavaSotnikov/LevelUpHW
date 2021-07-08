@@ -31,7 +31,7 @@ namespace Group_Of_Students
 
         static void Main()
         {
-            Group myGroup = BL.CreateGroup(10);
+            Group myGroup = BL.CreateGroup();
 
             ChooseEnter(UI.ChooseMenu(), myGroup);
 
