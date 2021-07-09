@@ -1,64 +1,82 @@
 ﻿using System;
 
-namespace Group_Of_Students
+namespace GroupOfStudents
 {
     class UI
     {
-        public static string GetText(string statement)
+        public static string GetConsoleData(string statement)
         {
             Console.Write(statement);
-            string userText = Console.ReadLine();
+            string userData = Console.ReadLine();
+
+            return userData;
+        }
+
+        public static string CheckText(string input)
+        {
             string validText = string.Empty;
 
-            if (!Validator.IsValidateText(userText))
+            if (Validator.IsValidText(input))
             {
-                Console.WriteLine("Inappropriate Text! Try again.");
-                GetText(statement);
+                validText = input;
             }
             else
             {
-                validText = userText;
+                input = GetConsoleData("Inappropriate Data!Try again.");
+
+                validText = CheckText(input);
             }
 
             return validText;
         }
 
-        public static string GetNumber(string statement)
+        public static string CheckNumber(string input)
         {
-            Console.Write(statement);
-            string userText = Console.ReadLine();
-            string validText = string.Empty;
+            string validNumber = string.Empty;
 
-            if (!Validator.IsValidateNumber(userText))
+            if (Validator.IsValidNumber(input))
             {
-                Console.WriteLine("Inappropriate Text! Try again.");
-                GetText(statement);
+                validNumber = input;
             }
             else
             {
-                validText = userText;
+                input = GetConsoleData("Inappropriate Data!Try again.");
+
+                validNumber = CheckNumber(input);
             }
 
-            return validText;
+            return validNumber;
         }
 
-        public static string ValidatorCountry(string text)
+        public static string CheckCountry(string input)
         {
-            if (!Student.IsValidateCountry(text))
+            string validCountry = string.Empty;
+
+            if (Student.IsValidateCountry(input))
             {
-                Console.WriteLine("Ukrainian only! Try again.");
+                validCountry = input;
+            }
+            else
+            {
+                input = GetConsoleData("Ukrainian only! Try again.");
+
+                validCountry = CheckCountry(input);
             }
 
-            return text;
+            return validCountry;
         }
 
         public static Student CreateCustomStudent()
         {
-            string name     = GetText("Enter student's name: ");
-            string lastName = GetText("Last Name: ");
-            uint.TryParse(GetNumber("Id: "), out uint Id);
-            string country  = ValidatorCountry(GetText("Enter country: "));
-            DateTime.TryParse(GetNumber("Date of entering: "), out DateTime date);
+            string name      = CheckText(GetConsoleData("Enter student's name: "));
+            string lastName  = CheckText(GetConsoleData("Last Name: "));
+            string country   = CheckCountry(GetConsoleData("Enter Country: "));
+
+            string studentId = CheckNumber(GetConsoleData("Id: "));
+            uint.TryParse(studentId, out uint Id);
+
+            string enterDate = CheckNumber(GetConsoleData("Date of entering: "));
+            DateTime.TryParse(enterDate, out DateTime date);
 
             Student person = new Student(name, lastName, Id, country, date);
 
@@ -70,21 +88,23 @@ namespace Group_Of_Students
         public static void InitCustomMarks(Student person)
         {
             byte index = 0;
-            byte result = 1;
+            byte mark;
+            string result = string.Empty;
 
             Console.Write("Enter marks: ");
 
             do
             {
-                result = byte.Parse(Console.ReadLine());
+                result = CheckNumber(Console.ReadLine());
+                byte.TryParse(result, out mark);
 
-                if (result > 0)
+                if (mark > 0)
                 {
-                    person.AddMark(index, result);
+                    person.AddMark(index, mark);
                     ++index; 
                 }
 
-            } while (result != 0);
+            } while (mark != 0);
         }
 
         public static ConsoleKey ChooseMenu()
@@ -110,11 +130,25 @@ namespace Group_Of_Students
             return key;
         }
 
-        public static void PrintGroup(Group group)
+        public static void PrintFaculty(Department source)
         {
             Console.Clear();
 
-            for (int i = 0; i < group.GetCountOfStudents(); i++)
+            byte count = 0;
+            for (int i = 0; i < source.AmountOfGroups; i++)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Group {0}", ++count);
+                Console.ResetColor();
+
+                PrintGroup(source.GetGroupByPosition(i));
+            }
+        }
+
+        public static void PrintGroup(Group group)
+        {
+            for (int i = 0; i < group.AmountOfStudents; i++)
             {
                 ShowStudent(group.GetStudentByPosition(i));
             }
@@ -122,8 +156,8 @@ namespace Group_Of_Students
 
         private static void ShowStudent(Student person)
         {
-            Console.Write($"\nStudent: {person.GetName()} {person.GetLastName()} \nId: {person.GetStudNumber()}" +
-                    $"\nStudent since: {person.GetEnterDate().ToShortDateString()} \nCountry: {person.Country}\nMarks: ");
+            Console.Write($"\nStudent: {person.Name} {person.LastName} \nId: {person.StudNumber}" +
+                    $"\nStudent since: {person.EnterDate.ToShortDateString()} \nCountry: {person.Country}\nMarks: ");
             PrintMarks(person);
             Console.WriteLine();
             Console.WriteLine(("").PadRight(26, '-'));
@@ -131,7 +165,7 @@ namespace Group_Of_Students
 
         private static void PrintMarks(Student person)
         {
-            for (int i = 0; i < person.GetAmountOfMarks(); i++)
+            for (int i = 0; i < person.AmountOfMarks; i++)
             {
                 Console.Write("{0} ", person.GetMarkByPosition(i));
             }

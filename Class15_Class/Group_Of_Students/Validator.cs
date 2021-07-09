@@ -1,9 +1,11 @@
 ﻿
-namespace Group_Of_Students
+namespace GroupOfStudents
 {
     class Validator
     {
-        public static bool IsValidateText(string input)
+        #region Validators
+
+        public static bool IsValidText(string input)
         {
             bool result = true;
 
@@ -19,7 +21,7 @@ namespace Group_Of_Students
             return result;
         }
 
-        public static bool IsValidateNumber(string input)
+        public static bool IsValidNumber(string input)
         {
             bool result = true;
 
@@ -34,5 +36,7 @@ namespace Group_Of_Students
 
             return result;
         }
+
+        #endregion
     }
 }

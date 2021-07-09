@@ -35,7 +35,7 @@ namespace Group_Of_Students
             }
         }
 
-        public static void PrintGroup(Department source, int num = 0)
+        public static void PrintGroup(Department source)
         {
             Console.Clear();
 
@@ -49,8 +49,6 @@ namespace Group_Of_Students
 
                 PrintStudent(source.groups[i]);
             }
-
-
         }
 
         private static void ShowStudent(Student person)

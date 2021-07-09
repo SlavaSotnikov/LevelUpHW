@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Group_Of_Students
+namespace GroupOfStudents
 {
     class BL_Random
     {

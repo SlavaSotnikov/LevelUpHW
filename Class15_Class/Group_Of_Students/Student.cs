@@ -1,29 +1,56 @@
 ﻿using System;
 using System.Text;
 
-namespace Group_Of_Students
+namespace GroupOfStudents
 {
     class Student
     {
+        #region Constants
+
         private const byte MARK_AMOUNT = 10;
         private const byte DELETED_MARK = 1;
+
+        #endregion
+
+        #region Pravate Data
 
         private string _name;
         private string _lastName;
         private uint _studNum;
-        private DateTime _enterDate;
-        private byte[] _marks;
-        private int _countOfMarks;
-
         private string _country;
+        private DateTime _enterDate;
+        private int _countOfMarks;
+        private byte[] _marks;
 
-        public string Country
+        #endregion
+
+        #region Properties
+
+        public string Name
         {
-            get 
-            { 
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public string LastName
+        {
+            get { return _lastName; }
+            set { _lastName = value; }
+        }
+
+        public uint StudNumber
+        {
+            get { return _studNum; }
+            set { _studNum = value; }
+        }
+
+        public string Country // There is a check.
+        {
+            get
+            {
                 return _country;
             }
-            set 
+            set
             {
                 if (!IsValidateCountry(_country))
                 {
@@ -34,64 +61,31 @@ namespace Group_Of_Students
             }
         }
 
-        public static bool IsValidateCountry(string country)
+        public DateTime EnterDate
         {
-            bool result = true;
-
-            if (country.ToLower() != "ukraine" && country.ToLower() != "ukr")
-            {
-                result = false;
-            }
-
-            return result;
+            get { return _enterDate; }
+            set { _enterDate = value; }
         }
 
-        public int GetAmountOfMarks()
+        public int AmountOfMarks
         {
-            return _countOfMarks;
+            get { return _countOfMarks; }
         }
 
-        public void SetName(string name)
+        #endregion
+
+        #region Accessors
+       
+        public byte GetMarkByPosition(int index)
         {
-            _name = name;
+            return _marks[index];
         }
 
-        public string GetName()
-        {
-            return _name;
-        }
+        #endregion
 
-        public void SetLastName(string lastName)
-        {
-            _name = lastName;
-        }
+        #region CRUD Operations
 
-        public string GetLastName()
-        {
-            return _lastName;
-        }
-
-        public void SetStudNumber(uint studNumber)
-        {
-            _studNum = studNumber;
-        }
-
-        public uint GetStudNumber()
-        {
-            return _studNum;
-        }
-
-        public void SetEnterDate(DateTime date)
-        {
-            _enterDate = date;
-        }
-
-        public DateTime GetEnterDate()
-        {
-            return _enterDate;
-        }
-
-        public void AddMark(int index, byte mark)
+        public void AddMark(int index, byte mark) // Ask a question.
         {
             if (_countOfMarks >= _marks.Length)
             {
@@ -100,16 +94,6 @@ namespace Group_Of_Students
 
             _marks[index] = mark;
             ++_countOfMarks;
-        }
-
-        public void InitRandomMarks()
-        {
-            for (int i = 0; i < MARK_AMOUNT; i++)
-            {
-                byte mark = (byte)BL_Random.rnd.Next(2, 6);
-
-                AddMark(i, mark);
-            }
         }
 
         public void EditMark(int index, byte newMark)
@@ -139,26 +123,25 @@ namespace Group_Of_Students
             _countOfMarks -= DELETED_MARK;
         }
 
-        public byte GetMarkByPosition(int index)
-        {
-            return _marks[index];
-        }
+        #endregion
+
+        #region Constructors
 
         public Student(string name, string lastName, uint studNum, string country,
-                DateTime enterDate, int capacity=MARK_AMOUNT)
+                DateTime enterDate, int capacity = MARK_AMOUNT)
         {
-            _name = name;
+            Name = name;
             _lastName = lastName;
             _studNum = studNum;
             _country = country;
             _enterDate = enterDate;
             _countOfMarks = 0;
-            _marks = new byte [capacity];
+            _marks = new byte[capacity];
         }
 
         public Student(Student source)
         {
-            _name = source._name;
+            Name = source.Name;
             _lastName = source._lastName;
             _studNum = source._studNum;
             _country = source._country;
@@ -167,7 +150,33 @@ namespace Group_Of_Students
             _marks = GetFullCopy(source._marks);    // Clone?
         }
 
-        public static byte[] GetFullCopy(byte[] source)
+        #endregion
+
+        #region Utilits
+
+        public static bool IsValidateCountry(string country)
+        {
+            bool result = true;
+
+            if (country.ToLower() != "ukraine" && country.ToLower() != "ukr")
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        public void InitRandomMarks()
+        {
+            for (int i = 0; i < MARK_AMOUNT; i++)
+            {
+                byte mark = (byte)BL_Random.rnd.Next(2, 6);
+
+                AddMark(i, mark);
+            }
+        }
+
+        public static byte[] GetFullCopy(byte[] source) // Ask a question.
         {
             byte[] destination = new byte[source.Length];
 
@@ -176,25 +185,26 @@ namespace Group_Of_Students
             return destination;
         }
 
-        // Grade Point Average Method.
-        public int GetGPA()
+        public double GetGPA() // Grade Point Average Method.
         {
-            int gpa = 0;
+            double gpa = 0;
 
-            for (int i = 0; i < _marks.Length; i++)
+            for (int i = 0; i < _countOfMarks; i++)
             {
                 gpa += _marks[i];
             }
 
-            return gpa;
+            return gpa / _countOfMarks;
         }
 
         public string GetShortName()
         {
             StringBuilder shortName = new StringBuilder(_lastName + " ");
-            shortName.Append(_name[0] + ".");
+            shortName.Append(Name[0] + ".");
 
             return shortName.ToString();
         }
+
+        #endregion
     }
 }

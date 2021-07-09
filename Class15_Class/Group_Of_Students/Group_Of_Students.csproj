@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BL.cs" />
     <Compile Include="BL_Random.cs" />
+    <Compile Include="Department.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

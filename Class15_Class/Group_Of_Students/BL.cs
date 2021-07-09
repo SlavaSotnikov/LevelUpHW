@@ -1,16 +1,9 @@
 ﻿using System;
 
-namespace Group_Of_Students
+namespace GroupOfStudents
 {
     class BL
     {
-        public static Group CreateGroup() // TODO: Constr
-        {
-            Group one = new Group();
-
-            return one;
-        }
-
         public static Student CreateRandomStudent()
         {
             string name     = GetRandomName();
@@ -54,8 +47,6 @@ namespace Group_Of_Students
 
             return start.AddDays(BL_Random.rnd.Next(range));
         }
-
-        
 
         public static string GetCountry()
         {

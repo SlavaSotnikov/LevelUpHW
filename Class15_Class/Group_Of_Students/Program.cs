@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Group_Of_Students
+namespace GroupOfStudents
 {
     class Program
     {
-        public static void ChooseEnter(ConsoleKey key, Group myGroup, int count = 0)
+        public static void ChooseEnter(ConsoleKey key, Group myGroup, Department faculty, int count = 0)
         {
             do
             {
@@ -20,6 +20,9 @@ namespace Group_Of_Students
                         // Create by random.
                         myGroup.AddStudent(BL.CreateRandomStudent());
                         break;
+                    case ConsoleKey.D3:
+                        faculty.AddGroup(myGroup);
+                        break;
                     default:
                         break;
                 }
@@ -31,11 +34,20 @@ namespace Group_Of_Students
 
         static void Main()
         {
-            Group myGroup = BL.CreateGroup();
+            Department faculty = new Department();
 
-            ChooseEnter(UI.ChooseMenu(), myGroup);
+            Group myGroup = new Group();
+            ChooseEnter(UI.ChooseMenu(), myGroup, faculty);
 
-            UI.PrintGroup(myGroup);
+            Group secondGroup = new Group();
+            ChooseEnter(UI.ChooseMenu(), secondGroup, faculty);
+
+            Group thirdGroup = new Group();
+            ChooseEnter(UI.ChooseMenu(), thirdGroup, faculty);
+
+            //UI.PrintGroup(myGroup);
+
+            UI.PrintFaculty(faculty);
 
             Console.ReadKey();
         }

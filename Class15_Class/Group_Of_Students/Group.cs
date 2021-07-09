@@ -1,11 +1,15 @@
 ﻿using System;
 
-namespace Group_Of_Students
+namespace GroupOfStudents
 {
     class Group
     {
+        #region Constants
+
         private const byte STUDENTS_AMOUNT = 10;
         private const byte DELETED_STUDENT = 1;
+
+        #endregion
 
         #region Private Data
 
@@ -14,12 +18,16 @@ namespace Group_Of_Students
 
         #endregion
 
-        #region Accessors
+        #region Properties
 
-        public int GetCountOfStudents()
+        public int AmountOfStudents
         {
-            return _countOfStudents;
+            get { return _countOfStudents; }
         }
+
+        #endregion
+
+        #region Accessors
 
         public Student GetStudentByPosition(int index)
         {
@@ -70,32 +78,44 @@ namespace Group_Of_Students
 
         #endregion
 
-        #region Utilits
-
-        public int GetGPA()
-        {
-            int gpa = 0;
-
-            for (int i = 0; i < _countOfStudents - 1; i++)
-            {
-                for (int j = 0; j < _students[i].GetAmountOfMarks(); j++)
-                {
-                    gpa += _students[i].GetMarkByPosition(j);
-                }
-            }
-
-            return gpa;
-        } 
-
-        #endregion
-
         #region Constructors
 
         public Group(int capacity=STUDENTS_AMOUNT)
         {
             _students = new Student[capacity];
             _countOfStudents = 0;
-        } 
+        }
+
+        public Group(Group source)
+        {
+            _countOfStudents = source._countOfStudents;
+            _students = GetFullCopy(source._students);
+        }
+
+        #endregion
+
+        #region Utilits
+
+        public double GetGPA() // Grade Point Average.
+        {
+            double gpa = 0;
+
+            for (int i = 0; i < _countOfStudents; i++)
+            {
+                gpa += _students[i].GetGPA();
+            }
+
+            return gpa / _countOfStudents;
+        }
+
+        private Student[] GetFullCopy(Student[] source)
+        {
+            Student[] destination = new Student[source.Length];
+
+            Array.Copy(source, destination, source.Length);
+
+            return destination;
+        }
 
         #endregion
     }
