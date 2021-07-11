@@ -1,7 +1,7 @@
 ﻿using Group_Of_Students;
 using System;
 
-namespace GroupOfStudents
+namespace Group_Of_Students
 {
     class Program
     {
@@ -48,21 +48,12 @@ namespace GroupOfStudents
 
             //Department facultTwo = new Department(myGroup, secondGroup, thirdGroup);
 
-            int index = firstGroup.SearchByName("Michael");
+            int[] indexes = firstGroup.SearchDuplicateNames("Michael");
 
-            Student our = firstGroup.GetStudentByPosition(index);
-
-            if (firstGroup.LastOperationStatus != OperationStatus.Ok)
+            for (int i = 0; i < indexes.Length; i++)
             {
-                Console.WriteLine("\n{0}", firstGroup.LastOperationStatus.ToString());
+                UI.ShowStudent(firstGroup.GetStudentByPosition(i));
             }
-            else
-            {
-                UI.ShowStudent(our);
-            }
-
-            
-
             
 
             //UI.PrintGroup(myGroup);

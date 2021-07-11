@@ -1,7 +1,6 @@
-﻿using Group_Of_Students;
-using System;
+﻿using System;
 
-namespace GroupOfStudents
+namespace Group_Of_Students
 {
     class Group // TODO: Add search by Name, Id, EnterDate.
     {
@@ -79,7 +78,6 @@ namespace GroupOfStudents
             _countOfStudents -= DELETED_STUDENT;
         }
 
-
         public int SearchByName(string name)
         {
             int result = 0;
@@ -98,9 +96,46 @@ namespace GroupOfStudents
             return result;
         }
 
+        public int[] SearchDuplicateNames(string name)
+        {
+            int count = 0;
+
+            int[] duplicate = new int[0];
+
+            //LastOperationStatus = OperationStatus.Not_Found;
+
+            for (int i = 0; i < _countOfStudents; i++)
+            {
+                if (_students[i].Name == name)
+                {
+                    Array.Resize(ref duplicate, duplicate.Length + 1);
+                    duplicate.SetValue(i, count);
+                    ++count;
+                }
+            }
+
+            return duplicate;
+        }
+
+        public int SearchById(int id)
+        {
+            int result = 0;
+
+            LastOperationStatus = OperationStatus.Not_Found;
+
+            for (int i = 0; i < _countOfStudents; i++)
+            {
+                if (_students[i].StudNumber == id)
+                {
+                    result = i;
+                    LastOperationStatus = OperationStatus.Ok;
+                }
+            }
+
+            return result;
+        }
 
         #endregion
-
 
         #region Constructors 
 

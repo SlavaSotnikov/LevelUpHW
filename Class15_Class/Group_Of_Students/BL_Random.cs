@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GroupOfStudents
+namespace Group_Of_Students
 {
     class BL_Random
     {
@@ -24,12 +24,12 @@ namespace GroupOfStudents
             name[11] = "Harvey";
             name[12] = "Jude";
             name[13] = "Albert";
-            name[14] = "Stanley";
-            name[15] = "Frankie";
-            name[16] = "Gabriel";
-            name[17] = "Ryan";
-            name[18] = "Tyler";
-            name[19] = "Jasper";
+            name[14] = "Michael";//Stanley
+            name[15] = "Michael";//Frankie
+            name[16] = "Michael";//Gabriel
+            name[17] = "Michael";//Ryan
+            name[18] = "Michael";//Tyler
+            name[19] = "Michael";//Jasper
 
             return name[index];
         }

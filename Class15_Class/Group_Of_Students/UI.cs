@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Group_Of_Students;
+using System;
 
-namespace GroupOfStudents
+namespace Group_Of_Students
 {
     class UI
     {
@@ -136,9 +137,16 @@ namespace GroupOfStudents
 
         public static void PrintGroup(Group group)
         {
-            for (int i = 0; i < group.AmountOfStudents; i++)
+            if (group.LastOperationStatus != OperationStatus.Ok)
             {
-                ShowStudent(group.GetStudentByPosition(i));
+                Console.WriteLine("\n{0}", group.LastOperationStatus.ToString());
+            }
+            else
+            {
+                for (int i = 0; i < group.AmountOfStudents; i++)
+                {
+                    ShowStudent(group.GetStudentByPosition(i));
+                }
             }
         }
 

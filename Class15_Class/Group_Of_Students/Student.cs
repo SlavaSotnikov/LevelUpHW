@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace GroupOfStudents
+namespace Group_Of_Students
 {
     class Student
     {

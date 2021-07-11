@@ -1,5 +1,5 @@
 ﻿
-namespace GroupOfStudents
+namespace Group_Of_Students
 {
     class Validator
     {

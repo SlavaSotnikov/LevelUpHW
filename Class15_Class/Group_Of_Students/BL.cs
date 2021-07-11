@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GroupOfStudents
+namespace Group_Of_Students
 {
     class BL
     {
@@ -35,7 +35,7 @@ namespace GroupOfStudents
 
         public static uint GetRandomStudNumber()
         {
-            uint rndStudNum = (uint)BL_Random.rnd.Next(1024, 2049);
+            uint rndStudNum = (uint)BL_Random.rnd.Next(0, 21);
 
             return rndStudNum;
         }
