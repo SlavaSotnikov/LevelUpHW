@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Group_Of_Students;
+using System;
 
 namespace GroupOfStudents
 {
-    class Group
+    class Group // TODO: Add search by Name, Id, EnterDate.
     {
         #region Constants
 
@@ -11,7 +12,7 @@ namespace GroupOfStudents
 
         #endregion
 
-        #region Private Data
+        #region Private Data //TODO: Add Gorup Id. UnicueName property.
 
         private Student[] _students;
         private int _countOfStudents;
@@ -19,6 +20,8 @@ namespace GroupOfStudents
         #endregion
 
         #region Properties
+
+        public OperationStatus LastOperationStatus { get; private set; }
 
         public int AmountOfStudents
         {
@@ -31,7 +34,7 @@ namespace GroupOfStudents
 
         public Student GetStudentByPosition(int index)
         {
-            return _students[index];
+            return new Student(_students[index]);
         }
 
         #endregion
@@ -49,9 +52,9 @@ namespace GroupOfStudents
             ++_countOfStudents;
         } 
 
-        public void EditStudent(Student person, int index)
+        public void EditStudent(Student person, int index) // TODO: Edit by Id.
         {
-            index -= 1; // Adjust index
+            index -= 1; // Adjust index // It's not here! Before call!!
             if (index < 0 || index > _students.Length)
             {
                 return; // Enum error.
@@ -60,7 +63,7 @@ namespace GroupOfStudents
             _students[index] = new Student(person);
         }
 
-        public void DeleteStudent(int index)
+        public void DeleteStudent(int index) // TODO: Delete by Id.
         {
             index -= 1; // Adjust index
             if (index < 0 || index > _students.Length)
@@ -76,11 +79,32 @@ namespace GroupOfStudents
             _countOfStudents -= DELETED_STUDENT;
         }
 
+
+        public int SearchByName(string name)
+        {
+            int result = 0;
+
+            LastOperationStatus = OperationStatus.Not_Found;
+
+            for (int i = 0; i < _countOfStudents; i++)
+            {
+                if (_students[i].Name == name)
+                {
+                    result = i;
+                    LastOperationStatus = OperationStatus.Ok;
+                }
+            }
+
+            return result;
+        }
+
+
         #endregion
 
-        #region Constructors
 
-        public Group(int capacity=STUDENTS_AMOUNT)
+        #region Constructors 
+
+        public Group(int capacity=STUDENTS_AMOUNT) // TODO: From Students[] to Group
         {
             _students = new Student[capacity];
             _countOfStudents = 0;
@@ -88,8 +112,14 @@ namespace GroupOfStudents
 
         public Group(Group source)
         {
-            _countOfStudents = source._countOfStudents;
             _students = GetFullCopy(source._students);
+            _countOfStudents = source._countOfStudents;
+        }
+
+        public Group(Student[] input)
+        {
+            _students = GetFullCopy(input);
+            //_countOfStudents = ???;
         }
 
         #endregion
@@ -112,7 +142,10 @@ namespace GroupOfStudents
         {
             Student[] destination = new Student[source.Length];
 
-            Array.Copy(source, destination, source.Length);
+            for (int i = 0; i < source.Length; i++)
+            {
+                destination[i] = new Student(source[i]);
+            }
 
             return destination;
         }

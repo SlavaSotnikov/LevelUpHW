@@ -37,6 +37,18 @@ namespace GroupOfStudents
             return result;
         }
 
+        public static bool IsValidateCountry(string country)
+        {
+            bool result = true;
+
+            if (country.ToLower() != "ukraine" && country.ToLower() != "ukr")
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
         #endregion
     }
 }

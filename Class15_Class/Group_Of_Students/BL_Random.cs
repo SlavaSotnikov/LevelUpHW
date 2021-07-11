@@ -61,5 +61,23 @@ namespace GroupOfStudents
 
             return lastName[index];
         }
+
+        public static string GetRandomSubject(int index)
+        {
+            string[] subject = new string[10];
+
+            subject[0] = "Algebra";
+            subject[1] = "Geometry";
+            subject[2] = "Statistics";
+            subject[3] = "Trigonometry";
+            subject[4] = "Economics";
+            subject[5] = "Geography";
+            subject[6] = "World History";
+            subject[7] = "Biology";
+            subject[8] = "Chemistry";
+            subject[9] = "Physics";
+
+            return subject[index];
+        }
     }
 }

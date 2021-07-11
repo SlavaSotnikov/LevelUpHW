@@ -89,7 +89,7 @@ namespace Group_Of_Students
             //ChooseEnter(UI.ChooseMenu(), ref third);
             //BL.AddGroup(ref faculty, third);
 
-            //UI.PrintGroup(faculty);
+            UI.PrintGroup(faculty);
 
 
 

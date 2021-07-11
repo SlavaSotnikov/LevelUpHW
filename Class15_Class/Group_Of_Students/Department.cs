@@ -51,7 +51,7 @@ namespace GroupOfStudents
             _groups[index] = new Group(source);
         }
 
-        public void DeleteGroup(int index)
+        public void DeleteGroup(int index) //TODO: Delete by Id. Return Enum error.
         {
             index -= 1; //Adjust index.
             if (index < 0 || index > _groups.Length)
@@ -59,7 +59,7 @@ namespace GroupOfStudents
                 return; // Enum error.
             }
 
-            for (int i = index; i < _countOfGroups - 1; i++)
+            for (int i = index; i < _countOfGroups - 1; i++) // TODO: Use Array.Copy() by index.
             {
                 _groups[i] = _groups[i + 1];
             }
@@ -77,11 +77,22 @@ namespace GroupOfStudents
             _countOfGroups = 0;
         }
 
+        public Department(params Group[] groups)
+        {
+            _groups = new Group[groups.Length];
+            _countOfGroups = groups.Length;
+
+            for (int i = 0; i < _countOfGroups; i++)
+            {
+                _groups[i] = new Group(groups[i]);
+            }
+        }
+
         #endregion
 
         #region Utilits
 
-        public double GetGPA() // Grade Point Average.
+        public double GetGPA() // Grade Point Average. GPA for _groups[i].
         {
             double gpa = 0;
 

@@ -12,15 +12,16 @@ namespace GroupOfStudents
 
         #endregion
 
-        #region Pravate Data
+        #region Private Data
 
         private string _name;
         private string _lastName;
+        private byte _age;
         private uint _studNum;
         private string _country;
         private DateTime _enterDate;
         private int _countOfMarks;
-        private byte[] _marks;
+        private Mark[] _marks;
 
         #endregion
 
@@ -28,14 +29,38 @@ namespace GroupOfStudents
 
         public string Name
         {
-            get { return _name; }
-            set { _name = value; }
+            get 
+            { 
+                return _name; 
+            }
+            set 
+            { 
+                _name = value;
+            }
         }
 
         public string LastName
         {
-            get { return _lastName; }
-            set { _lastName = value; }
+            get
+            { 
+                return _lastName;
+            }
+            set 
+            {
+                _lastName = value; 
+            }
+        }
+
+        public byte Age
+        {
+            get 
+            { 
+                return _age;
+            }
+            set
+            {
+                _age = value;
+            }
         }
 
         public uint StudNumber
@@ -52,11 +77,6 @@ namespace GroupOfStudents
             }
             set
             {
-                if (!IsValidateCountry(_country))
-                {
-                    return;
-                }
-
                 _country = value;
             }
         }
@@ -72,49 +92,43 @@ namespace GroupOfStudents
             get { return _countOfMarks; }
         }
 
+
         #endregion
 
-        #region Accessors
-       
-        public byte GetMarkByPosition(int index)
+        #region Indexers
+
+        public Mark this[int index]
         {
-            return _marks[index];
+            get
+            {
+                return _marks[index]; // Don't need to use new Mark() because of Value Type.
+            }
         }
 
         #endregion
 
         #region CRUD Operations
 
-        public void AddMark(int index, byte mark) // Ask a question.
+        public void AddMark(Mark input) // Ask a question.
         {
             if (_countOfMarks >= _marks.Length)
             {
                 Array.Resize(ref _marks, _marks.Length + (_marks.Length * 2));
             }
 
-            _marks[index] = mark;
+            _marks[_countOfMarks] = GetFullCopy(input);
             ++_countOfMarks;
         }
 
-        public void EditMark(int index, byte newMark)
+        public void DeleteMark(Mark source) // TODO: Delete by Date, Subject.
         {
-            if (index < 0 || index > _marks.Length)
-            {
-                return; // Enum error.
-            }
+            //index -= 1; // Adjust index
+            //if (!IsValidPosition(index))
+            //{
+            //    return; // Enum error.
+            //}
 
-            _marks[index] = newMark;
-        }
-
-        public void DeleteMark(int index, byte deleteMark)
-        {
-            index -= 1; // Adjust index
-            if (index < 0 || index > _marks.Length)
-            {
-                return; // Enum error.
-            }
-
-            for (int i = index; i < _countOfMarks - 1; i++)
+            for (int i = 0/*index*/; i < _countOfMarks - 1; i++)
             {
                 _marks[i] = _marks[i + 1];
             }
@@ -130,59 +144,50 @@ namespace GroupOfStudents
         public Student(string name, string lastName, uint studNum, string country,
                 DateTime enterDate, int capacity = MARK_AMOUNT)
         {
-            Name = name;
+            _name = name;
             _lastName = lastName;
             _studNum = studNum;
             _country = country;
             _enterDate = enterDate;
             _countOfMarks = 0;
-            _marks = new byte[capacity];
+            _marks = new Mark[capacity];
         }
 
-        public Student(Student source)
+        public Student(Student source) //TODO: Add to previos constr
         {
-            Name = source.Name;
+            _name = source._name;
             _lastName = source._lastName;
             _studNum = source._studNum;
             _country = source._country;
             _enterDate = source._enterDate;
             _countOfMarks = source._countOfMarks;
-            _marks = GetFullCopy(source._marks);    // Clone?
+            _marks = (Mark[])source._marks.Clone();    // Clone
         }
 
         #endregion
 
         #region Utilits
 
-        public static bool IsValidateCountry(string country)
+        public static Mark GetFullCopy(Mark source)
         {
-            bool result = true;
-
-            if (country.ToLower() != "ukraine" && country.ToLower() != "ukr")
+            Mark destination = new Mark()
             {
-                result = false;
-            }
+                Subject = source.Subject,
+                Date = source.Date,
+                Value = source.Value
+            };
 
-            return result;
+            return destination;
         }
+
+        
 
         public void InitRandomMarks()
         {
             for (int i = 0; i < MARK_AMOUNT; i++)
             {
-                byte mark = (byte)BL_Random.rnd.Next(2, 6);
-
-                AddMark(i, mark);
+                AddMark(GetRandomMark()); 
             }
-        }
-
-        public static byte[] GetFullCopy(byte[] source) // Ask a question.
-        {
-            byte[] destination = new byte[source.Length];
-
-            Array.Copy(source, destination, source.Length);
-
-            return destination;
         }
 
         public double GetGPA() // Grade Point Average Method.
@@ -191,7 +196,7 @@ namespace GroupOfStudents
 
             for (int i = 0; i < _countOfMarks; i++)
             {
-                gpa += _marks[i];
+                gpa += _marks[i].Value;
             }
 
             return gpa / _countOfMarks;
@@ -203,6 +208,42 @@ namespace GroupOfStudents
             shortName.Append(Name[0] + ".");
 
             return shortName.ToString();
+        }
+
+        public static Mark GetRandomMark()
+        {
+            string subject = BL_Random.GetRandomSubject(BL_Random.rnd.Next(0, 10));
+            DateTime date = BL.GetRandomEnterDate();
+            byte value = (byte)BL_Random.rnd.Next(2, 6);
+
+            Mark rndMark = new Mark(subject, date, value);
+
+            return rndMark;
+        }
+
+        public static DateTime GetRandomMarkDate()
+        {
+            DateTime start = new DateTime(2016, 1, 9);
+            int range = (DateTime.Today - start).Days;
+
+            return start.AddDays(BL_Random.rnd.Next(range));
+        }
+
+        private bool IsValidPosition(int index)
+        {
+            return index < 0 || index > _countOfMarks;
+        }
+
+        public bool IsAge(byte age) // TODO: Ask a question about Member Functions.
+        {
+            bool result = true;
+
+            if (age < 15 || age > 100)
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         #endregion

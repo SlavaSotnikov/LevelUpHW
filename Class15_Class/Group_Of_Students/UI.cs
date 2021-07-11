@@ -12,38 +12,30 @@ namespace GroupOfStudents
             return userData;
         }
 
-        public static string CheckText(string input)
+        public static string GetRightText(string input) // Try cycle, rename.
         {
             string validText = string.Empty;
 
-            if (Validator.IsValidText(input))
-            {
-                validText = input;
-            }
-            else
+            while (!Validator.IsValidText(input))
             {
                 input = GetConsoleData("Inappropriate Data!Try again.");
-
-                validText = CheckText(input);
             }
+
+            validText = input;
 
             return validText;
         }
 
-        public static string CheckNumber(string input)
+        public static string GetRightNumber(string input)
         {
             string validNumber = string.Empty;
 
-            if (Validator.IsValidNumber(input))
-            {
-                validNumber = input;
-            }
-            else
+            if (!Validator.IsValidNumber(input))
             {
                 input = GetConsoleData("Inappropriate Data!Try again.");
-
-                validNumber = CheckNumber(input);
             }
+
+            validNumber = input;
 
             return validNumber;
         }
@@ -52,30 +44,26 @@ namespace GroupOfStudents
         {
             string validCountry = string.Empty;
 
-            if (Student.IsValidateCountry(input))
-            {
-                validCountry = input;
-            }
-            else
+            if (Validator.IsValidateCountry(input))
             {
                 input = GetConsoleData("Ukrainian only! Try again.");
-
-                validCountry = CheckCountry(input);
             }
+
+            validCountry = input;
 
             return validCountry;
         }
 
         public static Student CreateCustomStudent()
         {
-            string name      = CheckText(GetConsoleData("Enter student's name: "));
-            string lastName  = CheckText(GetConsoleData("Last Name: "));
+            string name      = GetRightText(GetConsoleData("Enter student's name: "));
+            string lastName  = GetRightText(GetConsoleData("Last Name: "));
             string country   = CheckCountry(GetConsoleData("Enter Country: "));
 
-            string studentId = CheckNumber(GetConsoleData("Id: "));
+            string studentId = GetRightNumber(GetConsoleData("Id: "));
             uint.TryParse(studentId, out uint Id);
 
-            string enterDate = CheckNumber(GetConsoleData("Date of entering: "));
+            string enterDate = GetRightNumber(GetConsoleData("Date of entering: "));
             DateTime.TryParse(enterDate, out DateTime date);
 
             Student person = new Student(name, lastName, Id, country, date);
@@ -95,12 +83,12 @@ namespace GroupOfStudents
 
             do
             {
-                result = CheckNumber(Console.ReadLine());
+                result = GetRightNumber(Console.ReadLine());
                 byte.TryParse(result, out mark);
 
                 if (mark > 0)
                 {
-                    person.AddMark(index, mark);
+                    //person.AddMark(mark); // TODO: Develop AddMark.
                     ++index; 
                 }
 
@@ -154,12 +142,11 @@ namespace GroupOfStudents
             }
         }
 
-        private static void ShowStudent(Student person)
+        public static void ShowStudent(Student person)
         {
             Console.Write($"\nStudent: {person.Name} {person.LastName} \nId: {person.StudNumber}" +
-                    $"\nStudent since: {person.EnterDate.ToShortDateString()} \nCountry: {person.Country}\nMarks: ");
+                    $"\nStudent since: {person.EnterDate.ToShortDateString()} \nCountry: {person.Country}\n\nMarks: \n");
             PrintMarks(person);
-            Console.WriteLine();
             Console.WriteLine(("").PadRight(26, '-'));
         }
 
@@ -167,8 +154,20 @@ namespace GroupOfStudents
         {
             for (int i = 0; i < person.AmountOfMarks; i++)
             {
-                Console.Write("{0} ", person.GetMarkByPosition(i));
+                PrintMark(person[i]);
             }
+        }
+
+        private static void PrintMark(Mark source)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            Console.Write("{0, -12}", source.Date.ToShortDateString());
+            Console.Write("{0, -14} ", source.Subject);
+            Console.WriteLine("{0}", source.Value);
+            Console.WriteLine();
+
+            Console.ResetColor();
         }
     }
 }
