@@ -12,7 +12,7 @@ namespace Group_Of_Students
 
         #endregion
 
-        #region Properies
+        #region Properties
 
         public string Subject
         {
@@ -59,6 +59,12 @@ namespace Group_Of_Students
             _subject = subject;
             _date = date;
             _value = value;
+        }
+
+        public Mark(Mark source)
+            :this(source._subject, source._date, source._value)
+        {
+            
         }
        
         #endregion

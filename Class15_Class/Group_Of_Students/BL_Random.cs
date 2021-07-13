@@ -62,7 +62,7 @@ namespace Group_Of_Students
             return lastName[index];
         }
 
-        public static string GetRandomSubject(int index)
+        public static string GetSubject(int index)
         {
             string[] subject = new string[10];
 

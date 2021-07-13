@@ -69,7 +69,7 @@ namespace Group_Of_Students
             set { _studNum = value; }
         }
 
-        public string Country // There is a check.
+        public string Country 
         {
             get
             {
@@ -92,6 +92,39 @@ namespace Group_Of_Students
             get { return _countOfMarks; }
         }
 
+        public OperationStatus LastOperationStatus { get; private set; }    // TODO: Should we generate OperationStatus in each class?
+
+        #endregion
+
+        #region Accessors
+
+        public int[] GetMarkBySubject(string subject)
+        {
+            if (!IsValidSubject(subject))
+            {
+                LastOperationStatus = OperationStatus.Not_Found;
+
+                return new int[0];    // TODO: What should we return?
+            }
+
+            int count = 0;
+
+            int[] duplicate = new int[0];
+
+            for (int i = 0; i < _countOfMarks; i++)
+            {
+                if (_marks[i].Subject == subject)
+                {
+                    Array.Resize(ref duplicate, duplicate.Length + 1);
+                    duplicate.SetValue(i, count);
+                    ++count;
+
+                    LastOperationStatus = OperationStatus.Ok;
+                }
+            }
+
+            return duplicate;
+        } 
 
         #endregion
 
@@ -101,7 +134,12 @@ namespace Group_Of_Students
         {
             get
             {
-                return _marks[index]; // Don't need to use new Mark() because of Value Type.
+                if (!IsValidPosition(index))    // What should we return?
+                {
+
+                }
+
+                return _marks[index]; 
             }
         }
 
@@ -109,28 +147,30 @@ namespace Group_Of_Students
 
         #region CRUD Operations
 
-        public void AddMark(Mark input) // Ask a question.
+        public void AddMark(Mark input)
         {
             if (_countOfMarks >= _marks.Length)
             {
                 Array.Resize(ref _marks, _marks.Length + (_marks.Length * 2));
             }
 
-            _marks[_countOfMarks] = GetFullCopy(input);
+            _marks[_countOfMarks] = new Mark(input); //GetFullCopy(input);   TODO: Ctor or GetFullCopy()
             ++_countOfMarks;
         }
 
-        public void DeleteMark(Mark source) // TODO: Delete by Date, Subject.
+        public void DeleteMark(string subject) // TODO: Delete by Date, Subject.
         {
-            //index -= 1; // Adjust index
-            //if (!IsValidPosition(index))
-            //{
-            //    return; // Enum error.
-            //}
-
-            for (int i = 0/*index*/; i < _countOfMarks - 1; i++)
+            if (!IsValidSubject(subject))
             {
-                _marks[i] = _marks[i + 1];
+                return; // Enum error.
+            }
+            
+            for (int i = 0; i < _countOfMarks; i++)
+            {
+                if (_marks[i].Subject == subject)
+                {
+                    Array.Copy(_marks, i+1, _marks, i, _marks.Length - (i+1));
+                }
             }
 
             // Just modify the countOfMarks.
@@ -153,22 +193,19 @@ namespace Group_Of_Students
             _marks = new Mark[capacity];
         }
 
-        public Student(Student source) //TODO: Add to previos constr
+        public Student(Student source)
+            : this(source._name, source._lastName, source._studNum,
+                  source._country, source._enterDate )
         {
-            _name = source._name;
-            _lastName = source._lastName;
-            _studNum = source._studNum;
-            _country = source._country;
-            _enterDate = source._enterDate;
             _countOfMarks = source._countOfMarks;
-            _marks = (Mark[])source._marks.Clone();    // Clone
+            _marks = (Mark[])source._marks.Clone();   
         }
 
         #endregion
 
         #region Utilits
 
-        public static Mark GetFullCopy(Mark source)
+        public static Mark GetFullCopy(Mark source)    // TODO: Copy Constructor for Struct???
         {
             Mark destination = new Mark()
             {
@@ -179,8 +216,6 @@ namespace Group_Of_Students
 
             return destination;
         }
-
-        
 
         public void InitRandomMarks()
         {
@@ -212,7 +247,7 @@ namespace Group_Of_Students
 
         public static Mark GetRandomMark()
         {
-            string subject = BL_Random.GetRandomSubject(BL_Random.rnd.Next(0, 10));
+            string subject = BL_Random.GetSubject(BL_Random.rnd.Next(0, 10));
             DateTime date = BL.GetRandomEnterDate();
             byte value = (byte)BL_Random.rnd.Next(2, 6);
 
@@ -241,6 +276,21 @@ namespace Group_Of_Students
             if (age < 15 || age > 100)
             {
                 result = false;
+            }
+
+            return result;
+        }
+
+        public bool IsValidSubject(string subject)
+        {
+            bool result = true;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (!(BL_Random.GetSubject(i) == subject))
+                {
+                    result = false;
+                }
             }
 
             return result;

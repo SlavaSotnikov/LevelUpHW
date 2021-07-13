@@ -13,6 +13,7 @@ namespace Group_Of_Students
 
         #region Private Data //TODO: Add Gorup Id. UnicueName property.
 
+        private string _groupName;
         private Student[] _students;
         private int _countOfStudents;
 
@@ -25,6 +26,14 @@ namespace Group_Of_Students
         public int AmountOfStudents
         {
             get { return _countOfStudents; }
+        }
+
+        public string GroupName
+        {
+            get 
+            { 
+                return _groupName;
+            }
         }
 
         #endregion
@@ -51,58 +60,57 @@ namespace Group_Of_Students
             ++_countOfStudents;
         } 
 
-        public void EditStudent(Student person, int index) // TODO: Edit by Id.
+        public void EditStudent(Student person, int id)
         {
-            index -= 1; // Adjust index // It's not here! Before call!!
-            if (index < 0 || index > _students.Length)
+            if (IsValidGroupId(id))
             {
-                return; // Enum error.
-            }
+                for (int i = 0; i < _countOfStudents; i++)
+                {
+                    if (_students[i].StudNumber == id)
+                    {
+                        _students[i] = new Student(person);
 
-            _students[index] = new Student(person);
+                        LastOperationStatus = OperationStatus.Ok;
+                    }
+                } 
+            }
+            else
+            {
+                LastOperationStatus = OperationStatus.Not_Found;
+
+                return;
+            }
         }
 
-        public void DeleteStudent(int index) // TODO: Delete by Id.
+        public void DeleteStudent(int id)
         {
-            index -= 1; // Adjust index
-            if (index < 0 || index > _students.Length)
+            if (!IsValidGroupId(id))
             {
-                return; // Enum error.
+                LastOperationStatus = OperationStatus.Not_Found;
+
+                return;
             }
-
-            for (int i = index; i < _countOfStudents - 1; i++)
-            {
-                _students[i] = _students[i + 1];
-            }
-
-            _countOfStudents -= DELETED_STUDENT;
-        }
-
-        public int SearchByName(string name)
-        {
-            int result = 0;
-
-            LastOperationStatus = OperationStatus.Not_Found;
 
             for (int i = 0; i < _countOfStudents; i++)
             {
-                if (_students[i].Name == name)
+                if (_students[i].StudNumber == id)
                 {
-                    result = i;
+                    Array.Copy(_students, i + 1, _students, i, _students.Length - (i + 1));
+
+                    _countOfStudents -= DELETED_STUDENT;
+
                     LastOperationStatus = OperationStatus.Ok;
                 }
             }
-
-            return result;
         }
 
-        public int[] SearchDuplicateNames(string name)
+        public int[] SearchByName(string name)
         {
             int count = 0;
 
             int[] duplicate = new int[0];
 
-            //LastOperationStatus = OperationStatus.Not_Found;
+            LastOperationStatus = OperationStatus.Not_Found;
 
             for (int i = 0; i < _countOfStudents; i++)
             {
@@ -111,15 +119,17 @@ namespace Group_Of_Students
                     Array.Resize(ref duplicate, duplicate.Length + 1);
                     duplicate.SetValue(i, count);
                     ++count;
+
+                    LastOperationStatus = OperationStatus.Ok;
                 }
             }
 
             return duplicate;
         }
 
-        public int SearchById(int id)
+        public int SearchById(int id)    // TODO: What should we return? -1???
         {
-            int result = 0;
+            int index = -1;
 
             LastOperationStatus = OperationStatus.Not_Found;
 
@@ -127,41 +137,43 @@ namespace Group_Of_Students
             {
                 if (_students[i].StudNumber == id)
                 {
-                    result = i;
+                    index = i;
                     LastOperationStatus = OperationStatus.Ok;
                 }
             }
 
-            return result;
+            return index;
         }
 
         #endregion
 
         #region Constructors 
 
-        public Group(int capacity=STUDENTS_AMOUNT) // TODO: From Students[] to Group
+        public Group(int capacity=STUDENTS_AMOUNT) 
         {
+            _groupName = string.Empty;    // TODO: Develop GroupName.
             _students = new Student[capacity];
             _countOfStudents = 0;
         }
 
         public Group(Group source)
         {
+            _groupName = source._groupName;
             _students = GetFullCopy(source._students);
             _countOfStudents = source._countOfStudents;
         }
 
-        public Group(Student[] input)
+        public Group(params Student[] input)    // TODO: From Students[] to Group
         {
             _students = GetFullCopy(input);
-            //_countOfStudents = ???;
+            _countOfStudents = input.Length;   //????
         }
 
         #endregion
 
         #region Utilits
 
-        public double GetGPA() // Grade Point Average.
+        public double GetGPA()    // Grade Point Average.
         {
             double gpa = 0;
 
@@ -183,6 +195,21 @@ namespace Group_Of_Students
             }
 
             return destination;
+        }
+
+        public bool IsValidGroupId(int id)
+        {
+            bool result = false;
+
+            for (int i = 0; i < _countOfStudents; i++)
+            {
+                if (_students[i].StudNumber == id)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
         }
 
         #endregion

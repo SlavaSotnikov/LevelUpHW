@@ -48,15 +48,14 @@ namespace Group_Of_Students
 
             //Department facultTwo = new Department(myGroup, secondGroup, thirdGroup);
 
-            int[] indexes = firstGroup.SearchDuplicateNames("Michael");
+            int[] indexes = firstGroup.SearchByName("Michael");
 
             for (int i = 0; i < indexes.Length; i++)
             {
-                UI.ShowStudent(firstGroup.GetStudentByPosition(i));
+                UI.ShowStudent(firstGroup.GetStudentByPosition(indexes[i]));
             }
-            
 
-            //UI.PrintGroup(myGroup);
+            //UI.PrintGroup(firstGroup);
 
             //UI.PrintFaculty(faculty);
 
