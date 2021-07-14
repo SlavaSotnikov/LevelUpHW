@@ -52,5 +52,16 @@ namespace Group_Of_Students
         {
             return "Ukraine";
         }
+
+        public static string GetGroupName()
+        {
+            char letter = BL_Random.GetLetter(BL_Random.rnd.Next(0, 21));
+
+            int number = BL_Random.rnd.Next(1024, 2049);
+
+            string result = letter.ToString() + " - " + number.ToString();
+
+            return result;
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace Group_Of_Students
 
             //Department facultTwo = new Department(myGroup, secondGroup, thirdGroup);
 
-            int[] indexes = firstGroup.SearchByName("Michael");
+            int[] indexes = firstGroup.SearchByLastName("Michael");
 
             for (int i = 0; i < indexes.Length; i++)
             {

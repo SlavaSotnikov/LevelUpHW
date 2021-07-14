@@ -92,16 +92,22 @@ namespace Group_Of_Students
 
         #region Utilits
 
-        public double GetGPA() // Grade Point Average. GPA for _groups[i].
+        public GroupGPA[] GetGPA() // Grade Point Average.
         {
-            double gpa = 0;
+            GroupGPA[] departmentGPA = new GroupGPA[_countOfGroups];
 
             for (int i = 0; i < _countOfGroups; i++)
             {
-                gpa += _groups[i].GetGPA();
+                departmentGPA[i] = GetGroupGPA(_groups[i].GroupName,
+                    _groups[i].GetGPA());
             }
 
-            return gpa / _countOfGroups;
+            return departmentGPA;
+        }
+
+        public GroupGPA GetGroupGPA(string letter, double gpa)
+        {
+            return new GroupGPA(letter, gpa);
         }
 
         public Group GetGroupByPosition(int index)

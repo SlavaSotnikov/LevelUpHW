@@ -2,7 +2,7 @@
 
 namespace Group_Of_Students
 {
-    class Group // TODO: Add search by Name, Id, EnterDate.
+    class Group // TODO: Where and how should we do a sort?
     {
         #region Constants
 
@@ -16,6 +16,7 @@ namespace Group_Of_Students
         private string _groupName;
         private Student[] _students;
         private int _countOfStudents;
+        private int _groupGPA;
 
         #endregion
 
@@ -33,6 +34,14 @@ namespace Group_Of_Students
             get 
             { 
                 return _groupName;
+            }
+        }
+
+        public int GroupGPA
+        {
+            get 
+            {
+                return groupGPA;
             }
         }
 
@@ -104,20 +113,24 @@ namespace Group_Of_Students
             }
         }
 
-        public int[] SearchByName(string name)
+        public int[] SearchByLastName(string lastName)
         {
             int count = 0;
 
-            int[] duplicate = new int[0];
+            int[] duplicate = new int[5];
 
             LastOperationStatus = OperationStatus.Not_Found;
-
+             
             for (int i = 0; i < _countOfStudents; i++)
             {
-                if (_students[i].Name == name)
+                if (_students[i].LastName == lastName)
                 {
-                    Array.Resize(ref duplicate, duplicate.Length + 1);
-                    duplicate.SetValue(i, count);
+                    if (count >= duplicate.Length)
+                    {
+                        Array.Resize(ref duplicate, duplicate.Length + (duplicate.Length * 2));
+                    }
+
+                    duplicate[count] = i;
                     ++count;
 
                     LastOperationStatus = OperationStatus.Ok;
@@ -151,9 +164,10 @@ namespace Group_Of_Students
 
         public Group(int capacity=STUDENTS_AMOUNT) 
         {
-            _groupName = string.Empty;    // TODO: Develop GroupName.
+            _groupName = BL.GetGroupName();
             _students = new Student[capacity];
             _countOfStudents = 0;
+            _groupGPA = 0;
         }
 
         public Group(Group source)
@@ -161,6 +175,7 @@ namespace Group_Of_Students
             _groupName = source._groupName;
             _students = GetFullCopy(source._students);
             _countOfStudents = source._countOfStudents;
+            _groupGPA = source._groupGPA;
         }
 
         public Group(params Student[] input)    // TODO: From Students[] to Group

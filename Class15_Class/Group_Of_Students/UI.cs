@@ -5,66 +5,100 @@ namespace Group_Of_Students
 {
     class UI
     {
-        public static string GetConsoleData(string statement)
-        {
-            Console.Write(statement);
-            string userData = Console.ReadLine();
-
-            return userData;
-        }
-
-        public static string GetRightText(string input) // Try cycle, rename.
+        public static string GetRightText(string statement)
         {
             string validText = string.Empty;
+            string userData = string.Empty;
 
-            while (!Validator.IsValidText(input))
+            while (!Validator.IsValidText(userData))
             {
-                input = GetConsoleData("Inappropriate Data!Try again.");
+                Console.Write(statement);
+                userData = Console.ReadLine();
             }
 
-            validText = input;
+            validText = userData;
 
             return validText;
         }
 
-        public static string GetRightNumber(string input)
+        public static string GetRightNumber(string statement)
         {
             string validNumber = string.Empty;
+            string userData = string.Empty;
 
-            if (!Validator.IsValidNumber(input))
+            while (!Validator.IsValidNumber(userData))
             {
-                input = GetConsoleData("Inappropriate Data!Try again.");
+                Console.Write(statement);
+                userData = Console.ReadLine();
             }
 
-            validNumber = input;
+            validNumber = userData;
 
             return validNumber;
         }
 
-        public static string CheckCountry(string input)
+        public static string GetRightCountry(string statement)
         {
             string validCountry = string.Empty;
+            string userData = string.Empty;
 
-            if (Validator.IsValidateCountry(input))
+            while (!Validator.IsValidateCountry(userData))
             {
-                input = GetConsoleData("Ukrainian only! Try again.");
+                Console.Write(statement);
+                userData = Console.ReadLine();
             }
 
-            validCountry = input;
+            validCountry = userData;
 
             return validCountry;
         }
 
+        public static string GetSubject(string statement = "Enter a subject: ")
+        {
+            Console.WriteLine(statement);
+
+            return Console.ReadLine();
+        }
+
+        public static DateTime GetDate(string statement = "Enter a date: ")
+        {
+            Console.WriteLine(statement);
+            string newDate = Console.ReadLine();
+            DateTime.TryParse(newDate, out DateTime date);
+
+            return date;
+        }
+
+        public static byte GetMark(string statement = "Enter a value: ")
+        {
+            Console.WriteLine(statement);
+            string newValue = Console.ReadLine();
+            byte.TryParse(newValue, out byte mark);
+
+            return mark;
+        }
+
+        public static Mark GetCustomMark()
+        {
+            byte mark = GetMark();
+            string subject = GetSubject();
+            DateTime date = GetDate();
+
+            Mark newMark = new Mark(subject, date, mark);
+
+            return newMark;
+        }
+
         public static Student CreateCustomStudent()
         {
-            string name      = GetRightText(GetConsoleData("Enter student's name: "));
-            string lastName  = GetRightText(GetConsoleData("Last Name: "));
-            string country   = CheckCountry(GetConsoleData("Enter Country: "));
+            string name      = GetRightText("Enter student's name: ");
+            string lastName  = GetRightText("Last Name: ");
+            string country   = GetRightCountry("Enter Country: ");
 
-            string studentId = GetRightNumber(GetConsoleData("Id: "));
+            string studentId = GetRightNumber("Id: ");
             uint.TryParse(studentId, out uint Id);
 
-            string enterDate = GetRightNumber(GetConsoleData("Date of entering: "));
+            string enterDate = GetRightNumber("Date of entering: ");
             DateTime.TryParse(enterDate, out DateTime date);
 
             Student person = new Student(name, lastName, Id, country, date);
@@ -76,24 +110,17 @@ namespace Group_Of_Students
 
         public static void InitCustomMarks(Student person)
         {
-            byte index = 0;
-            byte mark;
-            string result = string.Empty;
+            Mark newMark;
 
             Console.Write("Enter marks: ");
 
             do
             {
-                result = GetRightNumber(Console.ReadLine());
-                byte.TryParse(result, out mark);
+                newMark = GetCustomMark();
 
-                if (mark > 0)
-                {
-                    //person.AddMark(mark); // TODO: Develop AddMark.
-                    ++index; 
-                }
+                person.AddMark(newMark);
 
-            } while (mark != 0);
+            } while (newMark.Value != 0);
         }
 
         public static ConsoleKey ChooseMenu()

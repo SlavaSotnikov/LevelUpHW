@@ -4,6 +4,8 @@ namespace Group_Of_Students
 {
     class BL_Random
     {
+        private const byte AMOUNT_OF_LETTERS = 26;
+
         public static Random rnd = new Random();
 
         public static string GetName(int index)
@@ -78,6 +80,35 @@ namespace Group_Of_Students
             subject[9] = "Physics";
 
             return subject[index];
+        }
+
+        public static char GetLetter(int index)
+        {
+            char[] alphabet = new char[AMOUNT_OF_LETTERS];
+
+            alphabet[0] = 'A';
+            alphabet[1] = 'B';
+            alphabet[2] = 'C';
+            alphabet[3] = 'D';
+            alphabet[4] = 'E';
+            alphabet[5] = 'F';
+            alphabet[6] = 'G';
+            alphabet[7] = 'H';
+            alphabet[8] = 'I';
+            alphabet[9] = 'J';
+            alphabet[10] = 'K';
+            alphabet[11] = 'L';
+            alphabet[12] = 'M';
+            alphabet[13] = 'N';
+            alphabet[14] = 'O';
+            alphabet[15] = 'P';
+            alphabet[16] = 'Q';
+            alphabet[17] = 'R';
+            alphabet[18] = 'S';
+            alphabet[19] = 'T';
+            alphabet[20] = 'U';
+
+            return alphabet[index];
         }
     }
 }

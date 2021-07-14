@@ -47,6 +47,7 @@
     <Compile Include="BL_Random.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="GroupGPA.cs" />
     <Compile Include="Mark.cs" />
     <Compile Include="OperationStatus.cs" />
     <Compile Include="Program.cs" />
