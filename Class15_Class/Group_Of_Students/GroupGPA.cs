@@ -3,9 +3,25 @@
     struct GroupGPA
     {
         private string _groupName;
-        private double _gpa;
+        private float _gpa;
 
-        public GroupGPA(string groupName, double gpa)
+        public string GroupName
+        {
+            get 
+            {
+                return _groupName;
+            }
+        }
+
+        public float GPA
+        {
+            get 
+            {
+                return _gpa;
+            }
+        }
+
+        public GroupGPA(string groupName, float gpa)
         {
             _groupName = groupName;
             _gpa = gpa;

@@ -11,7 +11,7 @@ namespace Group_Of_Students
 
         #endregion
 
-        #region Private Data //TODO: Add Gorup Id. UnicueName property.
+        #region Private Data 
 
         private string _groupName;
         private Student[] _students;
@@ -41,7 +41,7 @@ namespace Group_Of_Students
         {
             get 
             {
-                return groupGPA;
+                return _groupGPA;
             }
         }
 
@@ -181,16 +181,16 @@ namespace Group_Of_Students
         public Group(params Student[] input)    // TODO: From Students[] to Group
         {
             _students = GetFullCopy(input);
-            _countOfStudents = input.Length;   //????
+            _countOfStudents = input.Length;   // TODO:????
         }
 
         #endregion
 
         #region Utilits
 
-        public double GetGPA()    // Grade Point Average.
+        public float GetGPA()    // Grade Point Average.
         {
-            double gpa = 0;
+            float gpa = 0;
 
             for (int i = 0; i < _countOfStudents; i++)
             {

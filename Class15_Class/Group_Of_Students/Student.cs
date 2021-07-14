@@ -225,9 +225,9 @@ namespace Group_Of_Students
             }
         }
 
-        public double GetGPA() // Grade Point Average Method.
+        public float GetGPA() // Grade Point Average Method.
         {
-            double gpa = 0;
+            float gpa = 0;
 
             for (int i = 0; i < _countOfMarks; i++)
             {

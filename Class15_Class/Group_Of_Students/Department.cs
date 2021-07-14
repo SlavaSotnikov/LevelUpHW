@@ -25,6 +25,8 @@ namespace Group_Of_Students
             get { return _countOfGroups; }
         }
 
+        public OperationStatus LastOperationStatus { get; private set; }
+
         #endregion
 
         #region CRUD Operations
@@ -40,28 +42,43 @@ namespace Group_Of_Students
             ++_countOfGroups;
         }
 
-        public void EditGroup(Group source, int index)
+        public void EditGroupByName(Group source, string groupName)
         {
-            index -= 1; // Adjust index.
-            if (index < 0 || index > _groups.Length)
+            if (!IsGroup(groupName))
             {
-                return; // Enum error.
+                LastOperationStatus = OperationStatus.Not_Found;
+
+                return;
             }
 
-            _groups[index] = new Group(source);
+            for (int i = 0; i < _countOfGroups; i++)
+            {
+                if (_groups[i].GroupName == groupName)
+                {
+                    _groups[i] = new Group(source);
+
+                    LastOperationStatus = OperationStatus.Ok;
+                }
+            }
         }
 
-        public void DeleteGroup(int index) //TODO: Delete by Id. Return Enum error.
+        public void DeleteGroupByName(string groupName) 
         {
-            index -= 1; //Adjust index.
-            if (index < 0 || index > _groups.Length)
+            if (!IsGroup(groupName))
             {
-                return; // Enum error.
+                LastOperationStatus = OperationStatus.Not_Found;
+
+                return;
             }
 
-            for (int i = index; i < _countOfGroups - 1; i++) // TODO: Use Array.Copy() by index.
+            for (int i = 0; i < _countOfGroups - 1; i++) 
             {
-                _groups[i] = _groups[i + 1];
+                if (_groups[i].GroupName == groupName)
+                {
+                    Array.Copy(_groups, i + 1, _groups, i, _groups.Length - (i + 1));
+
+                    LastOperationStatus = OperationStatus.Ok;
+                }
             }
 
             _countOfGroups -= DELETED_GROUP;
@@ -98,21 +115,31 @@ namespace Group_Of_Students
 
             for (int i = 0; i < _countOfGroups; i++)
             {
-                departmentGPA[i] = GetGroupGPA(_groups[i].GroupName,
+                departmentGPA[i] = new GroupGPA(_groups[i].GroupName,
                     _groups[i].GetGPA());
             }
 
-            return departmentGPA;
-        }
-
-        public GroupGPA GetGroupGPA(string letter, double gpa)
-        {
-            return new GroupGPA(letter, gpa);
+            return departmentGPA;    // TODO: Should we return a copy of array?
         }
 
         public Group GetGroupByPosition(int index)
         {
             return _groups[index];
+        }
+
+        public bool IsGroup(string groupName)
+        {
+            bool result = false;
+
+            for (int i = 0; i < _countOfGroups; i++)
+            {
+                if (_groups[i].GroupName == groupName)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
         }
 
         #endregion
