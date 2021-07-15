@@ -201,12 +201,10 @@ namespace Group_Of_Students
             _marks = (Mark[])source._marks.Clone();   
         }
 
-        public static Student ZeroingCopy(Student source)
+        public Student ZeroingCopy()
         {
-            Student destination = new Student(source._name, source._lastName,
-                source._studNum, source._country, source._enterDate, 0);
-
-            return destination;
+            return new Student(_name, _lastName,
+                _studNum, _country, _enterDate, MARK_AMOUNT);    // Return???
         }
 
         #endregion

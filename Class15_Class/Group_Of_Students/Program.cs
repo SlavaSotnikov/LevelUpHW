@@ -38,7 +38,7 @@ namespace Group_Of_Students
             ChooseEnter(UI.ChooseMenu(), firstGroup);
             //faculty.AddGroup(myGroup);
 
-            Group nextLevel = Group.GoToNextLevel(firstGroup);
+            Group nextLevel = firstGroup.GoToNextLevel();
 
             //Group secondGroup = new Group();
             //ChooseEnter(UI.ChooseMenu(), secondGroup, faculty);

@@ -164,16 +164,15 @@ namespace Group_Of_Students
 
         public static void PrintGroup(Group group)
         {
-            if (group.LastOperationStatus != OperationStatus.Ok)
+            if (group.LastOperationStatus == OperationStatus.Not_Found)
             {
                 Console.WriteLine("\n{0}", group.LastOperationStatus.ToString());
+                return;
             }
-            else
+
+            for (int i = 0; i < group.AmountOfStudents; i++)
             {
-                for (int i = 0; i < group.AmountOfStudents; i++)
-                {
-                    ShowStudent(group.GetStudentByPosition(i));
-                }
+                ShowStudent(group.GetStudentByPosition(i));
             }
         }
 

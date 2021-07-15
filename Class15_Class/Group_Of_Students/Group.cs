@@ -9,6 +9,7 @@ namespace Group_Of_Students
 
         private const byte STUDENTS_AMOUNT = 10;
         private const byte DELETED_STUDENT = 1;
+        private const byte ONE_LEVEL = 1;
 
         #endregion
 
@@ -192,18 +193,18 @@ namespace Group_Of_Students
             _countOfStudents = amount;
         }
 
-        public static Group GoToNextLevel(Group source)
+        public Group GoToNextLevel()
         {
-            Student[] zeroing = new Student[source.AmountOfStudents];
+            Student[] zeroing = new Student[_countOfStudents];
 
-            for (int i = 0; i < source.AmountOfStudents; i++)
+            for (int i = 0; i < _countOfStudents; i++)
             {
-                zeroing[i] = Student.ZeroingCopy(source._students[i]);
+                zeroing[i] = _students[i].ZeroingCopy();
             }
 
-            string newName = NextLevelName(source._groupName);
+            string newName = NextLevelName(_groupName);
 
-            Group nextLevel = new Group(newName, zeroing, source._countOfStudents);
+            Group nextLevel = new Group(newName, zeroing, _countOfStudents);
 
             return nextLevel;
         }
@@ -252,15 +253,13 @@ namespace Group_Of_Students
 
         public static string NextLevelName(string source)
         {
-            int nextGroup = 1;
-
             StringBuilder newName = new StringBuilder(source);
 
             for (int i = 0; i < newName.Length; i++)
             {
                 if (char.IsDigit(newName[i]))
                 {
-                    nextGroup += Convert.ToInt32(newName[i]);
+                    int nextGroup = Convert.ToInt32(newName[i]) + ONE_LEVEL;
                     newName[i] = Convert.ToChar(nextGroup);
                     break;
                 }
