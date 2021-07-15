@@ -107,7 +107,7 @@ namespace Group_Of_Students
 
         #endregion
 
-        #region Utilits
+        #region Member Functions
 
         public GroupGPA[] GetGPA() // Grade Point Average.
         {

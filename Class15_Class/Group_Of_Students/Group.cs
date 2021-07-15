@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Group_Of_Students
 {
-    class Group // TODO: Where and how should we do a sort?
+    class Group
     {
         #region Constants
 
@@ -193,6 +193,10 @@ namespace Group_Of_Students
             _countOfStudents = amount;
         }
 
+        #endregion
+
+        #region Member Functions
+
         public Group GoToNextLevel()
         {
             Student[] zeroing = new Student[_countOfStudents];
@@ -208,9 +212,6 @@ namespace Group_Of_Students
 
             return nextLevel;
         }
-        #endregion
-
-        #region Utilits
 
         public float GetGPA()    // Grade Point Average.
         {

@@ -209,7 +209,7 @@ namespace Group_Of_Students
 
         #endregion
 
-        #region Utilits
+        #region Member Functions
 
         public static Mark GetFullCopy(Mark source)    // TODO: Copy Constructor for Struct???
         {
