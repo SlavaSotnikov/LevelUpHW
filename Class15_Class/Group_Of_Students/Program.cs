@@ -38,6 +38,8 @@ namespace Group_Of_Students
             ChooseEnter(UI.ChooseMenu(), firstGroup);
             //faculty.AddGroup(myGroup);
 
+            Group nextLevel = Group.GoToNextLevel(firstGroup);
+
             //Group secondGroup = new Group();
             //ChooseEnter(UI.ChooseMenu(), secondGroup, faculty);
             //faculty.AddGroup(secondGroup);
@@ -48,14 +50,14 @@ namespace Group_Of_Students
 
             //Department facultTwo = new Department(myGroup, secondGroup, thirdGroup);
 
-            int[] indexes = firstGroup.SearchByLastName("Michael");
+            //int[] indexes = firstGroup.SearchByLastName("Michael");
 
-            for (int i = 0; i < indexes.Length; i++)
-            {
-                UI.ShowStudent(firstGroup.GetStudentByPosition(indexes[i]));
-            }
+            //for (int i = 0; i < indexes.Length; i++)
+            //{
+            //    UI.ShowStudent(firstGroup.GetStudentByPosition(indexes[i]));
+            //}
 
-            //UI.PrintGroup(firstGroup);
+            UI.PrintGroup(nextLevel);
 
             //UI.PrintFaculty(faculty);
 

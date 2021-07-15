@@ -35,7 +35,7 @@ namespace Group_Of_Students
 
         public static uint GetRandomStudNumber()
         {
-            uint rndStudNum = (uint)BL_Random.rnd.Next(1, 21);
+            uint rndStudNum = (uint)BL_Random.rnd.Next(1, 101);
 
             return rndStudNum;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Group_Of_Students
 {
@@ -184,6 +185,28 @@ namespace Group_Of_Students
             _countOfStudents = input.Length;   // TODO:????
         }
 
+        public Group(string name, Student[] students, int amount)
+        {
+            _groupName = name;
+            _students = students;
+            _countOfStudents = amount;
+        }
+
+        public static Group GoToNextLevel(Group source)
+        {
+            Student[] zeroing = new Student[source.AmountOfStudents];
+
+            for (int i = 0; i < source.AmountOfStudents; i++)
+            {
+                zeroing[i] = Student.ZeroingCopy(source._students[i]);
+            }
+
+            string newName = NextLevelName(source._groupName);
+
+            Group nextLevel = new Group(newName, zeroing, source._countOfStudents);
+
+            return nextLevel;
+        }
         #endregion
 
         #region Utilits
@@ -225,6 +248,25 @@ namespace Group_Of_Students
             }
 
             return result;
+        }
+
+        public static string NextLevelName(string source)
+        {
+            int nextGroup = 1;
+
+            StringBuilder newName = new StringBuilder(source);
+
+            for (int i = 0; i < newName.Length; i++)
+            {
+                if (char.IsDigit(newName[i]))
+                {
+                    nextGroup += Convert.ToInt32(newName[i]);
+                    newName[i] = Convert.ToChar(nextGroup);
+                    break;
+                }
+            }
+
+            return newName.ToString();
         }
 
         #endregion
