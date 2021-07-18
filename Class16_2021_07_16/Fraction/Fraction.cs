@@ -15,7 +15,71 @@ namespace Fraction
         {
             return string.Format("{0}/{1}", _numerator, _denominator);
         }
+        #region Operations
 
+        public static Fraction operator+(Fraction num1, Fraction num2)
+        {
+            Fraction result;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = AddDifferentDenominators(num1, num2);
+            }
+            else
+            {
+                int sum = num1._numerator + num2._numerator;
+
+                result = new Fraction(sum, num1._denominator);
+            }
+
+            return result;
+        }
+
+        public static Fraction AddDifferentDenominators(Fraction num1, Fraction num2)
+        {
+            int multNumerator1 = num1._numerator * num2._denominator;
+            int multNumerator2 = num1._denominator * num2._numerator;
+
+            int multDenominator1 = num1._denominator * num2._denominator;
+
+            int numerator = multNumerator1 + multNumerator2;
+
+            return new Fraction(numerator, multDenominator1);
+
+        }
+
+        public static Fraction operator -(Fraction num1, Fraction num2)
+        {
+            Fraction result;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = SubtractDifferentDenominators(num1, num2);
+            }
+            else
+            {
+                int sum = num1._numerator - num2._numerator;
+
+                result = new Fraction(sum, num1._denominator);
+            }
+
+            return result;
+        }
+
+        public static Fraction SubtractDifferentDenominators(Fraction num1, Fraction num2)
+        {
+            int multNumerator1 = num1._numerator * num2._denominator;
+            int multNumerator2 = num1._denominator * num2._numerator;
+
+            int multDenominator1 = num1._denominator * num2._denominator;
+
+            int numerator = multNumerator1 - multNumerator2;
+
+            return new Fraction(numerator, multDenominator1);
+
+        }
+
+        #endregion
         #region Constructors
 
         public Fraction(int numerator, int denominator = 1)
@@ -29,7 +93,7 @@ namespace Fraction
             _numerator = numerator;
         }
 
-        public Fraction(float number)
+        public Fraction(double number)
         {
             int count = 0;
 
@@ -43,8 +107,8 @@ namespace Fraction
             _denominator = Convert.ToInt32(Math.Pow(10, count));
         }
 
-        public Fraction(double number)
-            : this((float)number)
+        public Fraction(float number)
+            : this((double)number)
         {
         }
 
