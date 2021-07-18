@@ -116,14 +116,16 @@ namespace Group_Of_Students
             for (int i = 0; i < _countOfGroups; i++)
             {
                 departmentGPA[i] = new GroupGPA(_groups[i].GroupName,
-                    _groups[i].GetGPA());
+                        _groups[i].GetGPA());
             }
 
             return departmentGPA;    // TODO: Should we return a copy of array?
         }
 
-        public Group GetGroupByPosition(int index)
+        public Group GetGroupByPosition(int index) // Check index
         {
+
+
             return _groups[index];
         }
 

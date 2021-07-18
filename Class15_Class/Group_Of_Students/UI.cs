@@ -120,7 +120,7 @@ namespace Group_Of_Students
 
                 person.AddMark(newMark);
 
-            } while (newMark.Value != 0);
+            } while (newMark.Rate != 0);
         }
 
         public static ConsoleKey ChooseMenu()
@@ -198,10 +198,13 @@ namespace Group_Of_Students
 
             Console.Write("{0, -12}", source.Date.ToShortDateString());
             Console.Write("{0, -14} ", source.Subject);
-            Console.WriteLine("{0}", source.Value);
+            Console.WriteLine("{0}", source.Rate);
             Console.WriteLine();
 
             Console.ResetColor();
         }
+
+        // TODO: Function GetDescribeMessage(enum OperationStatus).
+        // TODO: Class Common
     }
 }

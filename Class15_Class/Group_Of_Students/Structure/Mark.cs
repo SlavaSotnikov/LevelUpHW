@@ -8,7 +8,7 @@ namespace Group_Of_Students
 
         private string _subject;
         private DateTime _date;
-        private byte _value;
+        private byte _rate;
 
         #endregion
 
@@ -38,15 +38,15 @@ namespace Group_Of_Students
             }
         }
 
-        public byte Value
+        public byte Rate
         {
             get
             {
-                return _value;
+                return _rate;
             }
             set
             {
-                _value = value;
+                _rate = value;
             }
         }
 
@@ -58,11 +58,11 @@ namespace Group_Of_Students
         {
             _subject = subject;
             _date = date;
-            _value = value;
+            _rate = value;
         }
 
         public Mark(Mark source)
-            :this(source._subject, source._date, source._value)
+            :this(source._subject, source._date, source._rate)
         {
             
         }

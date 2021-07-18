@@ -119,7 +119,7 @@ namespace Group_Of_Students
         {
             int count = 0;
 
-            int[] duplicate = new int[5];
+            int[] duplicate = new int[0];
 
             LastOperationStatus = OperationStatus.Not_Found;
              
@@ -129,7 +129,7 @@ namespace Group_Of_Students
                 {
                     if (count >= duplicate.Length)
                     {
-                        Array.Resize(ref duplicate, duplicate.Length + (duplicate.Length * 2));
+                        Array.Resize(ref duplicate, duplicate.Length + 1);
                     }
 
                     duplicate[count] = i;

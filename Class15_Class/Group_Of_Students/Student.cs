@@ -134,9 +134,9 @@ namespace Group_Of_Students
         {
             get
             {
-                if (!IsValidPosition(index))    // What should we return?
+                if (!IsValidPosition(index))    // TODO: What should we return?
                 {
-
+                    return new Mark();
                 }
 
                 return _marks[index]; 
@@ -169,7 +169,7 @@ namespace Group_Of_Students
             {
                 if (_marks[i].Subject == subject)
                 {
-                    Array.Copy(_marks, i+1, _marks, i, _marks.Length - (i+1));
+                    Array.Copy(_marks, i+1, _marks, i, _marks.Length - (i+1)); // Shift marks.
                 }
             }
 
@@ -194,7 +194,7 @@ namespace Group_Of_Students
         }
 
         public Student(Student source)
-            : this(source._name, source._lastName, source._studNum,
+            : this(source._name, source._lastName, source._studNum,  // TODO: Ask about Copy Constructors
                   source._country, source._enterDate )
         {
             _countOfMarks = source._countOfMarks;
@@ -204,7 +204,7 @@ namespace Group_Of_Students
         public Student ZeroingCopy()
         {
             return new Student(_name, _lastName,
-                _studNum, _country, _enterDate, MARK_AMOUNT);    // Return???
+                    _studNum, _country, _enterDate, MARK_AMOUNT);    // Return???
         }
 
         #endregion
@@ -217,7 +217,7 @@ namespace Group_Of_Students
             {
                 Subject = source.Subject,
                 Date = source.Date,
-                Value = source.Value
+                Rate = source.Rate
             };
 
             return destination;
@@ -237,7 +237,7 @@ namespace Group_Of_Students
 
             for (int i = 0; i < _countOfMarks; i++)
             {
-                gpa += _marks[i].Value;
+                gpa += _marks[i].Rate;
             }
 
             return gpa / _countOfMarks;

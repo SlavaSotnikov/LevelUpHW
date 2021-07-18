@@ -40,7 +40,7 @@ namespace Group_Of_Students
             return rndStudNum;
         }
 
-        public static DateTime GetRandomEnterDate()
+        public static DateTime GetRandomEnterDate() // Create class RandomInit.
         {
             DateTime start = new DateTime(2016, 1, 9);
             int range = (DateTime.Today - start).Days;

@@ -1,5 +1,4 @@
-﻿using Group_Of_Students;
-using System;
+﻿using System;
 
 namespace Group_Of_Students
 {
@@ -37,6 +36,13 @@ namespace Group_Of_Students
             Group firstGroup = new Group();
             ChooseEnter(UI.ChooseMenu(), firstGroup);
             //faculty.AddGroup(myGroup);
+
+            //int id = firstGroup.SearchById(190);
+
+            //if (true)
+            //{
+
+            //}
 
             Group nextLevel = firstGroup.GoToNextLevel();
 
