@@ -15,9 +15,10 @@ namespace Fraction
         {
             return string.Format("{0}/{1}", _numerator, _denominator);
         }
+
         #region Operations
 
-        public static Fraction operator+(Fraction num1, Fraction num2)
+        public static Fraction operator +(Fraction num1, Fraction num2)
         {
             Fraction result;
 
@@ -37,12 +38,12 @@ namespace Fraction
 
         public static Fraction AddDifferentDenominators(Fraction num1, Fraction num2)
         {
-            int multNumerator1 = num1._numerator * num2._denominator;
-            int multNumerator2 = num1._denominator * num2._numerator;
+            int addNumerator1 = num1._numerator * num2._denominator;
+            int addNumerator2 = num1._denominator * num2._numerator;
 
             int multDenominator1 = num1._denominator * num2._denominator;
 
-            int numerator = multNumerator1 + multNumerator2;
+            int numerator = addNumerator1 + addNumerator2;
 
             return new Fraction(numerator, multDenominator1);
 
@@ -68,18 +69,73 @@ namespace Fraction
 
         public static Fraction SubtractDifferentDenominators(Fraction num1, Fraction num2)
         {
-            int multNumerator1 = num1._numerator * num2._denominator;
-            int multNumerator2 = num1._denominator * num2._numerator;
+            int addNumerator1 = num1._numerator * num2._denominator;
+            int addNumerator2 = num1._denominator * num2._numerator;
 
             int multDenominator1 = num1._denominator * num2._denominator;
 
-            int numerator = multNumerator1 - multNumerator2;
+            int numerator = addNumerator1 - addNumerator2;
 
             return new Fraction(numerator, multDenominator1);
 
         }
 
+        public static Fraction operator *(Fraction num1, Fraction num2)
+        {
+            int multNumerator1 = num1._numerator * num2._numerator;
+            int multNumerator2 = num1._denominator * num2._denominator;
+
+            return new Fraction(multNumerator1, multNumerator2);
+        }
+
+        public static Fraction operator /(Fraction num1, Fraction num2)
+        {
+            int multNumerator = num1._numerator * num2._denominator;
+            int multDenominator = num1._denominator * num2._numerator;
+
+            return new Fraction(multDenominator, multNumerator);
+        }
+
+        public static Fraction operator ++(Fraction num1)
+        {
+            Fraction num2 = new Fraction(1, 1);
+            Fraction result;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = AddDifferentDenominators(num1, num2);
+            }
+            else
+            {
+                int sum = num1._numerator + num2._numerator;
+
+                result = new Fraction(sum, num1._denominator);
+            }
+
+            return result;
+        }
+
+        public static Fraction operator --(Fraction num1)
+        {
+            Fraction num2 = new Fraction(1, 1);
+            Fraction result;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = SubtractDifferentDenominators(num1, num2);
+            }
+            else
+            {
+                int diff = num1._numerator - num2._numerator;
+
+                result = new Fraction(diff, num1._denominator);
+            }
+
+            return result;
+        }
+
         #endregion
+
         #region Constructors
 
         public Fraction(int numerator, int denominator = 1)
@@ -136,7 +192,7 @@ namespace Fraction
             return num1;
         }
 
-        public void GetNormalize()
+        public void ApplyNormalize()
         {
             int GCD = GetGCD();
 
