@@ -49,6 +49,8 @@ namespace Fraction
 
         }
 
+        
+
         public static Fraction operator -(Fraction num1, Fraction num2)
         {
             Fraction result;
@@ -133,6 +135,127 @@ namespace Fraction
 
             return result;
         }
+
+        public static bool operator <(Fraction num1, Fraction num2)
+        {
+            bool result = false;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = CompareDifferentDenominators(num1, num2);
+            }
+            else
+            {
+                result = num1._numerator < num2._numerator;
+            }
+
+            return result;
+        }
+
+        public static bool operator <=(Fraction num1, Fraction num2)
+        {
+            bool result = false;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = CompareDifferentDenominators(num1, num2);
+            }
+            else
+            {
+                result = num1._numerator <= num2._numerator;
+            }
+
+            return result;
+        }
+
+        public static bool operator >=(Fraction num1, Fraction num2)
+        {
+            bool result = false;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = CompareDifferent(num1, num2);
+            }
+            else
+            {
+                result = num1._numerator >= num2._numerator;
+            }
+
+            return result;
+        }
+
+        public static bool CompareDifferentDenominators(Fraction num1, Fraction num2)
+        {
+            bool result = false;
+
+            int addNumerator1 = num1._numerator * num2._denominator;
+            int addNumerator2 = num1._denominator * num2._numerator;
+
+            int multDenominator1 = num1._denominator * num2._denominator;
+            int multDenominator2 = num2._denominator * num1._denominator;
+
+            Fraction one = new Fraction(addNumerator1, multDenominator1);
+            Fraction two = new Fraction(addNumerator2, multDenominator2);
+
+            if (one._numerator <= two._numerator)
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        public static bool operator >(Fraction num1, Fraction num2)
+        {
+            bool result = false;
+
+            if (num1._denominator != num2._denominator)
+            {
+                result = CompareDifferent(num1, num2);
+            }
+            else
+            {
+                result = num1._numerator > num2._numerator;
+            }
+
+            return result;
+        }
+
+        public static bool CompareDifferent(Fraction num1, Fraction num2)
+        {
+            bool result = false;
+
+            int addNumerator1 = num1._numerator * num2._denominator;
+            int addNumerator2 = num1._denominator * num2._numerator;
+
+            int multDenominator1 = num1._denominator * num2._denominator;
+            int multDenominator2 = num2._denominator * num1._denominator;
+
+            Fraction one = new Fraction(addNumerator1, multDenominator1);
+            Fraction two = new Fraction(addNumerator2, multDenominator2);
+
+            if (one._numerator >= two._numerator)
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        //public static Fraction operator |(Fraction num1, Fraction num2)
+        //{
+            
+        //}
+
+        //public static Fraction operator &(Fraction num1, Fraction num2)
+        //{
+
+        //}
+
+        //public static Fraction operator ^(Fraction num1, Fraction num2)
+        //{
+
+        //}
 
         #endregion
 
