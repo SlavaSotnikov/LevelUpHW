@@ -4,10 +4,17 @@ namespace Fraction
 {
     class Fraction
     {
+        #region Constants
+
+        private int FACTOR = 10;
+        private double ACCURACY = 0.0001;
+        
+        #endregion
+
         #region Private Data
 
         private int _numerator;
-        private int _denominator;
+        private int _denominator = 1;
 
         #endregion
 
@@ -20,229 +27,72 @@ namespace Fraction
 
         public static Fraction operator +(Fraction num1, Fraction num2)
         {
-            Fraction result;
-
-            if (num1._denominator != num2._denominator)
-            {
-                result = AddDifferentDenominators(num1, num2);
-            }
-            else
-            {
-                int sum = num1._numerator + num2._numerator;
-
-                result = new Fraction(sum, num1._denominator);
-            }
-
-            return result;
+            return new Fraction(num1._numerator * num2._denominator + num2._numerator
+                    * num1._denominator, num1._denominator * num2._denominator);
         }
-
-        public static Fraction AddDifferentDenominators(Fraction num1, Fraction num2)
-        {
-            int addNumerator1 = num1._numerator * num2._denominator;
-            int addNumerator2 = num1._denominator * num2._numerator;
-
-            int multDenominator1 = num1._denominator * num2._denominator;
-
-            int numerator = addNumerator1 + addNumerator2;
-
-            return new Fraction(numerator, multDenominator1);
-
-        }
-
-        
 
         public static Fraction operator -(Fraction num1, Fraction num2)
         {
-            Fraction result;
-
-            if (num1._denominator != num2._denominator)
-            {
-                result = SubtractDifferentDenominators(num1, num2);
-            }
-            else
-            {
-                int sum = num1._numerator - num2._numerator;
-
-                result = new Fraction(sum, num1._denominator);
-            }
-
-            return result;
-        }
-
-        public static Fraction SubtractDifferentDenominators(Fraction num1, Fraction num2)
-        {
-            int addNumerator1 = num1._numerator * num2._denominator;
-            int addNumerator2 = num1._denominator * num2._numerator;
-
-            int multDenominator1 = num1._denominator * num2._denominator;
-
-            int numerator = addNumerator1 - addNumerator2;
-
-            return new Fraction(numerator, multDenominator1);
-
+            return num1 + new Fraction(-num2._numerator, num2._denominator);
         }
 
         public static Fraction operator *(Fraction num1, Fraction num2)
         {
-            int multNumerator1 = num1._numerator * num2._numerator;
-            int multNumerator2 = num1._denominator * num2._denominator;
-
-            return new Fraction(multNumerator1, multNumerator2);
+            return new Fraction(num1._numerator * num2._numerator, 
+                    num1._denominator * num2._denominator);
         }
 
         public static Fraction operator /(Fraction num1, Fraction num2)
         {
-            int multNumerator = num1._numerator * num2._denominator;
-            int multDenominator = num1._denominator * num2._numerator;
-
-            return new Fraction(multDenominator, multNumerator);
+            return num1 * new Fraction(num2._denominator, num2._numerator);
         }
 
         public static Fraction operator ++(Fraction num1)
         {
-            Fraction num2 = new Fraction(1, 1);
-            Fraction result;
-
-            if (num1._denominator != num2._denominator)
-            {
-                result = AddDifferentDenominators(num1, num2);
-            }
-            else
-            {
-                int sum = num1._numerator + num2._numerator;
-
-                result = new Fraction(sum, num1._denominator);
-            }
-
-            return result;
+            return new Fraction(num1._numerator + num1._denominator, num1._denominator);
         }
 
         public static Fraction operator --(Fraction num1)
         {
-            Fraction num2 = new Fraction(1, 1);
-            Fraction result;
-
-            if (num1._denominator != num2._denominator)
-            {
-                result = SubtractDifferentDenominators(num1, num2);
-            }
-            else
-            {
-                int diff = num1._numerator - num2._numerator;
-
-                result = new Fraction(diff, num1._denominator);
-            }
-
-            return result;
+            return new Fraction(num1._numerator - num1._denominator, num1._denominator);
         }
 
         public static bool operator <(Fraction num1, Fraction num2)
         {
-            bool result = false;
+            GetCommonDenominator(num1, num2, out Fraction one, out Fraction two);
 
-            if (num1._denominator != num2._denominator)
-            {
-                result = CompareDifferentDenominators(num1, num2);
-            }
-            else
-            {
-                result = num1._numerator < num2._numerator;
-            }
-
-            return result;
-        }
-
-        public static bool operator <=(Fraction num1, Fraction num2)
-        {
-            bool result = false;
-
-            if (num1._denominator != num2._denominator)
-            {
-                result = CompareDifferentDenominators(num1, num2);
-            }
-            else
-            {
-                result = num1._numerator <= num2._numerator;
-            }
-
-            return result;
-        }
-
-        public static bool operator >=(Fraction num1, Fraction num2)
-        {
-            bool result = false;
-
-            if (num1._denominator != num2._denominator)
-            {
-                result = CompareDifferent(num1, num2);
-            }
-            else
-            {
-                result = num1._numerator >= num2._numerator;
-            }
-
-            return result;
-        }
-
-        public static bool CompareDifferentDenominators(Fraction num1, Fraction num2)
-        {
-            bool result = false;
-
-            int addNumerator1 = num1._numerator * num2._denominator;
-            int addNumerator2 = num1._denominator * num2._numerator;
-
-            int multDenominator1 = num1._denominator * num2._denominator;
-            int multDenominator2 = num2._denominator * num1._denominator;
-
-            Fraction one = new Fraction(addNumerator1, multDenominator1);
-            Fraction two = new Fraction(addNumerator2, multDenominator2);
-
-            if (one._numerator <= two._numerator)
-            {
-                result = true;
-            }
-
-            return result;
+            return one._numerator < two._numerator;
         }
 
         public static bool operator >(Fraction num1, Fraction num2)
         {
-            bool result = false;
-
-            if (num1._denominator != num2._denominator)
-            {
-                result = CompareDifferent(num1, num2);
-            }
-            else
-            {
-                result = num1._numerator > num2._numerator;
-            }
-
-            return result;
+            return !(num1 < num2);
         }
 
-        public static bool CompareDifferent(Fraction num1, Fraction num2)
+        public static bool operator <=(Fraction num1, Fraction num2)
         {
-            bool result = false;
+            GetCommonDenominator(num1, num2, out Fraction one, out Fraction two);
 
-            int addNumerator1 = num1._numerator * num2._denominator;
-            int addNumerator2 = num1._denominator * num2._numerator;
-
-            int multDenominator1 = num1._denominator * num2._denominator;
-            int multDenominator2 = num2._denominator * num1._denominator;
-
-            Fraction one = new Fraction(addNumerator1, multDenominator1);
-            Fraction two = new Fraction(addNumerator2, multDenominator2);
-
-            if (one._numerator >= two._numerator)
-            {
-                result = true;
-            }
-
-            return result;
+            return one._numerator <= two._numerator;
         }
 
-        //public static Fraction operator |(Fraction num1, Fraction num2)
+        public static bool operator >=(Fraction num1, Fraction num2)
+        {
+            return !(num1 <= num2);
+        }
+
+        public static void GetCommonDenominator(Fraction num1, Fraction num2, 
+                out Fraction one, out Fraction two)
+        {
+            one = new Fraction(num1._numerator * num2._denominator,
+                    num1._denominator * num2._denominator);
+
+            two = new Fraction(num1._denominator * num2._numerator,
+                    num2._denominator * num1._denominator);
+        }
+
+        //     TODO: 0 - false, != 0 - true.
+        //public static Fraction operator |(Fraction num1, Fraction num2)    
         //{
             
         //}
@@ -264,38 +114,74 @@ namespace Fraction
         public Fraction(int numerator, int denominator = 1)
         {
             _numerator = numerator;
-            _denominator = denominator;
+
+            if (_denominator != 0)
+            {
+                _denominator = denominator;
+            }
         }
 
-        public Fraction(int numerator)
+        public Fraction(Fraction source)
         {
-            _numerator = numerator;
+            _numerator = source._numerator;
+            _denominator = source._denominator;
         }
+
+        //public Fraction(decimal number)    // TODO: Ask a question about three hares.
+        //{
+        //    int count = 1;
+
+        //    while (number % 1 != 0)
+        //    {
+        //        number *= FACTOR;
+        //        count *= FACTOR;
+        //    }
+
+        //    _numerator = (int)number;
+        //    _denominator = count;
+        //}
+
+        //public Fraction(double number)
+        //    : this((decimal)number)
+        //{
+        //}
+
+        //public Fraction(float number)
+        //    : this((decimal)number)
+        //{
+        //}
 
         public Fraction(double number)
         {
-            int count = 0;
+            double a = 1;
+            double b = 1;
 
-            while (number % 1 != 0)
+            while ((a / b) != number)
             {
-                number *= 10;
-                ++count;
+                if ((a / b) < number)
+                {
+                    ++a;
+                }
+                else
+                {
+                    ++b;
+                }
             }
 
-            _numerator = (int)number;
-            _denominator = Convert.ToInt32(Math.Pow(10, count));
+            _numerator = (int)a;
+            _denominator = (int)b;
         }
 
-        public Fraction(float number)
-            : this((double)number)
-        {
-        }
+        //public Fraction(float number)
+        //    : this((double)number)
+        //{
+        //}
 
         #endregion
 
         #region Normalize
 
-        public int GetGCD()    // The Greatest common divisor.
+        public int GetGCD()    // The Greatest common divisor. TODO: Make as static
         {
             int num1 = _numerator;
             int num2 = _denominator;
@@ -315,12 +201,15 @@ namespace Fraction
             return num1;
         }
 
-        public void ApplyNormalize()
+        public void ApplyNormalize()    // TODO: Make private method.
         {
-            int GCD = GetGCD();
+            int gcd = GetGCD();
 
-            _numerator /= GCD;
-            _denominator /= GCD;
+            if (gcd > 1)
+            {
+                _numerator /= gcd;
+                _denominator /= gcd;
+            }
         }
 
         #endregion

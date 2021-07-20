@@ -6,7 +6,7 @@ namespace Fraction
     {
         static void Main()
         {
-            Fraction num1 = new Fraction(1, 2);
+            Fraction num1 = new Fraction(0.8f);
             Fraction num2 = new Fraction(2, 3);
 
             Console.WriteLine("User Fraction: {0}", num1);
@@ -48,8 +48,8 @@ namespace Fraction
             //bool comp1 = num1 > num2;
             //Console.WriteLine("Compare Fractions: {0}", comp1);
 
-            //bool comp2 = num1 <= num2;
-            //Console.WriteLine("Compare Fractions: {0}", comp2);
+            bool comp2 = num1 <= num2;
+            Console.WriteLine("Compare Fractions: {0}", comp2);
 
             //bool comp3 = num1 >= num2;
             //Console.WriteLine("Compare Fractions: {0}", comp3);
