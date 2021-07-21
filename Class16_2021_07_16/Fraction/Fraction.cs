@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Fraction
+﻿namespace Fraction
 {
     class Fraction
     {
@@ -8,13 +6,34 @@ namespace Fraction
 
         private int FACTOR = 10;
         private double ACCURACY = 0.0001;
-        
+
         #endregion
 
         #region Private Data
 
         private int _numerator;
         private int _denominator = 1;
+
+        #endregion
+
+
+        #region Properties
+
+        public int Numerator
+        {
+            get
+            {
+                return _numerator;
+            }
+        }
+
+        public int Denonminator
+        {
+            get 
+            { 
+                return _denominator;
+            }
+        }
 
         #endregion
 
@@ -27,34 +46,56 @@ namespace Fraction
 
         public static Fraction operator +(Fraction num1, Fraction num2)
         {
-            return new Fraction(num1._numerator * num2._denominator + num2._numerator
-                    * num1._denominator, num1._denominator * num2._denominator);
+            return ApplyNormalize(new Fraction(num1._numerator * num2._denominator + num2._numerator
+                    * num1._denominator, num1._denominator * num2._denominator));
+        }
+
+        public static Fraction operator +(Fraction num1, AnotherFraction num2)
+        {
+            return ApplyNormalize(new Fraction(num1._numerator * num2.Denonminator + num2.Numerator
+                    * num1._denominator, num1._denominator * num2.Denonminator));
         }
 
         public static Fraction operator -(Fraction num1, Fraction num2)
         {
-            return num1 + new Fraction(-num2._numerator, num2._denominator);
+            return ApplyNormalize(num1 + new Fraction(-num2._numerator, num2._denominator));
+        }
+
+        public static Fraction operator -(Fraction num1, AnotherFraction num2)
+        {
+            return ApplyNormalize(num1 + new Fraction(-num2.Numerator, num2.Denonminator));
         }
 
         public static Fraction operator *(Fraction num1, Fraction num2)
         {
-            return new Fraction(num1._numerator * num2._numerator, 
-                    num1._denominator * num2._denominator);
+            return ApplyNormalize(new Fraction(num1._numerator * num2._numerator, 
+                    num1._denominator * num2._denominator));
+        }
+
+        public static Fraction operator *(Fraction num1, AnotherFraction num2)
+        {
+            return ApplyNormalize(new Fraction(num1._numerator * num2.Numerator,
+                    num1._denominator * num2.Denonminator));
         }
 
         public static Fraction operator /(Fraction num1, Fraction num2)
         {
-            return num1 * new Fraction(num2._denominator, num2._numerator);
+            return ApplyNormalize(num1 * new Fraction(num2._denominator, num2._numerator));
+        }
+
+        public static Fraction operator /(Fraction num1, AnotherFraction num2)
+        {
+            return ApplyNormalize(num1 * new Fraction(num2.Denonminator, num2.Numerator));
         }
 
         public static Fraction operator ++(Fraction num1)
         {
-            return new Fraction(num1._numerator + num1._denominator, num1._denominator);
+            return ApplyNormalize(new Fraction(num1._numerator + num1._denominator, num1._denominator));
         }
 
         public static Fraction operator --(Fraction num1)
         {
-            return new Fraction(num1._numerator - num1._denominator, num1._denominator);
+            return ApplyNormalize(new Fraction(num1._numerator - num1._denominator, num1._denominator));
         }
 
         public static bool operator <(Fraction num1, Fraction num2)
@@ -91,21 +132,81 @@ namespace Fraction
                     num2._denominator * num1._denominator);
         }
 
-        //     TODO: 0 - false, != 0 - true.
-        //public static Fraction operator |(Fraction num1, Fraction num2)    
-        //{
-            
-        //}
+        //     TODO: 0 - false, !=0 - true.
+        public static bool operator |(Fraction num1, Fraction num2)
+        {
+            GetLogicValue(num1, num2, out bool first, out bool second);
 
-        //public static Fraction operator &(Fraction num1, Fraction num2)
-        //{
+            return first | second;
+        }
 
-        //}
+        public static bool operator &(Fraction num1, Fraction num2)
+        {
+            GetLogicValue(num1, num2, out bool first, out bool second);
 
-        //public static Fraction operator ^(Fraction num1, Fraction num2)
-        //{
+            return first & second;
+        }
 
-        //}
+        public static bool operator ^(Fraction num1, Fraction num2)
+        {
+            GetLogicValue(num1, num2, out bool first, out bool second);
+
+            return first ^ second;
+        }
+
+        public static void GetLogicValue(Fraction num1, Fraction num2,
+                out bool first, out bool second)
+        {
+            first = false;
+            second = false;
+
+            if (num1._numerator / num1._denominator == 0)
+            {
+                first = true;
+            }
+
+            if (num2._numerator / num2._denominator == 0)
+            {
+                second = true;
+            }
+        }
+
+        public static implicit operator double(Fraction source)
+        {
+            return (double)source._numerator / source._denominator;
+        }
+
+        public static implicit operator float(Fraction source)
+        {
+            return (float)source._numerator / source._denominator;
+        }
+
+        public static explicit operator int(Fraction source)
+        {
+            return source._numerator / source._denominator;
+        }
+
+        public static implicit operator Fraction(double source)
+        {
+            return new Fraction(source);
+        }
+
+        public static implicit operator Fraction(float source)
+        {
+            return new Fraction(source);
+        }
+
+        public static explicit operator bool(Fraction source)
+        {
+            return source._numerator == 0;
+        }
+
+        public static explicit operator Fraction(AnotherFraction source)
+        {
+            return new Fraction(source.Numerator, source.Denonminator);
+        }
+
+
 
         #endregion
 
@@ -122,9 +223,8 @@ namespace Fraction
         }
 
         public Fraction(Fraction source)
+            :this(source._numerator, source._denominator)
         {
-            _numerator = source._numerator;
-            _denominator = source._denominator;
         }
 
         //public Fraction(decimal number)    // TODO: Ask a question about three hares.
@@ -153,63 +253,65 @@ namespace Fraction
 
         public Fraction(double number)
         {
-            double a = 1;
-            double b = 1;
+            double numerator = (int)number;
+            double denominator = 1;
 
-            while ((a / b) != number)
+            while ((numerator / denominator) != number)
             {
-                if ((a / b) < number)
+                if ((numerator / denominator) < number)
                 {
-                    ++a;
+                    ++numerator;
                 }
                 else
                 {
-                    ++b;
+                    ++denominator;
                 }
             }
 
-            _numerator = (int)a;
-            _denominator = (int)b;
+            _numerator = (int)numerator;
+            _denominator = (int)denominator;
         }
 
-        //public Fraction(float number)
-        //    : this((double)number)
-        //{
-        //}
+        public Fraction(float number)
+            : this((double)number)
+        {
+        }
 
         #endregion
 
         #region Normalize
 
-        public int GetGCD()    // The Greatest common divisor. TODO: Make as static
-        {
-            int num1 = _numerator;
-            int num2 = _denominator;
+        private static Fraction ApplyNormalize(Fraction source)       // This is an initial fraction after math operations.
+        {                                                            
+            Fraction copy = new Fraction(source);                    // TODO: Should we make a copy?
+                                                                     // We have to make a copy of initial fraction and normalizing it.
+            int divisor = GetGCD(copy.Numerator, copy.Denonminator);
 
-            while (num1 != num2)
+            if (divisor > 1)    // Normalizing.
             {
-                if (num1 > num2)
+                copy._numerator /= divisor;
+                copy._denominator /= divisor;
+            }
+
+            return copy;
+        }
+
+        // The Greatest common divisor.
+        public static int GetGCD(int source1, int source2)
+        {
+            while (source1 != source2)    
+            {
+                if (source1 > source2)
                 {
-                    num1 -= num2;
+                    source1 -= source2;
                 }
                 else
                 {
-                    num2 -= num1;
+                    source2 -= source1;
                 }
             }
 
-            return num1;
-        }
-
-        public void ApplyNormalize()    // TODO: Make private method.
-        {
-            int gcd = GetGCD();
-
-            if (gcd > 1)
-            {
-                _numerator /= gcd;
-                _denominator /= gcd;
-            }
+            return source1;
         }
 
         #endregion
