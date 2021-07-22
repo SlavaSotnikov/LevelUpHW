@@ -16,7 +16,13 @@ namespace Fraction
 
             AnotherFraction anNum = new AnotherFraction(3, 2);
 
-            bool res = num1 | num2;
+            Fraction num3 = (Fraction)anNum++;
+
+            AnotherFraction anNum1 = (AnotherFraction)num1;
+
+            Fraction res0 = num1 + anNum;
+
+            bool res = num1 ^ num2;
             Console.WriteLine("Sum Fraction: {0}", res);
 
             //Fraction res1 = num1 - num2;

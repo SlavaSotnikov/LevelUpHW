@@ -34,6 +34,16 @@
             return string.Format("{0}/{1}", _numerator, _denominator);
         }
 
+        public static AnotherFraction operator ++(AnotherFraction num1)
+        {
+            return new AnotherFraction(num1.Numerator + num1.Denonminator, num1.Denonminator);
+        }
+
+        public static AnotherFraction operator --(AnotherFraction num1)
+        {
+            return new AnotherFraction(num1.Numerator - num1.Denonminator, num1.Denonminator);
+        }
+
         public static explicit operator AnotherFraction(Fraction source)
         {
             return new AnotherFraction(source.Numerator, source.Denonminator);
