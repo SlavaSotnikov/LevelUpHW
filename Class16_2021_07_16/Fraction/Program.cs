@@ -6,7 +6,7 @@ namespace Fraction
     {
         static void Main()
         {
-            Fraction num1 = new Fraction(2, 2);
+            Fraction num1 = new Fraction(3.14);
             Fraction num2 = new Fraction(1, 1);
 
             Console.WriteLine("User Fraction: {0}", num1);

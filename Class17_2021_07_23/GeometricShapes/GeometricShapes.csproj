@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7F4DA6DE-2214-4F84-BB04-71E06977A307}</ProjectGuid>
+    <ProjectGuid>{584BE824-B8E0-4410-8A74-4F33D5C47658}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fraction</RootNamespace>
-    <AssemblyName>Fraction</AssemblyName>
+    <RootNamespace>GeometricShapes</RootNamespace>
+    <AssemblyName>GeometricShapes</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnotherFraction.cs" />
-    <Compile Include="Fraction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

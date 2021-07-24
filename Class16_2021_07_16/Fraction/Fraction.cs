@@ -1,4 +1,7 @@
-﻿namespace Fraction
+﻿using System;
+using System.Numerics;
+
+namespace Fraction
 {
     class Fraction
     {
@@ -134,29 +137,17 @@
 
         public static bool operator |(Fraction num1, Fraction num2)
         {
-            return GetLogicValue(num1) & GetLogicValue(num2);
+            return (bool)num1 & (bool)num2;
         }
 
         public static bool operator &(Fraction num1, Fraction num2)
         {
-            return GetLogicValue(num1) & GetLogicValue(num2);
+            return (bool)num1 & (bool)num2;
         }
 
         public static bool operator ^(Fraction num1, Fraction num2)
         {
-            return GetLogicValue(num1) ^ GetLogicValue(num2);
-        }
-
-        public static bool GetLogicValue(Fraction source)
-        {
-            bool result = false;
-
-            if (source._numerator / source._denominator == 0)
-            {
-                result = true;
-            }
-
-            return result;
+            return (bool)num1 ^ (bool)num2;
         }
 
         public static implicit operator double(Fraction source)
@@ -164,7 +155,7 @@
             return (double)source._numerator / source._denominator;
         }
 
-        public static implicit operator float(Fraction source)
+        public static explicit operator float(Fraction source)
         {
             return (float)source._numerator / source._denominator;
         }
@@ -172,16 +163,6 @@
         public static explicit operator int(Fraction source)
         {
             return source._numerator / source._denominator;
-        }
-
-        public static implicit operator Fraction(double source)
-        {
-            return new Fraction(source);
-        }
-
-        public static implicit operator Fraction(float source)
-        {
-            return new Fraction(source);
         }
 
         public static explicit operator bool(Fraction source)
@@ -200,13 +181,7 @@
 
         public Fraction(int numerator, int denominator = 1)
         {
-            int divisor = GetGCD(numerator, denominator);
-
-            if (divisor > 1)
-            {
-                numerator /= divisor;
-                denominator /= divisor;
-            }
+            ApplyNormalize(ref numerator, ref denominator);
 
             _numerator = numerator;
 
@@ -221,49 +196,18 @@
         {
         }
 
-        //public Fraction(decimal number)    // TODO: Ask a question about three hares.
-        //{
-        //    int count = 1;
-
-        //    while (number % 1 != 0)
-        //    {
-        //        number *= FACTOR;
-        //        count *= FACTOR;
-        //    }
-
-        //    _numerator = (int)number;
-        //    _denominator = count;
-        //}
-
-        //public Fraction(double number)
-        //    : this((decimal)number)
-        //{
-        //}
-
-        //public Fraction(float number)
-        //    : this((decimal)number)
-        //{
-        //}
-
         public Fraction(double number)
         {
-            double numerator = (int)number;
-            double denominator = 1;
+            int count = 1;
 
-            while ((numerator / denominator) != number)   // TODO: We don't need to apply normalizing because of the algorithm. 
+            while (Math.Abs(number % 1) > ACCURACY)
             {
-                if ((numerator / denominator) < number)
-                {
-                    ++numerator;
-                }
-                else
-                {
-                    ++denominator;
-                }
+                number *= FACTOR;
+                count *= FACTOR;
             }
 
-            _numerator = (int)numerator;
-            _denominator = (int)denominator;
+            _numerator = (int)number;
+            _denominator = count;
         }
 
         public Fraction(float number)
@@ -275,11 +219,8 @@
 
         #region Normalize
 
-        private static Fraction ApplyNormalize(Fraction source)       // TODO: This is an initial fraction after math operations.
+        private static void ApplyNormalize(ref int numerator, ref int denominator)     
         {
-            int numerator = source._numerator;
-            int denominator = source._denominator;
-
             int divisor = GetGCD(numerator, denominator);
 
             if (divisor > 1)    
@@ -287,8 +228,6 @@
                 numerator /= divisor;
                 denominator /= divisor;
             }
-
-            return new Fraction(numerator, denominator);              // TODO: Return a new normalized fraction.
         }
 
         // The Greatest common divisor.
