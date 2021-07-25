@@ -1,0 +1,6 @@
+﻿namespace GeometricShapes
+{
+    class Shapes
+    {
+    }
+}
