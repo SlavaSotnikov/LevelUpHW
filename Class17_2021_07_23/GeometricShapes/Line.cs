@@ -47,18 +47,17 @@ namespace GeometricShapes
 
         #region Constructors
 
-        public Line(int coordinatePoint1X, int coordinatePoint1Y,
-                int coordinatePoint2X, int coordinatePoint2Y)
-            : base(coordinatePoint1X, coordinatePoint1Y)
+        public Line(Point first, Point second)
+            : base(first)
         {
-            if (IsValidCoordinate(coordinatePoint2X))
+            if (IsValidCoordinate(second.CoordinateX))
             {
-                _coordinatePoint2X = coordinatePoint2X;
+                _coordinatePoint2X = second.CoordinateX;
             }
 
-            if (IsValidCoordinate(coordinatePoint2Y))
+            if (IsValidCoordinate(second.CoordinateY))
             {
-                _coordinatePoint2Y = coordinatePoint2Y;
+                _coordinatePoint2Y = second.CoordinateY;
             }
         }
 

@@ -45,12 +45,19 @@
 
         #region Constructors
 
-        public Triangle(int coordinatePoint1X, int coordinatePoint1Y,
-                int coordinatePoint2X, int coordinatePoint2Y, int coordinatePoint3X, int coordinatePoint3Y)
-            : base(coordinatePoint1X, coordinatePoint1Y, coordinatePoint2X, coordinatePoint2Y)
+        public Triangle(Point one, Point two, Point three)
+            : base(one, two)
         {
-            _coordinatePoint3X = coordinatePoint3X;
-            _coordinatePoint3Y = coordinatePoint3Y;
+            if (IsValidCoordinate(three.CoordinateX))
+            {
+                _coordinatePoint3X = three.CoordinateX;
+            }
+
+            if (IsValidCoordinate(three.CoordinateY))
+            {
+                _coordinatePoint3Y = three.CoordinateY;
+            }
+
         }
 
         #endregion

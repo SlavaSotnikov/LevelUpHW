@@ -60,6 +60,11 @@ namespace GeometricShapes
             }
         }
 
+        public Point(Point source)
+            :this(source._coordinatePoint1X, source._coordinatePoint1Y)
+        {
+        }
+
         #endregion
 
         #region Methods

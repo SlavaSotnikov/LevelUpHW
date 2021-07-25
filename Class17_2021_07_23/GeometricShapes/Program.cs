@@ -6,14 +6,23 @@ namespace GeometricShapes
     {
         static void Main()
         {
-            //Point one = new Point(5, 1);
-            //UI.ShowPoint(one);
+            Point one = new Point(5, 10);
+            UI.ShowPoint(one);
 
-            //Line straight = new Line(15, 20, 30, 40);
-            //UI.ShowLine(two);
+            Point two = new Point(30, 30);
+            UI.ShowPoint(one);
 
-            Triangle right = new Triangle(5, 10, 30, 30, 5, 30);
+            Point three = new Point(5, 30);
+            UI.ShowPoint(one);
+
+            Line straight = new Line(one, two);
+            UI.ShowLine(straight);
+
+            Triangle right = new Triangle(one, two, three);
             UI.ShowTriangle(right);
+
+            //Circle ellipse = new Circle(one, 10);
+            //UI.ShowCircle(ellipse);
 
             Console.ReadKey();
         }
