@@ -4,7 +4,7 @@
     {
         #region Private Data
 
-        private int _radius;
+        protected int _radius;
 
         #endregion
 
@@ -36,6 +36,18 @@
             if (IsValidRadius(radius))
             {
                 _radius = radius;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void SetSize(int deltaRadius)
+        {
+            if (IsValidRadius(deltaRadius))
+            {
+                _radius += deltaRadius;
             }
         }
 

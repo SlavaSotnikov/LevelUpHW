@@ -4,48 +4,53 @@ namespace GeometricShapes
 {
     class UI
     {
+        
+
         #region Show Data
 
-        public static void PrintPoint(int coordinateX, int coordinateY)
+        public static void Show(Point source)
         {
             Console.CursorVisible = false;
 
-            Console.SetCursorPosition(coordinateX, coordinateY);
+            Console.SetCursorPosition(source.CoordinateX, source.CoordinateY);
             Console.WriteLine("*");
         }
 
-        public static void ShowPoint(Point source)
+        public static void Show(Line source)
         {
-            PrintPoint(source.CoordinateX, source.CoordinateY);
+            Show(new Point(source.CoordinateX, source.CoordinateY));
+
+            Show(new Point(source.Coordinate2X, source.Coordinate2Y));
         }
 
-        public static void ShowLine(Line source)
+        public static void Show(Triangle source)
         {
-            PrintLine(source.CoordinateX, source.CoordinateY,
-                    source.CoordinatePoint2X, source.CoordinatePoint2Y);
+            ConnectTwoPoints(new Point(source.CoordinateX, source.CoordinateY), new Point(source.Coordinate2X, source.Coordinate2Y));
+            ConnectTwoPoints(new Point(source.CoordinateX, source.CoordinateY), new Point(source.Coordinate3X, source.Coordinate3Y));
+            ConnectTwoPoints(new Point(source.Coordinate3X, source.Coordinate3Y), new Point(source.Coordinate2X, source.Coordinate2Y));
         }
 
-        public static void ShowTriangle(Triangle source)
+        public static void Show(params Point[] source)
         {
-            PrintLine(source.CoordinateX, source.CoordinateY,
-                    source.CoordinatePoint3X, source.CoordinatePoint3Y);
-
-            PrintLine(source.CoordinateX, source.CoordinateY,
-                    source.CoordinatePoint2X, source.CoordinatePoint2Y);
-
-            PrintLine(source.CoordinatePoint3X, source.CoordinatePoint3Y,
-                    source.CoordinatePoint2X, source.CoordinatePoint2Y);
+            for (int i = 0; i < source.Length - 1; i++)
+            {
+                ConnectTwoPoints(source[i], source[i+1]);
+            }
         }
 
         #endregion
 
         #region Bresenham's algorithms
 
-        public static void PrintLine(int coordinateX, int coordinateY,
-                int coordinateX2, int coordinateY2)
+        public static void ConnectTwoPoints(Point first, Point last)
         {
-            int w = coordinateX2 - coordinateX;
-            int h = coordinateY2 - coordinateY;
+            int coordX = first.CoordinateX;
+            int coordY = first.CoordinateY;
+            int coordX2 = last.CoordinateX;
+            int coordY2 = last.CoordinateY;
+
+            int w = coordX2 - coordX;
+            int h = coordY2 - coordY;
 
             int dx1 = 0;
             int dy1 = 0;
@@ -101,24 +106,38 @@ namespace GeometricShapes
 
             int numerator = longest >> 1;
 
+            int capacity = 20;
+            //byte coef = 2;
+            Point[] points = new Point[capacity];
+
             for (int i = 0; i <= longest; i++)
             {
+                Show(new Point(coordX, coordY));
+
                 numerator += shortest;
 
                 if (!(numerator < longest))
                 {
                     numerator -= longest;
-                    coordinateX += dx1;
-                    coordinateY += dy1;
+                    coordX += dx1;
+                    coordY += dy1;
                 }
                 else
                 {
-                    coordinateX += dx2;
-                    coordinateY += dy2;
+                    coordX += dx2;
+                    coordY += dy2;
                 }
 
-                PrintPoint(coordinateX, coordinateY);
+                //if (_countOfPoints >= points.Length)
+                //{
+                //    Array.Resize(ref points, points.Length * coef);
+                //}
+
+                //points[_countOfPoints] = new Point(coordX, coordY);
+                //++_countOfPoints;
             }
+
+            //return points;
         }
 
         public static void ShowCircle(Circle source)
@@ -149,14 +168,14 @@ namespace GeometricShapes
 
         private static void DrawCircle(int coordX, int coordY, int x, int y)
         {
-            PrintPoint(coordX + x, coordY + y);
-            PrintPoint(coordX - x, coordY + y);
-            PrintPoint(coordX + x, coordY - y);
-            PrintPoint(coordX - x, coordY - y);
-            PrintPoint(coordX + y, coordY + x);
-            PrintPoint(coordX - y, coordY + x);
-            PrintPoint(coordX + y, coordY - x);
-            PrintPoint(coordX - y, coordY - x);
+            //PrintPoint(coordX + x, coordY + y);
+            //PrintPoint(coordX - x, coordY + y);
+            //PrintPoint(coordX + x, coordY - y);
+            //PrintPoint(coordX - x, coordY - y);
+            //PrintPoint(coordX + y, coordY + x);
+            //PrintPoint(coordX - y, coordY + x);
+            //PrintPoint(coordX + y, coordY - x);
+            //PrintPoint(coordX - y, coordY - x);
         }
 
         #endregion
