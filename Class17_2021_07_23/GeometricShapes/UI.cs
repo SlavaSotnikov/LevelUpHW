@@ -4,7 +4,7 @@ namespace GeometricShapes
 {
     class UI
     {
-        
+
 
         #region Show Data
 
@@ -16,25 +16,11 @@ namespace GeometricShapes
             Console.WriteLine("*");
         }
 
-        public static void Show(Line source)
-        {
-            Show(new Point(source.CoordinateX, source.CoordinateY));
-
-            Show(new Point(source.Coordinate2X, source.Coordinate2Y));
-        }
-
-        public static void Show(Triangle source)
-        {
-            ConnectTwoPoints(new Point(source.CoordinateX, source.CoordinateY), new Point(source.Coordinate2X, source.Coordinate2Y));
-            ConnectTwoPoints(new Point(source.CoordinateX, source.CoordinateY), new Point(source.Coordinate3X, source.Coordinate3Y));
-            ConnectTwoPoints(new Point(source.Coordinate3X, source.Coordinate3Y), new Point(source.Coordinate2X, source.Coordinate2Y));
-        }
-
         public static void Show(params Point[] source)
         {
             for (int i = 0; i < source.Length - 1; i++)
             {
-                ConnectTwoPoints(source[i], source[i+1]);
+                ConnectTwoPoints(source[i], source[i + 1]);
             }
         }
 
@@ -42,12 +28,12 @@ namespace GeometricShapes
 
         #region Bresenham's algorithms
 
-        public static void ConnectTwoPoints(Point first, Point last)
+        public static void ConnectTwoPoints(Point first, Point second)
         {
             int coordX = first.CoordinateX;
             int coordY = first.CoordinateY;
-            int coordX2 = last.CoordinateX;
-            int coordY2 = last.CoordinateY;
+            int coordX2 = second.CoordinateX;
+            int coordY2 = second.CoordinateY;
 
             int w = coordX2 - coordX;
             int h = coordY2 - coordY;
@@ -106,10 +92,6 @@ namespace GeometricShapes
 
             int numerator = longest >> 1;
 
-            int capacity = 20;
-            //byte coef = 2;
-            Point[] points = new Point[capacity];
-
             for (int i = 0; i <= longest; i++)
             {
                 Show(new Point(coordX, coordY));
@@ -127,20 +109,10 @@ namespace GeometricShapes
                     coordX += dx2;
                     coordY += dy2;
                 }
-
-                //if (_countOfPoints >= points.Length)
-                //{
-                //    Array.Resize(ref points, points.Length * coef);
-                //}
-
-                //points[_countOfPoints] = new Point(coordX, coordY);
-                //++_countOfPoints;
             }
-
-            //return points;
         }
 
-        public static void ShowCircle(Circle source)
+        public static void DrawCircle(Circle source)
         {
             int x = 0;
             int y = source.Radius;
@@ -168,14 +140,14 @@ namespace GeometricShapes
 
         private static void DrawCircle(int coordX, int coordY, int x, int y)
         {
-            //PrintPoint(coordX + x, coordY + y);
-            //PrintPoint(coordX - x, coordY + y);
-            //PrintPoint(coordX + x, coordY - y);
-            //PrintPoint(coordX - x, coordY - y);
-            //PrintPoint(coordX + y, coordY + x);
-            //PrintPoint(coordX - y, coordY + x);
-            //PrintPoint(coordX + y, coordY - x);
-            //PrintPoint(coordX - y, coordY - x);
+            Show(new Point(coordX + x, coordY + y));
+            Show(new Point(coordX - x, coordY + y));
+            Show(new Point(coordX + x, coordY - y));
+            Show(new Point(coordX - x, coordY - y));
+            Show(new Point(coordX + y, coordY + x));
+            Show(new Point(coordX - y, coordY + x));
+            Show(new Point(coordX + y, coordY - x));
+            Show(new Point(coordX - y, coordY - x));
         }
 
         #endregion

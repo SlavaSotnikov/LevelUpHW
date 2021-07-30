@@ -6,8 +6,8 @@ namespace GeometricShapes
     {
         #region Private Data
 
-        protected int _x;
-        protected int _y;
+        protected int _coordinateX;
+        protected int _coordinateY;
 
         #endregion
 
@@ -17,13 +17,13 @@ namespace GeometricShapes
         {
             get 
             {
-                return _x;
+                return _coordinateX;
             }
             set 
             {
                 if (IsValidCoordinate(value))
                 {
-                    _x = value; 
+                    _coordinateX = value; 
                 } 
             }
         }
@@ -32,13 +32,13 @@ namespace GeometricShapes
         {
             get
             {
-                return _y;
+                return _coordinateY;
             }
             set 
             {
                 if (IsValidCoordinate(value))
                 {
-                    _y = value; 
+                    _coordinateY = value; 
                 }
             }
         }
@@ -51,17 +51,17 @@ namespace GeometricShapes
         {
             if (IsValidCoordinate(coordinateX))
             {
-                _x = coordinateX; 
+                _coordinateX = coordinateX; 
             }
 
             if (IsValidCoordinate(coordinateY))
             {
-                _y = coordinateY; 
+                _coordinateY = coordinateY; 
             }
         }
 
         public Point(Point source)
-            :this(source._x, source._y)
+            :this(source._coordinateX, source._coordinateY)
         {
         }
 
@@ -71,20 +71,13 @@ namespace GeometricShapes
 
         public override string ToString()
         {
-            return string.Format("{0},{1}", _x, _y);
+            return string.Format("{0},{1}", _coordinateX, _coordinateY);
         }
 
         public void Move(int deltaX, int deltaY)
         {
-            if (_x - deltaX >= 0)
-            {
-                _x += deltaX;
-            }
-
-            if (_y - deltaY >= 0)
-            {
-                _y += deltaY;
-            }
+            _coordinateX += deltaX;
+            _coordinateY += deltaY;
         }
 
         public static bool IsValidCoordinate(int coordinate)

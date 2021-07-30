@@ -6,17 +6,17 @@ namespace GeometricShapes
     {
         #region Private Data
 
-        protected int _side;
+        protected int _wide;
 
         #endregion
 
         #region Properties
 
-        public int Side
+        public int Wide
         {
             get
             {
-                return _side;
+                return _wide;
             }
         }
 
@@ -24,10 +24,10 @@ namespace GeometricShapes
 
         #region Constructor
 
-        public Square(Point one, int length)
+        public Square(Point one, int wide)
             : base(one)
         {
-            _side = length;
+            _wide = wide;
         }
 
         #endregion

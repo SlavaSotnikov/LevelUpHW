@@ -4,30 +4,41 @@ namespace GeometricShapes
 {
     class Trapeze : Rectangle
     {
-        private int _coordX;
-        private int _coordY;
+        #region Private Data
 
-        public int CoordX
-        {
-            get 
-            { 
-                return _coordX;
-            }
-        }
+        private int _ground;
 
-        public int CoordY
+        #endregion
+
+        #region Properties
+
+        public int Ground
         {
             get 
             {
-                return _coordY; 
+                return _ground; 
             }
         }
 
-        public Trapeze(Point one, Point two, int side1, int side2)
+        #endregion
+
+        #region Constructor
+
+        public Trapeze(Point one, int side1, int side2, int ground)
             : base(one, side1, side2)
         {
-            _coordX = two.CoordinateX;
-            _coordY = two.CoordinateY;
+            _ground = ground;
         }
+
+        #endregion
+
+        #region Methods
+
+        public new void Move(int deltaX, int deltaY)
+        {
+            base.Move(deltaX, deltaY);
+        }
+
+        #endregion
     }
 }

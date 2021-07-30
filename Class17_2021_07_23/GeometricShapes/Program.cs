@@ -7,29 +7,45 @@ namespace GeometricShapes
         static void Main()
         {
             Point one = new Point(12, 1);
-            //UI.Print(one);
-
             Point two = new Point(12, 10); 
-            //UI.Print(one);
-
             Point three = new Point(25, 1);
-            //UI.Print(one);
+            Point four = new Point(22, 10);
 
             //Line myLine = new Line(one, two);
-            //myLine.Move(2, 4);
-            //UI.Show(myLine);
+            //UI.Show(BL.GetPoints(myLine));
+            //myLine.Move(0, 4);
+            //UI.Show(BL.GetPoints(myLine));
 
             //Triangle right = new Triangle(one, two, three);
-            //UI.Show(right);
+            //UI.Show(BL.GetPoints(right));
+            //right.Move(12, 0);
+            //UI.Show(BL.GetPoints(right));
 
             //Square my = new Square(one, 10);
             //UI.Show(BL.GetPoints(my));
+            //my.Move(5, 0);
+            //UI.Show(BL.GetPoints(my));
 
-            //Circle ellipse = new Circle(one, 10);
-            //UI.ShowCircle(ellipse);
+            //Rectangle rec = new Rectangle(one, 25, 5);
+            //UI.Show(BL.GetPoints(rec));
+            //rec.Move(35, 8);
+            //UI.Show(BL.GetPoints(rec));
 
-            Trapeze tr = new Trapeze(one, two, 5, 10);
-            UI.Show(tr);
+            //Circle myEl = new Circle(four, 10);
+            //UI.DrawCircle(myEl);
+            //myEl.Move(10, 0);
+            //UI.DrawCircle(myEl);
+
+            //Trapeze tr = new Trapeze(one, 10, 15, 5);
+            //UI.Show(BL.GetPoints(tr));
+            //tr.Move(0, 20);
+            //UI.Show(BL.GetPoints(tr));
+
+            Point[] po = { new Point(20, 15), new Point(10, 17), new Point(10, 20) };
+            PolyLine pl = new PolyLine(one, two, po);
+            UI.Show(BL.GetPoints(pl));
+            pl.Move(5, 0);
+            UI.Show(BL.GetPoints(pl));
 
             Console.ReadKey();
         }

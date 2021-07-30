@@ -6,13 +6,13 @@ namespace GeometricShapes
     {
         #region Private Data
 
-         int _side2;
+        protected int _height;
 
-        public int Side2
+        public int Height
         {
             get 
             {
-                return _side2; 
+                return _height; 
             }
         }
 
@@ -20,10 +20,19 @@ namespace GeometricShapes
 
         #region Constructors
 
-        public Rectangle(Point one, int side1, int side2)
+        public Rectangle(Point one, int side1, int height)
             : base(one, side1)
         {
-            _side2 = side2;
+            _height = height;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public new void Move(int deltaX, int deltaY)
+        {
+            base.Move(deltaX, deltaY);
         }
 
         #endregion

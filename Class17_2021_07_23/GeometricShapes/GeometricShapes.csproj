@@ -57,6 +57,7 @@
     <Compile Include="Shapes\Square.cs" />
     <Compile Include="Shapes\Trapeze.cs" />
     <Compile Include="Shapes\Triangle.cs" />
+    <Compile Include="TriangleIn.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
