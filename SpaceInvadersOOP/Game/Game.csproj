@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{584BE824-B8E0-4410-8A74-4F33D5C47658}</ProjectGuid>
+    <ProjectGuid>{E02069C0-EE96-4D44-B0DE-8823F7F4C08F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>GeometricShapes</RootNamespace>
-    <AssemblyName>GeometricShapes</AssemblyName>
+    <RootNamespace>Game</RootNamespace>
+    <AssemblyName>Game</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,29 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL.cs" />
-    <Compile Include="Coordinate.cs" />
-    <Compile Include="Figure.cs" />
-    <Compile Include="Picture.cs" />
-    <Compile Include="Shapes\Circle.cs" />
-    <Compile Include="Shapes\Ellipse.cs" />
-    <Compile Include="Shapes\Line.cs" />
-    <Compile Include="Enum\OperationStatus.cs" />
-    <Compile Include="Shapes\Point.cs" />
-    <Compile Include="Shapes\PolyLine.cs" />
+    <Compile Include="Cartridge.cs" />
+    <Compile Include="Display.cs" />
+    <Compile Include="EnemyShip.cs" />
+    <Compile Include="EnemyShip1.cs" />
+    <Compile Include="GameField.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shapes\Rectangle.cs" />
-    <Compile Include="Shapes.cs" />
-    <Compile Include="Shapes\Square.cs" />
-    <Compile Include="Shapes\Trapeze.cs" />
-    <Compile Include="Shapes\Triangle.cs" />
-    <Compile Include="TriangleIn.cs" />
-    <Compile Include="UI.cs" />
+    <Compile Include="Ship.cs" />
+    <Compile Include="Shot.cs" />
+    <Compile Include="Shot1.cs" />
+    <Compile Include="SpaceCraft.cs" />
+    <Compile Include="Swarm.cs" />
+    <Compile Include="UserShip.cs" />
+    <Compile Include="UserShip1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ShapesDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

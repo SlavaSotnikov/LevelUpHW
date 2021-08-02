@@ -3,64 +3,71 @@
   <Class Name="GeometricShapes.Circle" Collapsed="true">
     <Position X="1" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAIAAAAACAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>CAAIIAAAACAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shapes\Circle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Line" Collapsed="true">
     <Position X="5.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAgAAAAAAAAAAAQAAAAAAAAAAAAAAMAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAgAAAAAAAAAAAQAAAAAAAAAAAAEAMAA=</HashCode>
       <FileName>Shapes\Line.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Point" Collapsed="true">
-    <Position X="3.25" Y="1.25" Width="1.5" />
+    <Position X="3.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAIAIQAAAAEAAAAAAAAAAgAIAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAAAEAAAAAAAAAAgAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Shapes\Point.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Square" Collapsed="true">
     <Position X="3.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAgAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAgAAAAAAIAAAAAAA=</HashCode>
       <FileName>Shapes\Square.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Triangle" Collapsed="true">
     <Position X="5.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAMAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAMAA=</HashCode>
       <FileName>Shapes\Triangle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Ellipse" Collapsed="true">
     <Position X="1" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <HashCode>AAAAIBAAAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>Shapes\Ellipse.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.PolyLine" Collapsed="true">
     <Position X="8.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAAAAiAEAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shapes\PolyLine.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Rectangle" Collapsed="true">
     <Position X="3.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAABICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shapes\Rectangle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Trapeze" Collapsed="true">
     <Position X="3.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Shapes\Trapeze.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GeometricShapes.Figure" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAIAAAAAAAAAFAAAQ=</HashCode>
+      <FileName>Figure.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

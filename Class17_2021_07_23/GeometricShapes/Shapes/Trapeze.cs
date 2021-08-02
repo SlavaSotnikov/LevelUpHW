@@ -34,9 +34,21 @@ namespace GeometricShapes
 
         #region Methods
 
-        public new void Move(int deltaX, int deltaY)
+        public override void Move(int deltaX, int deltaY)
         {
             base.Move(deltaX, deltaY);
+        }
+
+        public override Coordinate[] GetPoints()
+        {
+            Coordinate[] points = base.GetPoints();
+
+            points.SetValue(new Coordinate(CoordinateX + _wide, CoordinateY), 1);
+            points.SetValue(new Coordinate(CoordinateX + _wide, CoordinateY + _ground), 2);
+            points.SetValue(new Coordinate(CoordinateX, CoordinateY + _height), 3);
+            points.SetValue(new Coordinate(CoordinateX, CoordinateY), 4);
+
+            return points;
         }
 
         #endregion

@@ -65,7 +65,7 @@ namespace GeometricShapes
 
         #region Methods
 
-        public new void Move(int deltaX, int deltaY)
+        public override void Move(int deltaX, int deltaY)
         {
             base.Move(deltaX, deltaY);
 
@@ -80,11 +80,28 @@ namespace GeometricShapes
             }
         }
 
-        #endregion
-
         public static bool IsValidDelta(int coordinate, int delta)
         {
             return (coordinate + delta) > 0;
         }
+
+        public override void Resize(double mult)
+        {
+            base.Resize(mult);
+        }
+
+        public override Coordinate[] GetPoints()
+        {
+            Coordinate[] points = base.GetPoints();
+
+            Array.Resize(ref points, points.Length + 1);
+            points.SetValue(new Coordinate(Coordinate2X, Coordinate2Y), 1);
+
+            return points;
+        }
+
+        #endregion
+
+
     }
 }

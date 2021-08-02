@@ -1,4 +1,6 @@
-﻿namespace GeometricShapes
+﻿using System;
+
+namespace GeometricShapes
 {
     class Triangle : Line
     {
@@ -63,7 +65,7 @@
 
         #region Methods
 
-        public new void Move(int deltaX, int deltaY)
+        public override void Move(int deltaX, int deltaY)
         {
             base.Move(deltaX, deltaY);
 
@@ -76,6 +78,18 @@
             {
                 _coordinate3Y += deltaY;
             }
+        }
+
+        public override Coordinate[] GetPoints()
+        {
+            Coordinate[] points = base.GetPoints();
+
+            Array.Resize(ref points, points.Length + 2);
+
+            points.SetValue(new Coordinate(Coordinate3X, Coordinate3Y), 2);
+            points.SetValue(new Coordinate(CoordinateX, CoordinateY), 3);
+
+            return points;
         }
 
         #endregion

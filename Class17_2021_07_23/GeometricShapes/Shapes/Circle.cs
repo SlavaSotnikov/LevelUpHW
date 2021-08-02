@@ -1,4 +1,6 @@
-﻿namespace GeometricShapes
+﻿using System;
+
+namespace GeometricShapes
 {
     class Circle : Point
     {
@@ -49,6 +51,15 @@
             {
                 _radius += deltaRadius;
             }
+        }
+
+        public override Coordinate[] GetPoints()
+        {
+            Coordinate[] points = base.GetPoints();
+
+            points[0].Radius = _radius;
+
+            return points;
         }
 
         #endregion

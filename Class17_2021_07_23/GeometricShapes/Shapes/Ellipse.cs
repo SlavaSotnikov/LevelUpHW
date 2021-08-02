@@ -35,7 +35,7 @@ namespace GeometricShapes
 
         #endregion
 
-        #region MyRegion
+        #region Methods
 
         public void SetSecondRadius(int deltaRadius)
         {
@@ -43,6 +43,20 @@ namespace GeometricShapes
             {
                 _secondRadius += deltaRadius;
             }
+        }
+
+        public override void Move(int deltaX, int deltaY)
+        {
+            base.Move(deltaX, deltaY);
+        }
+
+        public override Coordinate[] GetPoints()
+        {
+            Coordinate[] points = base.GetPoints();
+
+            points.SetValue(new Coordinate(_secondRadius, _secondRadius), 1);
+
+            return points;
         }
 
         #endregion

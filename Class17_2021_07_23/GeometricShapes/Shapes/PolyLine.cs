@@ -7,27 +7,26 @@ namespace GeometricShapes
         #region Private Data
 
         private Point[] _points;
-        private int _amountOfPoints = 2;
 
         #endregion
 
         #region Accessors
 
-        public Point this[int index]
-        {
-            get
-            {
-                return new Point(_points[index]);
-            }
-        }
+        //public Point this[int index]
+        //{
+        //    get
+        //    {
+        //        return new Point(_points[index]);
+        //    }
+        //}
 
-        public int AmountOfPoints
-        {
-            get 
-            {
-                return _amountOfPoints; 
-            }
-        }
+        //public int AmountOfPoints
+        //{
+        //    get 
+        //    {
+        //        return _amountOfPoints; 
+        //    }
+        //}
 
         #endregion
 
@@ -41,7 +40,7 @@ namespace GeometricShapes
             for (int i = 0; i < source.Length; i++)
             {
                 _points[i] = new Point(source[i]);
-                ++_amountOfPoints;
+                //++_amountOfPoints;
             }
         }
 
@@ -49,15 +48,29 @@ namespace GeometricShapes
 
         #region Methods
 
-        public new void Move(int deltaX, int deltaY)
+        public override void Move(int deltaX, int deltaY)
         {
             base.Move(deltaX, deltaY);
 
-            for (int i = 2; i < _amountOfPoints; i++)
+            for (int i = 0; i < _points.Length; i++)
             {
-                _points[i-2].CoordinateX += deltaX;
-                _points[i-2].CoordinateY += deltaY;
+                _points[i].CoordinateX += deltaX;
+                _points[i].CoordinateY += deltaY;
             }
+        }
+
+        public override Coordinate[] GetPoints()
+        {
+            Coordinate[] points = base.GetPoints();
+
+            Array.Resize(ref points, points.Length + _points.Length);
+
+            for (int i = 2; i < points.Length; i++)
+            {
+                points[i] = new Coordinate(_points[i - 2].CoordinateX, _points[i - 2].CoordinateY);
+            }
+
+            return points;
         }
 
         #endregion

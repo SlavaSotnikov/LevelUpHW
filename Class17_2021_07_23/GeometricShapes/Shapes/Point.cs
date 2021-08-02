@@ -2,66 +2,25 @@
 
 namespace GeometricShapes
 {
-    class Point
+    class Point : Figure
     {
-        #region Private Data
-
-        protected int _coordinateX;
-        protected int _coordinateY;
-
-        #endregion
-
-        #region Properties
-
-        public int CoordinateX
-        {
-            get 
-            {
-                return _coordinateX;
-            }
-            set 
-            {
-                if (IsValidCoordinate(value))
-                {
-                    _coordinateX = value; 
-                } 
-            }
-        }
-
-        public int CoordinateY
-        {
-            get
-            {
-                return _coordinateY;
-            }
-            set 
-            {
-                if (IsValidCoordinate(value))
-                {
-                    _coordinateY = value; 
-                }
-            }
-        }
-
-        #endregion
-
         #region Constructors
 
         public Point(int coordinateX, int coordinateY)
         {
             if (IsValidCoordinate(coordinateX))
             {
-                _coordinateX = coordinateX; 
+                _point.X = coordinateX; 
             }
 
             if (IsValidCoordinate(coordinateY))
             {
-                _coordinateY = coordinateY; 
+                _point.Y = coordinateY; 
             }
         }
 
         public Point(Point source)
-            :this(source._coordinateX, source._coordinateY)
+            :this(source._point.X, source._point.Y)
         {
         }
 
@@ -71,18 +30,32 @@ namespace GeometricShapes
 
         public override string ToString()
         {
-            return string.Format("{0},{1}", _coordinateX, _coordinateY);
+            return string.Format("{0},{1}", _point.X, _point.Y);
         }
 
-        public void Move(int deltaX, int deltaY)
+        public override void Move(int deltaX, int deltaY)
         {
-            _coordinateX += deltaX;
-            _coordinateY += deltaY;
+            _point.X += deltaX;
+            _point.Y += deltaY;
         }
 
         public static bool IsValidCoordinate(int coordinate)
         {
             return coordinate >= 0;
+        }
+
+        public override void Resize(double mult)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Coordinate[] GetPoints()
+        {
+            Coordinate[] result = new Coordinate[1];
+
+            result[0] = new Coordinate(_point.X, _point.Y);
+
+            return result;
         }
 
         #endregion

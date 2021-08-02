@@ -65,19 +65,19 @@ namespace GeometricShapes
             return result;
         }
 
-        public static Point[] GetPoints(PolyLine source)
-        {
-            Point[] result = new Point[source.AmountOfPoints];
+        //public static Point[] GetPoints(PolyLine source)
+        //{
+        //    Point[] result = new Point[source.AmountOfPoints];
 
-            result[0] = new Point(source.CoordinateX, source.CoordinateY);
-            result[1] = new Point(source.Coordinate2X, source.Coordinate2Y);
+        //    result[0] = new Point(source.CoordinateX, source.CoordinateY);
+        //    result[1] = new Point(source.Coordinate2X, source.Coordinate2Y);
 
-            for (int i = 2; i < source.AmountOfPoints; i++)
-            {
-                result[i] = source[i - 2];
-            }
+        //    for (int i = 2; i < source.AmountOfPoints; i++)
+        //    {
+        //        result[i] = source[i - 2];
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }
