@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Figure.cs" />
     <Compile Include="Picture.cs" />

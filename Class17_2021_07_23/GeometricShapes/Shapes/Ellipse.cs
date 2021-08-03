@@ -59,6 +59,13 @@ namespace GeometricShapes
             return points;
         }
 
+        public override void Resize(int mult)
+        {
+            base.Resize(mult);
+
+            _secondRadius *= mult;
+        }
+
         #endregion
     }
 }

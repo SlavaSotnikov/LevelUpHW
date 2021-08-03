@@ -10,26 +10,6 @@ namespace GeometricShapes
 
         #endregion
 
-        #region Accessors
-
-        //public Point this[int index]
-        //{
-        //    get
-        //    {
-        //        return new Point(_points[index]);
-        //    }
-        //}
-
-        //public int AmountOfPoints
-        //{
-        //    get 
-        //    {
-        //        return _amountOfPoints; 
-        //    }
-        //}
-
-        #endregion
-
         #region Constructor
 
         public PolyLine(Point one, Point two, params Point[] source)
@@ -40,7 +20,6 @@ namespace GeometricShapes
             for (int i = 0; i < source.Length; i++)
             {
                 _points[i] = new Point(source[i]);
-                //++_amountOfPoints;
             }
         }
 
@@ -71,6 +50,10 @@ namespace GeometricShapes
             }
 
             return points;
+        }
+
+        public override void Resize(int mult)
+        {
         }
 
         #endregion

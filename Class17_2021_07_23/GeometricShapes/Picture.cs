@@ -9,11 +9,11 @@ namespace GeometricShapes
 
         public Picture(int capacity = 10)
         {
-            _figures = new Point[capacity];
+            _figures = new Figure[capacity];
             _amountOfFigures = 0;
         }
 
-        public void AddPicture(Point source)
+        public void AddPicture(Figure source)
         {
             if (_amountOfFigures >= _figures.Length)
             {
@@ -29,6 +29,14 @@ namespace GeometricShapes
             for (int i = 0; i < _amountOfFigures; i++)
             {
                 _figures[i].Move(deltaX, deltaY);
+            }
+        }
+
+        public void Resize(int mult)
+        {
+            for (int i = 0; i < _amountOfFigures; i++)
+            {
+                _figures[i].Resize(mult);
             }
         }
     }

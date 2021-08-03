@@ -62,6 +62,11 @@ namespace GeometricShapes
             return points;
         }
 
+        public override void Resize(int mult)
+        {
+            _radius *= mult;
+        }
+
         #endregion
 
         #region Radius Validator

@@ -53,6 +53,11 @@ namespace GeometricShapes
             return points;
         }
 
+        public override void Resize(int mult)
+        {
+            _wide *= mult;
+        }
+
         #endregion
     }
 }

@@ -44,11 +44,6 @@ namespace GeometricShapes
             return coordinate >= 0;
         }
 
-        public override void Resize(double mult)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Coordinate[] GetPoints()
         {
             Coordinate[] result = new Coordinate[1];
@@ -56,6 +51,10 @@ namespace GeometricShapes
             result[0] = new Coordinate(_point.X, _point.Y);
 
             return result;
+        }
+
+        public override void Resize(int mult)
+        {
         }
 
         #endregion

@@ -80,14 +80,13 @@ namespace GeometricShapes
             }
         }
 
+        public override void Resize(int mult)
+        {
+        }
+
         public static bool IsValidDelta(int coordinate, int delta)
         {
             return (coordinate + delta) > 0;
-        }
-
-        public override void Resize(double mult)
-        {
-            base.Resize(mult);
         }
 
         public override Coordinate[] GetPoints()

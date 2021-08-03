@@ -92,6 +92,11 @@ namespace GeometricShapes
             return points;
         }
 
+        public override void Resize(int mult)
+        {
+
+        }
+
         #endregion
     }
 }
