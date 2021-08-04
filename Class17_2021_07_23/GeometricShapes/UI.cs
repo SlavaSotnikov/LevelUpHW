@@ -6,7 +6,8 @@ namespace GeometricShapes
     {
         #region Show Data
 
-        public static void PrintPoint(int coordX, int coordY, char symbol = '*', ConsoleColor color = ConsoleColor.White)
+        public static void PrintPoint(int coordX, int coordY, 
+                char symbol = '*', ConsoleColor color = ConsoleColor.White)
         {
             Console.SetCursorPosition(coordX, coordY);
             Console.Write(symbol);

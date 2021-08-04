@@ -43,11 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\Actions.cs" />
+    <Compile Include="BL.cs" />
+    <Compile Include="BL_Random.cs" />
     <Compile Include="Cartridge.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="EnemyShip1.cs" />
     <Compile Include="GameField.cs" />
+    <Compile Include="Enum\Model.cs" />
+    <Compile Include="HeavyShip.cs" />
+    <Compile Include="LightShip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
@@ -55,6 +61,7 @@
     <Compile Include="Shot1.cs" />
     <Compile Include="SpaceCraft.cs" />
     <Compile Include="Swarm.cs" />
+    <Compile Include="UI.cs" />
     <Compile Include="UserShip.cs" />
     <Compile Include="UserShip1.cs" />
   </ItemGroup>
