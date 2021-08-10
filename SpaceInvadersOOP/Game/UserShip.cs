@@ -15,7 +15,6 @@ namespace Game
             _active = true;
             _speed = 1;
             _counter = 0;
-            _view = UI.GetLightShip();
             _hitPoints = HITPOINTS;
             _life = LIFES;
         }

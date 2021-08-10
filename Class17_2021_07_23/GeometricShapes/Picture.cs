@@ -39,5 +39,13 @@ namespace GeometricShapes
                 _figures[i].Resize(mult);
             }
         }
+
+        public void Show()
+        {
+            for (int i = 0; i < _amountOfFigures; i++)
+            {
+                UI.Show(_figures[i].GetPoints());
+            }
+        }
     }
 }

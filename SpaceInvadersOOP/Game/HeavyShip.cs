@@ -4,7 +4,7 @@ namespace Game
 {
     class HeavyShip : LightShip
     {
-        private string[] _heavyShip = new string[5]
+        private string[] _image = new string[5]
         { "    ▲    ",
           "   ╱Ο╲   ",
           "∩ ╱UKR╲ ∩",

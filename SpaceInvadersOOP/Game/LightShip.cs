@@ -6,7 +6,25 @@ namespace Game
     {
         #region Private Data
 
-        
+        private string[] _image = new string[5]
+        { "    ▲    ",
+          "    Ο    ",
+          "  ║ Ο ║  ",
+          "╱╲╲╲Λ╱╱╱╲",
+          "  <╱╦╲>  "
+        };
+
+        #endregion
+
+        #region Properties
+
+        public override string[] View
+        {
+            get
+            {
+                return _image;
+            }
+        }
 
         #endregion
 
@@ -58,8 +76,7 @@ namespace Game
                     break;
 
                 case Actions.Shooting:
-                    Shot left = new Shot();
-                    Shot right = new Shot();
+
                     break;
 
                 default:

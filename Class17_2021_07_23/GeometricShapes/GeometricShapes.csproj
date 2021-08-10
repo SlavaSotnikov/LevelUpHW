@@ -55,11 +55,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
-    <Compile Include="Shapes.cs" />
     <Compile Include="Shapes\Square.cs" />
     <Compile Include="Shapes\Trapeze.cs" />
     <Compile Include="Shapes\Triangle.cs" />
-    <Compile Include="TriangleIn.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>

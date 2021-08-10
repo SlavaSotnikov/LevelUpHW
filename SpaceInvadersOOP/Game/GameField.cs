@@ -10,6 +10,7 @@ namespace Game
         public const int BOTTOM_BORDER = 33;  // The Bottom border of game field.
         private const int RESET = 0;
 
+
         private SpaceCraft[] _gameObjects;
         private int _amountOfObjects;
         private int _counterProduceEnemy;
@@ -56,6 +57,7 @@ namespace Game
                     _gameObjects[i].Counter = RESET;
 
                     _gameObjects[i].Step();
+
                     UI.PrintObject(_gameObjects[i]); 
                 }
             }
@@ -81,10 +83,9 @@ namespace Game
                 Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
             }
 
-            _gameObjects[_amountOfObjects] = source;
+            _gameObjects[_amountOfObjects] = source; // TODO: Safety copy.
             ++_amountOfObjects;
-        }
-
         
+        }
     }
 }

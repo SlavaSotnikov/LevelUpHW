@@ -9,7 +9,9 @@ namespace GeometricShapes
             Point one = new Point(12, 1);
             Point two = new Point(12, 10); 
             Point three = new Point(25, 1);
-            Point four = new Point(22, 30);
+            Point four = new Point(12, 40);
+            Point five = new Point(12, 20);
+            Point six = new Point(12, 50);
 
             //UI.Show(one.GetView());
 
@@ -21,25 +23,25 @@ namespace GeometricShapes
             //right.Move(10, 0);
             //UI.Show(right.GetPoints());
 
-            Square my = new Square(one, 10);
+            Square sq = new Square(one, 10);
             //UI.Show(my.GetPoints());
             //my.Move(5, 0);
             //my.Resize(2);
             //UI.Show(my.GetPoints());
 
-            Rectangle rec = new Rectangle(one, 25, 5);
+            Rectangle rect = new Rectangle(five, 25, 5);
             //UI.Show(rec.GetPoints());
             //rec.Move(35, 8);
             //rec.Resize(2);
             //UI.Show(rec.GetPoints());
 
-            Circle myEl = new Circle(four, 8);
+            Circle circ = new Circle(four, 8);
             //UI.Show(myEl.GetPoints());
             //myEl.Move(10, 0);
             //myEl.Resize(2);
             //UI.Show(myEl.GetPoints());
 
-            Trapeze trap = new Trapeze(one, 10, 15, 5);
+            Trapeze trap = new Trapeze(six, 10, 15, 5);
             //UI.Show(trap.GetPoints());
             //trap.Move(10, 20);
             //trap.Resize(2);
@@ -52,12 +54,16 @@ namespace GeometricShapes
             //UI.Show(poly.GetPoints());
 
             Picture pic = new Picture();
-            pic.AddPicture(my);
-            pic.AddPicture(rec);
-            pic.AddPicture(myEl);
+            pic.AddPicture(sq);
+            pic.AddPicture(rect);
+            pic.AddPicture(circ);
             pic.AddPicture(trap);
+            pic.Show();
+
+            pic.Move(30, 0);
 
             pic.Resize(2);
+            pic.Show();
 
             Console.ReadKey();
         }

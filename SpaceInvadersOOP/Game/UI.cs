@@ -8,31 +8,6 @@ namespace Game
         private const int WIDTH = 120;         // Width of buffer of consol window.
         private const int HEIGHT = 40;         // Height of buffer of console window.
 
-        private static string[] _lightShip = new string[5]
-        { "    ▲    ",
-          "    Ο    ",
-          "  ║ Ο ║  ",
-          "╱╲╲╲Λ╱╱╱╲",
-          "  <╱╦╲>  "
-        };
-
-        private static string[] _fly = new string[3]
-        {
-            "╲(|-|)╱",
-            "˂=-O-=˃",
-            "   ˅   "
-        };
-
-        public static string[] GetFly()
-        {
-            return _fly;
-        }
-
-        public static string[] GetLightShip()
-        {
-            return _lightShip;
-        }
-
         public static void SetBufferSize()
         {
             Console.SetBufferSize(WIDTH, HEIGHT);

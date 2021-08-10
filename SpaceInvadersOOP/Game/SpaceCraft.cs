@@ -13,12 +13,14 @@ namespace Game
         protected bool _active;
         protected uint _speed;
         protected uint _counter;
-        protected string[] _view;
         protected const byte STEP = 1;
         protected const byte LIFES = 3;
         protected const int INITIAL_X = 53;      // Initial X position of Spaceship.
         protected const int INITIAL_Y = 33;      // Initial Y position of Spaceship.
         protected const byte HITPOINTS = 100;
+        protected const byte LEFT_SHIFT = 2;     // This shift tunes the Left bullet. 
+        protected const byte RIGHT_SHIFT = 6;    // This shift tunes the Right bullet.
+        protected GameField _game;
 
         #endregion
 
@@ -96,12 +98,9 @@ namespace Game
             }
         }
 
-        public string[] View
-        {
-            get 
-            {
-                return _view; 
-            }
+        public abstract string[] View 
+        { 
+            get; 
         }
 
         #endregion
@@ -109,6 +108,8 @@ namespace Game
         #region Methods
 
         public abstract void Step();
+
+        //public abstract void Shoot();
 
         #endregion
     }

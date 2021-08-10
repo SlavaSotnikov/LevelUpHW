@@ -4,6 +4,29 @@ namespace Game
 {
     class EnemyShip : Ship
     {
+        #region Private Data
+
+        private string[] _image = new string[3]
+        {
+        "╲(|-|)╱",
+        "˂=-O-=˃",
+        "   ˅   "
+        };
+
+        #endregion
+
+        #region Properties
+
+        public override string[] View
+        {
+            get 
+            { 
+                return _image; 
+            }
+        }
+
+        #endregion
+
         public EnemyShip()
         {
             _coordX = BL_Random.GetCoordinateX();
@@ -12,7 +35,6 @@ namespace Game
             _oldCoordY = 2;
             _active = true;
             _counter = 0;
-            _view = UI.GetFly();
             _speed = BL_Random.GetFlySpeed();
         }
         public override void Step()
