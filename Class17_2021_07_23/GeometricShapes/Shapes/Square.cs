@@ -53,9 +53,9 @@ namespace GeometricShapes
             return points;
         }
 
-        public override void Resize(int mult)
+        public override void Resize(double mult)
         {
-            _wide *= mult;
+            _wide = (int)(mult * _wide);
         }
 
         #endregion

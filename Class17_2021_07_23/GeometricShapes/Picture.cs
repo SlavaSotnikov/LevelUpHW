@@ -32,7 +32,7 @@ namespace GeometricShapes
             }
         }
 
-        public void Resize(int mult)
+        public void Resize(double mult)
         {
             for (int i = 0; i < _amountOfFigures; i++)
             {

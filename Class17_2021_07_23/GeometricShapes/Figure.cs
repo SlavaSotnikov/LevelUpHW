@@ -38,7 +38,7 @@
 
         public abstract void Move(int deltaX, int deltaY);
 
-        public abstract void Resize(int mult);
+        public abstract void Resize(double mult);
 
         public abstract Coordinate[] GetPoints(); 
     }

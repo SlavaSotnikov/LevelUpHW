@@ -53,7 +53,7 @@ namespace GeometricShapes
             return result;
         }
 
-        public override void Resize(int mult)
+        public override void Resize(double mult)
         {
         }
 

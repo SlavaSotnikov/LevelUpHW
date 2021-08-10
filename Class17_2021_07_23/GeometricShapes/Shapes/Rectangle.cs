@@ -47,11 +47,11 @@ namespace GeometricShapes
             return points;
         }
 
-        public override void Resize(int mult)
+        public override void Resize(double mult)
         {
             base.Resize(mult);
 
-            _height *= mult;
+            _height = (int)(mult * _height);
         }
 
         #endregion

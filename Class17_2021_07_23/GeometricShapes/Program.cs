@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace GeometricShapes
 {
@@ -9,9 +9,9 @@ namespace GeometricShapes
             Point one = new Point(12, 1);
             Point two = new Point(12, 10); 
             Point three = new Point(25, 1);
-            Point four = new Point(12, 40);
-            Point five = new Point(12, 20);
-            Point six = new Point(12, 50);
+            Point four = new Point(12, 30);
+            Point five = new Point(12, 14);
+            Point six = new Point(12, 40);
 
             //UI.Show(one.GetView());
 
@@ -62,7 +62,7 @@ namespace GeometricShapes
 
             pic.Move(30, 0);
 
-            pic.Resize(2);
+            pic.Resize(0.5);
             pic.Show();
 
             Console.ReadKey();
