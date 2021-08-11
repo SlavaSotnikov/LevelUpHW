@@ -48,8 +48,10 @@
     <Compile Include="BL_Random.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="EnemyShip.cs" />
+    <Compile Include="Enum\Enemy.cs" />
     <Compile Include="GameField.cs" />
-    <Compile Include="Enum\Model.cs" />
+    <Compile Include="Enum\SpaceObject.cs" />
+    <Compile Include="God.cs" />
     <Compile Include="HeavyShip.cs" />
     <Compile Include="LightShip.cs" />
     <Compile Include="Program.cs" />

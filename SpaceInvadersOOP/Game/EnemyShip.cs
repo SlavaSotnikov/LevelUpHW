@@ -4,38 +4,16 @@ namespace Game
 {
     class EnemyShip : Ship
     {
-        #region Private Data
-
-        private string[] _image = new string[3]
+        public EnemyShip(GameField game, int coordX, int coordY, bool active, uint speed, uint counter=0, int oldCoordX=0, int oldCoordY=0)
         {
-        "╲(|-|)╱",
-        "˂=-O-=˃",
-        "   ˅   "
-        };
-
-        #endregion
-
-        #region Properties
-
-        public override string[] View
-        {
-            get 
-            { 
-                return _image; 
-            }
-        }
-
-        #endregion
-
-        public EnemyShip()
-        {
-            _coordX = BL_Random.GetCoordinateX();
-            _coordY = 1;
-            _oldCoordX = 2;
-            _oldCoordY = 2;
+            _game = game;
+            _coordX = coordX;
+            _coordY = coordY;
+            _oldCoordX = oldCoordX;
+            _oldCoordY = oldCoordY;
             _active = true;
             _counter = 0;
-            _speed = BL_Random.GetFlySpeed();
+            _speed = speed;
         }
         public override void Step()
         {

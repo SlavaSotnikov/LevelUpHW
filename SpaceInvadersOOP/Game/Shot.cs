@@ -4,26 +4,9 @@ namespace Game
 {
     class Shot : SpaceCraft
     {
-        #region Private Data
-
-        private string[] _image = { "|" };
-
-        #endregion
-
-        #region Properties
-
-        public override string[] View
-        {
-            get
-            {
-               return _image;
-            }
-        }
-        #endregion
-
         #region Constructors
 
-        public Shot(int x, int y, int oldX, int oldY, uint speed = 5000, uint counter = 0)
+        public Shot(int x, int y, int oldX=0, int oldY=0, uint speed = 5000, uint counter = 0)
         {
             _coordX = x;
             _coordY = y;
@@ -34,10 +17,10 @@ namespace Game
             _active = true;
         }
 
-        public Shot(Shot source)
-            : base()
-        {
-        }
+        //public Shot(Shot source)
+        //    : base()
+        //{
+        //}
 
         #endregion
 

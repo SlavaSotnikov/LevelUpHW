@@ -16,34 +16,34 @@ namespace Game
             Console.OutputEncoding = Encoding.UTF8;
         }
 
-        public static UserShip AskShipModel()
+        public static SpaceObject AskShipModel()
         {
             string model = "LightShip";/*Console.ReadLine();*/
 
             Console.Clear();
 
-            Model shipModel;
+            SpaceObject shipModel;
 
-            UserShip ship = null;
-
-            if (Enum.TryParse(model, true, out shipModel))
+            if (System.Enum.TryParse(model, true, out shipModel))
             {
                 switch (shipModel)
                 {
-                    case Model.None:
+                    case SpaceObject.None:
+                        shipModel = SpaceObject.None;
                         break;
-                    case Model.LightShip:
-                        ship = new LightShip();
+                    case SpaceObject.LightShip:
+                        shipModel = SpaceObject.LightShip;
                         break;
-                    case Model.HeavyShip:
-                        ship = new HeavyShip();
+                    case SpaceObject.HeavyShip:
+                        shipModel = SpaceObject.HeavyShip;
                         break;
                     default:
+                        shipModel = SpaceObject.None;
                         break;
                 }
             }
 
-            return ship;
+            return shipModel;
         }
 
         public static Actions AskConsole()
@@ -85,23 +85,26 @@ namespace Game
 
         public static void PrintObject(SpaceCraft source)
         {
+            string[] image = GetImage(source);
+
             if (source.CoordinateX != source.OldCoordinateX 
                     || source.CoordinateY != source.OldCoordinateY)
             {
                 // Hide.
-                Print(source.OldCoordinateX, source.OldCoordinateY,
-                        source.View, ConsoleColor.Black);
+                Print(source.OldCoordinateX, source.OldCoordinateY, ConsoleColor.Black, image);
 
-                // Show.
-                Print(source.CoordinateX, source.CoordinateY,
-                        source.View, ConsoleColor.White);
+                if (source.Active)
+                {
+                    // Show.
+                    Print(source.CoordinateX, source.CoordinateY, ConsoleColor.White, image); 
+                }
             }
 
             source.OldCoordinateX = source.CoordinateX;
             source.OldCoordinateY = source.CoordinateY;
         }
 
-        private static void Print(int x, int y, string[] view, ConsoleColor color)
+        private static void Print(int x, int y, ConsoleColor color, params string[] view)
         {
             for (int i = view.Length - 1; i >= 0; i--)
             {
@@ -110,6 +113,45 @@ namespace Game
                 Console.ForegroundColor = color;
                 Console.Write(view[i]);
             }
+        }
+
+        private static string[] GetImage(SpaceCraft source)
+        {
+            string[] image = { "|" };
+
+            if (source is LightShip)
+            {
+                image = new string[5]
+        { "    ▲    ",
+          "    Ο    ",
+          "  ║ Ο ║  ",
+          "╱╲╲╲Λ╱╱╱╲",
+          "  <╱╦╲>  "
+        };
+            }
+
+            if (source is HeavyShip)
+            {
+                image = new string[5]
+        { "    ▲    ",
+          "   ╱Ο╲   ",
+          "∩ ╱UKR╲ ∩",
+          "╠═══Λ═══╣",
+          " <╱*╦*╲> "
+        };
+            }
+
+            if (source is EnemyShip)
+            {
+                image = new string[3]
+        {
+        "╲(|-|)╱",
+        "˂=-O-=˃",
+        "   ˅   "
+        };
+            }
+
+            return image;
         }
     }
 }

@@ -6,17 +6,19 @@ namespace Game
     {
         protected byte _life;
 
-        public UserShip()
+        public UserShip(GameField game, int coordX, int coordY, bool active, 
+                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
         {
-            _coordX = INITIAL_X;
-            _coordY = INITIAL_Y;
-            _oldCoordX = INITIAL_X + 1;
-            _oldCoordY = INITIAL_Y - 1;
-            _active = true;
-            _speed = 1;
-            _counter = 0;
-            _hitPoints = HITPOINTS;
-            _life = LIFES;
+            _game = game;
+            _coordX = coordX;
+            _coordY = coordY;
+            _oldCoordX = oldCoordX;
+            _oldCoordY = oldCoordY;
+            _active = active;
+            _speed = speed;
+            _counter = counter;
+            _hitPoints = hitpoints;
+            _life = lifes;
         }
     }
 }

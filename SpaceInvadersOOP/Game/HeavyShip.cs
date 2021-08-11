@@ -4,16 +4,9 @@ namespace Game
 {
     class HeavyShip : LightShip
     {
-        private string[] _image = new string[5]
-        { "    ▲    ",
-          "   ╱Ο╲   ",
-          "∩ ╱UKR╲ ∩",
-          "╠═══Λ═══╣",
-          " <╱*╦*╲> "
-        };
-
-        public HeavyShip()
-            : base()
+        public HeavyShip(GameField game, int coordX, int coordY, bool active,
+                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
+            : base(game, coordX, coordY, active, speed, counter, hitpoints, lifes, oldCoordX, oldCoordY)
         {
         }
     }

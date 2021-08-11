@@ -14,15 +14,15 @@ namespace Game
         protected uint _speed;
         protected uint _counter;
         protected const byte STEP = 1;
-        protected const byte LIFES = 3;
-        protected const int INITIAL_X = 53;      // Initial X position of Spaceship.
-        protected const int INITIAL_Y = 33;      // Initial Y position of Spaceship.
-        protected const byte HITPOINTS = 100;
-        protected const byte LEFT_SHIFT = 2;     // This shift tunes the Left bullet. 
-        protected const byte RIGHT_SHIFT = 6;    // This shift tunes the Right bullet.
+        
         protected GameField _game;
 
         #endregion
+
+        //public SpaceCraft(SpaceCraft source)
+        //{
+
+        //}
 
         #region Properties
 
@@ -72,6 +72,10 @@ namespace Game
             {
                 return _active;
             }
+            set
+            {
+                _active = value;
+            }
         }
 
         public uint Counter
@@ -96,11 +100,6 @@ namespace Game
             {
                 _speed = value; 
             }
-        }
-
-        public abstract string[] View 
-        { 
-            get; 
         }
 
         #endregion

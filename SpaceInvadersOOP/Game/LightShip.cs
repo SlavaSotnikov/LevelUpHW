@@ -4,34 +4,11 @@ namespace Game
 {
     class LightShip : UserShip
     {
-        #region Private Data
-
-        private string[] _image = new string[5]
-        { "    ▲    ",
-          "    Ο    ",
-          "  ║ Ο ║  ",
-          "╱╲╲╲Λ╱╱╱╲",
-          "  <╱╦╲>  "
-        };
-
-        #endregion
-
-        #region Properties
-
-        public override string[] View
-        {
-            get
-            {
-                return _image;
-            }
-        }
-
-        #endregion
-
         #region Constructors
 
-        public LightShip()
-            : base()
+        public LightShip(GameField game, int coordX, int coordY, bool active,
+                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
+            : base(game, coordX, coordY, active, speed, counter, hitpoints, lifes, oldCoordX, oldCoordY)
         {
         }
 
@@ -45,38 +22,39 @@ namespace Game
             {
                 case Actions.LeftMove:
                     --_coordX;
-                    if (_coordX <= GameField.LEFT_BORDER)
+                    if (_coordX <= _game.LeftBorder)
                     {
-                        _coordX = GameField.LEFT_BORDER;
+                        _coordX = _game.LeftBorder;
                     }
                     break;
 
                 case Actions.RightMove:
                     ++_coordX;
-                    if (_coordX >= GameField.RIGHT_BORDER)
+                    if (_coordX >= _game.RightBorder)
                     {
-                        _coordX = GameField.RIGHT_BORDER;
+                        _coordX = _game.RightBorder;
                     }
                     break;
 
                 case Actions.UpMove:
                     --_coordY;
-                    if (_coordY <= GameField.TOP_BORDER)
+                    if (_coordY <= _game.TopBorder)
                     {
-                        _coordY = GameField.TOP_BORDER;
+                        _coordY = _game.TopBorder;
                     }
                     break;
 
                 case Actions.DownMove:
                     ++_coordY;
-                    if (_coordY >= GameField.BOTTOM_BORDER)
+                    if (_coordY >= _game.BottomBorder)
                     {
-                        _coordY = GameField.BOTTOM_BORDER;
+                        _coordY = _game.BottomBorder;
                     }
                     break;
 
                 case Actions.Shooting:
-
+                    _game.AddObject(SpaceObject.ShotLeft);
+                    _game.AddObject(SpaceObject.ShotRight);
                     break;
 
                 default:
