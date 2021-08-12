@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller.cs" />
     <Compile Include="Enum\Actions.cs" />
     <Compile Include="BL.cs" />
     <Compile Include="BL_Random.cs" />

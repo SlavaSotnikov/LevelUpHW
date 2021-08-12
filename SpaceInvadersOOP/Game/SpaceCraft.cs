@@ -13,16 +13,11 @@ namespace Game
         protected bool _active;
         protected uint _speed;
         protected uint _counter;
-        protected const byte STEP = 1;
+        protected byte step = 1;
         
         protected GameField _game;
 
         #endregion
-
-        //public SpaceCraft(SpaceCraft source)
-        //{
-
-        //}
 
         #region Properties
 
@@ -107,8 +102,6 @@ namespace Game
         #region Methods
 
         public abstract void Step();
-
-        //public abstract void Shoot();
 
         #endregion
     }

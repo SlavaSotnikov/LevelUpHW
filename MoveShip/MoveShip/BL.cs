@@ -301,7 +301,7 @@ namespace MoveShip
             {
                 for (int j = 0; j < source.countOfShots; j++)
                 {
-                    if (IsHit(enemies.enemyFly[i], source.mag[i]))
+                    if (IsHit(enemies.enemyFly[i], source.mag[j]))
                     {
                         if (source.mag[j].active)
                         {

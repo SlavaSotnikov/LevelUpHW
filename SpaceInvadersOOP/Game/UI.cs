@@ -16,6 +16,41 @@ namespace Game
             Console.OutputEncoding = Encoding.UTF8;
         }
 
+        public static void ShowAmountOfObjects()
+        {
+            if (GameField.GFAmount != GameField.OldGFAmount)
+            {
+                Console.SetCursorPosition(90, 1);
+                Console.WriteLine("GF: {0}", GameField.GFAmount);
+
+                GameField.OldGFAmount = GameField.GFAmount;
+            }
+
+            if (UserShip.ShipAmount != UserShip.OldShipAmount)
+            {
+                Console.SetCursorPosition(90, 2);
+                Console.WriteLine("User ships: {0}", UserShip.ShipAmount);
+
+                UserShip.OldShipAmount = UserShip.ShipAmount;
+            }
+
+            if (Shot.ShotAmount != Shot.OldShotAmount)
+            {
+                Console.SetCursorPosition(90, 3);
+                Console.WriteLine("Shots: {0}", Shot.ShotAmount);
+
+                Shot.OldShotAmount = Shot.ShotAmount;
+            }
+
+            if (EnemyShip.EnemyAmount != EnemyShip.OldEnemyAmount)
+            {
+                Console.SetCursorPosition(90, 4);
+                Console.WriteLine("Enemy: {0}", EnemyShip.EnemyAmount);
+
+                EnemyShip.OldEnemyAmount = EnemyShip.EnemyAmount;
+            }
+        }
+
         public static SpaceObject AskShipModel()
         {
             string model = "LightShip";/*Console.ReadLine();*/

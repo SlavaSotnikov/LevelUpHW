@@ -1,26 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Game.UserShip">
-    <Position X="4" Y="9.25" Width="1.5" />
+    <Position X="3.25" Y="6.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAABAA=</HashCode>
       <FileName>UserShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.EnemyShip">
-    <Position X="7.25" Y="10.25" Width="1.5" />
+    <Position X="5.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAEAAAAAAAQAAAAAAAAAAAAAAAIAAAAACAAAA=</HashCode>
       <FileName>EnemyShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.GameField">
     <Position X="7.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAYCAKAgQAChEgAAEAFAIAAgTZQAQEAiDAAQAACAUAI=</HashCode>
+      <HashCode>AAYCAOAgQQAhMmAAEAFFIMQgTZQIAAAiHAAQAACAUAI=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -36,8 +39,11 @@
   </Class>
   <Class Name="Game.SpaceCraft">
     <Position X="2.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>IIABAAAAAAAAAAAAAEAAAAABAwABIAAgJAAQAABAkAQ=</HashCode>
+      <HashCode>AIABAAAAAAAAAAAAAEAAAAABAwAgIAAgJAAQAABAkAQ=</HashCode>
       <FileName>SpaceCraft.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -45,30 +51,30 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Game.Ship">
-    <Position X="5.25" Y="7.25" Width="1.5" />
+    <Position X="4.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Ship.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.LightShip" Collapsed="true">
-    <Position X="4" Y="11.25" Width="1.5" />
+    <Position X="3.25" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>LightShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.HeavyShip" Collapsed="true">
-    <Position X="4" Y="12.25" Width="1.5" />
+    <Position X="3.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>HeavyShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.Shot">
-    <Position X="0.5" Y="7.25" Width="1.5" />
+    <Position X="1" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAIAAAIAAAAAIEAAA=</HashCode>
       <FileName>Shot.cs</FileName>
     </TypeIdentifier>
   </Class>

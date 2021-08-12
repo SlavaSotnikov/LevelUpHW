@@ -4,6 +4,8 @@ namespace Game
 {
     class GameField
     {
+        #region Private Data
+
         private int _leftBorder = 30;
         private int _rightBorder = 83;
         private int _topBorder = 0;
@@ -26,7 +28,37 @@ namespace Game
         private int _counterProduceEnemy;
         private int _speed;
 
-        public GameField GetReference 
+        #endregion
+
+        private static int _gfAmount = 0;
+        private static int _oldGFAmount = 0;
+
+        public static int GFAmount
+        {
+            get
+            {
+                return _gfAmount;
+            }
+            set
+            {
+                _gfAmount = value;
+            }
+        }
+        public static int OldGFAmount
+        {
+            get
+            {
+                return _oldGFAmount;
+            }
+            set
+            {
+                _oldGFAmount = value;
+            }
+        }
+
+        #region Properties
+
+        public GameField GetReference
         {
             get
             {
@@ -34,7 +66,7 @@ namespace Game
             }
         }
 
-        public int InitialX 
+        public int InitialX
         {
             get
             {
@@ -108,7 +140,7 @@ namespace Game
 
         public int LeftBorder
         {
-            get 
+            get
             {
                 return _leftBorder;
             }
@@ -116,7 +148,7 @@ namespace Game
 
         public int RightBorder
         {
-            get 
+            get
             {
                 return _rightBorder;
             }
@@ -124,9 +156,9 @@ namespace Game
 
         public int TopBorder
         {
-            get 
-            { 
-                return _topBorder; 
+            get
+            {
+                return _topBorder;
             }
         }
 
@@ -138,6 +170,9 @@ namespace Game
             }
         }
 
+        #endregion
+
+        #region Methods
 
         public GameField(int capacity = 20, int amount = 0, int speed = 350000)
         {
@@ -145,6 +180,7 @@ namespace Game
             _amountOfObjects = amount;
             _counterProduceEnemy = amount;
             _speed = speed;
+            ++_gfAmount;
         }
 
         public bool IsgameOver()
@@ -166,8 +202,10 @@ namespace Game
 
                 CheckObjects();
 
+                UI.ShowAmountOfObjects();
+
             } while (!IsgameOver());
-            
+
         }
 
         public void StepObjects()
@@ -181,8 +219,6 @@ namespace Game
                     _gameObjects[i].Counter = RESET;
 
                     _gameObjects[i].Step();
-
-                     
                 }
             }
         }
@@ -191,7 +227,7 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                UI.PrintObject(_gameObjects[i]); 
+                UI.PrintObject(_gameObjects[i]);
             }
         }
 
@@ -239,7 +275,7 @@ namespace Game
                 Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
             }
 
-            _gameObjects[_amountOfObjects] = creature;// todo: safety copy.
+            _gameObjects[_amountOfObjects] = creature;
             ++_amountOfObjects;
         }
 
@@ -254,8 +290,6 @@ namespace Game
                 rndX = BL_Random.GetCoordinateX();
 
                 isExist = false;
-
-                EnemyShip en = new EnemyShip(this, rndX, CONST_Y, _active, speed);
 
                 for (int i = 0; i < _amountOfObjects; i++)
                 {
@@ -282,10 +316,10 @@ namespace Game
 
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (_gameObjects[i] is LightShip 
-                        || _gameObjects[i] is HeavyShip)
+                if (IsUserShip(i))
                 {
-                    bullet = new Shot(_gameObjects[i].CoordinateX + shift, _gameObjects[i].CoordinateY);
+                    bullet = new Shot(_gameObjects[i].CoordinateX + shift,
+                            _gameObjects[i].CoordinateY);
                     break;
                 }
             }
@@ -293,14 +327,23 @@ namespace Game
             return bullet;
         }
 
+        
+
         private void CheckObjects()
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if ((_gameObjects[i] is Shot) && (_gameObjects[i].CoordinateY == TopBorder))
+                if (IsShot(i) && (_gameObjects[i].CoordinateY == TopBorder))
                 {
-                    _gameObjects[i].Active = false;
+                    DeactivateObject(i);
                 }
+
+                if (IsEnemyShip(i) && (_gameObjects[i].CoordinateY == BottomBorder))
+                {
+                    DeactivateObject(i);
+                }
+
+
             }
         }
 
@@ -310,11 +353,35 @@ namespace Game
             {
                 if (!_gameObjects[i].Active)
                 {
-                    Array.Copy(_gameObjects, i + 1, _gameObjects, i, _amountOfObjects - i);
+                    Array.Copy(_gameObjects, i + 1, _gameObjects,
+                            i, _amountOfObjects - i);
                     --_amountOfObjects;
                     --i;
                 }
             }
         }
-    }
+
+        private bool IsEnemyShip(int index)
+        {
+            return _gameObjects[index] is EnemyShip;
+        }
+
+        private bool IsShot(int index)
+        {
+            return _gameObjects[index] is Shot;
+        }
+
+        private bool IsUserShip(int index)
+        {
+            return (_gameObjects[index] is LightShip) 
+                    || (_gameObjects[index] is HeavyShip);
+        }
+
+        private void DeactivateObject(int index)
+        {
+            _gameObjects[index].Active = false;
+        }
+    } 
+
+    #endregion
 }
