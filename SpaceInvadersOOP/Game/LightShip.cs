@@ -4,6 +4,19 @@ namespace Game
 {
     class LightShip : UserShip
     {
+        public override byte HitPoints
+        {
+            get
+            {
+                return _hitPoints;
+            }
+
+            set
+            {
+                _hitPoints = value;
+            }
+        }
+
         #region Constructors
 
         public LightShip(GameField game, int coordX, int coordY, bool active,

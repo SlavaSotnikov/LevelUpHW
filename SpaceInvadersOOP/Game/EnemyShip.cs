@@ -30,8 +30,23 @@ namespace Game
             }
         }
 
+        public override byte HitPoints
+        {
+            get
+            {
+                return _hitPoints;
+            }
+
+            set
+            {
+                _hitPoints = value;
+            }
+        }
+
+
+
         public EnemyShip(GameField game, int coordX, int coordY, bool active, 
-                uint speed, uint counter=0, int oldCoordX=0, int oldCoordY=0)
+                uint speed, uint counter=0, int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
         {
             _game = game;
             _coordX = coordX;
@@ -41,6 +56,7 @@ namespace Game
             _active = true;
             _counter = 0;
             _speed = speed;
+            _hitPoints = hitPoints;
             ++_enemyAmount;
         }
         public override void Step()

@@ -7,6 +7,8 @@ namespace Game
         private static int _shipAmount = 0;
         private static int _oldShipAmount = 0;
 
+        private byte _life;
+
         public static int ShipAmount
         {
             get

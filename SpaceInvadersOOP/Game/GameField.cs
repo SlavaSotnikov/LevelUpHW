@@ -33,6 +33,18 @@ namespace Game
         private static int _gfAmount = 0;
         private static int _oldGFAmount = 0;
 
+        public SpaceCraft this[int index]
+        {
+            get 
+            {
+                return _gameObjects[index];
+            }
+            set 
+            {
+                _gameObjects[index] = value;
+            }
+        }
+
         public static int GFAmount
         {
             get
@@ -194,13 +206,15 @@ namespace Game
             {
                 ProduceEnemies();
 
+                CheckObjects();
+
                 PrintObjects();
 
                 StepObjects();
 
                 DeleteObjects();
 
-                CheckObjects();
+                
 
                 UI.ShowAmountOfObjects();
 
@@ -293,7 +307,7 @@ namespace Game
 
                 for (int i = 0; i < _amountOfObjects; i++)
                 {
-                    if (_gameObjects[i] is EnemyShip)
+                    if (IsEnemyShip(i))
                     {
                         if (!((rndX > _gameObjects[i].CoordinateX + 7) ||
                                 (rndX + 7 < _gameObjects[i].CoordinateX)))
@@ -333,19 +347,67 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (IsShot(i) && (_gameObjects[i].CoordinateY == TopBorder))
+                if (IsShot(i))
                 {
-                    DeactivateObject(i);
+                    CheckShot(i);
                 }
 
-                if (IsEnemyShip(i) && (_gameObjects[i].CoordinateY == BottomBorder))
+                if (IsEnemyShip(i))
                 {
-                    DeactivateObject(i);
+                    CheckEnemy(i);
+                }
+
+                if (IsUserShip(i))
+                {
+
                 }
 
 
             }
         }
+
+        private void CheckEnemy(int enemy)
+        {
+            if (_gameObjects[enemy].CoordinateY == BottomBorder)
+            {
+                DeactivateObject(enemy);
+            }
+        }
+
+        private void CheckShot(int shot)
+        {
+            if (_gameObjects[shot].CoordinateY == TopBorder)
+            {
+                DeactivateObject(shot);
+                return;
+            }
+
+            for (int enemy = 0; enemy < _amountOfObjects; enemy++)
+            {
+                if (IsEnemyShip(enemy))
+                {
+                    if (IsHit(shot, enemy))
+                    {
+                        DeactivateObject(shot);
+
+                        EnemyShip one = (EnemyShip)_gameObjects[enemy];
+                        --one.HitPoints;
+
+                        if (one.HitPoints <= 0)
+                        {
+                            DeactivateObject(enemy); 
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool IsHit(int shot, int enemy)
+        {
+            return _gameObjects[shot].CoordinateY == _gameObjects[enemy].CoordinateY &&
+                    _gameObjects[enemy].CoordinateX < _gameObjects[shot].CoordinateX &&
+                        _gameObjects[shot].CoordinateX < _gameObjects[enemy].CoordinateX + 7;
+          }
 
         private void DeleteObjects()
         {
@@ -380,6 +442,7 @@ namespace Game
         private void DeactivateObject(int index)
         {
             _gameObjects[index].Active = false;
+            _gameObjects[index].Step(); // Change Y for UI.
         }
     } 
 

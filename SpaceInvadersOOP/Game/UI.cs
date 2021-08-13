@@ -131,7 +131,18 @@ namespace Game
                 if (source.Active)
                 {
                     // Show.
-                    Print(source.CoordinateX, source.CoordinateY, ConsoleColor.White, image); 
+                    Print(source.CoordinateX, source.CoordinateY, ConsoleColor.White, image);
+
+                    if (source is EnemyShip)
+                    {
+                        EnemyShip one = (EnemyShip)source;
+
+                        if (one.HitPoints <= 2)
+                        {
+                            Print(source.CoordinateX, source.CoordinateY, ConsoleColor.DarkRed, image);
+                            Console.ResetColor();
+                        }
+                    }
                 }
             }
 

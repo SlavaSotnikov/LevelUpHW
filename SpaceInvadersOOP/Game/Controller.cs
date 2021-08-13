@@ -4,25 +4,25 @@ namespace Game
 {
     class Controller
     {
-        GameField _gameField;
-        public void Run()
-        {
-            do
-            {
-                _gameField.ProduceEnemies();
+        //GameField _gameField;
+        //public void Run()
+        //{
+        //    do
+        //    {
+        //        _gameField.ProduceEnemies();
 
-                PrintObjects();
+        //        PrintObjects();
 
-                StepObjects();
+        //        StepObjects();
 
-                DeleteObjects();
+        //        DeleteObjects();
 
-                CheckObjects();
+        //        CheckObjects();
 
-                UI.ShowAmountOfObjects();
+        //        UI.ShowAmountOfObjects();
 
-            } while (!IsgameOver());
+        //    } while (!IsgameOver());
 
-        }
+        //}
     }
 }
