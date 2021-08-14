@@ -17,6 +17,19 @@ namespace Game
             }
         }
 
+        public override byte OldHitPoints
+        {
+            get
+            {
+                return _oldHitPoints;
+            }
+
+            set
+            {
+                _oldHitPoints = value;
+            }
+        }
+
         #region Constructors
 
         public LightShip(GameField game, int coordX, int coordY, bool active,

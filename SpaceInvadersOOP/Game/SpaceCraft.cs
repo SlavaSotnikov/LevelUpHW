@@ -13,7 +13,7 @@ namespace Game
         protected bool _active;
         protected uint _speed;
         protected uint _counter;
-        protected byte step = 1;
+        protected byte _step = 1;
         
         protected GameField _game;
 
@@ -21,23 +21,31 @@ namespace Game
 
         #region Properties
 
-        public int CoordinateX
+        public int X
         {
             get
             {
                 return _coordX;
             }
+            set
+            {
+                _coordX = value;
+            }
         }
 
-        public int CoordinateY
+        public int Y
         {
             get
             {
                 return _coordY;
             }
+            set
+            {
+                _coordY = value;
+            }
         }
 
-        public int OldCoordinateX
+        public int OldX
         {
             get
             {
@@ -49,7 +57,7 @@ namespace Game
             }
         }
 
-        public int OldCoordinateY
+        public int OldY
         {
             get
             {

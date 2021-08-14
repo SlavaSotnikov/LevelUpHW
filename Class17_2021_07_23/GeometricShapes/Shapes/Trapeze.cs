@@ -55,7 +55,17 @@ namespace GeometricShapes
         {
             base.Resize(mult);
 
-            _ground = (int)(mult * _ground);
+            _ground = (int)Math.Round(mult * _ground);
+        }
+
+        public override double GetArea()
+        {
+            return (_wide + _ground) / 2 * _height;
+        }
+
+        public override double GetPerimeter()
+        {
+            return _wide + _height + _ground + _height / Math.Sin(45);
         }
 
         #endregion

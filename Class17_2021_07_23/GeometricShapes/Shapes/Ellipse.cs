@@ -45,6 +45,17 @@ namespace GeometricShapes
             }
         }
 
+        public override double GetArea()
+        {
+            return Math.PI * _radius * _secondRadius;
+        }
+
+        public override double GetPerimeter()
+        {
+            return 2 * Math.PI * Math.Sqrt((Math.Pow(_radius, 2) +
+                    Math.Pow(_secondRadius, 2)) / 2);
+        }
+
         public override void Move(int deltaX, int deltaY)
         {
             base.Move(deltaX, deltaY);
@@ -63,7 +74,7 @@ namespace GeometricShapes
         {
             base.Resize(mult);
 
-            _secondRadius = (int)(mult * _secondRadius);
+            _secondRadius = (int)Math.Round(mult * _secondRadius);
         }
 
         #endregion

@@ -9,6 +9,7 @@ namespace Game
         HeavyShip,
         EnemyShip,
         ShotLeft,
-        ShotRight
+        ShotRight,
+        ShotEnemy
     }
 }

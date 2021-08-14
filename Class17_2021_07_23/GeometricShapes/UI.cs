@@ -6,6 +6,12 @@ namespace GeometricShapes
     {
         #region Show Data
 
+        public static void Print(string name, double source, int position)
+        {
+            Console.SetCursorPosition(position, 0);
+            Console.WriteLine("Total {0}: {1}", name, source);
+        }
+
         public static void PrintPoint(int coordX, int coordY, 
                 char symbol = '*', ConsoleColor color = ConsoleColor.White)
         {

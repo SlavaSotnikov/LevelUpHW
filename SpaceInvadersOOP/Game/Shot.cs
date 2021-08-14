@@ -51,7 +51,7 @@ namespace Game
 
         public override void Step()
         {
-            _coordY -= step;
+            _coordY -= _step;
         }
 
         #endregion

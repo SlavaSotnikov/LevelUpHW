@@ -3,9 +3,10 @@
   <Class Name="GeometricShapes.Circle" Collapsed="true">
     <Position X="1" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAIIAAAACAAAAAAAAAIAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <HashCode>CAAIIAAAACAAAAAAAAAIAAAAAAAAAAEAAAAAEAEAAAA=</HashCode>
       <FileName>Shapes\Circle.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="GeometricShapes.Line" Collapsed="true">
     <Position X="5.75" Y="2.75" Width="1.5" />
@@ -24,9 +25,10 @@
   <Class Name="GeometricShapes.Square" Collapsed="true">
     <Position X="3.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAgAAAAAAIAAEAAAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAgAEAAAAIEAEAAAA=</HashCode>
       <FileName>Shapes\Square.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="GeometricShapes.Triangle" Collapsed="true">
     <Position X="5.75" Y="4" Width="1.5" />
@@ -38,12 +40,12 @@
   <Class Name="GeometricShapes.Ellipse" Collapsed="true">
     <Position X="1" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIBAAAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAEQAAA=</HashCode>
+      <HashCode>AAAAIBAAAIAAAAAAAAAQAAAAAAAAAAEAAAAAEAEQAAA=</HashCode>
       <FileName>Shapes\Ellipse.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.PolyLine" Collapsed="true">
-    <Position X="8.5" Y="2.5" Width="1.5" />
+    <Position X="8.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAIAAAAAAgAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Shapes\PolyLine.cs</FileName>
@@ -52,14 +54,14 @@
   <Class Name="GeometricShapes.Rectangle" Collapsed="true">
     <Position X="3.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAABICAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <HashCode>AAAAIAAABICAAAAAAAAAAAAAAAAAAAEAAAAAEAEAAAA=</HashCode>
       <FileName>Shapes\Rectangle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GeometricShapes.Trapeze" Collapsed="true">
     <Position X="3.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAAAEAEAA=</HashCode>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAEAAAAAAAAAEAAAAAEAEAEAA=</HashCode>
       <FileName>Shapes\Trapeze.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -73,7 +75,7 @@
   <Class Name="GeometricShapes.Picture" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAAAAACAAAEAAAAAAAAAAAABAEAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAAAAAAAACAAAEAAAEAAEAAAAAFAEAAAA=</HashCode>
       <FileName>Picture.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

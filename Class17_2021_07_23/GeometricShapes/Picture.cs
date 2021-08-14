@@ -24,6 +24,36 @@ namespace GeometricShapes
             ++_amountOfFigures;
         }
 
+        public double GetArea()
+        {
+            double result = 0;
+
+            for (int i = 0; i < _amountOfFigures; i++)
+            {
+                if (_figures[i] is IGeometrical res)
+                {
+                    result += res.GetArea();
+                }
+            };
+
+            return result;
+        }
+
+        public double GetPerimeter()
+        {
+            double result = 0;
+
+            for (int i = 0; i < _amountOfFigures; i++)
+            {
+                if (_figures[i] is IGeometrical res)
+                {
+                    result += res.GetPerimeter();
+                }
+            };
+
+            return result;
+        }
+
         public void Move(int deltaX, int deltaY)
         {
             for (int i = 0; i < _amountOfFigures; i++)

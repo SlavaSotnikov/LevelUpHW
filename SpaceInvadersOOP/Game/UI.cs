@@ -5,6 +5,29 @@ namespace Game
 {
     class UI
     {
+        static string[] _lightShip = new string[5] // TODO: Static array.
+        { "    ▲    ",
+          "    Ο    ",
+          "  ║ Ο ║  ",
+          "╱╲╲╲Λ╱╱╱╲",
+          "  <╱╦╲>  "
+        };
+
+        static string[] _heavyShip = new string[5]
+        { "    ▲    ",
+          "   ╱Ο╲   ",
+          "∩ ╱UKR╲ ∩",
+          "╠═══Λ═══╣",
+          " <╱*╦*╲> "
+        };
+
+        static string[] _enemyShip = new string[3]
+        {
+        "╲(|-|)╱",
+        "˂=-O-=˃",
+        "   ˅   "
+        };
+
         private const int WIDTH = 120;         // Width of buffer of consol window.
         private const int HEIGHT = 40;         // Height of buffer of console window.
 
@@ -122,16 +145,16 @@ namespace Game
         {
             string[] image = GetImage(source);
 
-            if (source.CoordinateX != source.OldCoordinateX 
-                    || source.CoordinateY != source.OldCoordinateY)
+            if (source.X != source.OldX 
+                    || source.Y != source.OldY)
             {
                 // Hide.
-                Print(source.OldCoordinateX, source.OldCoordinateY, ConsoleColor.Black, image);
+                Print(source.OldX, source.OldY, ConsoleColor.Black, image);
 
                 if (source.Active)
                 {
                     // Show.
-                    Print(source.CoordinateX, source.CoordinateY, ConsoleColor.White, image);
+                    Print(source.X, source.Y, ConsoleColor.White, image);
 
                     if (source is EnemyShip)
                     {
@@ -139,15 +162,15 @@ namespace Game
 
                         if (one.HitPoints <= 2)
                         {
-                            Print(source.CoordinateX, source.CoordinateY, ConsoleColor.DarkRed, image);
+                            Print(source.X, source.Y, ConsoleColor.DarkRed, image);
                             Console.ResetColor();
                         }
                     }
                 }
             }
 
-            source.OldCoordinateX = source.CoordinateX;
-            source.OldCoordinateY = source.CoordinateY;
+            source.OldX = source.X;
+            source.OldY = source.Y;
         }
 
         private static void Print(int x, int y, ConsoleColor color, params string[] view)
@@ -161,43 +184,34 @@ namespace Game
             }
         }
 
-        private static string[] GetImage(SpaceCraft source)
+        private static string[] GetImage(SpaceCraft source)    // TODO: Static constructor.
         {
             string[] image = { "|" };
 
             if (source is LightShip)
             {
-                image = new string[5]
-        { "    ▲    ",
-          "    Ο    ",
-          "  ║ Ο ║  ",
-          "╱╲╲╲Λ╱╱╱╲",
-          "  <╱╦╲>  "
-        };
+                image = _lightShip;
             }
 
             if (source is HeavyShip)
             {
-                image = new string[5]
-        { "    ▲    ",
-          "   ╱Ο╲   ",
-          "∩ ╱UKR╲ ∩",
-          "╠═══Λ═══╣",
-          " <╱*╦*╲> "
-        };
+                image = _heavyShip; 
             }
 
             if (source is EnemyShip)
             {
-                image = new string[3]
-        {
-        "╲(|-|)╱",
-        "˂=-O-=˃",
-        "   ˅   "
-        };
+                image = _enemyShip;
             }
 
             return image;
+        }
+
+        public static void ShowDisplay(int hp, GameField source)
+        {
+            Console.SetCursorPosition(source.LeftBorder, source.BottomBorder);
+            Console.Write("HP: {0}%", hp);
+            Console.SetCursorPosition(40, source.BottomBorder);
+            Console.Write("Life: {0}");
         }
     }
 }

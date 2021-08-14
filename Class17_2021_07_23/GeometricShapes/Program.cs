@@ -65,6 +65,9 @@ namespace GeometricShapes
             pic.Resize(0.5);
             pic.Show();
 
+            UI.Print("Perimeter", pic.GetPerimeter(), 5);
+            UI.Print("Area", pic.GetArea(), 40);
+
             Console.ReadKey();
         }
     }

@@ -100,7 +100,5 @@ namespace GeometricShapes
         }
 
         #endregion
-
-
     }
 }

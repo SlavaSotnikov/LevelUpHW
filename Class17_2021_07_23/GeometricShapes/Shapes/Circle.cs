@@ -2,7 +2,7 @@
 
 namespace GeometricShapes
 {
-    class Circle : Point
+    class Circle : Point, IGeometrical
     {
         #region Private Data
 
@@ -62,9 +62,20 @@ namespace GeometricShapes
             return points;
         }
 
+
+        public virtual double GetArea()
+        {
+            return Math.PI * Math.Pow(_radius, 2);
+        }
+
+        public virtual double GetPerimeter()
+        {
+            return 2 * Math.PI * _radius;
+        }
+
         public override void Resize(double mult)
         {
-            _radius = (int)(mult * _radius);
+            _radius = (int)Math.Round(mult * _radius);
         }
 
         #endregion
@@ -75,6 +86,7 @@ namespace GeometricShapes
         {
             return !(radius > CoordinateY && radius > CoordinateX);
         }
+
 
         #endregion
     }

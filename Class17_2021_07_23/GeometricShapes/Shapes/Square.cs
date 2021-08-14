@@ -2,7 +2,7 @@
 
 namespace GeometricShapes
 {
-    class Square : Point
+    class Square : Point, IGeometrical
     {
         #region Private Data
 
@@ -55,7 +55,17 @@ namespace GeometricShapes
 
         public override void Resize(double mult)
         {
-            _wide = (int)(mult * _wide);
+            _wide = (int)Math.Round(mult * _wide);
+        }
+
+        public virtual double GetArea()
+        {
+            return _wide * _wide;
+        }
+
+        public virtual double GetPerimeter()
+        {
+            return _wide * 4;
         }
 
         #endregion

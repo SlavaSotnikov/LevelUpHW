@@ -20,5 +20,10 @@ namespace Game
         {
             return (uint)value.Next(10000, 20000);
         }
+
+        public static uint GetRateOfFire()
+        {
+            return (uint)value.Next(10000, 15000);
+        }
     }
 }
