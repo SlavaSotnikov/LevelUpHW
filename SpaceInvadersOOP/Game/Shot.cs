@@ -32,8 +32,8 @@ namespace Game
 
         #region Constructors
 
-        public Shot(int x, int y, int oldX=0, int oldY=0, 
-                uint speed = 5000, uint counter = 0)
+        public Shot(int x, int y, sbyte step, uint speed,
+                int oldX=0, int oldY=0, uint counter = 0)
         {
             ++_shotAmount;
             _coordX = x;
@@ -43,7 +43,13 @@ namespace Game
             _speed = speed;
             _counter = counter;
             _active = true;
+            _step = step;
         }
+
+        //~Shot()    // TODO: Pay attention to destructor working.
+        //{
+        //    --_shotAmount;
+        //}
 
         #endregion
 

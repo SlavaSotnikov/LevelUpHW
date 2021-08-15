@@ -21,9 +21,9 @@ namespace Game
             return (uint)value.Next(10000, 20000);
         }
 
-        public static uint GetRateOfFire()
+        public static byte GetRndY()
         {
-            return (uint)value.Next(10000, 15000);
+            return (byte)value.Next(1, 20);
         }
     }
 }

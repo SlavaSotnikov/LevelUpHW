@@ -156,10 +156,8 @@ namespace Game
                     // Show.
                     Print(source.X, source.Y, ConsoleColor.White, image);
 
-                    if (source is EnemyShip)
+                    if (source is Ship one)
                     {
-                        EnemyShip one = (EnemyShip)source;
-
                         if (one.HitPoints <= 2)
                         {
                             Print(source.X, source.Y, ConsoleColor.DarkRed, image);

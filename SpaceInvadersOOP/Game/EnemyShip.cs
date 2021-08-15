@@ -7,26 +7,17 @@ namespace Game
         private static int _enemyAmount = 0;
         private static int _oldEnemyAmount = 0;
 
-        private uint _rateOfFire;
-        private uint _countOfFire;
+        private byte _shot;
 
-        public uint RateOfFire 
+        public byte Shot 
         {
             get
             {
-                return _rateOfFire;
-            }
-        }
-
-        public uint CountOfFire
-        {
-            get
-            {
-                return _countOfFire;
+                return _shot;
             }
             set
             {
-                _countOfFire = value;
+                _shot = value;
             }
         }
 
@@ -79,13 +70,13 @@ namespace Game
             }
         }
 
-        ~EnemyShip()
-        {
-            --_enemyAmount;
-        }
+        //~EnemyShip()
+        //{
+        //    --_enemyAmount;
+        //}
 
         public EnemyShip(GameField game, int coordX, int coordY, bool active, 
-                uint speed, uint rateOfFire, uint counter=0, int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
+                uint speed, sbyte step, byte rndY, uint counter=0, int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
         {
             _game = game;
             _coordX = coordX;
@@ -96,7 +87,8 @@ namespace Game
             _counter = 0;
             _speed = speed;
             _hitPoints = hitPoints;
-            _rateOfFire = rateOfFire;
+            _shot = rndY;
+            _step = step;
             ++_enemyAmount;
         }
 

@@ -13,7 +13,7 @@ namespace Game
         protected bool _active;
         protected uint _speed;
         protected uint _counter;
-        protected byte _step = 1;
+        protected sbyte _step;
         
         protected GameField _game;
 

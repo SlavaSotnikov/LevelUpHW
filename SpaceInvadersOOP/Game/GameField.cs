@@ -16,10 +16,10 @@ namespace Game
         private int _initialX = 53;      // Initial X position of Spaceship.
         private int _initialY = 28;      // Initial Y position of Spaceship.
         private byte _lifes = 3;
-        private byte _hitpoints = 100;
+        private byte _hitpoints = 10;
         private byte _leftShift = 2;     // This shift tunes the Left bullet. 
         private byte _rightShift = 6;    // This shift tunes the Right bullet.
-        private byte _shotEnemyShift = 4;
+        private byte _shotEnemyShift = 3;
         private uint _shipSpeed = 1;
         private bool _active = true;
         private uint _counter = 0;
@@ -124,7 +124,18 @@ namespace Game
 
         public bool IsgameOver()
         {
-            return false;
+            bool gamуOn = false;
+
+            for (int i = 0; i < _amountOfObjects; i++)
+            {
+                if (_gameObjects[i] is UserShip)
+                {
+                    gamуOn = true;
+                    break;
+                }
+            }
+
+            return gamуOn;
         }
 
         public void Run()
@@ -133,7 +144,7 @@ namespace Game
             {
                 ProduceEnemies();
 
-                //ShotEnemies();
+                ShotEnemies();
 
                 CheckObjects();
 
@@ -143,11 +154,11 @@ namespace Game
 
                 DeleteObjects();
 
-                Display.SetUserShipData(this);
+                //Display.SetUserShipData(this);
 
-                UI.ShowAmountOfObjects();
+                //UI.ShowAmountOfObjects();
 
-            } while (!IsgameOver());
+            } while (IsgameOver());
 
         }
 
@@ -155,12 +166,9 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (IsEnemyShip(i))
+                if (_gameObjects[i] is EnemyShip one)
                 {
-                    EnemyShip one = (EnemyShip)_gameObjects[i];
-                    ++one.CountOfFire;
-
-                    if (one.CountOfFire == one.RateOfFire)
+                    if (_gameObjects[i].Y == one.Shot)
                     {
                         AddObject(SpaceObject.ShotEnemy);
                     }
@@ -233,13 +241,13 @@ namespace Game
                     break;
             }
 
-            if (_amountOfObjects >= _gameObjects.Length)
+            if (_amountOfObjects >= _gameObjects.Length)    // TODO: Pay attention!
             {
                 Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
             }
 
             _gameObjects[_amountOfObjects] = creature;
-            ++_amountOfObjects;
+             ++_amountOfObjects;
         }
 
         private SpaceCraft AddEnemy()
@@ -247,7 +255,7 @@ namespace Game
             bool isExist;
             int rndX = 0;
             uint speed = BL_Random.GetFlySpeed();
-            uint rateOfFire = BL_Random.GetRateOfFire();
+            byte rndYShot = BL_Random.GetRndY();
 
             do
             {
@@ -257,10 +265,10 @@ namespace Game
 
                 for (int i = 0; i < _amountOfObjects; i++)
                 {
-                    if (IsEnemyShip(i))
+                    if (_gameObjects[i] is EnemyShip)
                     {
                         if (!((rndX > _gameObjects[i].X + 7) ||
-                                (rndX + 7 < _gameObjects[i].X)))
+                                (rndX + 7 < _gameObjects[i].X)))    // TODO: Ask about width of a ship.
                         {
                             isExist = true;
                             i = 0;
@@ -271,7 +279,7 @@ namespace Game
 
             } while (isExist);
 
-            return new EnemyShip(this, rndX, CONST_Y, _active, speed, rateOfFire);
+            return new EnemyShip(this, rndX, CONST_Y, _active, speed, 1, rndYShot);
         }
 
         public Shot AddShot(int shift)
@@ -280,10 +288,11 @@ namespace Game
 
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (IsUserShip(i))
+                if (_gameObjects[i] is UserShip)
                 {
                     bullet = new Shot(_gameObjects[i].X + shift,
-                            _gameObjects[i].Y);
+                            _gameObjects[i].Y - 1, 1, 5000);
+
                     break;
                 }
             }
@@ -291,16 +300,19 @@ namespace Game
             return bullet;
         }
 
-        public EnemyShot AddEnemyShot(int shift)
+        public Shot AddEnemyShot(int shift)
         {
-            EnemyShot bullet = null;
+            Shot bullet = null;
 
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (IsEnemyShip(i))
+                if (_gameObjects[i] is EnemyShip one && one.Shot != 0)
                 {
-                    bullet = new EnemyShot(_gameObjects[i].X + shift,
-                            _gameObjects[i].Y);
+                    bullet = new Shot(_gameObjects[i].X + shift,
+                            _gameObjects[i].Y + 3, -1, 28000);
+
+                    one.Shot = 0;
+
                     break;
                 }
             }
@@ -312,26 +324,20 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (IsShot(i))
+                if (_gameObjects[i] is Shot)
                 {
                     CheckShot(i);
                 }
 
-                if (IsEnemyShip(i))
+                if (_gameObjects[i] is EnemyShip)
                 {
                     CheckEnemy(i);
                 }
 
-                if (IsUserShip(i))
+                if (_gameObjects[i] is UserShip)
                 {
                     CheckUserShip(i);
                 }
-
-                if (IsEnemyShot(i))
-                {
-                    CheckEnemyShot(i);
-                }
-
 
             }
         }
@@ -340,7 +346,7 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (IsEnemyShip(i))
+                if (_gameObjects[i] is EnemyShip)
                 {
                     if (IsClash(ship, i))
                     {
@@ -367,20 +373,25 @@ namespace Game
                 return;
             }
 
-            for (int enemy = 0; enemy < _amountOfObjects; enemy++)
+            if (_gameObjects[shot].Y == BottomBorder)
             {
-                if (IsEnemyShip(enemy))
+                DeactivateObject(shot);
+                return;
+            }
+
+            for (int i = 0; i < _amountOfObjects; i++)
+            {
+                if (_gameObjects[i] is Ship one)
                 {
-                    if (IsHit(shot, enemy))
+                    if (IsHit(shot, i))
                     {
                         DeactivateObject(shot);
 
-                        EnemyShip one = (EnemyShip)_gameObjects[enemy];
                         --one.HitPoints;
 
                         if (one.HitPoints <= 0)
                         {
-                            DeactivateObject(enemy); 
+                            DeactivateObject(i); 
                         }
                     }
                 }
@@ -395,20 +406,20 @@ namespace Game
                 return;
             }
 
-            for (int ship = 0; ship < _amountOfObjects; ship++)
+            for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (IsUserShip(ship))
+                if (_gameObjects[i] is UserShip)
                 {
-                    if (IsHit(shot, ship))
+                    if (IsHit(shot, i))
                     {
                         DeactivateObject(shot);
 
-                        UserShip one = (UserShip)_gameObjects[ship];
+                        UserShip one = (UserShip)_gameObjects[i];
                         one.HitPoints -= 10;
 
                         if (one.HitPoints <= 0)
                         {
-                            DeactivateObject(ship);
+                            DeactivateObject(i);
                         }
                     }
                 }
@@ -442,27 +453,7 @@ namespace Game
                 }
             }
 
-            GC.Collect();
-        }
-
-        private bool IsEnemyShot(int index)
-        {
-            return _gameObjects[index] is EnemyShot;
-        }
-
-        private bool IsEnemyShip(int index)
-        {
-            return _gameObjects[index] is EnemyShip;
-        }
-
-        private bool IsShot(int index)
-        {
-            return _gameObjects[index] is Shot;
-        }
-
-        private bool IsUserShip(int index)
-        {
-            return _gameObjects[index] is UserShip;
+            //GC.Collect();
         }
 
         private void DeactivateObject(int index)
