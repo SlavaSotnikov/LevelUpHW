@@ -5,10 +5,15 @@
         #region Private Data
 
         protected Coordinate _point;
-
+        protected string _name;
         #endregion
 
         #region Properties
+
+        public abstract string Name 
+        {
+            get;
+        }
 
         public int CoordinateX
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 namespace GeometricShapes
 {
@@ -58,15 +59,27 @@ namespace GeometricShapes
             pic.AddPicture(rect);
             pic.AddPicture(circ);
             pic.AddPicture(trap);
-            pic.Show();
+            //pic.Show();
 
-            pic.Move(30, 0);
+            //pic.Move(30, 0);
 
-            pic.Resize(0.5);
-            pic.Show();
+            //pic.Resize(0.5);
+            //pic.Show();
 
-            UI.Print("Perimeter", pic.GetPerimeter(), 5);
-            UI.Print("Area", pic.GetArea(), 40);
+            //UI.Print("Perimeter", pic.GetPerimeter(), 5);
+            //UI.Print("Area", pic.GetArea(), 40);
+
+            //IEnumerator iter = pic.GetEnumerator();
+            //while (iter.MoveNext())
+            //{
+            //    Console.WriteLine("{0} ", iter.Current);
+            //}
+
+            foreach (var item in pic)
+            {
+                Console.WriteLine("{0} ", item);
+            }
+
 
             Console.ReadKey();
         }

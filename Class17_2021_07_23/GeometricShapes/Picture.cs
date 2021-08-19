@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections;
 
 namespace GeometricShapes
 {
-    class Picture
+    class Picture : IEnumerable
     {
         private Figure[] _figures;
         private int _amountOfFigures;
@@ -11,6 +12,37 @@ namespace GeometricShapes
         {
             _figures = new Figure[capacity];
             _amountOfFigures = 0;
+        }
+
+        public Picture(Figure[] source)
+        {
+            _figures = (Figure[])source.Clone();
+            _amountOfFigures = source.Length;
+        }
+
+        public Figure this[int index]
+        {
+            get 
+            {
+                return _figures[index]; 
+            }
+            set 
+            {
+                _figures[index] = value;
+            }
+        }
+
+        public int Amount 
+        {
+            get 
+            {
+                return _amountOfFigures;
+            }
+        }
+
+        public string Name 
+        {
+            get;
         }
 
         public void AddPicture(Figure source)
@@ -26,7 +58,7 @@ namespace GeometricShapes
 
         public double GetArea()
         {
-            double result = 0;
+            double result = 0.0;
 
             for (int i = 0; i < _amountOfFigures; i++)
             {
@@ -39,9 +71,14 @@ namespace GeometricShapes
             return result;
         }
 
+        public IEnumerator GetEnumerator()
+        {
+            return new Iterator(this);
+        }
+
         public double GetPerimeter()
         {
-            double result = 0;
+            double result = 0.0;
 
             for (int i = 0; i < _amountOfFigures; i++)
             {

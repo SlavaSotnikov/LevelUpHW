@@ -4,9 +4,16 @@ namespace GeometricShapes
 {
     class Point : Figure
     {
+        public override string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
         #region Constructors
 
-        public Point(int coordinateX, int coordinateY)
+        public Point(int coordinateX, int coordinateY, string name = "Point")
         {
             if (IsValidCoordinate(coordinateX))
             {

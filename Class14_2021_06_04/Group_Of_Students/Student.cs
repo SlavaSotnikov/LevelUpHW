@@ -9,5 +9,13 @@ namespace Group_Of_Students
         public int studNum;
         public DateTime enterDate;
         public byte[] marks;
+
+        public string Name 
+        {
+            get
+            {
+                return name;
+            }
+        }
     }
 }

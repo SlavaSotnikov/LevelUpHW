@@ -12,6 +12,13 @@ namespace GeometricShapes
 
         #region Properties
 
+        public override string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
         public int Radius
         {
             get
@@ -32,13 +39,15 @@ namespace GeometricShapes
 
         #region Constructors
 
-        public Circle(Point source, int radius)
+        public Circle(Point source, int radius, string name = "Circle")
             : base(source)
         {
             if (IsValidRadius(radius))
             {
                 _radius = radius;
             }
+
+            _name = name;
         }
 
         #endregion

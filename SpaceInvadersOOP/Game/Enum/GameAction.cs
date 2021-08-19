@@ -2,9 +2,9 @@
 
 namespace Game
 {
-    enum Actions
+    enum GameAction
     {
-        NoDirection,
+        NoAction,
         LeftMove,
         RightMove,
         UpMove,

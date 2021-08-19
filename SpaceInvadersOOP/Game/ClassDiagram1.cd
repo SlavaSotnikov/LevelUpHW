@@ -17,16 +17,6 @@
       <FileName>EnemyShip.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Game.GameField">
-    <Position X="8.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAICAMAgQQBhMmAAGgEFIMSwTBAAAAEAFgAWCACAUAI=</HashCode>
-      <FileName>GameField.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Field Name="_gameObjects" />
-    </ShowAsCollectionAssociation>
-  </Class>
   <Class Name="Game.SpaceCraft">
     <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
@@ -68,11 +58,21 @@
       <FileName>Shot.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Game.Display">
+  <Class Name="Game.Space">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAMAgQQAhMiAAGAEFIMQgTBAAAAEAFgAWCACAUAI=</HashCode>
+      <FileName>Space.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_gameObjects" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Game.Game" Collapsed="true">
     <Position X="13" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Display.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Game.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

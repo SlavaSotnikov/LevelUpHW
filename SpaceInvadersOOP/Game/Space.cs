@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    class GameField
+    class Space
     {
         #region Private Data
 
@@ -29,9 +29,6 @@ namespace Game
         private int _counterProduceEnemy;
         private int _speed;
 
-        private static int _gfAmount = 0;
-        private static int _oldGFAmount = 0;
-
         #endregion
 
         #region Properties
@@ -49,29 +46,6 @@ namespace Game
             get
             {
                 return _amountOfObjects;
-            }
-        }
-
-        public static int GFAmount
-        {
-            get
-            {
-                return _gfAmount;
-            }
-            set
-            {
-                _gfAmount = value;
-            }
-        }
-        public static int OldGFAmount
-        {
-            get
-            {
-                return _oldGFAmount;
-            }
-            set
-            {
-                _oldGFAmount = value;
             }
         }
 
@@ -113,13 +87,12 @@ namespace Game
 
         #region Methods
 
-        public GameField(int capacity = 20, int amount = 0, int speed = 350000)
+        public Space(int capacity = 20, int amount = 0, int speed = 350000)
         {
             _gameObjects = new SpaceCraft[capacity];
             _amountOfObjects = amount;
             _counterProduceEnemy = amount;
             _speed = speed;
-            ++_gfAmount;
         }
 
         public bool IsgameOver()
@@ -142,6 +115,8 @@ namespace Game
         {
             do
             {
+                StepObjects();
+
                 ProduceEnemies();
 
                 ShotEnemies();
@@ -150,13 +125,11 @@ namespace Game
 
                 PrintObjects();
 
-                StepObjects();
-
                 DeleteObjects();
 
                 //Display.SetUserShipData(this);
 
-                //UI.ShowAmountOfObjects();
+                UI.ShowAmountOfObjects();
 
             } while (IsgameOver());
 
@@ -187,6 +160,7 @@ namespace Game
                     _gameObjects[i].Counter = RESET;
 
                     _gameObjects[i].Step();
+
                 }
             }
         }
@@ -247,7 +221,7 @@ namespace Game
             }
 
             _gameObjects[_amountOfObjects] = creature;
-             ++_amountOfObjects;
+            ++_amountOfObjects;
         }
 
         private SpaceCraft AddEnemy()
@@ -272,6 +246,7 @@ namespace Game
                         {
                             isExist = true;
                             i = 0;
+
                             break;
                         }
                     }
@@ -324,102 +299,52 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if (_gameObjects[i] is Shot)
+                for (int j = 0; j < _amountOfObjects; j++)
                 {
-                    CheckShot(i);
-                }
-
-                if (_gameObjects[i] is EnemyShip)
-                {
-                    CheckEnemy(i);
-                }
-
-                if (_gameObjects[i] is UserShip)
-                {
-                    CheckUserShip(i);
-                }
-
-            }
-        }
-
-        private void CheckUserShip(int ship)
-        {
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                if (_gameObjects[i] is EnemyShip)
-                {
-                    if (IsClash(ship, i))
+                    if (i != j)
                     {
-                        _gameObjects[ship].Y = _gameObjects[ship].Y+2;
-                        _gameObjects[i].Y = _gameObjects[i].Y-2;
-                    }
-                }
-            }
-        }
-
-        private void CheckEnemy(int enemy)
-        {
-            if (_gameObjects[enemy].Y == BottomBorder)
-            {
-                DeactivateObject(enemy);
-            }
-        }
-
-        private void CheckShot(int shot)
-        {
-            if (_gameObjects[shot].Y == TopBorder)
-            {
-                DeactivateObject(shot);
-                return;
-            }
-
-            if (_gameObjects[shot].Y == BottomBorder)
-            {
-                DeactivateObject(shot);
-                return;
-            }
-
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                if (_gameObjects[i] is Ship one)
-                {
-                    if (IsHit(shot, i))
-                    {
-                        DeactivateObject(shot);
-
-                        --one.HitPoints;
-
-                        if (one.HitPoints <= 0)
+                        if (_gameObjects[i] is UserShip && _gameObjects[j] is EnemyShip)
                         {
-                            DeactivateObject(i); 
+                            if (IsClash(i, j))
+                            {
+                                _gameObjects[i].Y = _gameObjects[i].Y + 2;
+                                _gameObjects[j].Y = _gameObjects[j].Y - 2;
+                            }
                         }
-                    }
-                }
-            }
-        }
 
-        private void CheckEnemyShot(int shot)
-        {
-            if (_gameObjects[shot].Y == BottomBorder)
-            {
-                DeactivateObject(shot);
-                return;
-            }
-
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                if (_gameObjects[i] is UserShip)
-                {
-                    if (IsHit(shot, i))
-                    {
-                        DeactivateObject(shot);
-
-                        UserShip one = (UserShip)_gameObjects[i];
-                        one.HitPoints -= 10;
-
-                        if (one.HitPoints <= 0)
+                        if (_gameObjects[i] is Shot && _gameObjects[j] is Ship one)
                         {
-                            DeactivateObject(i);
+                            if (IsHit(i, j))
+                            {
+                                _gameObjects[i].Active = false;
+
+                                --one.HitPoints;
+
+                                if (one.HitPoints <= 0)
+                                {
+                                    _gameObjects[j].Active = false;
+
+                                    one.Step();
+                                }
+                            }
+                        }
+
+                        if (_gameObjects[i] is EnemyShip)
+                        {
+                            if (_gameObjects[i].Y == BottomBorder)
+                            {
+                                _gameObjects[i].Active = false;
+                            }
+                        }
+
+                        if (_gameObjects[i] is Shot)
+                        {
+                            if (_gameObjects[i].Y == TopBorder ||
+                                    _gameObjects[i].Y == BottomBorder)
+                            {
+                                _gameObjects[i].Active = false;
+                            }
+
                         }
                     }
                 }
@@ -433,33 +358,34 @@ namespace Game
                         _gameObjects[enemy].X + 7 <= _gameObjects[userShip].X + 9;
         }
 
-        private bool IsHit(int shot, int enemy)
+        private bool IsHit(int shot, int ship)
         {
-            return _gameObjects[shot].Y == _gameObjects[enemy].Y &&
-                    _gameObjects[enemy].X < _gameObjects[shot].X &&
-                        _gameObjects[shot].X < _gameObjects[enemy].X + 7;
+            return _gameObjects[shot].Y == _gameObjects[ship].Y &&
+                    _gameObjects[ship].X < _gameObjects[shot].X &&
+                        _gameObjects[shot].X < _gameObjects[ship].X + 7;
           }
 
         private void DeleteObjects()
         {
-            for (int i = 0; i < _amountOfObjects; i++)
+            for (int i = _gameObjects.Length - 1; i >= 0; i--)
             {
-                if (!_gameObjects[i].Active)
+                if (_gameObjects[i] != null)
                 {
-                    Array.Copy(_gameObjects, i + 1, _gameObjects,
-                            i, _amountOfObjects - i);
-                    --_amountOfObjects;
-                    --i;
+                    if (!_gameObjects[i].Active)
+                    {
+                        Array.Copy(_gameObjects, i + 1, _gameObjects,
+                                i, _amountOfObjects - i);
+                        --_amountOfObjects;
+                    } 
                 }
             }
 
-            //GC.Collect();
-        }
+            for (int i = 0; i < _amountOfObjects; i++)    // TODO: Reverse.
+            {
+                
+            }
 
-        private void DeactivateObject(int index)
-        {
-            _gameObjects[index].Active = false;
-            _gameObjects[index].Step(); // Change Y for UI.
+            //GC.Collect();
         }
     } 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Group_Of_Students
 {
@@ -56,16 +57,16 @@ namespace Group_Of_Students
 
             ChooseEnter(UI.ChooseMenu(), ref first);
 
-            UI.PrintStudent(first);
+            //UI.PrintStudent(first);
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
-            Group nextLevel = BL.GoToNextLevel(first);
+            //Group nextLevel = BL.GoToNextLevel(first);
 
 
             //BL.AddStudent(ref first, st);
             //BL.AddStudent(ref first, st2);
-            UI.PrintStudent(nextLevel);
+            //UI.PrintStudent(nextLevel);
 
             //Console.ReadKey();
             //Student person = GetCustomStudent();
@@ -89,7 +90,14 @@ namespace Group_Of_Students
             //ChooseEnter(UI.ChooseMenu(), ref third);
             //BL.AddGroup(ref faculty, third);
 
-            UI.PrintGroup(faculty);
+            //UI.PrintGroup(faculty);
+
+            IStudentIterator iter = first.CreateNumerator();
+            while (iter.HasNext())
+            {
+                Student st = iter.Next();
+                Console.WriteLine(st.Name);
+            }
 
 
 

@@ -75,12 +75,13 @@
   <Class Name="GeometricShapes.Picture" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAAAAACAAAEAAAEAAEAAAAAFAEAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAABAACAACAACEAAAEAAEAAAAAFAEAAAA=</HashCode>
       <FileName>Picture.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_figures" />
     </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

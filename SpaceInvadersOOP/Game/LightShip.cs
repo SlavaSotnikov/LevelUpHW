@@ -32,7 +32,7 @@ namespace Game
 
         #region Constructors
 
-        public LightShip(GameField game, int coordX, int coordY, bool active,
+        public LightShip(Space game, int coordX, int coordY, bool active,
                 uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
             : base(game, coordX, coordY, active, speed, counter, hitpoints, lifes, oldCoordX, oldCoordY)
         {
@@ -44,9 +44,9 @@ namespace Game
 
         public override void Step()
         {
-            switch (UI.AskConsole())
+            switch (Game.GetEvent())
             {
-                case Actions.LeftMove:
+                case GameAction.LeftMove:
                     --_coordX;
                     if (_coordX <= _game.LeftBorder)
                     {
@@ -54,7 +54,7 @@ namespace Game
                     }
                     break;
 
-                case Actions.RightMove:
+                case GameAction.RightMove:
                     ++_coordX;
                     if (_coordX >= _game.RightBorder)
                     {
@@ -62,7 +62,7 @@ namespace Game
                     }
                     break;
 
-                case Actions.UpMove:
+                case GameAction.UpMove:
                     --_coordY;
                     if (_coordY <= _game.TopBorder)
                     {
@@ -70,7 +70,7 @@ namespace Game
                     }
                     break;
 
-                case Actions.DownMove:
+                case GameAction.DownMove:
                     ++_coordY;
                     if (_coordY >= _game.BottomBorder)
                     {
@@ -78,7 +78,7 @@ namespace Game
                     }
                     break;
 
-                case Actions.Shooting:
+                case GameAction.Shooting:
                     _game.AddObject(SpaceObject.ShotLeft);
                     _game.AddObject(SpaceObject.ShotRight);
                     break;

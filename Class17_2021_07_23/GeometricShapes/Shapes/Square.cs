@@ -12,6 +12,13 @@ namespace GeometricShapes
 
         #region Properties
 
+        public override string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
         public int Wide
         {
             get
@@ -24,10 +31,12 @@ namespace GeometricShapes
 
         #region Constructor
 
-        public Square(Point one, int wide)
+        public Square(Point one, int wide, string name = "Square")
             : base(one)
         {
             _wide = wide;
+
+            _name = name;
         }
 
         #endregion
@@ -57,6 +66,7 @@ namespace GeometricShapes
         {
             _wide = (int)Math.Round(mult * _wide);
         }
+        #region IGeometrical
 
         public virtual double GetArea()
         {
@@ -68,6 +78,7 @@ namespace GeometricShapes
             return _wide * 4;
         }
 
+        #endregion
         #endregion
     }
 }

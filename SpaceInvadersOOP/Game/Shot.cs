@@ -46,11 +46,6 @@ namespace Game
             _step = step;
         }
 
-        //~Shot()    // TODO: Pay attention to destructor working.
-        //{
-        //    --_shotAmount;
-        //}
-
         #endregion
 
         #region Methods

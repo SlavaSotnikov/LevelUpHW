@@ -16,14 +16,23 @@ namespace GeometricShapes
             }
         }
 
+        public override string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
         #endregion
 
         #region Constructors
 
-        public Rectangle(Point one, int side1, int height)
+        public Rectangle(Point one, int side1, int height, string name = "Rectangle")
             : base(one, side1)
         {
             _height = height;
+            _name = name;
         }
 
         #endregion

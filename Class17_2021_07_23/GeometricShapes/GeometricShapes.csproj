@@ -46,6 +46,7 @@
     <Compile Include="Coordinate.cs" />
     <Compile Include="Figure.cs" />
     <Compile Include="IGeometrical.cs" />
+    <Compile Include="Iterator.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Shapes\Circle.cs" />
     <Compile Include="Shapes\Ellipse.cs" />

@@ -5,6 +5,8 @@ namespace Game
 {
     class UI
     {
+        static string[] _shot = { "|" };
+
         static string[] _lightShip = new string[5] // TODO: Static array.
         { "    ▲    ",
           "    Ο    ",
@@ -41,14 +43,6 @@ namespace Game
 
         public static void ShowAmountOfObjects()
         {
-            if (GameField.GFAmount != GameField.OldGFAmount)
-            {
-                Console.SetCursorPosition(90, 1);
-                Console.WriteLine("GF: {0}", GameField.GFAmount);
-
-                GameField.OldGFAmount = GameField.GFAmount;
-            }
-
             if (UserShip.ShipAmount != UserShip.OldShipAmount)
             {
                 Console.SetCursorPosition(90, 2);
@@ -104,9 +98,9 @@ namespace Game
             return shipModel;
         }
 
-        public static Actions AskConsole()
+        public static GameAction AskConsole()
         {
-            Actions userEvent = Actions.NoDirection;
+            GameAction userEvent = GameAction.NoAction;
 
             if (Console.KeyAvailable)
             {
@@ -115,25 +109,25 @@ namespace Game
                 switch (key)
                 {
                     case ConsoleKey.LeftArrow:
-                        userEvent = Actions.LeftMove;
+                        userEvent = GameAction.LeftMove;
                         break;
                     case ConsoleKey.RightArrow:
-                        userEvent = Actions.RightMove;
+                        userEvent = GameAction.RightMove;
                         break;
                     case ConsoleKey.UpArrow:
-                        userEvent = Actions.UpMove;
+                        userEvent = GameAction.UpMove;
                         break;
                     case ConsoleKey.DownArrow:
-                        userEvent = Actions.DownMove;
+                        userEvent = GameAction.DownMove;
                         break;
                     case ConsoleKey.Spacebar:
-                        userEvent = Actions.Shooting;
+                        userEvent = GameAction.Shooting;
                         break;
                     case ConsoleKey.Escape:
-                        userEvent = Actions.Exit;
+                        userEvent = GameAction.Exit;
                         break;
                     default:
-                        userEvent = Actions.NoDirection;
+                        userEvent = GameAction.NoAction;
                         break;
                 }
             }
@@ -145,7 +139,7 @@ namespace Game
         {
             string[] image = GetImage(source);
 
-            if (source.X != source.OldX 
+            if (source.X != source.OldX
                     || source.Y != source.OldY)
             {
                 // Hide.
@@ -171,7 +165,7 @@ namespace Game
             source.OldY = source.Y;
         }
 
-        private static void Print(int x, int y, ConsoleColor color, params string[] view)
+        public static void Print(int x, int y, ConsoleColor color, params string[] view)
         {
             for (int i = view.Length - 1; i >= 0; i--)
             {
@@ -184,7 +178,7 @@ namespace Game
 
         private static string[] GetImage(SpaceCraft source)    // TODO: Static constructor.
         {
-            string[] image = { "|" };
+            string[] image = _shot;
 
             if (source is LightShip)
             {
@@ -204,7 +198,7 @@ namespace Game
             return image;
         }
 
-        public static void ShowDisplay(int hp, GameField source)
+        public static void ShowDisplay(int hp, Space source)
         {
             Console.SetCursorPosition(source.LeftBorder, source.BottomBorder);
             Console.Write("HP: {0}%", hp);

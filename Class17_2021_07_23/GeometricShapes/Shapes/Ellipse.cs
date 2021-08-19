@@ -20,17 +20,27 @@ namespace GeometricShapes
             }
         }
 
+        public override string Name 
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
         #endregion
 
         #region Constructors
 
-        public Ellipse(Point one, int radius, int secondRadius)
+        public Ellipse(Point one, int radius, int secondRadius, string name = "Ellipse")
             : base(one, radius)
         {
             if (IsValidRadius(secondRadius))
             {
                 _secondRadius = secondRadius;
             }
+
+            _name = name;
         }
 
         #endregion

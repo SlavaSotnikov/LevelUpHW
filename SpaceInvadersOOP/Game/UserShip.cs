@@ -32,7 +32,7 @@ namespace Game
             }
         }
 
-        public UserShip(GameField game, int coordX, int coordY, bool active, 
+        public UserShip(Space game, int coordX, int coordY, bool active, 
                 uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
         {
             _game = game;

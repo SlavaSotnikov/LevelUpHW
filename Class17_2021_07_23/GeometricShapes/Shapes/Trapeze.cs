@@ -20,14 +20,23 @@ namespace GeometricShapes
             }
         }
 
+        public override string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
         #endregion
 
         #region Constructor
 
-        public Trapeze(Point one, int side1, int side2, int ground)
+        public Trapeze(Point one, int side1, int side2, int ground, string name = "Trapeze")
             : base(one, side1, side2)
         {
             _ground = ground;
+            _name = name;
         }
 
         #endregion

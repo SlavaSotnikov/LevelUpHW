@@ -8,7 +8,7 @@ namespace Game
         {
             UI.SetBufferSize();
 
-            GameField game = new GameField();
+            Space game = new Space();
 
             game.AddObject(UI.AskShipModel());
 
