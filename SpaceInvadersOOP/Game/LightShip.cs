@@ -30,11 +30,21 @@ namespace Game
             }
         }
 
+        public override byte Width 
+        {
+            get
+            {
+                return _width;
+            }
+        }
+
         #region Constructors
 
         public LightShip(Space game, int coordX, int coordY, bool active,
-                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
-            : base(game, coordX, coordY, active, speed, counter, hitpoints, lifes, oldCoordX, oldCoordY)
+                uint speed, uint counter, byte hitpoints, byte lifes,
+                    int oldCoordX=0, int oldCoordY= 0, byte width = 9)
+            : base(game, coordX, coordY, active, speed, width, counter, 
+                    hitpoints, lifes, oldCoordX, oldCoordY)
         {
         }
 

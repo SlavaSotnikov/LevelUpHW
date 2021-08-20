@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    class Space
+    class Space : Game, ISpace
     {
         #region Private Data
 
@@ -10,24 +10,6 @@ namespace Game
         private int _rightBorder = 83;
         private int _topBorder = 0;
         private int _bottomBorder = 33;
-        private const int RESET = 0;
-        private const int CONST_Y = 1;
-
-        private int _initialX = 53;      // Initial X position of Spaceship.
-        private int _initialY = 28;      // Initial Y position of Spaceship.
-        private byte _lifes = 3;
-        private byte _hitpoints = 10;
-        private byte _leftShift = 2;     // This shift tunes the Left bullet. 
-        private byte _rightShift = 6;    // This shift tunes the Right bullet.
-        private byte _shotEnemyShift = 3;
-        private uint _shipSpeed = 1;
-        private bool _active = true;
-        private uint _counter = 0;
-
-        private SpaceCraft[] _gameObjects;
-        private int _amountOfObjects;
-        private int _counterProduceEnemy;
-        private int _speed;
 
         #endregion
 
@@ -82,8 +64,6 @@ namespace Game
         }
 
         #endregion
-
-        // TODO: GameField divides into Game and Space.
 
         #region Methods
 
@@ -146,30 +126,6 @@ namespace Game
                         AddObject(SpaceObject.ShotEnemy);
                     }
                 }
-            }
-        }
-
-        public void StepObjects()
-        {
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                ++_gameObjects[i].Counter;
-
-                if (_gameObjects[i].Counter % _gameObjects[i].Speed == 0)
-                {
-                    _gameObjects[i].Counter = RESET;
-
-                    _gameObjects[i].Step();
-
-                }
-            }
-        }
-
-        public void PrintObjects()
-        {
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                UI.PrintObject(_gameObjects[i]);
             }
         }
 
@@ -363,29 +319,6 @@ namespace Game
             return _gameObjects[shot].Y == _gameObjects[ship].Y &&
                     _gameObjects[ship].X < _gameObjects[shot].X &&
                         _gameObjects[shot].X < _gameObjects[ship].X + 7;
-          }
-
-        private void DeleteObjects()
-        {
-            for (int i = _gameObjects.Length - 1; i >= 0; i--)
-            {
-                if (_gameObjects[i] != null)
-                {
-                    if (!_gameObjects[i].Active)
-                    {
-                        Array.Copy(_gameObjects, i + 1, _gameObjects,
-                                i, _amountOfObjects - i);
-                        --_amountOfObjects;
-                    } 
-                }
-            }
-
-            for (int i = 0; i < _amountOfObjects; i++)    // TODO: Reverse.
-            {
-                
-            }
-
-            //GC.Collect();
         }
     } 
 

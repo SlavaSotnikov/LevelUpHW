@@ -17,5 +17,13 @@ namespace Group_Of_Students
                 return name;
             }
         }
+
+        public string LastName
+        {
+            get
+            {
+                return lastName;
+            }
+        }
     }
 }

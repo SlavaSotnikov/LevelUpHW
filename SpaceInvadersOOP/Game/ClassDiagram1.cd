@@ -13,7 +13,7 @@
   <Class Name="Game.EnemyShip">
     <Position X="6.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAEAAAAAAAQAAABAIAAAAIAAAAIAAAIACAAAA=</HashCode>
+      <HashCode>AAAACAAAEAAAAAAAQAAABEIAAAAIAAAAIAAAIACAAAA=</HashCode>
       <FileName>EnemyShip.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -33,21 +33,21 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAEAAIIAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABEAAABAAAAAAEAAIIAAAAAA=</HashCode>
       <FileName>Ship.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.LightShip" Collapsed="true">
     <Position X="3.25" Y="9.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAIAAAIAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAIAAAIAAAAAA=</HashCode>
       <FileName>LightShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.HeavyShip" Collapsed="true">
     <Position X="3.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>HeavyShip.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,21 +59,26 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Game.Space">
-    <Position X="9.25" Y="0.5" Width="1.5" />
+    <Position X="9.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAICAMAgQQAhMiAAGAEFIMQgTBAAAAEAFgAWCACAUAI=</HashCode>
+      <HashCode>AAACAMAAAAAhEgAAGAABIAAADAAAAAEAEgAGCACAAAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="_gameObjects" />
-    </ShowAsAssociation>
+    <Lollipop Position="0.656" />
   </Class>
-  <Class Name="Game.Game" Collapsed="true">
-    <Position X="13" Y="0.75" Width="1.5" />
+  <Class Name="Game.Game">
+    <Position X="12.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAIAAAAgQAAhACAAAAEAAEQgSBAAAAAABAAQAAAAWAA=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Interface Name="Game.ISpace" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAhAgAAAAAAAAAADAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISpace.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

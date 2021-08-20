@@ -96,7 +96,7 @@ namespace Group_Of_Students
             while (iter.HasNext())
             {
                 Student st = iter.Next();
-                Console.WriteLine(st.Name);
+                Console.WriteLine("{0} {1}",st.Name, st.LastName);
             }
 
 

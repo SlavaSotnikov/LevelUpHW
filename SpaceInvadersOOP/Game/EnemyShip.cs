@@ -4,9 +4,6 @@ namespace Game
 {
     class EnemyShip : Ship
     {
-        private static int _enemyAmount = 0;
-        private static int _oldEnemyAmount = 0;
-
         private byte _shot;
 
         public byte Shot 
@@ -18,29 +15,6 @@ namespace Game
             set
             {
                 _shot = value;
-            }
-        }
-
-        public static int EnemyAmount
-        {
-            get
-            {
-                return _enemyAmount;
-            }
-            set
-            {
-                _enemyAmount = value;
-            }
-        }
-        public static int OldEnemyAmount
-        {
-            get
-            {
-                return _oldEnemyAmount;
-            }
-            set
-            {
-                _oldEnemyAmount = value;
             }
         }
 
@@ -70,8 +44,17 @@ namespace Game
             }
         }
 
+        public override byte Width
+        {
+            get
+            {
+                return _width;
+            }
+        }
+
         public EnemyShip(Space game, int coordX, int coordY, bool active, 
-                uint speed, sbyte step, byte rndY, uint counter=0, int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
+                uint speed, sbyte step, byte rndY, uint counter=0,
+                    int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6, byte width = 7)
         {
             _game = game;
             _coordX = coordX;
@@ -84,7 +67,7 @@ namespace Game
             _hitPoints = hitPoints;
             _shot = rndY;
             _step = step;
-            ++_enemyAmount;
+            _width = width;
         }
 
         public override void Step()

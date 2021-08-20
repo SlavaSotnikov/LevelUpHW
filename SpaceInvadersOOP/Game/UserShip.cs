@@ -33,7 +33,7 @@ namespace Game
         }
 
         public UserShip(Space game, int coordX, int coordY, bool active, 
-                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
+                uint speed, byte width, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
         {
             _game = game;
             _coordX = coordX;
@@ -45,6 +45,7 @@ namespace Game
             _counter = counter;
             _hitPoints = hitpoints;
             _life = lifes;
+            _width = width;
             ++_shipAmount;
         }
     }
