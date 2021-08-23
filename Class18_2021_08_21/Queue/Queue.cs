@@ -15,10 +15,6 @@ namespace Queue
 
         #endregion
 
-        #region Properties
-
-        #endregion
-
         #region Constructors
 
         public Queue(int capacity)
