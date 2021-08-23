@@ -2,14 +2,33 @@
 
 namespace Game
 {
-    class Space : Game, ISpace
+    class Space : ISpace
     {
         #region Private Data
 
-        private int _leftBorder = 30;
-        private int _rightBorder = 83;
-        private int _topBorder = 0;
-        private int _bottomBorder = 33;
+        protected int _leftBorder = 30;
+        protected int _rightBorder = 83;
+        protected int _topBorder = 0;
+        protected int _bottomBorder = 33;
+
+        protected int _initialX = 53;      // Initial X position of Spaceship.
+        protected int _initialY = 28;      // Initial Y position of Spaceship.
+        protected byte _lifes = 3;
+        protected byte _hitpoints = 10;
+        protected byte _leftShift = 2;     // This shift tunes the Left bullet. 
+        protected byte _rightShift = 6;    // This shift tunes the Right bullet.
+        protected byte _shotEnemyShift = 3;
+        protected uint _shipSpeed = 1;
+        protected bool _active = true;
+        protected uint _counter = 0;
+        protected const int RESET = 0;
+        protected const int CONST_Y = 1;
+
+        protected int _counterProduceEnemy;
+        protected int _speed;
+
+        protected SpaceCraft[] _gameObjects;
+        protected int _amountOfObjects;
 
         #endregion
 
@@ -107,10 +126,6 @@ namespace Game
 
                 DeleteObjects();
 
-                //Display.SetUserShipData(this);
-
-                UI.ShowAmountOfObjects();
-
             } while (IsgameOver());
 
         }
@@ -171,7 +186,7 @@ namespace Game
                     break;
             }
 
-            if (_amountOfObjects >= _gameObjects.Length)    // TODO: Pay attention!
+            if (_amountOfObjects >= _gameObjects.Length)
             {
                 Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
             }
@@ -319,6 +334,32 @@ namespace Game
             return _gameObjects[shot].Y == _gameObjects[ship].Y &&
                     _gameObjects[ship].X < _gameObjects[shot].X &&
                         _gameObjects[shot].X < _gameObjects[ship].X + 7;
+        }
+
+        
+
+        public void PrintObjects()
+        {
+            for (int i = 0; i < _amountOfObjects; i++)
+            {
+                UI.PrintObject(_gameObjects[i]);
+            }
+        }
+
+        public void StepObjects()
+        {
+            for (int i = 0; i < _amountOfObjects; i++)
+            {
+                ++_gameObjects[i].Counter;
+
+                if (_gameObjects[i].Counter % _gameObjects[i].Speed == 0)
+                {
+                    _gameObjects[i].Counter = RESET;
+
+                    _gameObjects[i].Step();
+
+                }
+            }
         }
     } 
 
