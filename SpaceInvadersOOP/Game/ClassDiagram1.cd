@@ -61,7 +61,7 @@
   <Class Name="Game.Space">
     <Position X="10" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAICAMAgQAAhEiAAGAEBIAQgTBAAAAEAFgAWCACAUAI=</HashCode>
+      <HashCode>AAICAMAgQAAhEiAAGAEBIAQgTBAAAAAABgAUAACAUAA=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -79,7 +79,7 @@
   <Class Name="Game.GameField">
     <Position X="7.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAEAEAACCAAAAAI=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
   </Class>

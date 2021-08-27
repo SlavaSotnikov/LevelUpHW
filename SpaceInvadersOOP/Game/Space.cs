@@ -130,6 +130,22 @@ namespace Game
 
         }
 
+        public void DeleteObjects()
+        {
+            for (int i = _gameObjects.Length - 1; i >= 0; i--)
+            {
+                if (_gameObjects[i] != null)
+                {
+                    if (!_gameObjects[i].Active)
+                    {
+                        Array.Copy(_gameObjects, i + 1, _gameObjects,
+                                i, _amountOfObjects - i);
+                        --_amountOfObjects;
+                    }
+                }
+            }
+        }
+
         private void ShotEnemies()
         {
             for (int i = 0; i < _amountOfObjects; i++)

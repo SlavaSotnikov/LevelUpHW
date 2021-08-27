@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IContainer.cs" />
+    <Compile Include="IQueue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue.cs" />
+    <Compile Include="QueueIterator.cs" />
     <Compile Include="Warnings.cs" />
   </ItemGroup>
   <ItemGroup>

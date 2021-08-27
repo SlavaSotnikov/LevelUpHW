@@ -1,26 +1,73 @@
 ﻿using System;
+using System.Collections;
 
 namespace Queue
 {
-    class Queue
+    class Queue : IContainer, IEnumerable
     {
         #region Private Data
 
         private object[] _elements;
-        private object[] _auxiliary;
         private int _head;
         private int _tale;
+        private int _size;
+
+        private const sbyte INITIAL_VALUE = -1;
 
         private Warnings _warning;
 
         #endregion
 
+        public object this[int index]
+        {
+            get
+            {
+                return _elements[index];
+            }
+            set
+            {
+                _elements[index] = (int)value;
+            }
+        }
+
+        public int Size
+        {
+            get
+            {
+                return _size;
+            }
+        }
+
+        public int Length 
+        {
+            get
+            {
+                return _elements.Length;
+            }
+        }
+
+        public int Head
+        {
+            get
+            {
+                return _head;
+            }
+        }
+
+        public int Tale
+        {
+            get
+            {
+                return _tale;
+            }
+        }
         #region Constructors
 
         public Queue(int capacity)
         {
-            _head = -1;
-            _tale = -1;
+            _size = 0;
+            _head = INITIAL_VALUE;
+            _tale = INITIAL_VALUE;
             _elements = new object[capacity];
         }
 
@@ -41,25 +88,12 @@ namespace Queue
 
             if (_head == _tale + 1)
             {
-                //Array.Resize(ref _elements, _elements.Length * 2);
-
-                _auxiliary = new object[_tale + 1];
-
-                // Copy to _auxiliary
-                Array.Copy(_elements, 0, _auxiliary, 0, _tale + 1);
-
-                // Move at the beginning.
-                Array.Copy(_elements, _head, _elements, 0, _elements.Length - _head);  
-                
-                _tale = _elements.Length - _head;
-                _head = 0;
-
-                // Copy from _auxiliary into _elements
-                Array.Copy(_auxiliary, 0, _elements, _tale, _auxiliary.Length);
-
-                _tale += _auxiliary.Length - 1;
-                
                 Array.Resize(ref _elements, _elements.Length * 2);
+
+                Array.Copy(_elements, _head, _elements, 
+                        _elements.Length - (Size - _head), Size - _head);
+
+                _head = _elements.Length - Size + 2;
             }
 
             if (_head == -1)
@@ -80,6 +114,7 @@ namespace Queue
             }
 
             _elements[_tale] = source;
+            ++_size;
 
         }
 
@@ -95,6 +130,7 @@ namespace Queue
             object temp = _elements[_head];
 
             _elements[_head] = null;
+            --_size;
 
             if (_head == _tale)
             {
@@ -114,6 +150,11 @@ namespace Queue
             }
 
             return temp;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return new QueueIterator(this);
         }
 
         #endregion

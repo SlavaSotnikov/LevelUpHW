@@ -1,20 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
-namespace Iterator
+namespace Container
 {
-    class DoubleContainerIterator : IEnumerator
+    class ContainerIterator : IEnumerator
     {
-        private DoubleContainer _source;
+        private IContainer _source;
         private int _currentPosition = -1;
 
-        public DoubleContainerIterator(DoubleContainer source)
+        public ContainerIterator(IContainer source)
         {
             _source = source;
         }
 
         public object Current 
         {
-            get 
+            get
             {
                 return _source[_currentPosition];
             }
@@ -24,7 +25,7 @@ namespace Iterator
         {
             ++_currentPosition;
 
-            return _currentPosition < _source.Size;
+            return (_currentPosition < _source.Size);
         }
 
         public void Reset()
