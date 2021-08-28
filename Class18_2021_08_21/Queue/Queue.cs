@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Queue
 {
-    class Queue : IContainer, IEnumerable
+    class Queue : IQueue, IEnumerable
     {
         #region Private Data
 
@@ -14,53 +14,21 @@ namespace Queue
 
         private const sbyte INITIAL_VALUE = -1;
 
-        private Warnings _warning;
+        private QueueStatus _warning;
 
         #endregion
 
-        public object this[int index]
+        public object[] GetElements 
         {
-            get
-            {
-                return _elements[index];
-            }
-            set
-            {
-                _elements[index] = (int)value;
-            }
+            get; 
         }
 
-        public int Size
-        {
-            get
-            {
-                return _size;
-            }
-        }
+        public int Head { get; set; }
 
-        public int Length 
-        {
-            get
-            {
-                return _elements.Length;
-            }
-        }
+        public int Tale { get; set; }
 
-        public int Head
-        {
-            get
-            {
-                return _head;
-            }
-        }
+        public int Size { get; set; }
 
-        public int Tale
-        {
-            get
-            {
-                return _tale;
-            }
-        }
         #region Constructors
 
         public Queue(int capacity)
@@ -73,15 +41,15 @@ namespace Queue
 
         #endregion
 
-        #region public methods
+        #region Public Methods
 
         public void Add(object source)
         {
-            _warning = Warnings.Ok;
+            _warning = QueueStatus.Ok;
 
             if (_head == 0 && _tale == _elements.Length - 1)
             {
-                _warning = Warnings.Queue_is_full;
+                _warning = QueueStatus.Full;
 
                 Array.Resize(ref _elements, _elements.Length * 2);
             }
@@ -91,9 +59,9 @@ namespace Queue
                 Array.Resize(ref _elements, _elements.Length * 2);
 
                 Array.Copy(_elements, _head, _elements, 
-                        _elements.Length - (Size - _head), Size - _head);
+                        _elements.Length - (_size - _head), _size - _head);
 
-                _head = _elements.Length - Size + 2;
+                _head = _elements.Length - _size + 2;
             }
 
             if (_head == -1)
@@ -122,7 +90,7 @@ namespace Queue
         {
             if (_head == -1)
             {
-                _warning = Warnings.Queue_is_empty;
+                _warning = QueueStatus.Empty;
 
                 return null;
             }
@@ -156,6 +124,7 @@ namespace Queue
         {
             return new QueueIterator(this);
         }
+
 
         #endregion
     }

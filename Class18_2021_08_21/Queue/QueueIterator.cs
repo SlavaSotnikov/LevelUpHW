@@ -5,20 +5,18 @@ namespace Queue
 {
     class QueueIterator : IEnumerator
     {
-        private IContainer _source;
-        private int _currentPosition;
+        Queue _source;
 
-        public QueueIterator(IContainer source)
+        public QueueIterator(Queue source)
         {
             _source = source;
-            _currentPosition = source.Head - 1;
         }
 
         public object Current
         {
             get
             {
-                return _source[_currentPosition];
+                return _source[_source.Head];
             }
         }
 

@@ -108,6 +108,40 @@ namespace Game
             return userEvent;
         }
 
+        public static void Hide(SpaceCraft source)
+        {
+            string[] image = GetImage(source);
+
+            if (source.X != source.OldX 
+                    || source.Y != source.OldY)
+            {
+                Print(source.OldX, source.OldY, ConsoleColor.Black, image);
+            }
+
+            source.OldX = source.X;
+            source.OldY = source.Y;
+        }
+
+        public static void Show(SpaceCraft source)
+        {
+            string[] image = GetImage(source);
+
+            if ((source.X != source.OldX
+                    || source.Y != source.OldY) && source.Active)
+            {
+                Print(source.X, source.Y, ConsoleColor.White, image);
+
+                if ((source is Ship one) && one.HitPoints <= 2)
+                {
+                    Print(source.X, source.Y, ConsoleColor.DarkRed, image);
+                    Console.ResetColor();
+                }
+            }
+
+            source.OldX = source.X;
+            source.OldY = source.Y;
+        }
+
         public static void PrintObject(SpaceCraft source)
         {
             string[] image = GetImage(source);
