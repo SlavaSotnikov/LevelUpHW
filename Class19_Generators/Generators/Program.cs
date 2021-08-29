@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FibonacciNumbers
+namespace Generators
 {
     class Program
     {
@@ -9,6 +9,15 @@ namespace FibonacciNumbers
             Fibonacci numbers = new Fibonacci(12, 100);
 
             foreach (var item in numbers.GetSequence())
+            {
+                Console.Write("{0} ", item);
+            }
+
+            Console.WriteLine();
+
+            Prime number = new Prime(8, 30);
+
+            foreach (var item in number.GetSequence())
             {
                 Console.Write("{0} ", item);
             }

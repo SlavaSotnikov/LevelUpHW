@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace FibonacciNumbers
+namespace Generators
 {
     class Fibonacci : IGenerator
     {
