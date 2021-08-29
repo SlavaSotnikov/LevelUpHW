@@ -18,20 +18,9 @@ namespace Queue
 
         #endregion
 
-        public object[] GetElements 
-        {
-            get; 
-        }
-
-        public int Head { get; set; }
-
-        public int Tale { get; set; }
-
-        public int Size { get; set; }
-
         #region Constructors
 
-        public Queue(int capacity)
+        public Queue(int capacity = 5)
         {
             _size = 0;
             _head = INITIAL_VALUE;
@@ -47,15 +36,17 @@ namespace Queue
         {
             _warning = QueueStatus.Ok;
 
-            if (_head == 0 && _tale == _elements.Length - 1)
+            if (IsFool())
             {
                 _warning = QueueStatus.Full;
 
                 Array.Resize(ref _elements, _elements.Length * 2);
             }
 
-            if (_head == _tale + 1)
+            if (IsFool())
             {
+                _warning = QueueStatus.Full;
+
                 Array.Resize(ref _elements, _elements.Length * 2);
 
                 Array.Copy(_elements, _head, _elements, 
@@ -88,14 +79,14 @@ namespace Queue
 
         public object Get()
         {
-            if (_head == -1)
+            if (IsEmpty())
             {
                 _warning = QueueStatus.Empty;
 
                 return null;
             }
 
-            object temp = _elements[_head];
+            object result = _elements[_head];
 
             _elements[_head] = null;
             --_size;
@@ -117,14 +108,84 @@ namespace Queue
                 }
             }
 
-            return temp;
+            return result;
         }
 
         public IEnumerator GetEnumerator()
         {
-            return new QueueIterator(this);
+            return new QueueIterator(_elements, _head, _tale);
         }
 
+        public bool IsEmpty()
+        {
+            bool result = true;
+
+            for (int i = 0; i < _elements.Length; i++)
+            {
+                if (_elements[i] != null)
+                {
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
+        public bool IsFool()
+        {
+            return (_head == 0 && _tale == _elements.Length - 1) 
+                    || (_head == _tale + 1);
+        }
+
+        #endregion
+
+        #region QueueIterator
+
+        private struct QueueIterator : IEnumerator
+        {
+            private object[] _elements;
+            private int _head;
+            private int _tale;
+
+            public QueueIterator(object[] elements, int head, int tale)
+            {
+                _elements = elements;
+                _head = head - 1;
+                _tale = tale;
+            }
+
+            public object Current
+            {
+                get
+                {
+                    return _elements[_head];
+                }
+            }
+
+            public bool MoveNext()
+            {
+                bool result = false;
+
+                if (_head != _tale)
+                {
+                    ++_head;
+
+                    if (_head >= _elements.Length)
+                    {
+                        _head = 0;
+                    }
+
+                    result = true;
+                }
+
+                return result;
+            }
+
+            public void Reset()
+            {
+                _head -= 1;
+            }
+        }
 
         #endregion
     }

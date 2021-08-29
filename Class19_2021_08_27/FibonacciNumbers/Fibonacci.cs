@@ -5,11 +5,17 @@ namespace FibonacciNumbers
 {
     class Fibonacci
     {
+        #region Private Data
+
         private int _greaterFib;
         private int _lowerFib;
         private int _last;
 
-        public Fibonacci(int first = 1 , int last = 10)
+        #endregion
+
+        #region Constructor
+
+        public Fibonacci(int first = 1, int last = 10)
         {
             int fibonacci = 0;
             int temp = 1;
@@ -26,6 +32,8 @@ namespace FibonacciNumbers
 
             _last = last;
         }
+
+        #endregion
 
         public IEnumerator GetEnumerator()
         {
