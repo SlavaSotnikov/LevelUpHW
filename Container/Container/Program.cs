@@ -11,7 +11,6 @@ namespace Container
             c3.Add("one");
             c3.Add("sd");
             c3.Add("f");
-            c3.Add("t");
 
             foreach (string item in c3)
             {
