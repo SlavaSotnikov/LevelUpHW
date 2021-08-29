@@ -37,6 +37,11 @@ namespace FibonacciNumbers
                 fibonacci += temp;
                 temp = fibonacci - temp;
 
+                if (temp >= _last)
+                {
+                    yield break;
+                }
+
                 yield return temp;
             }
         }

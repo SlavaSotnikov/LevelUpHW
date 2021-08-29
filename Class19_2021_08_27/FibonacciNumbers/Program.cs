@@ -6,7 +6,7 @@ namespace FibonacciNumbers
     {
         static void Main()
         {
-            Fibonacci numbers = new Fibonacci(0, 100);
+            Fibonacci numbers = new Fibonacci(20, 1000);
 
             foreach (var item in numbers)
             {
