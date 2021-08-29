@@ -5,14 +5,24 @@ namespace Generators
 {
     class Prime : IGenerator
     {
+        #region Private Data
+
         private int _first;
         private int _last;
 
-        public Prime(int first, int last)
+        #endregion
+
+        #region Constructor
+
+        public Prime(int first, int last)    // TODO: Ask a question about constructor.
         {
             _first = first;
             _last = last;
         }
+
+        #endregion
+
+        #region Methods
 
         public IEnumerable GetSequence()
         {
@@ -24,7 +34,7 @@ namespace Generators
                 {
                     if (i != j && i % j == 0)
                     {
-                        prime = false;  
+                        prime = false;
 
                         break;
                     }
@@ -38,5 +48,8 @@ namespace Generators
                 prime = true;
             }
         }
+
+        #endregion
+
     }
 }

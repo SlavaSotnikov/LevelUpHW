@@ -34,6 +34,8 @@ namespace Generators
 
         #endregion
 
+        #region Methods
+
         public IEnumerable GetSequence()
         {
             int fibonacci = _greaterFib;
@@ -52,5 +54,8 @@ namespace Generators
                 yield return temp;
             }
         }
+
+        #endregion
+
     }
 }
