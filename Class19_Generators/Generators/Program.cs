@@ -15,7 +15,7 @@ namespace Generators
 
             Console.WriteLine();
 
-            Prime number = new Prime(8, 30);
+            Prime number = new Prime(3, 10);
 
             foreach (var item in number.GetSequence())
             {

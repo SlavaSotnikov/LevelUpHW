@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 
 namespace Generators
 {
@@ -14,7 +13,7 @@ namespace Generators
 
         #region Constructor
 
-        public Prime(int first, int last)    // TODO: Ask a question about constructor.
+        public Prime(int first, int last)    // TODO: Ask a question about a constructor.
         {
             _first = first;
             _last = last;
@@ -26,26 +25,24 @@ namespace Generators
 
         public IEnumerable GetSequence()
         {
-            bool prime = true;
+            int count = 0;
 
             for (int i = _first; i <= _last; i++)
             {
-                for (int j = 2; j < _last; j++)
+                for (int j = 2; j < i; j++) 
                 {
-                    if (i != j && i % j == 0)
+                    if (i % j != 0)
                     {
-                        prime = false;
-
-                        break;
+                        count += 1;
                     }
                 }
 
-                if (prime)
+                if (count == (i - 2))
                 {
                     yield return i;
                 }
 
-                prime = true;
+                count = 0;
             }
         }
 
