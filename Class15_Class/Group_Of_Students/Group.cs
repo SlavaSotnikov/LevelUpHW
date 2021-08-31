@@ -90,7 +90,7 @@ namespace Group_Of_Students
             }
         }
 
-        public Student this[int index]
+        public object this[int index]
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Group_Of_Students
             }
             set
             {
-                _students[index] = new Student(value);    // TODO: Ask a question about this indexer.
+                _students[index] = new Student(value as Student);    // TODO: Ask a question about this indexer.
             }
         }
 
@@ -329,28 +329,37 @@ namespace Group_Of_Students
 
         #region IList Members
 
-        public void Add(Student person)
+        public int Add(object person)
         {
-            if (_amountOfStudents >= _students.Length)
+            if (_amountOfStudents < _students.Length)
+            {
+                _students[_amountOfStudents] = person as Student;
+                ++_amountOfStudents;
+
+                return (_amountOfStudents - 1);
+            }
+            else
             {
                 Array.Resize(ref _students, _students.Length + (_students.Length * 2));
-            }
 
-            _students[_amountOfStudents] = new Student(person);
-            ++_amountOfStudents;
+                return -1;
+            }
         }
 
-        public bool Contains(Student person)
+        public bool Contains(object person)
         {
             bool result = false;
 
-            for (int i = 0; i < _amountOfStudents; i++)
+            if (person is Student one)
             {
-                if (_students[i].Id == person.Id)
+                for (int i = 0; i < _amountOfStudents; i++)
                 {
-                    result = true;
-                    break;
-                }
+                    if (_students[i].Id == one.Id)
+                    {
+                        result = true;
+                        break;
+                    }
+                } 
             }
 
             return result;
@@ -361,23 +370,26 @@ namespace Group_Of_Students
             _amountOfStudents = 0;
         }
 
-        public int IndexOf(Student person)
+        public int IndexOf(object person)
         {
             int result = -1;
 
-            for (int i = 0; i < _amountOfStudents; i++)
+            if (person is Student one)
             {
-                if (_students[i].Id == person.Id)
+                for (int i = 0; i < _amountOfStudents; i++)
                 {
-                    result = i;
-                    break;
+                    if (_students[i].Id == one.Id)
+                    {
+                        result = i;
+                        break;
+                    }
                 } 
             }
 
             return result;
         }
 
-        public void Insert(int index, Student person)
+        public void Insert(int index, object person)
         {
             if ((_amountOfStudents + 1 <= _students.Length) 
                     && (index < _amountOfStudents) && (index >= 0))
@@ -390,10 +402,10 @@ namespace Group_Of_Students
                 }
             }
 
-            _students[index] = new Student(person);
+            _students[index] = new Student(person as Student);
         }
 
-        public void Remove(Student person)
+        public void Remove(object person)
         {
             RemoveAt(IndexOf(person));
         }
