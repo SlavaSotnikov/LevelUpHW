@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Text;
 
 namespace Group_Of_Students
 {
-    class Group
+    class Group : IList
     {
         #region Constants
 
@@ -17,7 +18,7 @@ namespace Group_Of_Students
 
         private string _groupName;
         private Student[] _students;
-        private int _countOfStudents;
+        private int _amountOfStudents;
         private int _groupGPA;
 
         #endregion
@@ -28,7 +29,7 @@ namespace Group_Of_Students
 
         public int AmountOfStudents
         {
-            get { return _countOfStudents; }
+            get { return _amountOfStudents; }
         }
 
         public string GroupName
@@ -47,6 +48,63 @@ namespace Group_Of_Students
             }
         }
 
+        #region IList properties
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public bool IsFixedSize
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public int Count 
+        {
+            get
+            {
+                return _amountOfStudents;
+            }
+        }
+
+        public object SyncRoot
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        public bool IsSynchronized
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public Student this[int index]
+        {
+            get
+            {
+                return _students[index];
+            }
+            set
+            {
+                _students[index] = new Student(value);    // TODO: Ask a question about this indexer.
+            }
+        }
+
+
+        #endregion
+
         #endregion
 
         #region Accessors
@@ -62,22 +120,22 @@ namespace Group_Of_Students
 
         public void AddStudent(Student person)
         {
-            if (_countOfStudents >= _students.Length)
+            if (_amountOfStudents >= _students.Length)
             {
                 Array.Resize(ref _students, _students.Length + (_students.Length * 2));
             }
 
-            _students[_countOfStudents] = new Student(person);
-            ++_countOfStudents;
+            _students[_amountOfStudents] = new Student(person);
+            ++_amountOfStudents;
         } 
 
         public void EditStudent(Student person, int id)
         {
             if (IsValidGroupId(id))
             {
-                for (int i = 0; i < _countOfStudents; i++)
+                for (int i = 0; i < _amountOfStudents; i++)
                 {
-                    if (_students[i].StudNumber == id)
+                    if (_students[i].Id == id)
                     {
                         _students[i] = new Student(person);
 
@@ -102,13 +160,13 @@ namespace Group_Of_Students
                 return;
             }
 
-            for (int i = 0; i < _countOfStudents; i++)
+            for (int i = 0; i < _amountOfStudents; i++)
             {
-                if (_students[i].StudNumber == id)
+                if (_students[i].Id == id)
                 {
                     Array.Copy(_students, i + 1, _students, i, _students.Length - (i + 1));
 
-                    _countOfStudents -= DELETED_STUDENT;
+                    _amountOfStudents -= DELETED_STUDENT;
 
                     LastOperationStatus = OperationStatus.Ok;
                 }
@@ -123,7 +181,7 @@ namespace Group_Of_Students
 
             LastOperationStatus = OperationStatus.Not_Found;
              
-            for (int i = 0; i < _countOfStudents; i++)
+            for (int i = 0; i < _amountOfStudents; i++)
             {
                 if (_students[i].LastName == lastName)
                 {
@@ -148,9 +206,9 @@ namespace Group_Of_Students
 
             LastOperationStatus = OperationStatus.Not_Found;
 
-            for (int i = 0; i < _countOfStudents; i++)
+            for (int i = 0; i < _amountOfStudents; i++)
             {
-                if (_students[i].StudNumber == id)
+                if (_students[i].Id == id)
                 {
                     index = i;
                     LastOperationStatus = OperationStatus.Ok;
@@ -168,7 +226,7 @@ namespace Group_Of_Students
         {
             _groupName = BL.GetGroupName();
             _students = new Student[capacity];
-            _countOfStudents = 0;
+            _amountOfStudents = 0;
             _groupGPA = 0;
         }
 
@@ -176,21 +234,21 @@ namespace Group_Of_Students
         {
             _groupName = source._groupName;
             _students = GetFullCopy(source._students);
-            _countOfStudents = source._countOfStudents;
+            _amountOfStudents = source._amountOfStudents;
             _groupGPA = source._groupGPA;
         }
 
         public Group(params Student[] input)    // TODO: From Students[] to Group
         {
             _students = GetFullCopy(input);
-            _countOfStudents = input.Length;   // TODO:????
+            _amountOfStudents = input.Length;   // TODO:????
         }
 
         public Group(string name, Student[] students, int amount)
         {
             _groupName = name;
             _students = students;
-            _countOfStudents = amount;
+            _amountOfStudents = amount;
         }
 
         #endregion
@@ -199,16 +257,16 @@ namespace Group_Of_Students
 
         public Group GoToNextLevel()
         {
-            Student[] zeroing = new Student[_countOfStudents];
+            Student[] zeroing = new Student[_amountOfStudents];
 
-            for (int i = 0; i < _countOfStudents; i++)
+            for (int i = 0; i < _amountOfStudents; i++)
             {
                 zeroing[i] = _students[i].ZeroingCopy();
             }
 
             string newName = NextLevelName(_groupName);
 
-            Group nextLevel = new Group(newName, zeroing, _countOfStudents);
+            Group nextLevel = new Group(newName, zeroing, _amountOfStudents);
 
             return nextLevel;
         }
@@ -217,12 +275,12 @@ namespace Group_Of_Students
         {
             float gpa = 0;
 
-            for (int i = 0; i < _countOfStudents; i++)
+            for (int i = 0; i < _amountOfStudents; i++)
             {
                 gpa += _students[i].GetGPA();
             }
 
-            return gpa / _countOfStudents;
+            return gpa / _amountOfStudents;
         }
 
         private Student[] GetFullCopy(Student[] source)
@@ -241,9 +299,9 @@ namespace Group_Of_Students
         {
             bool result = false;
 
-            for (int i = 0; i < _countOfStudents; i++)
+            for (int i = 0; i < _amountOfStudents; i++)
             {
-                if (_students[i].StudNumber == id)
+                if (_students[i].Id == id)
                 {
                     result = true;
                 }
@@ -268,6 +326,106 @@ namespace Group_Of_Students
 
             return newName.ToString();
         }
+
+        #region IList Members
+
+        public void Add(Student person)
+        {
+            if (_amountOfStudents >= _students.Length)
+            {
+                Array.Resize(ref _students, _students.Length + (_students.Length * 2));
+            }
+
+            _students[_amountOfStudents] = new Student(person);
+            ++_amountOfStudents;
+        }
+
+        public bool Contains(Student person)
+        {
+            bool result = false;
+
+            for (int i = 0; i < _amountOfStudents; i++)
+            {
+                if (_students[i].Id == person.Id)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        public void Clear()
+        {
+            _amountOfStudents = 0;
+        }
+
+        public int IndexOf(Student person)
+        {
+            int result = -1;
+
+            for (int i = 0; i < _amountOfStudents; i++)
+            {
+                if (_students[i].Id == person.Id)
+                {
+                    result = i;
+                    break;
+                } 
+            }
+
+            return result;
+        }
+
+        public void Insert(int index, Student person)
+        {
+            if ((_amountOfStudents + 1 <= _students.Length) 
+                    && (index < _amountOfStudents) && (index >= 0))
+            {
+                ++_amountOfStudents;
+
+                for (int i = _amountOfStudents - 1; i > index; i--)
+                {
+                    _students[i] = _students[i - 1];
+                }
+            }
+
+            _students[index] = new Student(person);
+        }
+
+        public void Remove(Student person)
+        {
+            RemoveAt(IndexOf(person));
+        }
+
+        public void RemoveAt(int index)
+        {
+            if ((index >= 0) && (index < _amountOfStudents))
+            {
+                for (int i = index; i < _amountOfStudents - 1; i++)
+                {
+                    _students[i] = _students[i + 1];
+                }
+
+                --_amountOfStudents;
+            }
+        }
+
+        public void CopyTo(Array destination, int index)
+        {
+            for (int i = 0; i < _amountOfStudents; i++)
+            {
+                destination.SetValue(_students[i], index++);
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
 
         #endregion
     }

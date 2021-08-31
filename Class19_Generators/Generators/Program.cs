@@ -6,7 +6,7 @@ namespace Generators
     {
         static void Main()
         {
-            Fibonacci numbers = new Fibonacci(12, 100);
+            Fibonacci numbers = new Fibonacci(12, 100);        
 
             foreach (var item in numbers.GetSequence())
             {

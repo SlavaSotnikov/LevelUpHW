@@ -178,7 +178,7 @@ namespace Group_Of_Students
 
         public static void ShowStudent(Student person)
         {
-            Console.Write($"\nStudent: {person.Name} {person.LastName} \nId: {person.StudNumber}" +
+            Console.Write($"\nStudent: {person.Name} {person.LastName} \nId: {person.Id}" +
                     $"\nStudent since: {person.EnterDate.ToShortDateString()} \nCountry: {person.Country}\n\nMarks: \n");
             PrintMarks(person);
             Console.WriteLine(("").PadRight(26, '-'));

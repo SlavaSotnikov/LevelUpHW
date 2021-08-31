@@ -63,7 +63,7 @@ namespace Group_Of_Students
             }
         }
 
-        public uint StudNumber
+        public uint Id
         {
             get { return _studNum; }
             set { _studNum = value; }

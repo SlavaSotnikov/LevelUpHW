@@ -20,7 +20,7 @@ namespace Generator
             int fib1 = 0;
             int fib2 = 1;
 
-            while (fib1 <= first)
+            while (fib1 <= first)    // TODO: Extract a method.
             {
                 fib1 += fib2;
                 fib2 = fib1 - fib2;
