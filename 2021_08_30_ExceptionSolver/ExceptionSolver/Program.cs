@@ -8,10 +8,17 @@ namespace ExceptionSolver
     {
         static void Main()
         {
-            Equation one = Equation.SolveEquation(1, 2, 1);
-            one.Run();
+            try
+            {
+                Equation one = Equation.FindEquation(2, 3);
+                one.Solve();
 
-            Console.WriteLine($"X1 = {one.X1}");
+                Console.WriteLine($"X1 = {one.X1}");
+            }
+            catch (EquationException ex)
+            {
+                Console.WriteLine($"{ex.Message} \n{ex.HelpLink} \n{ex.TargetSite}");
+            }
 
             Console.ReadKey();
         }

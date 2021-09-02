@@ -6,8 +6,8 @@ namespace EquationLib
     {
         #region Private Data
 
-        protected int _factorA;
-        protected int _factorB;
+        protected double _factorA;
+        protected double _factorB;
         protected double _x1;
 
         #endregion
@@ -20,7 +20,7 @@ namespace EquationLib
 
         #region Constructors
 
-        public Equation(int a, int b)
+        public Equation(double a, double b)
         {
             _factorA = a;
             _factorB = b;
@@ -30,13 +30,13 @@ namespace EquationLib
 
         #region Member Functions
 
-        public abstract void Run();
+        public abstract void Solve();
 
         #endregion
 
         #region Static Functions
 
-        public static Equation SolveEquation(params int[] factor)
+        public static Equation FindEquation(params int[] factor)
         {
             Equation result = null;
 

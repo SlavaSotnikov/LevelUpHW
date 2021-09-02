@@ -4,7 +4,7 @@ namespace EquationLib
 {
     class Quadratic : Equation
     {
-        private int _factorC;
+        private double _factorC;
         private double _x2;
 
         public override double X1
@@ -23,15 +23,16 @@ namespace EquationLib
             }
         }
 
-        public Quadratic(int a, int b, int c)
+        public Quadratic(double a, double b, double c)
             : base(a, b)
         {
             _factorC = c;
+            _x2 = 0.0;
         }
 
-        public override void Run()
+        public override void Solve()
         {
-            int discriminant = GetDiscriminant();
+            double discriminant = GetDiscriminant();
 
             if (discriminant > 0)
             {
@@ -49,7 +50,7 @@ namespace EquationLib
             }
         }
 
-        public int GetDiscriminant()
+        public double GetDiscriminant()
         {
             if (_factorA == 0)
             {

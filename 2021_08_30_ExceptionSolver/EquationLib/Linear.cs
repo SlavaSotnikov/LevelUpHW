@@ -12,20 +12,21 @@ namespace EquationLib
             }
         }
 
-        public Linear(int a, int b)
+        public Linear(double a, double b)
             : base(a, b)
         {
+            _x1 = 0;
         }
 
-        public override void Run()
+        public override void Solve()
         {
-            if (_factorA == 0)
+            if (_factorA == 0 && _factorB == 0)
             {
-
+                throw new LinearEquationException("Every number is a solution. In case factors A = 0 and B = 0.");
             }
-            else if (_factorA == 0 && _factorB == 0)
+            else if (_factorA == 0)
             {
-
+                throw new LinearEquationException("Not valid value! Factor 'A' != 0");
             }
             else
             {
