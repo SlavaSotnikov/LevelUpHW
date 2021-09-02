@@ -6,7 +6,7 @@ namespace _2021_08_30_ExceptionsDemo
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             try
             {
