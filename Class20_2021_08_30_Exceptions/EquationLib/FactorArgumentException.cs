@@ -8,6 +8,8 @@ namespace EquationLib
 {
     public class FactorArgumentException : Exception
     {
+        #region Constructors
+
         public FactorArgumentException()
         {
         }
@@ -21,5 +23,7 @@ namespace EquationLib
             : base(message, innerException)
         {
         }
+
+        #endregion
     }
 }

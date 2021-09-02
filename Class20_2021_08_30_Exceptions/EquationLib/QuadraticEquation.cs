@@ -4,26 +4,42 @@ namespace EquationLib
 {
     public class QuadraticEquation
     {
+        #region Private Data
+
         private int _factorA;
         private int _factorB;
         private int _factorC;
         private double _x1;
         private double _x2;
 
-        public double X1 
+        #endregion
+
+        #region Properties
+
+        public double X1
         {
             get
             {
                 return _x1;
             }
         }
-        public double X2 
+
+        public double X2
         {
             get
             {
+                if (_x1 == _x2)
+                {
+                    throw new FieldAccessException("There is an only one root!");
+                }
+
                 return _x2;
             }
         }
+
+        #endregion
+
+        #region Constructor
 
         public QuadraticEquation(int a, int b, int c)
         {
@@ -31,6 +47,10 @@ namespace EquationLib
             _factorB = b;
             _factorC = c;
         }
+
+        #endregion
+
+        #region Member Functions
 
         public void Run()
         {
@@ -44,7 +64,7 @@ namespace EquationLib
             else if (discriminant == 0)
             {
                 _x1 = -_factorB / 2 * _factorA;
-                _x2 = -_factorB / 2 * _factorA;    // How can I throw an Exception here?
+                _x2 = -_factorB / 2 * _factorA;    // TODO: How can I throw an Exception here?
             }
             else
             {
@@ -61,5 +81,7 @@ namespace EquationLib
 
             return (_factorB * _factorB) - (4 * _factorA * _factorC);
         }
+
+        #endregion
     }
 }

@@ -10,7 +10,7 @@ namespace Exceptions
         {
             try
             {
-                QuadraticEquation one = new QuadraticEquation(3, 10, -8);
+                QuadraticEquation one = new QuadraticEquation(1, 2, 1);
                 one.Run();
 
                 Console.WriteLine($"X1 = {one.X1}, X2 = {one.X2}");
