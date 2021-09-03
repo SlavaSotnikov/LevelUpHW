@@ -327,23 +327,21 @@ namespace Group_Of_Students
             return newName.ToString();
         }
 
+        #endregion
+
         #region IList Members
 
         public int Add(object person)
         {
-            if (_amountOfStudents < _students.Length)
-            {
-                _students[_amountOfStudents] = person as Student;
-                ++_amountOfStudents;
-
-                return (_amountOfStudents - 1);
-            }
-            else
+            if (_amountOfStudents >= _students.Length)
             {
                 Array.Resize(ref _students, _students.Length + (_students.Length * 2));
-
-                return -1;
             }
+
+            _students[_amountOfStudents] = person as Student;
+            ++_amountOfStudents;
+
+            return (_amountOfStudents - 1);
         }
 
         public bool Contains(object person)
@@ -359,7 +357,7 @@ namespace Group_Of_Students
                         result = true;
                         break;
                     }
-                } 
+                }
             }
 
             return result;
@@ -383,7 +381,7 @@ namespace Group_Of_Students
                         result = i;
                         break;
                     }
-                } 
+                }
             }
 
             return result;
@@ -391,7 +389,7 @@ namespace Group_Of_Students
 
         public void Insert(int index, object person)
         {
-            if ((_amountOfStudents + 1 <= _students.Length) 
+            if ((_amountOfStudents + 1 <= _students.Length)
                     && (index < _amountOfStudents) && (index >= 0))
             {
                 ++_amountOfStudents;
@@ -435,9 +433,6 @@ namespace Group_Of_Students
         {
             throw new NotImplementedException();
         }
-
-
-        #endregion
 
         #endregion
     }
