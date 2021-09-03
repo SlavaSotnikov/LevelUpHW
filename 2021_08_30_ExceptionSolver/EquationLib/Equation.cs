@@ -2,19 +2,23 @@
 
 namespace EquationLib
 {
-    public abstract class Equation
+     public abstract class Equation
     {
         #region Private Data
 
         protected double _factorA;
         protected double _factorB;
-        protected double _x1;
+        protected double[] _roots;
+        protected byte _count;
+
 
         #endregion
 
         #region Properties
 
         public abstract double X1 { get; }
+
+        public abstract byte Roots { get; }
 
         #endregion
 

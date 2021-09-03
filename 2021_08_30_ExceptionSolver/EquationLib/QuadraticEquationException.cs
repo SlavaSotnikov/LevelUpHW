@@ -2,7 +2,7 @@
 
 namespace EquationLib
 {
-    class QuadraticEquationException : EquationException
+    public class QuadraticEquationException : EquationException
     {
         public QuadraticEquationException()
         {

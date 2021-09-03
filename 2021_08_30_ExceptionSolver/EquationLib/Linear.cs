@@ -2,21 +2,40 @@
 
 namespace EquationLib
 {
-    class Linear : Equation
+    public class Linear : Equation
     {
+        #region Properties
+
         public override double X1
         {
             get
             {
-                return _x1;
+                return _roots[0];
             }
         }
+
+        public override byte Roots
+        {
+            get
+            {
+                return _count;
+            }
+        }
+
+        #endregion
+
+        #region Constructor
 
         public Linear(double a, double b)
             : base(a, b)
         {
-            _x1 = 0;
+            _roots = new double[1];
+            _count = 0;
         }
+
+        #endregion
+
+        #region Member Functions
 
         public override void Solve()
         {
@@ -30,8 +49,12 @@ namespace EquationLib
             }
             else
             {
-                _x1 = -_factorB / _factorA;
+                _roots[0] = -_factorB / _factorA;
+                ++_count;
             }
         }
+
+        #endregion
+
     }
 }

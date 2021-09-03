@@ -2,7 +2,7 @@
 
 namespace EquationLib
 {
-    class LinearEquationException : EquationException
+    public class LinearEquationException : EquationException
     {
         public LinearEquationException()
         {

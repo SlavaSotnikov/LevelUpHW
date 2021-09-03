@@ -2,24 +2,36 @@
 
 namespace EquationLib
 {
-    class Quadratic : Equation
+    public class Quadratic : Equation
     {
         private double _factorC;
-        private double _x2;
 
-        public override double X1
+        public override double X1 
         {
-            get
+            get 
             {
-                return _x1;
+                return _roots[0];
             }
         }
-        
+
         public double X2
         {
             get
             {
-                return _x2;
+                if (_count == 1)
+                {
+                    throw new FieldAccessException("There is no second root!");
+                }
+
+                return _roots[1];
+            }
+        }
+
+        public override byte Roots
+        {
+            get
+            {
+                return _count;
             }
         }
 
@@ -27,7 +39,8 @@ namespace EquationLib
             : base(a, b)
         {
             _factorC = c;
-            _x2 = 0.0;
+            _roots = new double[2];
+            _count = 0;
         }
 
         public override void Solve()
@@ -36,17 +49,20 @@ namespace EquationLib
 
             if (discriminant > 0)
             {
-                _x1 = (-_factorB + Math.Sqrt(discriminant)) / 2 * _factorA;
-                _x2 = (-_factorB - Math.Sqrt(discriminant)) / 2 * _factorA;
+                _roots[0] = (-_factorB + Math.Sqrt(discriminant)) / 2 * _factorA;
+                ++_count;
+
+                _roots[1] = (-_factorB - Math.Sqrt(discriminant)) / 2 * _factorA;
+                ++_count;
             }
             else if (discriminant == 0)
             {
-                _x1 = -_factorB / 2 * _factorA;
-                _x2 = -_factorB / 2 * _factorA;    // TODO: How can I throw an Exception here?
+                _roots[0] = -_factorB / 2 * _factorA;
+                ++_count;
             }
             else
             {
-                throw new FieldAccessException("There are no roots in this equation!");
+                throw new QuadraticEquationException("There are no roots in this equation!");
             }
         }
 
@@ -54,7 +70,7 @@ namespace EquationLib
         {
             if (_factorA == 0)
             {
-                //throw new FactorArgumentException("Anappropriate value! The value 'a' mustn't be zero.");
+                throw new QuadraticEquationException("Invalid value! The value 'a' mustn't be zero.");
             }
 
             return (_factorB * _factorB) - (4 * _factorA * _factorC);
