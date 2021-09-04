@@ -14,11 +14,11 @@ namespace Group_Of_Students
                 {
                     case ConsoleKey.D1:
                         // Create by hand.
-                        myGroup.AddStudent(UI.CreateCustomStudent());
+                        myGroup.Add(UI.CreateCustomStudent());
                         break;
                     case ConsoleKey.D2:
                         // Create by random.
-                        myGroup.AddStudent(BL.CreateRandomStudent());
+                        myGroup.Add(BL.CreateRandomStudent());
                         break;
                     default:
                         break;

@@ -10,18 +10,13 @@ namespace ExceptionSolver
         {
             try
             {
-                Equation one = Equation.FindEquation(1, 2, 1);
+                Equation one = Utilits.FindEquation(1, -6, 1);
                 one.Solve();
 
-                if (one is Linear lin)
-                {
-                    Console.WriteLine($"X1 = {lin.X1}");
-                }
+                Console.WriteLine($"Roots: {one.RootsCount}");
+                Console.ReadLine();
 
-                if (one is Quadratic qu)
-                {
-                    Console.WriteLine($"X1 = {qu.X1} \nX2 = {qu.X2}");
-                }
+                Console.WriteLine($"X1 = {one[1]} X2 = {one[2]}");
                 
             }
             catch (EquationException ex)

@@ -48,6 +48,8 @@ namespace Group_Of_Students
             }
         }
 
+        #endregion
+
         #region IList properties
 
         public bool IsReadOnly
@@ -62,11 +64,11 @@ namespace Group_Of_Students
         {
             get
             {
-                return true;
+                return false;
             }
         }
 
-        public int Count 
+        public int Count
         {
             get
             {
@@ -105,8 +107,6 @@ namespace Group_Of_Students
 
         #endregion
 
-        #endregion
-
         #region Accessors
 
         public Student GetStudentByPosition(int index)
@@ -118,7 +118,7 @@ namespace Group_Of_Students
 
         #region CRUD Operations
 
-        public void AddStudent(Student person)
+        public void Add(Student person)
         {
             if (_amountOfStudents >= _students.Length)
             {
@@ -331,15 +331,16 @@ namespace Group_Of_Students
 
         #region IList Members
 
-        public int Add(object person)
+        int IList.Add(object person)
         {
-            if (_amountOfStudents >= _students.Length)
+            Student s = person as Student;
+
+            if (s == null)
             {
-                Array.Resize(ref _students, _students.Length + (_students.Length * 2));
+                return -1;
             }
 
-            _students[_amountOfStudents] = person as Student;
-            ++_amountOfStudents;
+            Add(s);
 
             return (_amountOfStudents - 1);
         }

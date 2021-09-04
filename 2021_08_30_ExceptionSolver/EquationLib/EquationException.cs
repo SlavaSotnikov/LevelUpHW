@@ -2,9 +2,8 @@
 
 namespace EquationLib
 {
-    public class EquationException : Exception
+    public class EquationException : Exception    // TODO: Add Equation reference
     {
-        
         public EquationException()
         {
         }

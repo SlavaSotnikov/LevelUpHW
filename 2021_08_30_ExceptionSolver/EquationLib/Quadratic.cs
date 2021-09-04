@@ -2,38 +2,64 @@
 
 namespace EquationLib
 {
-    public class Quadratic : Equation
+    class Quadratic : Equation
     {
+        #region Private Data
+
         private double _factorC;
 
-        public override double X1 
-        {
-            get 
-            {
-                return _roots[0];
-            }
-        }
+        #endregion
 
-        public double X2
-        {
-            get
-            {
-                if (_count == 1)
-                {
-                    throw new FieldAccessException("There is no second root!");
-                }
+        #region Properties
 
-                return _roots[1];
-            }
-        }
-
-        public override byte Roots
+        public override byte RootsCount
         {
             get
             {
                 return _count;
             }
         }
+
+        public override double FactorA
+        {
+            set
+            {
+                _factorA = value;
+            }
+        }
+
+        public override double FactorB
+        {
+            set
+            {
+                _factorB = value;
+            }
+        }
+
+        public double FactorC
+        {
+            set
+            {
+                _factorC = value;
+            }
+        }
+
+        public override double this[int index]
+        {
+            get
+            {
+                if (index - 1 >= RootsCount)
+                {
+                    throw new QuadraticEquationException($"There is only {RootsCount} root!");
+                }
+
+                return _roots[index - 1];
+            }
+        }
+
+        #endregion
+
+        #region Constructor
 
         public Quadratic(double a, double b, double c)
             : base(a, b)
@@ -43,6 +69,10 @@ namespace EquationLib
             _count = 0;
         }
 
+        #endregion
+
+        #region Member Functions
+
         public override void Solve()
         {
             double discriminant = GetDiscriminant();
@@ -50,15 +80,15 @@ namespace EquationLib
             if (discriminant > 0)
             {
                 _roots[0] = (-_factorB + Math.Sqrt(discriminant)) / 2 * _factorA;
-                ++_count;
-
                 _roots[1] = (-_factorB - Math.Sqrt(discriminant)) / 2 * _factorA;
-                ++_count;
+
+                _count = 2;
             }
             else if (discriminant == 0)
             {
                 _roots[0] = -_factorB / 2 * _factorA;
-                ++_count;
+
+                _count = 1;
             }
             else
             {
@@ -75,5 +105,7 @@ namespace EquationLib
 
             return (_factorB * _factorB) - (4 * _factorA * _factorC);
         }
+
+        #endregion
     }
 }

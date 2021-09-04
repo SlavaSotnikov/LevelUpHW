@@ -3,7 +3,7 @@
 namespace EquationLib
 {
      public abstract class Equation
-    {
+     {
         #region Private Data
 
         protected double _factorA;
@@ -11,14 +11,19 @@ namespace EquationLib
         protected double[] _roots;
         protected byte _count;
 
-
         #endregion
 
         #region Properties
 
-        public abstract double X1 { get; }
+        public abstract double this[int index]
+        {
+            get;
+        }
 
-        public abstract byte Roots { get; }
+        public abstract double FactorA { set; }
+        public abstract double FactorB { set; }
+
+        public abstract byte RootsCount { get; }
 
         #endregion
 
@@ -37,26 +42,5 @@ namespace EquationLib
         public abstract void Solve();
 
         #endregion
-
-        #region Static Functions
-
-        public static Equation FindEquation(params int[] factor)
-        {
-            Equation result = null;
-
-            if (factor.Length == 2)
-            {
-                result = new Linear(factor[0], factor[1]);
-            }
-
-            if (factor.Length == 3)
-            {
-                result = new Quadratic(factor[0], factor[1], factor[2]);
-            }
-
-            return result;
-        }
-
-        #endregion
-    }
+     }
 }

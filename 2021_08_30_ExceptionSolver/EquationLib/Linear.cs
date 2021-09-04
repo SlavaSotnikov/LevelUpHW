@@ -2,23 +2,44 @@
 
 namespace EquationLib
 {
-    public class Linear : Equation
+    class Linear : Equation
     {
         #region Properties
 
-        public override double X1
-        {
-            get
-            {
-                return _roots[0];
-            }
-        }
-
-        public override byte Roots
+        public override byte RootsCount
         {
             get
             {
                 return _count;
+            }
+        }
+
+        public override double FactorA
+        {
+            set
+            {
+                _factorA = value;
+            }
+        }
+
+        public override double FactorB
+        {
+            set
+            {
+                _factorB = value;
+            }
+        }
+
+        public override double this[int index]
+        {
+            get
+            {
+                if (index - 1 >= RootsCount)
+                {
+                    throw new LinearEquationException($"There is only {RootsCount} root!");
+                }
+
+                return _roots[index - 1];
             }
         }
 
@@ -41,7 +62,8 @@ namespace EquationLib
         {
             if (_factorA == 0 && _factorB == 0)
             {
-                throw new LinearEquationException("Every number is a solution. In case factors A = 0 and B = 0.");
+                throw new LinearEquationException("Every number is a solution." +
+                        " In case factors A = 0 and B = 0.");
             }
             else if (_factorA == 0)
             {
@@ -50,7 +72,7 @@ namespace EquationLib
             else
             {
                 _roots[0] = -_factorB / _factorA;
-                ++_count;
+                _count = 1;
             }
         }
 

@@ -4,6 +4,8 @@ namespace EquationLib
 {
     public class QuadraticEquationException : EquationException
     {
+        Quadratic _source;
+
         public QuadraticEquationException()
         {
         }
@@ -11,7 +13,7 @@ namespace EquationLib
         public QuadraticEquationException(string message)
             : base(message)
         {
-            this.HelpLink = "https://en.wikipedia.org/wiki/Linear_equation";
+            HelpLink = "https://en.wikipedia.org/wiki/Linear_equation";
         }
 
         public QuadraticEquationException(string message, Exception innerException)
