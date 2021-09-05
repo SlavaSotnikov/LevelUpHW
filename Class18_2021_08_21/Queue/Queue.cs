@@ -157,6 +157,11 @@ namespace Queue
             {
                 get
                 {
+                    if (_head < 0)
+                    {
+                        throw new InvalidOperationException("Invalid operation!");
+                    }
+
                     return _elements[_head];
                 }
             }

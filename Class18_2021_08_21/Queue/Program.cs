@@ -13,7 +13,7 @@ namespace Queue
                 Console.WriteLine($"The Queue is empty? :{one.IsEmpty()}");
                 Console.ReadKey();
 
-                one.Get();
+                //one.Get();
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 foreach (object item in one)
@@ -21,11 +21,14 @@ namespace Queue
                     Console.Write("{0} ", item);
                 }
             }
-            catch (QueueException ex)
+            catch(QueueException ex)
             {
                 Console.WriteLine($"{ex.Message} \n{ex.StackTrace}");
             }
-
+            catch(InvalidOperationException ex)
+            {
+                Console.WriteLine($"{ex.Message} \n{ex.StackTrace}");
+            }
             Console.ReadKey();
         }
     }
