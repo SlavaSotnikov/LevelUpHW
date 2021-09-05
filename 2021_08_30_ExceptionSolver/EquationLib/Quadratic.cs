@@ -2,7 +2,7 @@
 
 namespace EquationLib
 {
-    class Quadratic : Equation
+    internal class Quadratic : Equation
     {
         #region Private Data
 
@@ -16,6 +16,26 @@ namespace EquationLib
         {
             get
             {
+                if (_factorA == 0)
+                {
+                    throw new QuadraticEquationException("Invalid value! The value 'a' mustn't be zero.");
+                }
+
+                double discriminant = GetDiscriminant();
+
+                if (discriminant > 0)
+                {
+                    _count = 2;
+                }
+                else if (discriminant == 0)
+                {
+                    _count = 1;
+                }
+                else
+                {
+                    throw new QuadraticEquationException("There are no roots in this equation!");
+                }
+
                 return _count;
             }
         }
@@ -26,6 +46,10 @@ namespace EquationLib
             {
                 _factorA = value;
             }
+            get
+            {
+                return _factorA;
+            }
         }
 
         public override double FactorB
@@ -33,6 +57,10 @@ namespace EquationLib
             set
             {
                 _factorB = value;
+            }
+            get
+            {
+                return _factorB;
             }
         }
 
@@ -42,18 +70,34 @@ namespace EquationLib
             {
                 _factorC = value;
             }
+            get
+            {
+                return _factorC;
+            }
         }
 
         public override double this[int index]
         {
             get
             {
-                if (index - 1 >= RootsCount)
+                index -= 1;
+
+                if (index >= RootsCount)
                 {
                     throw new QuadraticEquationException($"There is only {RootsCount} root!");
                 }
 
-                return _roots[index - 1];
+                if (index == 0)
+                {
+                    _roots[0] = (-_factorB + Math.Sqrt(GetDiscriminant())) / 2 * _factorA; 
+                }
+
+                if (index == 1)
+                {
+                    _roots[1] = (-_factorB - Math.Sqrt(GetDiscriminant())) / 2 * _factorA; 
+                }
+
+                return _roots[index];
             }
         }
 
@@ -61,48 +105,21 @@ namespace EquationLib
 
         #region Constructor
 
-        public Quadratic(double a, double b, double c)
+        public Quadratic(double a, double b, double c,
+                byte capacity = 2, byte count = 0)
             : base(a, b)
         {
             _factorC = c;
-            _roots = new double[2];
-            _count = 0;
+            _roots = new double[capacity];
+            _count = count;
         }
 
         #endregion
 
         #region Member Functions
 
-        public override void Solve()
+        private double GetDiscriminant()
         {
-            double discriminant = GetDiscriminant();
-
-            if (discriminant > 0)
-            {
-                _roots[0] = (-_factorB + Math.Sqrt(discriminant)) / 2 * _factorA;
-                _roots[1] = (-_factorB - Math.Sqrt(discriminant)) / 2 * _factorA;
-
-                _count = 2;
-            }
-            else if (discriminant == 0)
-            {
-                _roots[0] = -_factorB / 2 * _factorA;
-
-                _count = 1;
-            }
-            else
-            {
-                throw new QuadraticEquationException("There are no roots in this equation!");
-            }
-        }
-
-        public double GetDiscriminant()
-        {
-            if (_factorA == 0)
-            {
-                throw new QuadraticEquationException("Invalid value! The value 'a' mustn't be zero.");
-            }
-
             return (_factorB * _factorB) - (4 * _factorA * _factorC);
         }
 

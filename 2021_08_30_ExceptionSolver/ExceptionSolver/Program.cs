@@ -10,8 +10,7 @@ namespace ExceptionSolver
         {
             try
             {
-                Equation one = Utilits.FindEquation(1, -6, 1);
-                one.Solve();
+                Equation one = Utilits.FindEquation(1, -6);
 
                 Console.WriteLine($"Roots: {one.RootsCount}");
                 Console.ReadLine();

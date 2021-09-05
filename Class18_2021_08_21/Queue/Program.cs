@@ -6,25 +6,24 @@ namespace Queue
     {
         static void Main()
         {
-            Queue one = new Queue(5);
-
-            one.Add("one");
-            one.Add("two");
-            one.Add("three");
-            one.Add("four");
-            one.Add("five");
-
-            one.Get();
-            one.Get();
-            
-            one.Add("six");
-            one.Add("seven");
-            one.Add("eight");
-
-
-            foreach (object item in one)
+            try
             {
-                Console.WriteLine("{0} ", item);
+                Queue one = new Queue(5);
+
+                Console.WriteLine($"The Queue is empty? :{one.IsEmpty()}");
+                Console.ReadKey();
+
+                one.Get();
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                foreach (object item in one)
+                {
+                    Console.Write("{0} ", item);
+                }
+            }
+            catch (QueueException ex)
+            {
+                Console.WriteLine($"{ex.Message} \n{ex.StackTrace}");
             }
 
             Console.ReadKey();

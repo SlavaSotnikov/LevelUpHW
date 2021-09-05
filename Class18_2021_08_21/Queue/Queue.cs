@@ -81,9 +81,7 @@ namespace Queue
         {
             if (IsEmpty())
             {
-                _warning = QueueStatus.Empty;
-
-                return null;
+                throw new QueueException("The Queue is empty!");
             }
 
             object result = _elements[_head];
@@ -125,6 +123,7 @@ namespace Queue
                 if (_elements[i] != null)
                 {
                     result = false;
+                    break;
                 }
             }
 

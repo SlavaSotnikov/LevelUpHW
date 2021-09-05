@@ -2,7 +2,7 @@
 
 namespace EquationLib
 {
-    class Linear : Equation
+    internal class Linear : Equation
     {
         #region Properties
 
@@ -10,6 +10,20 @@ namespace EquationLib
         {
             get
             {
+                if (_factorA == 0 && _factorB == 0)
+                {
+                    throw new LinearEquationException("Every number is a solution." +
+                            " In case factors A = 0 and B = 0.");
+                }
+                else if (_factorA == 0)
+                {
+                    throw new LinearEquationException("Not valid value! Factor 'A' != 0");
+                }
+                else
+                {
+                    _count = 1;
+                }
+
                 return _count;
             }
         }
@@ -20,6 +34,10 @@ namespace EquationLib
             {
                 _factorA = value;
             }
+            get
+            {
+                return _factorA;
+            }
         }
 
         public override double FactorB
@@ -28,18 +46,26 @@ namespace EquationLib
             {
                 _factorB = value;
             }
+            get
+            {
+                return _factorB;
+            }
         }
 
         public override double this[int index]
         {
             get
             {
-                if (index - 1 >= RootsCount)
+                index -= 1;
+
+                if (index >= RootsCount)
                 {
                     throw new LinearEquationException($"There is only {RootsCount} root!");
                 }
 
-                return _roots[index - 1];
+                _roots[0] = -_factorB / _factorA;
+
+                return _roots[index];
             }
         }
 
@@ -47,36 +73,14 @@ namespace EquationLib
 
         #region Constructor
 
-        public Linear(double a, double b)
+        public Linear(double a, double b, 
+                byte capacity = 1, byte count = 0)
             : base(a, b)
         {
-            _roots = new double[1];
-            _count = 0;
+            _roots = new double[capacity];
+            _count = count;
         }
 
         #endregion
-
-        #region Member Functions
-
-        public override void Solve()
-        {
-            if (_factorA == 0 && _factorB == 0)
-            {
-                throw new LinearEquationException("Every number is a solution." +
-                        " In case factors A = 0 and B = 0.");
-            }
-            else if (_factorA == 0)
-            {
-                throw new LinearEquationException("Not valid value! Factor 'A' != 0");
-            }
-            else
-            {
-                _roots[0] = -_factorB / _factorA;
-                _count = 1;
-            }
-        }
-
-        #endregion
-
     }
 }

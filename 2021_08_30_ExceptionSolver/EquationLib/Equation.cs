@@ -20,8 +20,8 @@ namespace EquationLib
             get;
         }
 
-        public abstract double FactorA { set; }
-        public abstract double FactorB { set; }
+        public abstract double FactorA { set; get; }
+        public abstract double FactorB { set; get; }
 
         public abstract byte RootsCount { get; }
 
@@ -34,12 +34,6 @@ namespace EquationLib
             _factorA = a;
             _factorB = b;
         }
-
-        #endregion
-
-        #region Member Functions
-
-        public abstract void Solve();
 
         #endregion
      }
