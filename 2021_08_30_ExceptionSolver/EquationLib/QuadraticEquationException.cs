@@ -13,7 +13,7 @@ namespace EquationLib
                 if (_source is Quadratic eq)
                 {
                     result = $"Pay attention to factors:" +
-                        $" A = {eq.A}, B = {eq.B}, C = {eq.C}.";
+                        $" A = {eq['A']}, B = {eq['B']}, C = {eq['C']}.";
                 }
 
                 return result;

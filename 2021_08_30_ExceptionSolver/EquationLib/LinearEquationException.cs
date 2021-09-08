@@ -13,7 +13,7 @@ namespace EquationLib
                 if (_source is Linear eq)
                 {
                     result = $"Pay attention to factors:" +
-                        $" A = {eq.A}, B = {eq.B}.";
+                        $" A = {eq['A']}, B = {eq['B']}.";
                 }
 
                 return result;

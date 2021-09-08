@@ -6,15 +6,13 @@ namespace EquationLib
     {
         #region Properties
 
-        public double C { get; set; }
-
         public override Roots RootsCount
         {
             get
             {
                 Roots rootsCount = Roots.None;
 
-                if (A == 0)
+                if (_factors[0] == 0)
                 {
                     throw new QuadraticEquationException("Invalid value!" +
                             " The value 'a' mustn't be zero.", this);
@@ -39,7 +37,51 @@ namespace EquationLib
             }
         }
 
-        
+        public override double this[char index] 
+        { 
+            get
+            {
+                char source = char.ToUpper(index);
+
+                double result = 0.0;
+
+                switch (source)
+                {
+                    case 'A':
+                        result = _factors[0];
+                        break;
+                    case 'B':
+                        result = _factors[1];
+                        break;
+                    case 'C':
+                        result = _factors[2];
+                        break;
+                    default:
+                        break;
+                }
+
+                return result;
+            }
+            set
+            {
+                char source = char.ToUpper(index);
+
+                switch (source)
+                {
+                    case 'A':
+                        _factors[0] = value;
+                        break;
+                    case 'B':
+                        _factors[1] = value;
+                        break;
+                    case 'C':
+                        _factors[2] = value;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         public override double this[int index]
         {
@@ -56,12 +98,12 @@ namespace EquationLib
 
                 if (index == 0)
                 {
-                    result = (-B + Math.Sqrt(GetDiscriminant())) / 2 * A; 
+                    result = (-_factors[1] + Math.Sqrt(GetDiscriminant())) / 2 * _factors[0]; 
                 }
 
                 if (index == 1)
                 {
-                    result = (-B - Math.Sqrt(GetDiscriminant())) / 2 * A; 
+                    result = (-_factors[1] - Math.Sqrt(GetDiscriminant())) / 2 * _factors[0]; 
                 }
 
                 return result;
@@ -73,9 +115,12 @@ namespace EquationLib
         #region Constructor
 
         public Quadratic(double a, double b, double c)
-            : base(a, b)
         {
-            C = c;
+            _factors = new double[3];
+
+            _factors[0] = a;
+            _factors[1] = b;
+            _factors[2] = c;
         }
 
         #endregion
@@ -84,7 +129,7 @@ namespace EquationLib
 
         private double GetDiscriminant()
         {
-            return (B * B) - (4 * A * B);
+            return (_factors[1] * _factors[1]) - (4 * _factors[0] * _factors[2]);
         }
 
         #endregion
