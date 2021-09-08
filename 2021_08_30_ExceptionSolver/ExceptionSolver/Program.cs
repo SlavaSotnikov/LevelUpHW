@@ -12,6 +12,9 @@ namespace ExceptionSolver
             {
                 Equation one = Utilits.FindEquation(2, -6);
 
+                one.A = 0;
+                one.B = 1;
+
                 switch (one.RootsCount)
                 {
                     case 1:
@@ -27,7 +30,8 @@ namespace ExceptionSolver
             }
             catch (EquationException ex)
             {
-                Console.WriteLine($"{ex.Message} \n{ex.HelpLink} \n{ex.TargetSite}");
+                Console.WriteLine($"{ex.Message} \n{ex.HelpLink} \n{ex.TargetSite}" +
+                    $"\n{ex.Describing}");
             }
             catch (Exception ex)
             {

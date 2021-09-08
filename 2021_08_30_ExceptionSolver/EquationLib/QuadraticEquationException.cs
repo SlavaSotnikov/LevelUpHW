@@ -4,14 +4,28 @@ namespace EquationLib
 {
     public class QuadraticEquationException : EquationException
     {
-        Quadratic _source;
+        public override string Describing
+        {
+            get
+            {
+                string result = string.Empty;
+
+                if (_source is Quadratic eq)
+                {
+                    result = $"Pay attention to factors:" +
+                        $" A = {eq.A}, B = {eq.B}, C = {eq.C}.";
+                }
+
+                return result;
+            }
+        }
 
         public QuadraticEquationException()
         {
         }
 
-        public QuadraticEquationException(string message)
-            : base(message)
+        public QuadraticEquationException(string message, Equation source)
+            : base(message, source)
         {
             HelpLink = "https://en.wikipedia.org/wiki/Linear_equation";
         }

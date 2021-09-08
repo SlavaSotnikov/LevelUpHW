@@ -17,7 +17,7 @@ namespace EquationLib
                 if (A == 0)
                 {
                     throw new QuadraticEquationException("Invalid value!" +
-                            " The value 'a' mustn't be zero.");
+                            " The value 'a' mustn't be zero.", this);
                 }
 
                 double discriminant = GetDiscriminant();
@@ -32,7 +32,7 @@ namespace EquationLib
                 }
                 else
                 {
-                    throw new QuadraticEquationException("There are no roots in this equation!");
+                    throw new QuadraticEquationException("There are no roots in this equation!", this);
                 }
 
                 return rootsCount;
@@ -51,7 +51,7 @@ namespace EquationLib
 
                 if (index >= RootsCount)
                 {
-                    throw new QuadraticEquationException($"There is only {RootsCount} root!");
+                    throw new QuadraticEquationException($"There is only {RootsCount} root!", this);
                 }
 
                 if (index == 0)
