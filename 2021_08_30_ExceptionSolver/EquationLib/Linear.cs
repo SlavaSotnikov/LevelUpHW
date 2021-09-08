@@ -6,11 +6,11 @@ namespace EquationLib
     {
         #region Properties
 
-        public override byte RootsCount
+        public override Roots RootsCount
         {
             get
             {
-                byte rootsCount = 0;
+                Roots rootsCount = 0;
 
                 if (A == 0 && B == 0)
                 {
@@ -23,7 +23,7 @@ namespace EquationLib
                 }
                 else
                 {
-                    rootsCount = 1;
+                    rootsCount = Roots.One;
                 }
 
                 return rootsCount;
@@ -38,7 +38,7 @@ namespace EquationLib
 
                 index -= 1;
 
-                if (index >= RootsCount)
+                if (index >= (int)RootsCount)
                 {
                     throw new LinearEquationException($"There is only {RootsCount} root!", this);
                 }

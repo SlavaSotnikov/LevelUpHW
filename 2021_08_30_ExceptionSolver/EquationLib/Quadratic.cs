@@ -8,11 +8,11 @@ namespace EquationLib
 
         public double C { get; set; }
 
-        public override byte RootsCount
+        public override Roots RootsCount
         {
             get
             {
-                byte rootsCount = 0;
+                Roots rootsCount = Roots.None;
 
                 if (A == 0)
                 {
@@ -24,11 +24,11 @@ namespace EquationLib
 
                 if (discriminant > 0)
                 {
-                    rootsCount = 2;
+                    rootsCount = Roots.Two;
                 }
                 else if (discriminant == 0)
                 {
-                    rootsCount = 1;
+                    rootsCount = Roots.One;
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace EquationLib
 
                 index -= 1;
 
-                if (index >= RootsCount)
+                if (index >= (int)RootsCount)
                 {
                     throw new QuadraticEquationException($"There is only {RootsCount} root!", this);
                 }

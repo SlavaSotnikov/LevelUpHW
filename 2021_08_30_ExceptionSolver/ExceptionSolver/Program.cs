@@ -17,10 +17,10 @@ namespace ExceptionSolver
 
                 switch (one.RootsCount)
                 {
-                    case 1:
+                    case Roots.One:
                         Console.WriteLine($"X1 = {one[1]}");
                         break;
-                    case 2:
+                    case Roots.Two:
                         Console.WriteLine($"X1 = {one[1]} X2 = {one[2]}");
                         break;
                     default:

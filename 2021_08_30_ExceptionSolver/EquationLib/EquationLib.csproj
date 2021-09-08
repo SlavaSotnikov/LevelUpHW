@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quadratic.cs" />
     <Compile Include="QuadraticEquationException.cs" />
+    <Compile Include="Roots.cs" />
     <Compile Include="Utilits.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ namespace EquationLib
 
         public double B { set; get; }
 
-        public abstract byte RootsCount { get; }
+        public abstract Roots RootsCount { get; }
 
         #endregion
 
