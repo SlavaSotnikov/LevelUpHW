@@ -10,13 +10,20 @@ namespace ExceptionSolver
         {
             try
             {
-                Equation one = Utilits.FindEquation(1, -6);
+                Equation one = Utilits.FindEquation(2, -6);
 
-                Console.WriteLine($"Roots: {one.RootsCount}");
-                Console.ReadLine();
-
-                Console.WriteLine($"X1 = {one[1]} X2 = {one[2]}");
-                
+                switch (one.RootsCount)
+                {
+                    case 1:
+                        Console.WriteLine($"X1 = {one[1]}");
+                        break;
+                    case 2:
+                        Console.WriteLine($"X1 = {one[1]} X2 = {one[2]}");
+                        break;
+                    default:
+                        Console.WriteLine("Something goes wrong!");
+                        break;
+                }
             }
             catch (EquationException ex)
             {

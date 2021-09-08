@@ -13,6 +13,7 @@ namespace Queue
                 Console.WriteLine($"The Queue is empty? :{one.IsEmpty()}");
                 Console.ReadKey();
 
+                one.Add(1);
                 //one.Get();
 
                 Console.ForegroundColor = ConsoleColor.Red;

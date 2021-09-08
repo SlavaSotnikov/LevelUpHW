@@ -2,7 +2,7 @@
 
 namespace EquationLib
 {
-    public static class Utilits
+    public class Utilits
     {
         public static Equation FindEquation(params double[] factor)
         {

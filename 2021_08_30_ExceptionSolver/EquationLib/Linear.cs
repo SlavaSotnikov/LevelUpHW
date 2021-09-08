@@ -10,45 +10,23 @@ namespace EquationLib
         {
             get
             {
-                if (_factorA == 0 && _factorB == 0)
+                byte rootsCount = 0;
+
+                if (A == 0 && B == 0)
                 {
                     throw new LinearEquationException("Every number is a solution." +
-                            " In case factors A = 0 and B = 0.");
+                            " In case factors A = 0 and B = 0.", this);
                 }
-                else if (_factorA == 0)
+                else if (A == 0)
                 {
-                    throw new LinearEquationException("Not valid value! Factor 'A' != 0");
+                    throw new LinearEquationException("Not valid value! Factor 'A' != 0", this);
                 }
                 else
                 {
-                    _count = 1;
+                    rootsCount = 1;
                 }
 
-                return _count;
-            }
-        }
-
-        public override double FactorA
-        {
-            set
-            {
-                _factorA = value;
-            }
-            get
-            {
-                return _factorA;
-            }
-        }
-
-        public override double FactorB
-        {
-            set
-            {
-                _factorB = value;
-            }
-            get
-            {
-                return _factorB;
+                return rootsCount;
             }
         }
 
@@ -56,16 +34,26 @@ namespace EquationLib
         {
             get
             {
+                double result = 0.0;
+
                 index -= 1;
 
                 if (index >= RootsCount)
                 {
-                    throw new LinearEquationException($"There is only {RootsCount} root!");
+                    throw new LinearEquationException($"There is only {RootsCount} root!", this);
                 }
 
-                _roots[0] = -_factorB / _factorA;
+                try
+                {
+                    result = - B / A;
+                }
+                catch (DivideByZeroException ex)
+                {
 
-                return _roots[index];
+                    throw new LinearEquationException("Dividing by zero!", ex, this);
+                }
+
+                return result;
             }
         }
 
@@ -73,12 +61,9 @@ namespace EquationLib
 
         #region Constructor
 
-        public Linear(double a, double b, 
-                byte capacity = 1, byte count = 0)
+        public Linear(double a, double b)
             : base(a, b)
         {
-            _roots = new double[capacity];
-            _count = count;
         }
 
         #endregion

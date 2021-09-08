@@ -12,7 +12,7 @@ namespace Queue
         private int _tale;
         private int _size;
 
-        private const sbyte INITIAL_VALUE = -1;
+        private const sbyte INITIAL_VALUE = 0;
 
         private QueueStatus _warning;
 
@@ -36,12 +36,12 @@ namespace Queue
         {
             _warning = QueueStatus.Ok;
 
-            if (IsFool())
-            {
-                _warning = QueueStatus.Full;
+            //if (IsFool())
+            //{
+            //    _warning = QueueStatus.Full;
 
-                Array.Resize(ref _elements, _elements.Length * 2);
-            }
+            //    Array.Resize(ref _elements, _elements.Length * 2);
+            //}
 
             if (IsFool())
             {
@@ -81,7 +81,7 @@ namespace Queue
         {
             if (IsEmpty())
             {
-                throw new QueueException("The Queue is empty!");
+                throw new QueueException("The Queue is empty!");    // TODO: Exception 1
             }
 
             object result = _elements[_head];
@@ -111,7 +111,7 @@ namespace Queue
 
         public IEnumerator GetEnumerator()
         {
-            return new QueueIterator(_elements, _head, _tale);
+            return new QueueIterator(_elements, _head, _tale);    
         }
 
         public bool IsEmpty()
@@ -157,10 +157,10 @@ namespace Queue
             {
                 get
                 {
-                    if (_head < 0)
-                    {
-                        throw new InvalidOperationException("Invalid operation!");
-                    }
+                    //if (_head < 0)
+                    //{
+                    //    throw new InvalidOperationException("Invalid operation!");    // TODO: Exception 2
+                    //}
 
                     return _elements[_head];
                 }
