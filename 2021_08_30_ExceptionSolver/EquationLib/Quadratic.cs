@@ -15,7 +15,7 @@ namespace EquationLib
                 if (_factors[0] == 0)
                 {
                     throw new QuadraticEquationException("Invalid value!" +
-                            " The value 'a' mustn't be zero.", this);
+                            " The value 'A' mustn't be zero.", this);
                 }
 
                 double discriminant = GetDiscriminant();
@@ -57,7 +57,7 @@ namespace EquationLib
                         result = _factors[2];
                         break;
                     default:
-                        break;
+                        throw new QuadraticEquationException($"There is no {source} factor!", this);
                 }
 
                 return result;
@@ -78,7 +78,7 @@ namespace EquationLib
                         _factors[2] = value;
                         break;
                     default:
-                        break;
+                        throw new QuadraticEquationException($"There is no {source} factor!", this);
                 }
             }
         }
@@ -129,7 +129,8 @@ namespace EquationLib
 
         private double GetDiscriminant()
         {
-            return (_factors[1] * _factors[1]) - (4 * _factors[0] * _factors[2]);
+            return (_factors[1] * _factors[1])
+                    - (4 * _factors[0] * _factors[2]);
         }
 
         #endregion

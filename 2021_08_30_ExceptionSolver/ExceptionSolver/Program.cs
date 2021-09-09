@@ -12,8 +12,8 @@ namespace ExceptionSolver
             {
                 Equation one = Utilits.FindEquation(2, -6);
 
-                one['A'] = 0;
-                one['B'] = 1;
+                one['A'] = 1;
+                one['B'] = 1; 
 
                 switch (one.RootsCount)
                 {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EquationLib
+﻿namespace EquationLib
 {
      public abstract class Equation
      {

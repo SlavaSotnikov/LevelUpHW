@@ -47,7 +47,7 @@ namespace EquationLib
                         result = _factors[1];
                         break;
                     default:
-                        break;
+                        throw new LinearEquationException($"There is no {source} factor!", this);
                 }
 
                 return result;
@@ -66,7 +66,7 @@ namespace EquationLib
                         _factors[1] = value;
                         break;
                     default:
-                        break;
+                        throw new LinearEquationException($"There is no {source} factor!", this);
                 }
             }
         }
