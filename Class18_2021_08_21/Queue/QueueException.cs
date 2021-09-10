@@ -4,6 +4,8 @@ namespace Queue
 {
     class QueueException : Exception
     {
+        public string Describing { get; }
+
         public QueueException()
         {
         }

@@ -9,10 +9,10 @@ namespace Queue
 
         private object[] _elements;
         private int _head;
-        private int _tale;
+        private int _tail;
         private int _size;
 
-        private const sbyte INITIAL_VALUE = 0;
+        private const sbyte INITIAL_VALUE = -1;
 
         private QueueStatus _warning;
 
@@ -23,8 +23,8 @@ namespace Queue
         public Queue(int capacity = 5)
         {
             _size = 0;
-            _head = INITIAL_VALUE;
-            _tale = INITIAL_VALUE;
+            _head = 0;
+            _tail = -1;
             _elements = new object[capacity];
         }
 
@@ -32,49 +32,27 @@ namespace Queue
 
         #region Public Methods
 
+        public void Resize(int newSize)
+        {
+            if (newSize > _elements.Length)
+            {
+                Array.Resize(ref _elements, newSize); 
+            }
+        }
+
         public void Add(object source)
         {
             _warning = QueueStatus.Ok;
 
-            //if (IsFool())
-            //{
-            //    _warning = QueueStatus.Full;
-
-            //    Array.Resize(ref _elements, _elements.Length * 2);
-            //}
-
             if (IsFool())
             {
-                _warning = QueueStatus.Full;
-
-                Array.Resize(ref _elements, _elements.Length * 2);
-
-                Array.Copy(_elements, _head, _elements, 
-                        _elements.Length - (_size - _head), _size - _head);
-
-                _head = _elements.Length - _size + 2;
+                throw new QueueException($"Queue is full! \n{source} is an extra object," +
+                        $" resize the array.");
             }
 
-            if (_head == -1)
-            {
-                _head = 0;
-                _tale = 0;
-            }
-            else
-            {
-                if (_tale == _elements.Length - 1)
-                {
-                    _tale = 0;
-                }
-                else
-                {
-                    _tale += 1;
-                }
-            }
-
-            _elements[_tale] = source;
+            _tail = (_tail + 1) % _elements.Length;
+            _elements[_tail] = source;
             ++_size;
-
         }
 
         public object Get()
@@ -84,34 +62,18 @@ namespace Queue
                 throw new QueueException("The Queue is empty!");    // TODO: Exception 1
             }
 
-            object result = _elements[_head];
+            object removed = _elements[_head];
 
             _elements[_head] = null;
+            _head = (_head + 1) % _elements.Length;
             --_size;
 
-            if (_head == _tale)
-            {
-                _head = -1;
-                _tale = -1;
-            }
-            else
-            {
-                if (_head == _elements.Length - 1)
-                {
-                    _head = 0;
-                }
-                else
-                {
-                    _head += 1;
-                }
-            }
-
-            return result;
+            return removed;
         }
 
         public IEnumerator GetEnumerator()
         {
-            return new QueueIterator(_elements, _head, _tale);    
+            return new QueueIterator(_elements, _head, _tail);    
         }
 
         public bool IsEmpty()
@@ -132,8 +94,7 @@ namespace Queue
 
         public bool IsFool()
         {
-            return (_head == 0 && _tale == _elements.Length - 1) 
-                    || (_head == _tale + 1);
+            return (_head == 0 && _tail == _elements.Length - 1);
         }
 
         #endregion
@@ -144,24 +105,19 @@ namespace Queue
         {
             private object[] _elements;
             private int _head;
-            private int _tale;
+            private int _tail;
 
-            public QueueIterator(object[] elements, int head, int tale)
+            public QueueIterator(object[] elements, int head, int tail)
             {
                 _elements = elements;
                 _head = head - 1;
-                _tale = tale;
+                _tail = tail;
             }
 
             public object Current
             {
                 get
                 {
-                    //if (_head < 0)
-                    //{
-                    //    throw new InvalidOperationException("Invalid operation!");    // TODO: Exception 2
-                    //}
-
                     return _elements[_head];
                 }
             }
@@ -170,11 +126,11 @@ namespace Queue
             {
                 bool result = false;
 
-                if (_head != _tale)
+                if (_head != _tail)
                 {
-                    ++_head;
+                    _head++;
 
-                    if (_head >= _elements.Length)
+                    if (_head > _elements.Length - 1)
                     {
                         _head = 0;
                     }
@@ -187,7 +143,7 @@ namespace Queue
 
             public void Reset()
             {
-                _head -= 1;
+                _head = -1;
             }
         }
 

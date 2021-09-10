@@ -10,13 +10,19 @@ namespace Queue
             {
                 Queue one = new Queue(5);
 
-                Console.WriteLine($"The Queue is empty? :{one.IsEmpty()}");
-                Console.ReadKey();
-
                 one.Add(1);
+                one.Add(2);
+                one.Add(3);
+                one.Add(4);
+                one.Add(5);
+
+                //one.Resize(6);
+
+                //one.Get();
                 //one.Get();
 
-                Console.ForegroundColor = ConsoleColor.Red;
+                one.Add(6);
+
                 foreach (object item in one)
                 {
                     Console.Write("{0} ", item);
