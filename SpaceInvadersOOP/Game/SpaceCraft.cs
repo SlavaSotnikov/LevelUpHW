@@ -15,7 +15,6 @@ namespace Game
         protected uint _counter;
         protected sbyte _step;
 
-        //protected Space _game;
         protected ISpace _game;
 
         #endregion

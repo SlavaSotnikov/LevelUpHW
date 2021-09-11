@@ -4,7 +4,12 @@ namespace Game
 {
     class Controller
     {
-        public static void HideSpaceCrafts(SpaceCraft[] source, int amount)
+        public static GameAction GetEvent()
+        {
+            return UI.AskConsole();
+        }
+
+        public static void Hide(SpaceCraft[] source, int amount)
         {
             for (int i = 0; i < amount; i++)
             {
@@ -12,7 +17,7 @@ namespace Game
             }
         }
 
-        public static void ShowSpaceCrafts(SpaceCraft[] source, int amount)
+        public static void Show(SpaceCraft[] source, int amount)
         {
             for (int i = 0; i < amount; i++)
             {

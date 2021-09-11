@@ -45,11 +45,8 @@
   <ItemGroup>
     <Compile Include="Controller.cs" />
     <Compile Include="Enum\GameAction.cs" />
-    <Compile Include="BL.cs" />
     <Compile Include="BL_Random.cs" />
     <Compile Include="EnemyShip.cs" />
-    <Compile Include="Enum\Enemy.cs" />
-    <Compile Include="Game.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="ISpace.cs" />
     <Compile Include="Space.cs" />

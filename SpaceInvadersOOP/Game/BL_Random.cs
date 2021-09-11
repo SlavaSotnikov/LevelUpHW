@@ -16,11 +16,6 @@ namespace Game
             return (uint)value.Next(40000, 50000);
         }
 
-        public static uint GetProduceSpeed()
-        {
-            return (uint)value.Next(10000, 20000);
-        }
-
         public static byte GetRndY()
         {
             return (byte)value.Next(1, 20);

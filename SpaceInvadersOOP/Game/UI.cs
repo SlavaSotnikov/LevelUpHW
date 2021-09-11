@@ -110,25 +110,20 @@ namespace Game
 
         public static void Hide(SpaceCraft source)
         {
-            string[] image = GetImage(source);
-
             if (source.X != source.OldX 
                     || source.Y != source.OldY)
             {
-                Print(source.OldX, source.OldY, ConsoleColor.Black, image);
+                Print(source.OldX, source.OldY, ConsoleColor.Black, GetImage(source));
             }
-
-            source.OldX = source.X;
-            source.OldY = source.Y;
         }
 
         public static void Show(SpaceCraft source)
         {
-            string[] image = GetImage(source);
-
             if ((source.X != source.OldX
                     || source.Y != source.OldY) && source.Active)
             {
+                string[] image = GetImage(source);
+
                 Print(source.X, source.Y, ConsoleColor.White, image);
 
                 if ((source is Ship one) && one.HitPoints <= 2)
@@ -142,39 +137,39 @@ namespace Game
             source.OldY = source.Y;
         }
 
-        public static void PrintObject(SpaceCraft source)
-        {
-            string[] image = GetImage(source);
+        //public static void PrintObject(SpaceCraft source)
+        //{
+        //    string[] image = GetImage(source);
 
-            if (source.X != source.OldX
-                    || source.Y != source.OldY)
-            {
-                // Hide.
-                Print(source.OldX, source.OldY, ConsoleColor.Black, image);
+        //    if (source.X != source.OldX
+        //            || source.Y != source.OldY)
+        //    {
+        //        // Hide.
+        //        Print(source.OldX, source.OldY, ConsoleColor.Black, image);
 
-                if (source.Active)
-                {
-                    // Show.
-                    Print(source.X, source.Y, ConsoleColor.White, image);
+        //        if (source.Active)
+        //        {
+        //            // Show.
+        //            Print(source.X, source.Y, ConsoleColor.White, image);
 
-                    if (source is Ship one)
-                    {
-                        if (one.HitPoints <= 2)
-                        {
-                            Print(source.X, source.Y, ConsoleColor.DarkRed, image);
-                            Console.ResetColor();
-                        }
-                    }
-                }
-            }
+        //            if (source is Ship one)
+        //            {
+        //                if (one.HitPoints <= 2)
+        //                {
+        //                    Print(source.X, source.Y, ConsoleColor.DarkRed, image);
+        //                    Console.ResetColor();
+        //                }
+        //            }
+        //        }
+        //    }
 
-            source.OldX = source.X;
-            source.OldY = source.Y;
-        }
+        //    source.OldX = source.X;
+        //    source.OldY = source.Y;
+        //}
 
         public static void Print(int x, int y, ConsoleColor color, params string[] view)
         {
-            for (int i = view.Length - 1; i >= 0; i--)
+            for (int i = 0; i < view.Length; i++)
             {
                 Console.SetCursorPosition(x, y + i);
 
@@ -205,12 +200,12 @@ namespace Game
             return image;
         }
 
-        public static void ShowDisplay(int hp, Space source)
-        {
-            Console.SetCursorPosition(source.LeftBorder, source.BottomBorder);
-            Console.Write("HP: {0}%", hp);
-            Console.SetCursorPosition(40, source.BottomBorder);
-            Console.Write("Life: {0}");
-        }
+        //public static void ShowDisplay(int hp, Space source)
+        //{
+        //    Console.SetCursorPosition(source.LeftBorder, source.BottomBorder);
+        //    Console.Write("HP: {0}%", hp);
+        //    Console.SetCursorPosition(40, source.BottomBorder);
+        //    Console.Write("Life: {0}");
+        //}
     }
 }

@@ -54,7 +54,7 @@ namespace Game
 
         public override void Step()
         {
-            switch (Game.GetEvent())
+            switch (Controller.GetEvent())
             {
                 case GameAction.LeftMove:
                     --_coordX;

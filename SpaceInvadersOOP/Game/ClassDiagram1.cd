@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Game.UserShip">
-    <Position X="3.25" Y="7" Width="1.5" />
+    <Position X="4" Y="8.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -11,14 +11,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Game.EnemyShip">
-    <Position X="6.75" Y="7" Width="1.5" />
+    <Position X="7.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAABEIAAAAIAAAAIAAAIAAAAAA=</HashCode>
       <FileName>EnemyShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.SpaceCraft">
-    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIABIAAAAAADAAAAAAAAAAABAwAAAAAgJAAQAAAAcAQ=</HashCode>
       <FileName>SpaceCraft.cs</FileName>
@@ -28,7 +28,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Game.Ship">
-    <Position X="5" Y="4.5" Width="1.5" />
+    <Position X="5.75" Y="5.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
@@ -38,50 +38,50 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Game.LightShip" Collapsed="true">
-    <Position X="3.25" Y="9.5" Width="1.5" />
+    <Position X="4" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAIAAAIAAAAAA=</HashCode>
       <FileName>LightShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.HeavyShip" Collapsed="true">
-    <Position X="3.25" Y="10.75" Width="1.5" />
+    <Position X="4" Y="12.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>HeavyShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.Shot">
-    <Position X="0.5" Y="4.5" Width="1.5" />
+    <Position X="1.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Shot.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.Space">
-    <Position X="12.25" Y="0.5" Width="1.5" />
+    <Position X="11.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAhEgAAEAAAIAAADAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAICAMAgQAAhEgAAGAEBIEQgTBAAAAEAFgAWCACAUAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
   </Class>
-  <Class Name="Game.Game">
-    <Position X="14.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
-      <FileName>Game.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Game.GameField">
-    <Position X="10" Y="0.5" Width="1.5" />
+    <Position X="9.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAICAEAgQAAhACAACAEBAEQgSBAAAAEAFgAWCACAUAI=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Game.Controller">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Controller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="Game.ISpace" Collapsed="true">
-    <Position X="7.25" Y="0.5" Width="1.5" />
+    <Position X="6" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAhAgAAAAAAAAAADAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ISpace.cs</FileName>
