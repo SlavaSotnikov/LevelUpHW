@@ -43,12 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorException.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Enum\GameAction.cs" />
     <Compile Include="BL_Random.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="ISpace.cs" />
+    <Compile Include="IUi.cs" />
     <Compile Include="Space.cs" />
     <Compile Include="Enum\SpaceObject.cs" />
     <Compile Include="HeavyShip.cs" />

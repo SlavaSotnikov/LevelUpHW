@@ -42,10 +42,11 @@ namespace Game
 
         public LightShip(Space game, int coordX, int coordY, bool active,
                 uint speed, uint counter, byte hitpoints, byte lifes,
-                    int oldCoordX=0, int oldCoordY= 0, byte width = 9)
-            : base(game, coordX, coordY, active, speed, width, counter, 
+                    int oldCoordX=0, int oldCoordY= 0)
+            : base(game, coordX, coordY, active, speed, counter, 
                     hitpoints, lifes, oldCoordX, oldCoordY)
         {
+
         }
 
         #endregion

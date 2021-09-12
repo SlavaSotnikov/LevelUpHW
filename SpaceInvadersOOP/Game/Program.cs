@@ -13,7 +13,6 @@ namespace Game
             game.AddObject(UI.AskShipModel());
 
             game.Run();
-
         }
     }
 }

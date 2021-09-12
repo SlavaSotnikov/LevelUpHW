@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    class Space : ISpace
+    class Space : ISpace, IUi
     {
         #region Private Data
 
@@ -47,9 +47,64 @@ namespace Game
             }
         }
 
+        public SpaceCraft this[int index]
+        {
+            get
+            {
+                return _gameObjects[index];
+            }
+        }
+
+        public int Amount 
+        {
+            get
+            {
+                return _amountOfObjects;
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        public void Run()
+        {
+            do
+            {
+                Controller.Show(this);
+
+                StepObjects();
+
+                ProduceEnemies();
+
+                ShotEnemies();
+
+                CheckObjects();
+
+                //PrintObjects();
+
+                Controller.Hide(this);
+
+                //DeleteObjects();
+
+            } while (IsgameOver());
+        }
+
+        public bool IsgameOver()
+        {
+            bool gameOn = true;
+
+            for (int i = 0; i < _amountOfObjects; i++)
+            {
+                if ((_gameObjects[i] is UserShip user) && !user.Active)
+                {
+                    gameOn = false;
+                    break;
+                }
+            }
+
+            return gameOn;
+        }
 
         public void AddObject(SpaceObject source)
         {
@@ -152,86 +207,24 @@ namespace Game
             _speed = speed;
         }
 
-        public bool IsgameOver()
+        public void StepObjects()
         {
-            bool gameOn = true;
-
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if ((_gameObjects[i] is UserShip user) && !user.Active)
+                ++_gameObjects[i].Counter;
+
+                if ((_gameObjects[i].Counter % _gameObjects[i].Speed == 0)
+                        && _gameObjects[i].Active)
                 {
-                    gameOn = false;
-                    break;
-                }
-            }
+                    _gameObjects[i].Counter = RESET;
 
-            return gameOn;
-        }
+                    _gameObjects[i].Step();
 
-        public void Run()
-        {
-            do
-            {
-                Controller.Show(_gameObjects, _amountOfObjects);
-
-                StepObjects();
-
-                ProduceEnemies();
-
-                ShotEnemies();
-
-                CheckObjects();
-
-                //PrintObjects();
-
-                Controller.Hide(_gameObjects, _amountOfObjects);
-
-                //DeleteObjects();
-
-            } while (IsgameOver());
-        }
-
-        public void DeleteObjects()
-        {
-            for (int i = _gameObjects.Length - 1; i >= 0; i--)
-            {
-                if (_gameObjects[i] != null)
-                {
-                    if (!_gameObjects[i].Active)
-                    {
-                        Array.Copy(_gameObjects, i + 1, _gameObjects,
-                                i, _amountOfObjects - i);
-                        --_amountOfObjects;
-                    }
                 }
             }
         }
 
-        private void ShotEnemies()
-        {
-            for (int i = _amountOfObjects; i >= 0; i--)
-            {
-                if (_gameObjects[i] is EnemyShip one)
-                {
-                    if (one.Y == one.Shot)
-                    {
-                        AddObject(SpaceObject.ShotEnemy);
-                    }
-                }
-            }
-        }
-
-        public void ProduceEnemies()
-        {
-            ++_counterProduceEnemy;
-
-            if (_counterProduceEnemy % _speed == 0)
-            {
-                AddObject(SpaceObject.EnemyShip);
-            }
-        }
-
-        private void CheckObjects()
+        public void CheckObjects()
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
@@ -243,8 +236,10 @@ namespace Game
                         {
                             if (IsClash(user, enemy))
                             {
-                                user.Y = user.Y + 2;
-                                enemy.Y = enemy.Y - 2;
+                                throw new ColorException();
+
+                                //user.Y = user.Y + 2; 
+                                //enemy.Y = enemy.Y - 2;
                             }
                         }
 
@@ -289,13 +284,53 @@ namespace Game
         private bool IsClash(UserShip user, EnemyShip enemy)
         {
             return user.Y - 1 == enemy.Y && enemy.X >= user.X
-                    && enemy.X + 7 <= user.X + 9;
+                    && enemy.X + enemy.Width <= user.X + user.Width;
         }
 
         private bool IsHit(Shot bullet, Ship user)
         {
             return bullet.Y == user.Y && user.X < bullet.X
-                    && bullet.X < user.X + 7;
+                    && bullet.X < user.X + user.Width;
+        }
+
+        public void DeleteObjects()
+        {
+            for (int i = _gameObjects.Length - 1; i >= 0; i--)
+            {
+                if (_gameObjects[i] != null)
+                {
+                    if (!_gameObjects[i].Active)
+                    {
+                        Array.Copy(_gameObjects, i + 1, _gameObjects,
+                                i, _amountOfObjects - i);
+                        --_amountOfObjects;
+                    }
+                }
+            }
+        }
+
+        public void ShotEnemies()
+        {
+            for (int i = _amountOfObjects; i >= 0; i--)
+            {
+                if (_gameObjects[i] is EnemyShip one)
+                {
+                    if (one.Y == one.Shot)
+                    {
+                        AddObject(SpaceObject.ShotEnemy);
+                    }
+                }
+            }
+        }
+
+        public void ProduceEnemies()
+        {
+            ++_counterProduceEnemy;
+
+            if (_counterProduceEnemy % _speed == 0)
+            {
+                AddObject(SpaceObject.EnemyShip);
+            }
         }
 
         private SpaceCraft AddEnemy()
@@ -315,7 +350,7 @@ namespace Game
                 {
                     if (_gameObjects[i] is EnemyShip enemy)
                     {
-                        if (!((rndX > enemy.X + 7) || (rndX + 7 < enemy.X)))
+                        if (!((rndX > enemy.X + enemy.Width) || (rndX + enemy.Width < enemy.X)))
                         {
                             isExist = true;
                             i = 0;
@@ -361,23 +396,6 @@ namespace Game
             }
 
             return bullet;
-        }
-
-        public void StepObjects()
-        {
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                ++_gameObjects[i].Counter;
-
-                if ((_gameObjects[i].Counter % _gameObjects[i].Speed == 0)
-                        && _gameObjects[i].Active)
-                {
-                    _gameObjects[i].Counter = RESET;
-
-                    _gameObjects[i].Step();
-
-                }
-            }
         }
     }
 

@@ -6,7 +6,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAGAABAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserShip.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -28,7 +28,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Game.Ship">
-    <Position X="5.75" Y="5.5" Width="1.5" />
+    <Position X="5.75" Y="5.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
@@ -61,13 +61,13 @@
   <Class Name="Game.Space">
     <Position X="11.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAICAMAgQAAhEgAAGAEBIEQgTBAAAAEAFgAWCACAUAI=</HashCode>
+      <HashCode>AAICAMAgQAAhEgAAGAEBIESgTBAAAAEAFgASCACAUAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
   </Class>
   <Class Name="Game.GameField">
-    <Position X="9.25" Y="3.25" Width="1.5" />
+    <Position X="9" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GameField.cs</FileName>
@@ -76,12 +76,12 @@
   <Class Name="Game.Controller">
     <Position X="14.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Controller.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Game.ISpace" Collapsed="true">
-    <Position X="6" Y="2" Width="1.5" />
+    <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAhAgAAAAAAAAAADAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ISpace.cs</FileName>

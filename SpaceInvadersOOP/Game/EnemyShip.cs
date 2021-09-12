@@ -54,7 +54,7 @@ namespace Game
 
         public EnemyShip(Space game, int coordX, int coordY, bool active, 
                 uint speed, sbyte step, byte rndY, uint counter=0,
-                    int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6, byte width = 7)
+                    int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
         {
             _game = game;
             _coordX = coordX;
@@ -67,7 +67,7 @@ namespace Game
             _hitPoints = hitPoints;
             _shot = rndY;
             _step = step;
-            _width = width;
+            _width = 7;
         }
 
         public override void Step()
