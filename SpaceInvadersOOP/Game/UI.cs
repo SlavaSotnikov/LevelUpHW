@@ -106,7 +106,7 @@ namespace Game
             return userEvent;
         }
 
-        public static void Hide(SpaceCraft source)
+        public static void Hide(ISpaceCraft source)
         {
             if (source.X != source.OldX
                         || source.Y != source.OldY)
@@ -115,16 +115,7 @@ namespace Game
             }
         }
 
-        //public static void Hide(SpaceCraft source)
-        //{
-        //    if (source.X != source.OldX 
-        //            || source.Y != source.OldY)
-        //    {
-        //        Print(source.OldX, source.OldY, ConsoleColor.Black, GetImage(source));
-        //    }
-        //}
-
-        public static void Show(SpaceCraft source)
+        public static void Show(ISpaceCraft source)
         {
             if ((source.X != source.OldX
                     || source.Y != source.OldY) && source.Active)
@@ -144,56 +135,6 @@ namespace Game
             source.OldY = source.Y;
         }
 
-        //public static void Show(SpaceCraft source)
-        //{
-        //    if ((source.X != source.OldX
-        //            || source.Y != source.OldY) && source.Active)
-        //    {
-        //        string[] image = GetImage(source);
-
-        //        Print(source.X, source.Y, ConsoleColor.White, image);
-
-        //        if ((source is Ship one) && one.HitPoints <= 2)
-        //        {
-        //            Print(source.X, source.Y, ConsoleColor.DarkRed, image);
-        //            Console.ResetColor();
-        //        }
-        //    }
-
-        //    source.OldX = source.X;
-        //    source.OldY = source.Y;
-        //}
-
-        //public static void PrintObject(SpaceCraft source)
-        //{
-        //    string[] image = GetImage(source);
-
-        //    if (source.X != source.OldX
-        //            || source.Y != source.OldY)
-        //    {
-        //        // Hide.
-        //        Print(source.OldX, source.OldY, ConsoleColor.Black, image);
-
-        //        if (source.Active)
-        //        {
-        //            // Show.
-        //            Print(source.X, source.Y, ConsoleColor.White, image);
-
-        //            if (source is Ship one)
-        //            {
-        //                if (one.HitPoints <= 2)
-        //                {
-        //                    Print(source.X, source.Y, ConsoleColor.DarkRed, image);
-        //                    Console.ResetColor();
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    source.OldX = source.X;
-        //    source.OldY = source.Y;
-        //}
-
         public static void Print(int x, int y, ConsoleColor color, params string[] view)
         {
             for (int i = 0; i < view.Length; i++)
@@ -205,7 +146,7 @@ namespace Game
             }
         }
 
-        private static string[] GetImage(SpaceCraft source)    // TODO: Static constructor.
+        private static string[] GetImage(ISpaceCraft source)    // TODO: Static constructor.
         {
             string[] image = _shot;
 

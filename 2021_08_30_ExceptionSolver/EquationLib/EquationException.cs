@@ -9,6 +9,7 @@ namespace EquationLib
         public virtual string Describing { get; }
 
         public EquationException()
+           : this($"Pay attention to factors!!!", (Equation)null)
         {
         }
 

@@ -7,7 +7,7 @@
             return UI.AskConsole();
         }
 
-        public static void Hide(Space source)
+        public static void Hide(IGame source)
         {
             for (int i = 0; i < source.Amount; i++)
             {
@@ -15,7 +15,7 @@
             }
         }
 
-        public static void Show(Space source)
+        public static void Show(IGame source)
         {
             for (int i = 0; i < source.Amount; i++)
             {

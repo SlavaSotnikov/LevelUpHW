@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    class Space : ISpace, IUi
+    class Space : IGame, ISpace
     {
         #region Private Data
 
@@ -10,6 +10,26 @@ namespace Game
         protected int _rightBorder = 83;
         protected int _topBorder = 0;
         protected int _bottomBorder = 33;
+
+        protected int _initialX = 53;      // Initial X position of Spaceship.
+        protected int _initialY = 28;      // Initial Y position of Spaceship.
+        protected byte _lifes = 3;
+
+        protected byte _hitpoints = 10;
+        protected byte _leftShift = 2;     // This shift tunes the Left bullet. 
+        protected byte _rightShift = 6;    // This shift tunes the Right bullet.
+        protected byte _shotEnemyShift = 3;
+        protected uint _shipSpeed = 1;
+        protected bool _active = true;
+        protected uint _counter = 0;
+        protected const int RESET = 0;
+        protected const int CONST_Y = 1;
+
+        protected int _counterProduceEnemy;
+        protected int _speed;
+
+        protected SpaceCraft[] _gameObjects;
+        protected int _amountOfObjects;
 
         #endregion
 
@@ -47,7 +67,7 @@ namespace Game
             }
         }
 
-        public SpaceCraft this[int index]
+        public ISpaceCraft this[int index]
         {
             get
             {
@@ -79,18 +99,28 @@ namespace Game
 
                 ShotEnemies();
 
-                CheckObjects();
+                try
+                {
+                    CheckObjects();
+                }
+                catch (ClashException ex)
+                {
+                    Console.Beep(1000, 100); // TODO: Try Console.
+                }
+                finally
+                {
+                    //PrintObjects();
 
-                //PrintObjects();
+                    Controller.Hide(this);
 
-                Controller.Hide(this);
+                    //DeleteObjects();
+                }
 
-                //DeleteObjects();
 
-            } while (IsgameOver());
+            } while (IsGameOver());
         }
 
-        public bool IsgameOver()
+        public bool IsGameOver()
         {
             bool gameOn = true;
 
@@ -159,45 +189,7 @@ namespace Game
                     break;
                 }
             }
-
-            //for (int i = -1; i < _amountOfObjects; i++)
-            //{
-            //    if (_gameObjects[i + 1] is null)
-            //    {
-            //        _gameObjects[i + 1] = creature;
-            //        ++_amountOfObjects;
-
-            //        break;
-            //    }
-
-            //    if (!_gameObjects[i + 1].Active)
-            //    {
-            //        _gameObjects[i + 1] = creature;
-
-            //        break;
-            //    }
-            //}
         }
-
-        protected int _initialX = 53;      // Initial X position of Spaceship.
-        protected int _initialY = 28;      // Initial Y position of Spaceship.
-        protected byte _lifes = 3;
-
-        protected byte _hitpoints = 10;
-        protected byte _leftShift = 2;     // This shift tunes the Left bullet. 
-        protected byte _rightShift = 6;    // This shift tunes the Right bullet.
-        protected byte _shotEnemyShift = 3;
-        protected uint _shipSpeed = 1;
-        protected bool _active = true;
-        protected uint _counter = 0;
-        protected const int RESET = 0;
-        protected const int CONST_Y = 1;
-
-        protected int _counterProduceEnemy;
-        protected int _speed;
-
-        protected SpaceCraft[] _gameObjects;
-        protected int _amountOfObjects;
 
         public Space(int capacity = 13, int speed = 350000)
         {
@@ -219,7 +211,6 @@ namespace Game
                     _gameObjects[i].Counter = RESET;
 
                     _gameObjects[i].Step();
-
                 }
             }
         }
@@ -236,7 +227,7 @@ namespace Game
                         {
                             if (IsClash(user, enemy))
                             {
-                                throw new ColorException();
+                                throw new ClashException();
 
                                 //user.Y = user.Y + 2; 
                                 //enemy.Y = enemy.Y - 2;
@@ -291,22 +282,6 @@ namespace Game
         {
             return bullet.Y == user.Y && user.X < bullet.X
                     && bullet.X < user.X + user.Width;
-        }
-
-        public void DeleteObjects()
-        {
-            for (int i = _gameObjects.Length - 1; i >= 0; i--)
-            {
-                if (_gameObjects[i] != null)
-                {
-                    if (!_gameObjects[i].Active)
-                    {
-                        Array.Copy(_gameObjects, i + 1, _gameObjects,
-                                i, _amountOfObjects - i);
-                        --_amountOfObjects;
-                    }
-                }
-            }
         }
 
         public void ShotEnemies()

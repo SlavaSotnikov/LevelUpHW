@@ -52,7 +52,7 @@ namespace Game
             }
         }
 
-        public EnemyShip(Space game, int coordX, int coordY, bool active, 
+        public EnemyShip(ISpace game, int coordX, int coordY, bool active, 
                 uint speed, sbyte step, byte rndY, uint counter=0,
                     int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
         {

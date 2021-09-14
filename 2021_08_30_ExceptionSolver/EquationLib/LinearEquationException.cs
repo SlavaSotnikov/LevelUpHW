@@ -4,6 +4,14 @@ namespace EquationLib
 {
     public class LinearEquationException : EquationException
     {
+        //public Linear LSource  
+        //{
+        //    get
+        //    {
+        //        return _source as Linear;
+        //    }
+        //}
+
         public override string Describing 
         { 
             get

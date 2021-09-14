@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    abstract class SpaceCraft
+    abstract class SpaceCraft : ISpaceCraft
     {
         #region Private Data
 

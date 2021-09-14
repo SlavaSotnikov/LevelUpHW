@@ -26,6 +26,7 @@
     <ShowAsAssociation>
       <Field Name="_game" />
     </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Game.Ship">
     <Position X="5.75" Y="5.75" Width="1.5" />
@@ -61,7 +62,7 @@
   <Class Name="Game.Space">
     <Position X="11.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAICAMAgQAAhEgAAGAEBIESgTBAAAAEAFgASCACAUAI=</HashCode>
+      <HashCode>AAICAMAgQAAhEgAAGAEBIASgTBAAAAEAFgASCACAUAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
@@ -76,15 +77,15 @@
   <Class Name="Game.Controller">
     <Position X="14.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
       <FileName>Controller.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Game.ISpace" Collapsed="true">
-    <Position X="7" Y="0.5" Width="1.5" />
+    <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAhAgAAAAAAAAAADAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ISpace.cs</FileName>
+      <FileName>Interfaces\ISpace.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
