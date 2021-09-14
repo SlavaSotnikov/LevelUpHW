@@ -6,7 +6,7 @@ namespace Game
     {
         private byte _life;
 
-        public UserShip(Space game, int coordX, int coordY, bool active, 
+        public UserShip(ISpace game, int coordX, int coordY, bool active, 
                 uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
         {
             _game = game;

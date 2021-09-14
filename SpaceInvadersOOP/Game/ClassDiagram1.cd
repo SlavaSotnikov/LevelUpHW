@@ -60,22 +60,23 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Game.Space">
-    <Position X="11.5" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAICAMAgQAAhEgAAGAEBIASgTBAAAAEAFgASCACAUAI=</HashCode>
+      <HashCode>AAACAAAAQAABAAAACAAAAACAQAAAAAEAFAACCACAAAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
   </Class>
   <Class Name="Game.GameField">
-    <Position X="9" Y="4" Width="1.5" />
+    <Position X="12" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAMAgQAAhEgAAEAEBIAQgDBAAAAAAAgAQAAAAUAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Game.Controller">
-    <Position X="14.25" Y="0.5" Width="1.5" />
+    <Position X="14" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
       <FileName>Controller.cs</FileName>
@@ -86,6 +87,20 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAhAgAAAAAAAAAADAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ISpace.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Game.ISpaceCraft" Collapsed="true">
+    <Position X="6" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAADAAAAAAAAAAAAAAAAAAAgAAAAAAAAYAA=</HashCode>
+      <FileName>Interfaces\ISpaceCraft.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Game.IGame" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGame.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

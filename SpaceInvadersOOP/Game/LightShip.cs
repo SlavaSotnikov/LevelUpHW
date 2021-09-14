@@ -40,7 +40,7 @@ namespace Game
 
         #region Constructors
 
-        public LightShip(Space game, int coordX, int coordY, bool active,
+        public LightShip(ISpace game, int coordX, int coordY, bool active,
                 uint speed, uint counter, byte hitpoints, byte lifes,
                     int oldCoordX=0, int oldCoordY= 0)
             : base(game, coordX, coordY, active, speed, counter, 
