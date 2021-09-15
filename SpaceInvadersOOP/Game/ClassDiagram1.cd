@@ -62,7 +62,7 @@
   <Class Name="Game.Space">
     <Position X="9.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAQAABAAAACAAAAACAQAAAAAEAFAACCACAAAI=</HashCode>
+      <HashCode>AAACAEAAQAAhAgAAAAABAAAADAAAAAEABgAAAAAAAAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
@@ -70,14 +70,14 @@
   <Class Name="Game.Controller">
     <Position X="14" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAgAEAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
       <FileName>Controller.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.GameField">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAMAgQAAhEgAAEAEBIAQgDBAAAAAAAgAQAAAAUAA=</HashCode>
+      <HashCode>AAIAAIAgQAAhkAAAEAEAIAQgSBAAAAAAEAASCACAUAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

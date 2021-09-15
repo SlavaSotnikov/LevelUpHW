@@ -2,9 +2,10 @@
 
 namespace Game
 {
-    class GameField : ISpace
+    class GameField : IGame
     {
         protected const int CONST_Y = 1;
+        protected const int RESET = 0;
 
         protected int _leftBorder = 30;
         protected int _rightBorder = 83;
@@ -25,156 +26,126 @@ namespace Game
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
 
-        public int LeftBorder
+        ISpaceCraft IGame.this[int index]    // TODO: Explicit implementation.
         {
             get
             {
-                return _leftBorder;
+                return _gameObjects[index];
             }
         }
 
-        public int RightBorder
+        int IGame.Amount
         {
             get
             {
-                return _rightBorder;
+                return _amountOfObjects;
             }
         }
 
-        public int TopBorder
+        public bool IsGameOver()
         {
-            get
-            {
-                return _topBorder;
-            }
-        }
+            bool gameOn = true;
 
-        public int BottomBorder
-        {
-            get
+            for (int i = 0; i < _amountOfObjects; i++)
             {
-                return _bottomBorder;
-            }
-        }
-
-        public void AddObject(SpaceObject source)
-        {
-            SpaceCraft creature = null;
-
-            switch (source)
-            {
-                case SpaceObject.None:
-                    break;
-                case SpaceObject.LightShip:
-                    creature = new LightShip(this, _initialX, _initialY,
-                            _active, _shipSpeed, _counter, _hitpoints, _lifes);
-                    break;
-                case SpaceObject.HeavyShip:
-                    creature = new HeavyShip(this, _initialX, _initialY,
-                            _active, _shipSpeed, _counter, _hitpoints, _lifes);
-                    break;
-                case SpaceObject.EnemyShip:
-                    creature = AddEnemy();
-                    break;
-                case SpaceObject.ShotLeft:
-                    creature = AddShot(_leftShift);
-                    break;
-                case SpaceObject.ShotRight:
-                    creature = AddShot(_rightShift);
-                    break;
-                case SpaceObject.ShotEnemy:
-                    creature = AddEnemyShot(_shotEnemyShift);
-                    break;
-                default:
-                    break;
-            }
-
-            if (_amountOfObjects >= _gameObjects.Length - 1)
-            {
-                Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
-            }
-
-            for (int i = 0; i <= _amountOfObjects; i++)
-            {
-                if (_gameObjects[i] is null)
+                if ((_gameObjects[i] is UserShip user) && !user.Active)
                 {
-                    _gameObjects[i] = creature;
-                    ++_amountOfObjects;
-
+                    gameOn = false;
                     break;
                 }
+            }
 
-                if (!_gameObjects[i].Active)
+            return gameOn;
+        }
+
+        public void StepObjects()
+        {
+            for (int i = 0; i < _amountOfObjects; i++)
+            {
+                ++_gameObjects[i].Counter;
+
+                if ((_gameObjects[i].Counter % _gameObjects[i].Speed == 0)
+                        && _gameObjects[i].Active)
                 {
-                    _gameObjects[i] = creature;
-                    break;
+                    _gameObjects[i].Counter = RESET;
+
+                    _gameObjects[i].Step();
                 }
             }
         }
 
-        private SpaceCraft AddEnemy()
+        public void CheckObjects()
         {
-            bool isExist;
-            int rndX = 0;
-            uint speed = BL_Random.GetFlySpeed();
-            byte rndYShot = BL_Random.GetRndY();
-
-            do
+            for (int i = 0; i < _amountOfObjects; i++)
             {
-                rndX = BL_Random.GetCoordinateX();
-
-                isExist = false;
-
-                for (int i = 0; i < _amountOfObjects; i++)
+                for (int j = 0; j < _amountOfObjects; j++)
                 {
-                    if (_gameObjects[i] is EnemyShip enemy)
+                    if (i != j)
                     {
-                        if (!((rndX > enemy.X + enemy.Width) || (rndX + enemy.Width < enemy.X)))
+                        if (_gameObjects[i] is UserShip user && _gameObjects[j] is EnemyShip enemy)
                         {
-                            isExist = true;
-                            i = 0;
+                            if (IsClash(user, enemy))
+                            {
+                                int x = user.X;
+                                int y = user.Y;
 
-                            break;
+                                user.Y = user.Y + 2;
+                                enemy.Y = enemy.Y - 2;
+
+                                throw new ClashException("BOOM!!!", x, y);
+                            }
+                        }
+
+                        if (_gameObjects[i] is Shot bullet && _gameObjects[j] is Ship ship)
+                        {
+                            if (bullet.Active && ship.Active)
+                            {
+                                if (IsHit(bullet, ship))
+                                {
+                                    bullet.Active = false;
+                                    --ship.HitPoints;
+
+                                    if (ship.HitPoints <= 0)
+                                    {
+                                        ship.Active = false;
+                                        ship.Step();
+                                    }
+                                }
+                            }
+                        }
+
+                        if (_gameObjects[i] is EnemyShip one)
+                        {
+                            if (one.Y == _bottomBorder)
+                            {
+                                one.Active = false;
+                            }
+                        }
+
+                        if (_gameObjects[i] is Shot two)
+                        {
+                            if (two.Y == _topBorder || two.Y == _bottomBorder)
+                            {
+                                two.Active = false;
+                            }
                         }
                     }
                 }
-
-            } while (isExist);
-
-            return new EnemyShip(this, rndX, CONST_Y, _active, speed, 1, rndYShot);
-        }
-
-        public Shot AddShot(int shift)
-        {
-            Shot bullet = null;
-
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                if (_gameObjects[i] is UserShip user)
-                {
-                    bullet = new Shot(user.X + shift, user.Y - 1, 1, 5000);
-                    break;
-                }
             }
-
-            return bullet;
         }
 
-        public Shot AddEnemyShot(int shift)
+        private bool IsClash(UserShip user, EnemyShip enemy)
         {
-            Shot bullet = null;
-
-            for (int i = 0; i < _amountOfObjects; i++)
-            {
-                if (_gameObjects[i] is EnemyShip one && one.Shot != 0)
-                {
-                    bullet = new Shot(one.X + shift, one.Y + 3, -1, 28000);
-                    one.Shot = 0;
-                    break;
-                }
-            }
-
-            return bullet;
+            return user.Y - 1 == enemy.Y && enemy.X >= user.X
+                    && enemy.X + enemy.Width <= user.X + user.Width;
         }
+
+        private bool IsHit(Shot bullet, Ship user)
+        {
+            return bullet.Y == user.Y && user.X < bullet.X
+                    && bullet.X < user.X + user.Width;
+        }
+
+
     }
 }
