@@ -3,35 +3,62 @@ using System.Text;
 
 namespace Game
 {
-    static class UI
+    static class UI    // TODO: 1 - Ask a question, what's going on?
     {
-        private static string[] _shot = { "|" };
-
-        private static string[] _lightShip = new string[5] 
-        { "    ▲    ",
-          "    Ο    ",
-          "  ║ Ο ║  ",
-          "╱╲╲╲Λ╱╱╱╲",
-          "  <╱╦╲>  "
-        };
-
-        private static string[] _heavyShip = new string[5]
-        { "    ▲    ",
-          "   ╱Ο╲   ",
-          "∩ ╱UKR╲ ∩",
-          "╠═══Λ═══╣",
-          " <╱*╦*╲> "
-        };
-
-        private static string[] _enemyShip = new string[3]
-        {
-          "╲(|-|)╱",
-          "˂=-O-=˃",
-          "   ˅   "
-        };
+        #region Constants
 
         private const int WIDTH = 120;         // Width buffer of consol window.
         private const int HEIGHT = 40;         // Height buffer of console window.
+
+        #endregion
+
+        #region Private Data
+
+        private static string[] _shot;
+
+        private static string[] _lightShip;
+
+        private static string[] _heavyShip;
+
+        private static string[] _enemyShip;
+
+        #endregion
+
+        #region Constructor
+
+        static UI()    // TODO: 2 - Ask a question, what's going on?
+        {
+            _shot = new string[] { "|" };
+
+            _lightShip = new string[5]
+            {
+               "    ▲    ",
+               "    Ο    ",
+               "  ║ Ο ║  ",
+               "╱╲╲╲Λ╱╱╱╲",
+               "  <╱╦╲>  "
+            };
+
+            _heavyShip = new string[5]
+            {
+              "    ▲    ",
+              "   ╱Ο╲   ",
+              "∩ ╱UKR╲ ∩",
+              "╠═══Λ═══╣",
+              " <╱*╦*╲> "
+            };
+
+            _enemyShip = new string[3]
+            {
+              "╲(|-|)╱",
+              "˂=-O-=˃",
+              "   ˅   "
+            };
+        }
+
+        #endregion
+
+        #region Methods
 
         public static void SetBufferSize()
         {
@@ -130,9 +157,6 @@ namespace Game
                     Console.ResetColor();
                 }
             }
-
-            source.OldX = source.X;
-            source.OldY = source.Y;
         }
 
         public static void Print(int x, int y, ConsoleColor color, params string[] view)
@@ -157,7 +181,7 @@ namespace Game
 
             if (source is HeavyShip)
             {
-                image = _heavyShip; 
+                image = _heavyShip;
             }
 
             if (source is EnemyShip)
@@ -175,5 +199,7 @@ namespace Game
         //    Console.SetCursorPosition(40, source.BottomBorder);
         //    Console.Write("Life: {0}");
         //}
+
+        #endregion
     }
 }

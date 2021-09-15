@@ -15,7 +15,7 @@ namespace Game
 
         #region Properties
 
-        public ISpaceCraft this[int index]
+        ISpaceCraft IGame.this[int index]    // TODO: Explicit implementation.
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Game
             }
         }
 
-        public int Amount 
+        int IGame.Amount
         {
             get
             {
@@ -53,13 +53,12 @@ namespace Game
                 }
                 catch (ClashException ex)
                 {
-                    Console.Beep(1000, 100); // TODO: Try Console.
+                    Console.Beep(500, 100); // TODO: Try Console.
                 }
                 finally
                 {
                     Controller.Hide(this);
                 }
-
 
             } while (IsGameOver());
         }
