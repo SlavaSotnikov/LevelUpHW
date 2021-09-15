@@ -25,5 +25,10 @@
                 source[i].OldY = source[i].Y;
             }
         }
+
+        public static void ShowExplosion(ClashException ex)
+        {
+            UI.ShowExplosion(ex);
+        }
     }
 }

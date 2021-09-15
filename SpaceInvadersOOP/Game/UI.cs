@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 
 namespace Game
 {
@@ -59,6 +60,16 @@ namespace Game
         #endregion
 
         #region Methods
+
+        public static void ShowExplosion(ClashException ex)
+        {
+            Console.SetCursorPosition(ex.X + 2, ex.Y);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine($"{ex.Message}");
+            Console.ResetColor();
+            Thread.Sleep(400);
+        }
 
         public static void SetBufferSize()
         {

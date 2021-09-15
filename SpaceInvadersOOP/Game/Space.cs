@@ -53,7 +53,7 @@ namespace Game
                 }
                 catch (ClashException ex)
                 {
-                    Console.Beep(500, 100); // TODO: Try Console.
+                    Controller.ShowExplosion(ex); // TODO: Try Console.
                 }
                 finally
                 {
@@ -117,10 +117,13 @@ namespace Game
                         {
                             if (IsClash(user, enemy))
                             {
-                                throw new ClashException();
+                                int x = user.X;
+                                int y = user.Y;
 
-                                //user.Y = user.Y + 2; 
-                                //enemy.Y = enemy.Y - 2;
+                                user.Y = user.Y + 2;
+                                enemy.Y = enemy.Y - 2;
+
+                                throw new ClashException("BOOM!!!", x, y);
                             }
                         }
 
