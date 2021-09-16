@@ -4,6 +4,7 @@ namespace Game
 {
     class ClashException : Exception
     {
+        // TODO
         public int X { get; }
         public int Y { get; }
 
