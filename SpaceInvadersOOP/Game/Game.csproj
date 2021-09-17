@@ -49,6 +49,7 @@
     <Compile Include="BL_Random.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="GameField.cs" />
+    <Compile Include="Interfaces\IDisplay.cs" />
     <Compile Include="Interfaces\ISpace.cs" />
     <Compile Include="Interfaces\IGame.cs" />
     <Compile Include="Interfaces\ISpaceCraft.cs" />

@@ -99,8 +99,8 @@ namespace Game
                                 int x = user.X;
                                 int y = user.Y;
 
-                                user.Y = user.Y + 2;
-                                enemy.Y = enemy.Y - 2;
+                                user.Y += 2;
+                                enemy.Y -= 2;
 
                                 throw new ClashException("BOOM!!!", x, y);
                             }

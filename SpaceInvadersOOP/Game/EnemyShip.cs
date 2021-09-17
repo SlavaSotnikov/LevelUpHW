@@ -4,9 +4,15 @@ namespace Game
 {
     class EnemyShip : Ship
     {
+        #region Private Data
+
         private byte _shot;
 
-        public byte Shot 
+        #endregion
+
+        #region Properties
+
+        public byte Shot
         {
             get
             {
@@ -52,9 +58,13 @@ namespace Game
             }
         }
 
-        public EnemyShip(ISpace game, int coordX, int coordY, bool active, 
-                uint speed, sbyte step, byte rndY, uint counter=0,
-                    int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
+        #endregion
+
+        #region Constructor
+
+        public EnemyShip(ISpace game, int coordX, int coordY, bool active,
+                uint speed, sbyte step, byte rndY, uint counter = 0,
+                    int oldCoordX = 0, int oldCoordY = 0, byte hitPoints = 6)
         {
             _game = game;
             _coordX = coordX;
@@ -70,9 +80,15 @@ namespace Game
             _width = 7;
         }
 
+        #endregion
+
+        #region Member Functions
+
         public override void Step()
         {
             _coordY += _step;
         }
+
+        #endregion
     }
 }

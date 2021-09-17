@@ -203,13 +203,14 @@ namespace Game
             return image;
         }
 
-        //public static void ShowDisplay(int hp, Space source)
-        //{
-        //    Console.SetCursorPosition(source.LeftBorder, source.BottomBorder);
-        //    Console.Write("HP: {0}%", hp);
-        //    Console.SetCursorPosition(40, source.BottomBorder);
-        //    Console.Write("Life: {0}");
-        //}
+        public static void ShowDisplay(IDisplay source)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(54, 38);
+            Console.Write($"HP: {source.HP}");
+            Console.SetCursorPosition(54, 39);
+            Console.Write($"Life: {source.Life}");
+        }
 
         #endregion
     }

@@ -49,7 +49,7 @@ namespace Game
 
         #region Constructor
 
-        public Space(int capacity = 13, int speed = 350000)
+        public Space(int capacity = 13, int speed = 330000)
         {
             _gameObjects = new SpaceCraft[capacity];
             _amountOfObjects = 0;
@@ -85,6 +85,8 @@ namespace Game
                 {
                     Controller.Hide(this);
                 }
+
+                Controller.ShowDisplay(this);
 
             } while (IsGameOver());
         }

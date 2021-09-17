@@ -4,6 +4,8 @@ namespace Game
 {
     class LightShip : UserShip
     {
+        #region Properties
+
         public override byte HitPoints
         {
             get
@@ -30,13 +32,15 @@ namespace Game
             }
         }
 
-        public override byte Width 
+        public override byte Width
         {
             get
             {
                 return _width;
             }
         }
+
+        #endregion
 
         #region Constructors
 
@@ -51,7 +55,7 @@ namespace Game
 
         #endregion
 
-        #region Methods
+        #region Member Functions
 
         public override void Step()
         {
