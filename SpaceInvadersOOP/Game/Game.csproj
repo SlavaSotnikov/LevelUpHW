@@ -43,13 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClashException.cs" />
+    <Compile Include="Exception\ClashException.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Enum\GameAction.cs" />
     <Compile Include="BL_Random.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="GameField.cs" />
-    <Compile Include="Interfaces\IDisplay.cs" />
+    <Compile Include="Interfaces\IUserShip.cs" />
     <Compile Include="Interfaces\ISpace.cs" />
     <Compile Include="Interfaces\IGame.cs" />
     <Compile Include="Interfaces\ISpaceCraft.cs" />

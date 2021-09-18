@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    abstract class UserShip : Ship, IDisplay
+    abstract class UserShip : Ship, IUserShip
     {
         private byte _life;
         private byte _oldLife;
@@ -23,7 +23,7 @@ namespace Game
             _width = 9;
         }
 
-        byte IDisplay.OldLife
+        byte IUserShip.OldLife
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Game
                 _oldLife = value;
             }
         }
-        byte IDisplay.OldHP 
+        byte IUserShip.OldHP 
         { 
             get
             {
@@ -47,7 +47,7 @@ namespace Game
 
         }
 
-        byte IDisplay.Life
+        byte IUserShip.Life
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Game
                 _life = value;  
             }
         }
-        byte IDisplay.HP
+        byte IUserShip.HP
         {
             get
             {

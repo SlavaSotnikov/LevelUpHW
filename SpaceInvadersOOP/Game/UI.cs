@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Game
 {
-    static class UI    // TODO: 1 - Ask a question, what's going on?
+    static class UI
     {
         #region Constants
 
@@ -27,7 +27,7 @@ namespace Game
 
         #region Constructor
 
-        static UI()    // TODO: 2 - Ask a question, what's going on?
+        static UI()
         {
             _shot = new string[] { "|" };
 
@@ -203,7 +203,7 @@ namespace Game
             return image;
         }
 
-        public static void ShowDisplay(IDisplay source)
+        public static void ShowDisplay(IUserShip source)
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(54, 38);

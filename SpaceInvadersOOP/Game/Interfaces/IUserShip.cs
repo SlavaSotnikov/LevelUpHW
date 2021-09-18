@@ -1,6 +1,6 @@
 ﻿namespace Game
 {
-    internal interface IDisplay
+    internal interface IUserShip
     {
         byte Life { get; set; }
 

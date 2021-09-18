@@ -21,8 +21,8 @@
             {
                 UI.Show(source[i]);
 
-                source[i].OldX = source[i].X;    // TODO: Ask a question.
-                source[i].OldY = source[i].Y;
+                //source[i].OldX = source[i].X;    // TODO: Move to UserShip.
+                //source[i].OldY = source[i].Y;
             }
         }
 
@@ -35,16 +35,14 @@
         {
             for (int i = 0; i < source.Amount; i++)
             {
-                if (source[i] is IDisplay one)
+                if (source[i] is IUserShip one)
                 {
                     if (one.Life != one.OldLife || one.HP != one.OldHP)
                     {
                         UI.ShowDisplay(one);
-
-                        
                     }
 
-                    one.OldLife = one.Life;
+                    one.OldLife = one.Life;    // TODO: Move to Ship.
                     one.OldHP = one.HP;
 
                     break;

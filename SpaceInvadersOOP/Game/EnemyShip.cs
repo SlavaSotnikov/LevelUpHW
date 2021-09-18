@@ -86,6 +86,9 @@ namespace Game
 
         public override void Step()
         {
+            OldX = X;    // TODO: Something goes wrong.
+            OldY = Y;
+
             _coordY += _step;
         }
 

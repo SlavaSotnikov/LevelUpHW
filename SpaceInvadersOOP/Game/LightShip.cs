@@ -59,6 +59,9 @@ namespace Game
 
         public override void Step()
         {
+            OldX = X;
+            OldY = Y;
+
             switch (Controller.GetEvent())
             {
                 case GameAction.LeftMove:

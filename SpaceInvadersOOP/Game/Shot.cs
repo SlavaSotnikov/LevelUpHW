@@ -25,6 +25,9 @@ namespace Game
 
         public override void Step()
         {
+            OldX = X;
+            OldY = Y;
+
             _coordY -= _step;
         }
 
