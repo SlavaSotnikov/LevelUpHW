@@ -75,7 +75,7 @@ namespace Game
 
                 try
                 {
-                    CheckObjects();
+                    Is();
                 }
                 catch (ClashException ex)
                 {

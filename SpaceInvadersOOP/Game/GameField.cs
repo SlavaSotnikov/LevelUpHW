@@ -32,7 +32,7 @@ namespace Game
 
         #region IGame implementation
 
-        ISpaceCraft IGame.this[int index]    // TODO: Explicit implementation.
+        ISpaceCraft IGame.this[int index]    // TODO: Ask a question about Quick Link, and namely Agregation to Whole, Agregation to Part. 
         {
             get
             {
@@ -84,7 +84,7 @@ namespace Game
             }
         }
 
-        public void CheckObjects()
+        public void Is()
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
