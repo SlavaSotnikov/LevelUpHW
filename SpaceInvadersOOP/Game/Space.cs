@@ -65,7 +65,11 @@ namespace Game
         {
             do
             {
+                Controller.Hide(this);
+
                 Controller.Show(this);
+
+                Controller.ShowDisplay(this);
 
                 StepObjects();
 
@@ -75,18 +79,12 @@ namespace Game
 
                 try
                 {
-                    Is();
+                    CheckObjects();
                 }
                 catch (ClashException ex)
                 {
-                    Controller.ShowExplosion(ex); // TODO: Try Console.
+                    Controller.ShowExplosion(ex);
                 }
-                finally
-                {
-                    Controller.Hide(this);
-                }
-
-                Controller.ShowDisplay(this);
 
             } while (IsGameOver());
         }

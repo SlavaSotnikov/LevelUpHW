@@ -20,9 +20,6 @@
             for (int i = 0; i < source.Amount; i++)
             {
                 UI.Show(source[i]);
-
-                //source[i].OldX = source[i].X;    // TODO: Move to UserShip.
-                //source[i].OldY = source[i].Y;
             }
         }
 
@@ -42,8 +39,8 @@
                         UI.ShowDisplay(one);
                     }
 
-                    one.OldLife = one.Life;    // TODO: Move to Ship.
-                    one.OldHP = one.HP;
+                    //one.OldLife = one.Life;    // TODO: Move to UserShip.
+                    //one.OldHP = one.HP;
 
                     break;
                 } 

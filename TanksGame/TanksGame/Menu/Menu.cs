@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static System.Console;
 
 namespace Menu
 {
@@ -22,12 +18,12 @@ namespace Menu
 
         public void DisplayOptions()
         {
-            OutputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
 
-            ConsoleColor prevColor = ForegroundColor;
-            ForegroundColor = ConsoleColor.DarkRed;
-            WriteLine(Prompt);
-            ForegroundColor = prevColor;
+            ConsoleColor prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(Prompt);
+            Console.ForegroundColor = prevColor;
 
             for (int i = 0; i < Options.Length; i++)
             {
@@ -37,18 +33,18 @@ namespace Menu
                 if (i == SelectedIndex)
                 {                    
                     prefix = "\u2192";
-                    ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                 }
                 else
                 {
-                    ResetColor();
+                    Console.ResetColor();
                     prefix = " ";
-                }                
-                WriteLine($"\t\t\t\t\t\t{prefix} {currentOption} ");                                
+                }
+                Console.WriteLine($"\t\t\t\t\t\t{prefix} {currentOption} ");                                
             }
-            ResetColor();
-           
-            WriteLine("\n\t\t\t\t\t\t\xA9 2021 LevelUp\x2122");
+            Console.ResetColor();
+
+            Console.WriteLine("\n\t\t\t\t\t\t\xA9 2021 LevelUp\x2122");
         }
 
         public int Run()
@@ -56,10 +52,10 @@ namespace Menu
             ConsoleKey keyPressed;
             do
             {
-                Clear();
+                Console.Clear();
                 DisplayOptions();
 
-                ConsoleKeyInfo keyInfo = ReadKey(true);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
                 if (keyPressed == ConsoleKey.UpArrow)

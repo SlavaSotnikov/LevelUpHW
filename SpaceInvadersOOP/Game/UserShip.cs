@@ -4,70 +4,48 @@ namespace Game
 {
     abstract class UserShip : Ship, IUserShip
     {
-        private byte _life;
-        private byte _oldLife;
+        #region Properties
 
-        public UserShip(ISpace game, int coordX, int coordY, bool active, 
-                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
+        public override byte HP { get; set; }
+
+        public override byte OldHP { get; set; }
+
+        public byte Life { get; set; }
+
+        public byte OldLife { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        public UserShip(ISpace game, int coordX, int coordY, bool active,
+                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX = 0, int oldCoordY = 0)
         {
             _game = game;
-            _coordX = coordX;
-            _coordY = coordY;
-            _oldCoordX = oldCoordX;
-            _oldCoordY = oldCoordY;
-            _active = active;
-            _speed = speed;
-            _counter = counter;
-            _hitPoints = hitpoints;
-            _life = lifes;
-            _width = 9;
+            X = coordX;
+            Y = coordY;
+            OldX = oldCoordX;
+            OldY = oldCoordY;
+            Active = active;
+            Speed = speed;
+            Counter = counter;
+            HP = hitpoints;
+            Life = lifes;
+            Width = 9;
         }
 
-        byte IUserShip.OldLife
-        {
-            get
-            {
-                return _oldLife;
-            }
-            set
-            {
-                _oldLife = value;
-            }
-        }
-        byte IUserShip.OldHP 
-        { 
-            get
-            {
-                return _oldHitPoints;
-            }
-            set
-            {
-                _oldHitPoints = value;
-            }
+        #endregion
 
+        #region Member Functions
+
+        public override void MoveState()
+        {
+            base.MoveState();
+
+            OldHP = HP;
+            OldLife = Life;
         }
 
-        byte IUserShip.Life
-        {
-            get
-            {
-                return _life;
-            }
-            set
-            {
-                _life = value;  
-            }
-        }
-        byte IUserShip.HP
-        {
-            get
-            {
-                return _hitPoints;
-            }
-            set
-            {
-                _hitPoints = value;
-            }
-        }
+        #endregion
     }
 }

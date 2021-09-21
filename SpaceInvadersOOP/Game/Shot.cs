@@ -9,13 +9,13 @@ namespace Game
         public Shot(int x, int y, sbyte step, uint speed,
                 int oldX=0, int oldY=0, uint counter = 0)
         {
-            _coordX = x;
-            _coordY = y;
-            _oldCoordX = oldX;
-            _oldCoordY = oldY;
-            _speed = speed;
-            _counter = counter;
-            _active = true;
+            X = x;
+            Y = y;
+            OldX = oldX;
+            OldY = oldY;
+            Speed = speed;
+            Counter = counter;
+            Active = true;
             _step = step;
         }
 
@@ -25,10 +25,7 @@ namespace Game
 
         public override void Step()
         {
-            OldX = X;
-            OldY = Y;
-
-            _coordY -= _step;
+            Y -= _step;
         }
 
         #endregion

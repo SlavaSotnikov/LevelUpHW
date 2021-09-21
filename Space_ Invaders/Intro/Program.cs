@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Threading;
-using System.Media;
-using System.IO;
 
 namespace Intro
 {

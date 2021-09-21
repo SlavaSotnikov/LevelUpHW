@@ -32,7 +32,7 @@ namespace Game
 
         #region IGame implementation
 
-        ISpaceCraft IGame.this[int index]    // TODO: Ask a question about Quick Link, and namely Agregation to Whole, Agregation to Part. 
+        ISpaceCraft IGame.this[int index]
         {
             get
             {
@@ -72,9 +72,11 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                ++_gameObjects[i].Counter;
+                ++_gameObjects[i].Counter;    // TODO: Move to ship?
 
-                if ((_gameObjects[i].Counter % _gameObjects[i].Speed == 0)
+                _gameObjects[i].MoveState();
+
+                if ((_gameObjects[i].Counter % _gameObjects[i].Speed == 0)    // ???
                         && _gameObjects[i].Active)
                 {
                     _gameObjects[i].Counter = RESET;
@@ -84,7 +86,7 @@ namespace Game
             }
         }
 
-        public void Is()
+        public void CheckObjects()
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
@@ -113,9 +115,9 @@ namespace Game
                                 if (IsHit(bullet, ship))
                                 {
                                     bullet.Active = false;
-                                    --ship.HitPoints;
+                                    --ship.HP;
 
-                                    if (ship.HitPoints <= 0)
+                                    if (ship.HP <= 0)
                                     {
                                         ship.Active = false;
                                         ship.Step();
@@ -157,6 +159,5 @@ namespace Game
         }
 
         #endregion
-
     }
 }

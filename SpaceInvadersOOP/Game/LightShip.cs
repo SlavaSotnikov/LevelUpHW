@@ -6,39 +6,11 @@ namespace Game
     {
         #region Properties
 
-        public override byte HitPoints
-        {
-            get
-            {
-                return _hitPoints;
-            }
+        public override byte HP { get; set; }
 
-            set
-            {
-                _hitPoints = value;
-            }
-        }
+        public override byte OldHP { get; set; }
 
-        public override byte OldHitPoints
-        {
-            get
-            {
-                return _oldHitPoints;
-            }
-
-            set
-            {
-                _oldHitPoints = value;
-            }
-        }
-
-        public override byte Width
-        {
-            get
-            {
-                return _width;
-            }
-        }
+        public override byte Width { get; set; }
 
         #endregion
 
@@ -59,40 +31,37 @@ namespace Game
 
         public override void Step()
         {
-            OldX = X;
-            OldY = Y;
-
             switch (Controller.GetEvent())
             {
                 case GameAction.LeftMove:
-                    --_coordX;
-                    if (_coordX <= _game.LeftBorder)
+                    --X;
+                    if (X <= _game.LeftBorder)
                     {
-                        _coordX = _game.LeftBorder;
+                        X = _game.LeftBorder;
                     }
                     break;
 
                 case GameAction.RightMove:
-                    ++_coordX;
-                    if (_coordX >= _game.RightBorder)
+                    ++X;
+                    if (X >= _game.RightBorder)
                     {
-                        _coordX = _game.RightBorder;
+                        X = _game.RightBorder;
                     }
                     break;
 
                 case GameAction.UpMove:
-                    --_coordY;
-                    if (_coordY <= _game.TopBorder)
+                    --Y;
+                    if (Y <= _game.TopBorder)
                     {
-                        _coordY = _game.TopBorder;
+                        Y = _game.TopBorder;
                     }
                     break;
 
                 case GameAction.DownMove:
-                    ++_coordY;
-                    if (_coordY >= _game.BottomBorder)
+                    ++Y;
+                    if (Y >= _game.BottomBorder)
                     {
-                        _coordY = _game.BottomBorder;
+                        Y = _game.BottomBorder;
                     }
                     break;
 

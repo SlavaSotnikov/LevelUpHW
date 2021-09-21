@@ -162,7 +162,7 @@ namespace Game
 
                 Print(source.X, source.Y, ConsoleColor.White, image);
 
-                if ((source is Ship one) && one.HitPoints <= 2)
+                if ((source is Ship one) && one.HP <= 2)
                 {
                     Print(one.X, one.Y, ConsoleColor.DarkRed, image);
                     Console.ResetColor();
@@ -181,7 +181,7 @@ namespace Game
             }
         }
 
-        private static string[] GetImage(ISpaceCraft source)    // TODO: Static constructor.
+        private static string[] GetImage(ISpaceCraft source)
         {
             string[] image = _shot;
 
@@ -207,9 +207,9 @@ namespace Game
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(54, 38);
-            Console.Write($"HP: {source.HP}");
+            Console.Write("HP: {0, -2}", source.HP);
             Console.SetCursorPosition(54, 39);
-            Console.Write($"Life: {source.Life}");
+            Console.Write("Life: {0}", source.Life);
         }
 
         #endregion

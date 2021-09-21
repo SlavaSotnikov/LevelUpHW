@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Console;
 
 namespace Menu
 {
@@ -12,14 +7,14 @@ namespace Menu
         public void Start()
         {
 
-            Title = "Space Invaders";
+            Console.Title = "Space Invaders";
 
             RunMainMenu();
         }
 
         private void RunMainMenu()
         {
-            CursorVisible = false;
+            Console.CursorVisible = false;
 
             string prompt = @"
                       _____                        _____                     _               
@@ -55,34 +50,34 @@ namespace Menu
 
         private void ExitGame()
         {
-            WriteLine("\n\t\t\t\t\t   Press any key to exit...");
-            ReadKey(true);
+            Console.WriteLine("\n\t\t\t\t\t   Press any key to exit...");
+            Console.ReadKey(true);
             Environment.Exit(0);
         }
 
         private void DisplayAboutInfo()
         {
-            CursorVisible = false;
-            Clear();
-            SetCursorPosition(35, 10);
-            WriteLine("This game was created by Slava Sotnikov.");
-            SetCursorPosition(35, 11);
-            WriteLine("It uses assets from http://patorjk.com.");
-            SetCursorPosition(35, 12);
-            WriteLine("Press any key to return to the menu.");
-            ReadKey(true);
+            Console.CursorVisible = false;
+            Console.Clear();
+            Console.SetCursorPosition(35, 10);
+            Console.WriteLine("This game was created by Slava Sotnikov.");
+            Console.SetCursorPosition(35, 11);
+            Console.WriteLine("It uses assets from http://patorjk.com.");
+            Console.SetCursorPosition(35, 12);
+            Console.WriteLine("Press any key to return to the menu.");
+            Console.ReadKey(true);
             RunMainMenu();
         }
 
         private void RunFirstChoice()
         {
-            WriteLine("\n\t\t\t\t\t  Placeholder for 1st choice");
+            Console.WriteLine("\n\t\t\t\t\t  Placeholder for 1st choice");
             ExitGame();
         }
 
         private void RunSecondChoice()
         {
-            WriteLine("\n\t\t\t\t\t  Placeholder for 2nd choice");
+            Console.WriteLine("\n\t\t\t\t\t  Placeholder for 2nd choice");
         }
     }
 }

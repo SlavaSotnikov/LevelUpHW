@@ -6,57 +6,17 @@ namespace Game
     {
         #region Private Data
 
-        private byte _shot;
-
         #endregion
 
         #region Properties
 
-        public byte Shot
-        {
-            get
-            {
-                return _shot;
-            }
-            set
-            {
-                _shot = value;
-            }
-        }
+        public byte Shot { get; set; }
 
-        public override byte HitPoints
-        {
-            get
-            {
-                return _hitPoints;
-            }
+        public override byte HP { get; set; }
 
-            set
-            {
-                _hitPoints = value;
-            }
-        }
+        public override byte OldHP { get; set; }
 
-        public override byte OldHitPoints
-        {
-            get
-            {
-                return _oldHitPoints;
-            }
-
-            set
-            {
-                _oldHitPoints = value;
-            }
-        }
-
-        public override byte Width
-        {
-            get
-            {
-                return _width;
-            }
-        }
+        public override byte Width {  get; set; }
 
         #endregion
 
@@ -67,17 +27,17 @@ namespace Game
                     int oldCoordX = 0, int oldCoordY = 0, byte hitPoints = 6)
         {
             _game = game;
-            _coordX = coordX;
-            _coordY = coordY;
-            _oldCoordX = oldCoordX;
-            _oldCoordY = oldCoordY;
-            _active = true;
-            _counter = 0;
-            _speed = speed;
-            _hitPoints = hitPoints;
-            _shot = rndY;
+            X = coordX;
+            Y = coordY;
+            OldX = oldCoordX;
+            OldY = oldCoordY;
+            Active = true;
+            Counter = 0;
+            Speed = speed;
+            HP = hitPoints;
+            Shot = rndY;
             _step = step;
-            _width = 7;
+            Width = 7;
         }
 
         #endregion
@@ -86,10 +46,7 @@ namespace Game
 
         public override void Step()
         {
-            OldX = X;    // TODO: Something goes wrong.
-            OldY = Y;
-
-            _coordY += _step;
+            Y += _step;
         }
 
         #endregion
