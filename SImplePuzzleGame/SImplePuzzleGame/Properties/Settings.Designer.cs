@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SImplePuzzleGame.Properties
+namespace SimplePuzzleGame.Properties
 {
 
 
