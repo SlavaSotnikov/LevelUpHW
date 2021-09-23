@@ -6,7 +6,6 @@ namespace Menu
     {
         public void Start()
         {
-
             Console.Title = "Space Invaders";
 
             RunMainMenu();
@@ -31,19 +30,23 @@ namespace Menu
             Menu mainMenu = new Menu(prompt, options);
             int selectedIndex = mainMenu.Run();
 
-            switch (selectedIndex)
+            Options menu = (Options)selectedIndex;
+
+            switch (menu)
             {
-                case 0:
+                case Options.OnePlayer:
                     RunFirstChoice();
                     break;
-                case 1:
+                case Options.TwoPlayers:
                     RunSecondChoice();
                     break;
-                case 2:
-                    DisplayAboutInfo();
+                case Options.About:
+                    DisplayAboutInfo(Text.About);
                     break;
-                case 3:
+                case Options.Exit:
                     ExitGame();
+                    break;
+                default:
                     break;
             }
         }
@@ -55,7 +58,7 @@ namespace Menu
             Environment.Exit(0);
         }
 
-        private void DisplayAboutInfo()
+        private void DisplayAboutInfo(string source)
         {
             Console.CursorVisible = false;
             Console.Clear();

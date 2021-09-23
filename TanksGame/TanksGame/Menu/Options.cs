@@ -1,6 +1,6 @@
-﻿namespace Intro
+﻿namespace Menu
 {
-    enum Menu : byte
+    internal enum Options
     {
         None,
         OnePlayer,
