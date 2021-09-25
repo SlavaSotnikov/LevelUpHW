@@ -2,34 +2,36 @@
 
 namespace Delegates
 {
+    public delegate void Show();
+
     internal class Program
     {
         static void Main()
         {
-            Publisher p = new Publisher();
+            Show show = Print1;
+            Show show2 = Print2;
+            Show show3 = Print3;
 
-            Subscriber s1 = new Subscriber(p);
-
-            p.NewIterationSubscribe(s1.OnNewIterationCountIteration);
-
-            p.Run(5);
+            show += show2;
+            show += show3;
+            show.Invoke();
 
             Console.ReadKey();
         }
 
-        private static void OnNewIteration(int i)
+        public static void Print1()
         {
-            int oldX = Console.CursorLeft;
-            int oldY = Console.CursorTop;
-            ConsoleColor oldColor = Console.ForegroundColor;
+            Console.WriteLine("Print1");
+        }
 
-            Console.SetCursorPosition(40, 5);
+        public static void Print2()
+        {
+            Console.WriteLine("Print2");
+        }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Iteration: {0}", i);
-
-            Console.ForegroundColor = oldColor;
-            Console.SetCursorPosition(oldX, oldY);
+        public static void Print3()
+        {
+            Console.WriteLine("Print3");
         }
     }
 }

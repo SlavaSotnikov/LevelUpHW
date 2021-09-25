@@ -80,15 +80,15 @@ namespace SimplePuzzleGame
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(320, 320);
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(320, 320);
 
             this.Name = "Form1";
             this.Text = "Simple Puzzle Game";
-            this.BackColor = System.Drawing.Color.OldLace;
+            this.BackColor = Color.OldLace;
             this.MaximizeBox = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
 
         }

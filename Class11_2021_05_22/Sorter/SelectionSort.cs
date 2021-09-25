@@ -5,15 +5,16 @@ namespace Sorter
 {
     internal class SelectionSort : Sorter
     {
-        private int _count = 0;
-
         #region Properties
 
         public override double[] Sort
         {
             get
             {
-                One one = Time;
+                if (_time != null)
+                {
+                    _time.Invoke("Start", DateTime.Now.Millisecond); 
+                }
 
                 int index = 0;
 
@@ -32,6 +33,11 @@ namespace Sorter
                     index++;
                 }
 
+                if (_time != null)
+                {
+                    _time.Invoke("Finish", DateTime.Now.Millisecond); 
+                }
+
                 return _data;
             }
         }
@@ -47,10 +53,6 @@ namespace Sorter
 
         #endregion
 
-        public void Time(int time)
-        {
-            ++_count;
-            Console.WriteLine("{0}", time);
-        }
+        
     }
 }

@@ -2,15 +2,19 @@
 
 namespace Sorter
 {
-    public delegate void One(int x);
+    public delegate void Speed(string s, int x);
 
-    public delegate int Two(int a, int b);
+    public delegate void Compare(int a, int b);
 
     internal abstract class Sorter
     {
         #region Private Data
 
         protected double[] _data;
+
+        protected Speed _time;
+
+        protected Compare _compare;
 
         #endregion
 
@@ -30,5 +34,11 @@ namespace Sorter
         }
 
         #endregion
+
+        public void TimeMeasure(Speed time)
+        {
+            _time = time;
+        }
+        
     }
 }

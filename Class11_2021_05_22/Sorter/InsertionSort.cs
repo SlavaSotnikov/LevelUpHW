@@ -17,6 +17,11 @@ namespace Sorter
                 int i = 0;
                 int memory = 0;
 
+                if (_time != null)
+                {
+                    _time.Invoke("Start", DateTime.Now.Millisecond);
+                }
+
                 while (i < _data.Length - 1)
                 {
                     if (_data[i] > _data[i + 1])
@@ -40,6 +45,11 @@ namespace Sorter
                         memory++;
                         i = memory;
                     }
+                }
+
+                if (_time != null)
+                {
+                    _time.Invoke("Finish", DateTime.Now.Millisecond);
                 }
 
                 return _data;
