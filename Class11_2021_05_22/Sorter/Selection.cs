@@ -10,10 +10,7 @@ namespace Sorter
         {
             get
             {
-                if (TimeMeasure != null)
-                {
-                    TimeMeasure("Start", DateTime.Now.Millisecond); 
-                }
+                TimeMeasure?.Invoke("Start", DateTime.Now.Millisecond);
 
                 int index = 0;
                 double tmp = 0.0;
@@ -24,10 +21,7 @@ namespace Sorter
                     {
                         if (_data[index] > _data[i])
                         {
-                            if (SwapIndexes != null)
-                            {
-                                SwapIndexes(index, i);
-                            }
+                            SwapIndexes?.Invoke(index, i);
 
                             tmp = _data[index];
                             _data[index] = _data[i];
