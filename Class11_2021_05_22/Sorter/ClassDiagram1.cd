@@ -3,22 +3,22 @@
   <Class Name="Sorter.Sorter">
     <Position X="3" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAgAAAAAAAQABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABABAAAAAAABAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Sorter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Sorter.SelectionSort">
+  <Class Name="Sorter.Selection">
     <Position X="5.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAAAQAAAAAAAAAAAAAACAAAAAAQA=</HashCode>
-      <FileName>SelectionSort.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Selection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Sorter.InsertionSort">
+  <Class Name="Sorter.Insertion">
     <Position X="0.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>InsertionSort.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Insertion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -6,13 +6,19 @@ namespace Sorter
     {
         static void Main()
         {
-            InsertionSort s = new InsertionSort(9, 2, 4, 5, 1, 6, 7, 3, 8);
-            s.TimeMeasure(Utilits.Time);
+            //Insertion sort = new Insertion(9, 2, 4, 5, 1, 6, 7, 3, 8)
+            //{
+            //    TimeMeasure = UI.ShowTime,
+            //    SwapIndexes = UI.ShowIndexes
+            //};
 
-            //SelectionSort s = new SelectionSort(8, 3, 7, 5, 1, 6, 4, 2, 9);
-            //s.TimeMeasure(Utilits.Time);
+            Selection sort = new Selection(8, 3, 7, 5, 1, 6, 4, 2, 9)
+            {
+                TimeMeasure = UI.ShowTime,
+                SwapIndexes = UI.ShowIndexes
+            };
 
-            double[] result = s.Sort;
+            double[] result = sort.SortedArray;
 
             for (int i = 0; i < result.Length; i++)
             {

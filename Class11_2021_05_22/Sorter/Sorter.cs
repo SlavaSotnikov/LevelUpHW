@@ -12,15 +12,15 @@ namespace Sorter
 
         protected double[] _data;
 
-        protected Speed _time;
-
-        protected Compare _compare;
-
         #endregion
 
         #region Properties
 
-        public abstract double[] Sort { get; }
+        public Speed TimeMeasure { get; set; }
+
+        public Compare SwapIndexes { get; set; }
+
+        public abstract double[] SortedArray { get; }
 
         #endregion
 
@@ -35,10 +35,10 @@ namespace Sorter
 
         #endregion
 
-        public void TimeMeasure(Speed time)
-        {
-            _time = time;
-        }
+        //public void TimeMeasure(Speed time)
+        //{
+        //    _time = time;
+        //}
         
     }
 }

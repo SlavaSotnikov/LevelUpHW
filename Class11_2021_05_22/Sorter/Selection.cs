@@ -1,22 +1,22 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Sorter
 {
-    internal class SelectionSort : Sorter
+    internal class Selection : Sorter
     {
         #region Properties
 
-        public override double[] Sort
+        public override double[] SortedArray
         {
             get
             {
-                if (_time != null)
+                if (TimeMeasure != null)
                 {
-                    _time.Invoke("Start", DateTime.Now.Millisecond); 
+                    TimeMeasure("Start", DateTime.Now.Millisecond); 
                 }
 
                 int index = 0;
+                double tmp = 0.0;
 
                 for (int j = 1; j < _data.Length; j++)
                 {
@@ -24,7 +24,12 @@ namespace Sorter
                     {
                         if (_data[index] > _data[i])
                         {
-                            double tmp = _data[index];
+                            if (SwapIndexes != null)
+                            {
+                                SwapIndexes(index, i);
+                            }
+
+                            tmp = _data[index];
                             _data[index] = _data[i];
                             _data[i] = tmp;
                         }
@@ -33,9 +38,9 @@ namespace Sorter
                     index++;
                 }
 
-                if (_time != null)
+                if (TimeMeasure != null)
                 {
-                    _time.Invoke("Finish", DateTime.Now.Millisecond); 
+                    TimeMeasure("Finish", DateTime.Now.Millisecond); 
                 }
 
                 return _data;
@@ -46,7 +51,7 @@ namespace Sorter
 
         #region Constructor
 
-        public SelectionSort(params double[] data)
+        public Selection(params double[] data)
             : base(data)
         {
         }

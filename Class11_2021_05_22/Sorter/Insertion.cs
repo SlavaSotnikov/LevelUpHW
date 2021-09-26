@@ -6,26 +6,31 @@ using System.Threading.Tasks;
 
 namespace Sorter
 {
-    internal class InsertionSort : Sorter
+    internal class Insertion : Sorter
     {
         #region MyRegion
 
-        public override double[] Sort
+        public override double[] SortedArray
         {
             get
             {
                 int i = 0;
                 int memory = 0;
 
-                if (_time != null)
+                if (TimeMeasure != null)
                 {
-                    _time.Invoke("Start", DateTime.Now.Millisecond);
+                    TimeMeasure("Start", DateTime.Now.Millisecond);
                 }
 
                 while (i < _data.Length - 1)
                 {
                     if (_data[i] > _data[i + 1])
                     {
+                        if (SwapIndexes != null)
+                        {
+                            SwapIndexes(i, i + 1);
+                        }
+
                         double tmp = _data[i];
                         _data[i] = _data[i + 1];
                         _data[i + 1] = tmp;
@@ -47,9 +52,9 @@ namespace Sorter
                     }
                 }
 
-                if (_time != null)
+                if (TimeMeasure != null)
                 {
-                    _time.Invoke("Finish", DateTime.Now.Millisecond);
+                    TimeMeasure("Finish", DateTime.Now.Millisecond);
                 }
 
                 return _data;
@@ -60,7 +65,7 @@ namespace Sorter
 
         #region Constructor
 
-        public InsertionSort(params double[] data)
+        public Insertion(params double[] data)
             : base(data)
         {
         }

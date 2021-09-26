@@ -38,13 +38,18 @@ namespace SimplePuzzleGameInheritage
             return (index >= 0) && (index < _buttons.GetLength(0));
         }
 
+        private void Move(int index, int size)
+        {
+
+        }
+
         private void CheckAndMove(int i, int j)
         {
             if (IsIndex(j + 1) && (_buttons[i, j + 1] == null))
             {
                 _buttons[i, j + 1] = _buttons[i, j];
                 _buttons[i, j + 1].Location = new Point(_buttons[i, j].Location.X, _buttons[i, j].Location.Y + SIZE);
-                _buttons[i, j + 1].J++;
+                _buttons[i, j + 1].J += 1;
                 _buttons[i, j] = null;
 
                 return;
@@ -54,7 +59,7 @@ namespace SimplePuzzleGameInheritage
             {
                 _buttons[i, j - 1] = _buttons[i, j];
                 _buttons[i, j - 1].Location = new Point(_buttons[i, j].Location.X, _buttons[i, j].Location.Y - SIZE);
-                _buttons[i, j - 1].J--;
+                _buttons[i, j - 1].J -= 1;
                 _buttons[i, j] = null;
 
                 return;
