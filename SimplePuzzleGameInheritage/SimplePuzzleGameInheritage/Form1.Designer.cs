@@ -1,18 +1,17 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SimplePuzzleGame
+namespace SimplePuzzleGameInheritage
 {
     partial class Form1
     {
-        static Random rnd = new Random();
+        private static Random rnd = new Random();
 
-        private Button[,] _buttons;
+        private MyButton[,] _buttons;
         private const int SIZE = 75;
         private const int GAP = 10;
-
-        //private int[] _rndPosition = { 10, 85, 160, 235}; 
 
         /// <summary>
         /// Required designer variable.
@@ -40,7 +39,7 @@ namespace SimplePuzzleGame
         /// </summary>
         private void InitializeComponent()
         {
-            _buttons = new Button[4, 4];
+            _buttons = new MyButton[4, 4];
             int amountOfButtons = 0;
 
             int tabInd = 0;
@@ -60,8 +59,10 @@ namespace SimplePuzzleGame
                 int x = i * SIZE + GAP;
                 int y = j * SIZE + GAP;
 
-                _buttons[i, j] = new Button()
+                _buttons[i, j] = new MyButton()
                 {
+                    I = i,
+                    J = j,
                     Location = new Point(x, y),
                     Name = string.Format("button{0}", ++tabInd),
                     Size = new Size(SIZE, SIZE),
@@ -77,6 +78,16 @@ namespace SimplePuzzleGame
                 this.Controls.Add(_buttons[i, j]);
                 ++amountOfButtons;
             }
+
+            this.components = new Container();
+            this.timer1 = new Timer(this.components);
+            this.SuspendLayout();
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 50;
+            this.timer1.Tick += new EventHandler(this.Timer1_Tick);
             // 
             // Form1
             // 
@@ -87,12 +98,16 @@ namespace SimplePuzzleGame
             this.Text = "Simple Puzzle Game";
             this.BackColor = Color.OldLace;
             this.MaximizeBox = false;
+            this.Opacity = 0D;
             this.StartPosition = FormStartPosition.CenterScreen;
+            //this.Load += new EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-
+            this.PerformLayout();
         }
 
         #endregion
+
+        private Timer timer1;
     }
 }
 
