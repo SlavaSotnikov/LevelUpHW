@@ -2,10 +2,6 @@
 
 namespace Sorter
 {
-    public delegate void Speed(string s, int x);
-
-    public delegate void Compare(int a, int b);
-
     internal abstract class Sorter
     {
         #region Private Data

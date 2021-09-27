@@ -17,10 +17,8 @@ namespace Sorter
                 int i = 0;
                 int memory = 0;
 
-                if (TimeMeasure != null)
-                {
-                    TimeMeasure("Start", DateTime.Now.Millisecond);
-                }
+                TimeMeasure?.Invoke("Start"
+                        , DateTime.Now.Millisecond);
 
                 while (i < _data.Length - 1)
                 {
@@ -52,10 +50,8 @@ namespace Sorter
                     }
                 }
 
-                if (TimeMeasure != null)
-                {
-                    TimeMeasure("Finish", DateTime.Now.Millisecond);
-                }
+                TimeMeasure?.Invoke("Finish"
+                        , DateTime.Now.Millisecond);
 
                 return _data;
             }

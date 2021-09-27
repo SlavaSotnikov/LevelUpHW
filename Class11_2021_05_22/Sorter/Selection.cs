@@ -10,7 +10,8 @@ namespace Sorter
         {
             get
             {
-                TimeMeasure?.Invoke("Start", DateTime.Now.Millisecond);
+                TimeMeasure?.Invoke("Start"
+                        , DateTime.Now.Millisecond);
 
                 int index = 0;
                 double tmp = 0.0;
@@ -32,10 +33,8 @@ namespace Sorter
                     index++;
                 }
 
-                if (TimeMeasure != null)
-                {
-                    TimeMeasure("Finish", DateTime.Now.Millisecond); 
-                }
+                TimeMeasure?.Invoke("Finish"
+                        , DateTime.Now.Millisecond);
 
                 return _data;
             }
