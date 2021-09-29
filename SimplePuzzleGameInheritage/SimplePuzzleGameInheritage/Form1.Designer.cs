@@ -1,18 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace SimplePuzzleGameInheritage
 {
     partial class Form1
     {
-        private static Random rnd = new Random();
-
-        private MyButton[,] _buttons;
-        private const int SIZE = 75;
-        private const int GAP = 10;
-
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -39,75 +31,62 @@ namespace SimplePuzzleGameInheritage
         /// </summary>
         private void InitializeComponent()
         {
-            _buttons = new MyButton[4, 4];
-            int amountOfButtons = 0;
-
-            int tabInd = 0;
-
-            int i = 0;
-            int j = 0;
-
-            while (amountOfButtons < _buttons.Length - 1)
-            {
-                do
-                {
-                    i = rnd.Next(0, 4);
-                    j = rnd.Next(0, 4);
-
-                } while (_buttons[i, j] != null);
-
-                int x = i * SIZE + GAP;
-                int y = j * SIZE + GAP;
-
-                _buttons[i, j] = new MyButton()
-                {
-                    I = i,
-                    J = j,
-                    Location = new Point(x, y),
-                    Name = string.Format("button{0}", ++tabInd),
-                    Size = new Size(SIZE, SIZE),
-                    TabIndex = tabInd,
-                    Text = string.Format("{0}", tabInd),
-                    UseVisualStyleBackColor = true,
-                    BackColor = Color.PeachPuff,
-                    Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0))),
-                };
-
-                _buttons[i, j].Click += new EventHandler(this.Button_Click);
-
-                this.Controls.Add(_buttons[i, j]);
-                ++amountOfButtons;
-            }
-
-            this.components = new Container();
-            this.timer1 = new Timer(this.components);
             this.SuspendLayout();
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 50;
-            this.timer1.Tick += new EventHandler(this.Timer1_Tick);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(320, 320);
-            this.Name = "Form1";
-            this.Text = "Simple Puzzle Game";
-            this.BackColor = Color.OldLace;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.OldLace;
+            this.ClientSize = new System.Drawing.Size(544, 313);
             this.MaximizeBox = false;
+            this.Name = "Form1";
             this.Opacity = 0D;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            //this.Load += new EventHandler(this.Form1_Load);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = " ";
             this.ResumeLayout(false);
-            this.PerformLayout();
+
+        }
+
+        private void InitializeDynamicComponents()
+        {
+            _buttons = new MyButton[4, 4];
+
+            int amountOfButtons = 0;
+
+            int tabInd = 1;
+
+            for (int i = 0; i < _buttons.GetLength(0); i++)
+            {
+                for (int j = 0; j < _buttons.GetLength(1); j++)
+                {
+                    int x = i * SIZE + GAP;
+                    int y = j * SIZE + GAP;
+
+                    _buttons[i, j] = new MyButton()
+                    {
+                        I = i,
+                        J = j,
+                        Location = new Point(x, y),
+                        Name = string.Format("button{0}", tabInd),
+                        Size = new Size(SIZE, SIZE),
+                        TabIndex = tabInd,
+                        Text = string.Format("{0}", tabInd),
+                        UseVisualStyleBackColor = true,
+                        BackColor = Color.PeachPuff,
+                        Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0))),
+                    };
+
+                    _buttons[i, j].Click += new EventHandler(this.Button_Click);
+
+                    this.Controls.Add(_buttons[i, j]);
+                    ++amountOfButtons;
+                    ++tabInd;
+                }
+            }
         }
 
         #endregion
-
-        private Timer timer1;
     }
 }
 

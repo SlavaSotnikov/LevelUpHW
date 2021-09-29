@@ -6,14 +6,6 @@ namespace SimplePuzzleGame
 {
     partial class Form1
     {
-        static Random rnd = new Random();
-
-        private Button[,] _buttons;
-        private const int SIZE = 75;
-        private const int GAP = 10;
-
-        //private int[] _rndPosition = { 10, 85, 160, 235}; 
-
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -40,43 +32,7 @@ namespace SimplePuzzleGame
         /// </summary>
         private void InitializeComponent()
         {
-            _buttons = new Button[4, 4];
-            int amountOfButtons = 0;
-
-            int tabInd = 0;
-
-            int i = 0;
-            int j = 0;
-
-            while (amountOfButtons < _buttons.Length - 1)
-            {
-                do
-                {
-                    i = rnd.Next(0, 4);
-                    j = rnd.Next(0, 4);
-
-                } while (_buttons[i, j] != null);
-
-                int x = i * SIZE + GAP;
-                int y = j * SIZE + GAP;
-
-                _buttons[i, j] = new Button()
-                {
-                    Location = new Point(x, y),
-                    Name = string.Format("button{0}", ++tabInd),
-                    Size = new Size(SIZE, SIZE),
-                    TabIndex = tabInd,
-                    Text = string.Format("{0}", tabInd),
-                    UseVisualStyleBackColor = true,
-                    BackColor = Color.PeachPuff,
-                    Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0))),
-                };
-
-                _buttons[i, j].Click += new EventHandler(this.Button_Click);
-
-                this.Controls.Add(_buttons[i, j]);
-                ++amountOfButtons;
-            }
+            InitializeDynamicComponents();
             // 
             // Form1
             // 
@@ -90,6 +46,44 @@ namespace SimplePuzzleGame
             this.StartPosition = FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
 
+        }
+
+        private void InitializeDynamicComponents()
+        {
+            _buttons = new MyButton[4, 4];
+
+            int amountOfButtons = 0;
+
+            int tabInd = 1;
+
+            for (int i = 0; i < _buttons.GetLength(0); i++)
+            {
+                for (int j = 0; j < _buttons.GetLength(1); j++)
+                {
+                    int x = i * SIZE + GAP;
+                    int y = j * SIZE + GAP;
+
+                    _buttons[i, j] = new MyButton()
+                    {
+                        I = i,
+                        J = j,
+                        Location = new Point(x, y),
+                        Name = string.Format("button{0}", tabInd),
+                        Size = new Size(SIZE, SIZE),
+                        TabIndex = tabInd,
+                        Text = string.Format("{0}", tabInd),
+                        UseVisualStyleBackColor = true,
+                        BackColor = Color.PeachPuff,
+                        Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0))),
+                    };
+
+                    _buttons[i, j].Click += new EventHandler(this.Button_Click);
+
+                    this.Controls.Add(_buttons[i, j]);
+                    ++amountOfButtons;
+                    ++tabInd;
+                }
+            }
         }
 
         #endregion

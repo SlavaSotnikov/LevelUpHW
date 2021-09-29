@@ -6,18 +6,17 @@ namespace SimplePuzzleGameInheritage
 {
     public partial class Form1 : Form
     {
+        private static Random rnd = new Random();
+
+        private MyButton[,] _buttons;
+        private const int SIZE = 75;
+        private const int GAP = 10;
+
         public Form1()
         {
             InitializeComponent();
-        }
 
-        private void Timer1_Tick(object sender, EventArgs e)
-        {
-            if (Opacity == 1)
-            {
-                timer1.Stop();
-            }
-            Opacity += 0.2;
+            InitializeDynamicComponents();
         }
 
         private void Button_Click(object sender, EventArgs e)

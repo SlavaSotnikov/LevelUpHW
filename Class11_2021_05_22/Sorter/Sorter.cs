@@ -16,9 +16,20 @@ namespace Sorter
 
         public Compare SwapIndexes { get; set; }
 
-        public abstract double[] SortedArray { get; }
+        protected abstract double[] SortedArray { get; }    // TODO: Method.
 
         #endregion
+
+        public double[] Do()
+        {
+            TimeMeasure?.Invoke("Start", DateTime.Now.Millisecond);
+
+            double[] result = SortedArray;
+
+            TimeMeasure?.Invoke("Finish", DateTime.Now.Millisecond);
+
+            return result;
+        }
 
         #region Constructor
 

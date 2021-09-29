@@ -6,31 +6,24 @@ namespace SimplePuzzleGame
 {
     public partial class Form1 : Form
     {
+        static Random rnd = new Random();
+
+        private MyButton[,] _buttons;
+        private const int SIZE = 75;
+        private const int GAP = 10;
+
         public Form1()
         {
             InitializeComponent();
+
+            InitializeDynamicComponents();
         }
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender is Button button)
+            if (sender is MyButton pressed)
             {
-                for (int i = 0; i < _buttons.GetLength(0); i++)
-                {
-                    for (int j = 0; j < _buttons.GetLength(1); j++)
-                    {
-                        if (_buttons[i, j] != null)
-                        {
-                            if (_buttons[i, j].TabIndex == button.TabIndex)
-                            {
-                                CheckAndMove(i, j);
-
-                                i = _buttons.GetLength(0);
-                                j = _buttons.GetLength(0);
-                            } 
-                        }
-                    }
-                }
+                CheckAndMove(pressed.I, pressed.J);
             }
         }
 
@@ -43,39 +36,32 @@ namespace SimplePuzzleGame
         {
             if (IsIndex(j + 1) && (_buttons[i, j + 1] == null))
             {
-                _buttons[i, j + 1] = _buttons[i, j];
-                _buttons[i, j + 1].Location = new Point(_buttons[i, j].Location.X, _buttons[i, j].Location.Y + SIZE);
-                _buttons[i, j] = null;
-
-                return;
+                Shift(i, j, 0, 1, 0, SIZE);
             }
-
-            if (IsIndex(j - 1) && (_buttons[i, j - 1] == null))
+            else if (IsIndex(j - 1) && (_buttons[i, j - 1] == null))
             {
-                _buttons[i, j - 1] = _buttons[i, j];
-                _buttons[i, j - 1].Location = new Point(_buttons[i, j].Location.X, _buttons[i, j].Location.Y - SIZE);
-                _buttons[i, j] = null;
-
-                return;
+                Shift(i, j, 0, -1, 0, -SIZE);
             }
-
-            if (IsIndex(i + 1) && (_buttons[i + 1, j] == null))
+            else if (IsIndex(i + 1) && (_buttons[i + 1, j] == null))
             {
-                _buttons[i + 1, j] = _buttons[i, j];
-                _buttons[i + 1, j].Location = new Point(_buttons[i, j].Location.X + SIZE, _buttons[i, j].Location.Y);
-                _buttons[i, j] = null;
-
-                return;
+                Shift(i, j, 1, 0, SIZE, 0);
             }
-
-            if (IsIndex(i - 1) && (_buttons[i - 1, j] == null))
+            else if (IsIndex(i - 1) && (_buttons[i - 1, j] == null))
             {
-                _buttons[i - 1, j] = _buttons[i, j];
-                _buttons[i - 1, j].Location = new Point(_buttons[i, j].Location.X - SIZE, _buttons[i, j].Location.Y);
-                _buttons[i, j] = null;
-
-                return;
+                Shift(i, j, -1, 0, -SIZE, 0);
             }
+
+            return;
+        }
+
+        private void Shift(int i, int j, int factorI, int factorJ, int sizeX, int sizeY)
+        {
+            _buttons[i + factorI, j + factorJ] = _buttons[i, j];
+            _buttons[i + factorI, j + factorJ].Location = new Point(_buttons[i, j].Location.X + sizeX,
+                    _buttons[i, j].Location.Y + sizeY);
+            _buttons[i + factorI, j + factorJ].J += factorJ;
+            _buttons[i + factorI, j + factorJ].I += factorI;
+            _buttons[i, j] = null;
         }
     }
 }

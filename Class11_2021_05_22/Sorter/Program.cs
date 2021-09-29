@@ -12,13 +12,13 @@ namespace Sorter
             //    SwapIndexes = UI.ShowIndexes
             //};
 
-            Selection sort = new Selection(8, 3, 7, 5, 1, 6, 4, 2, 9)
+            Selection selectionSorter = new Selection(8, 3, 7, 5, 1, 6, 4, 2, 9)
             {
                 TimeMeasure = UI.ShowTime,
                 SwapIndexes = UI.ShowIndexes
             };
 
-            double[] result = sort.SortedArray;
+            double[] result = selectionSorter.Do();
 
             for (int i = 0; i < result.Length; i++)
             {

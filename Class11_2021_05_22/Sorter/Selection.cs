@@ -6,13 +6,10 @@ namespace Sorter
     {
         #region Properties
 
-        public override double[] SortedArray
+        protected override double[] SortedArray
         {
             get
             {
-                TimeMeasure?.Invoke("Start"
-                        , DateTime.Now.Millisecond);
-
                 int index = 0;
                 double tmp = 0.0;
 
@@ -32,9 +29,6 @@ namespace Sorter
 
                     index++;
                 }
-
-                TimeMeasure?.Invoke("Finish"
-                        , DateTime.Now.Millisecond);
 
                 return _data;
             }

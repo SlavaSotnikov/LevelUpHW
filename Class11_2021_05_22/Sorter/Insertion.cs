@@ -10,15 +10,12 @@ namespace Sorter
     {
         #region MyRegion
 
-        public override double[] SortedArray
+        protected override double[] SortedArray
         {
             get
             {
                 int i = 0;
                 int memory = 0;
-
-                TimeMeasure?.Invoke("Start"
-                        , DateTime.Now.Millisecond);
 
                 while (i < _data.Length - 1)
                 {
@@ -49,9 +46,6 @@ namespace Sorter
                         i = memory;
                     }
                 }
-
-                TimeMeasure?.Invoke("Finish"
-                        , DateTime.Now.Millisecond);
 
                 return _data;
             }
