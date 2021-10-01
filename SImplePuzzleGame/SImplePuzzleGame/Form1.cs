@@ -16,12 +16,12 @@ namespace SimplePuzzleGame
         private const int SIZE = 75;
         private const int GAP = 10;
 
-        public Form1()
+        public Form1(Game source)
         {
-            InitializeComponent();
-
-            _game = new Game(FIELD_SIZE);
+            _game = source;
             _game.Run();
+
+            InitializeComponent();
 
             InitializeDynamicComponents();
         }

@@ -16,7 +16,9 @@ namespace Sorter
 
         public Compare SwapIndexes { get; set; }
 
-        protected abstract double[] SortedArray { get; }    // TODO: Method.
+        //protected abstract double[] SortedArray { get; }    // TODO: Method.
+
+        protected abstract double[] SortedArray();
 
         #endregion
 
@@ -24,7 +26,7 @@ namespace Sorter
         {
             TimeMeasure?.Invoke("Start", DateTime.Now.Millisecond);
 
-            double[] result = SortedArray;
+            double[] result = SortedArray();
 
             TimeMeasure?.Invoke("Finish", DateTime.Now.Millisecond);
 

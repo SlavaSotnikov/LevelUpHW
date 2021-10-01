@@ -4,34 +4,31 @@ namespace Sorter
 {
     internal class Selection : Sorter
     {
-        #region Properties
+        #region Member Functions
 
-        protected override double[] SortedArray
+        protected override double[] SortedArray()
         {
-            get
+            int index = 0;
+            double tmp = 0.0;
+
+            for (int j = 1; j < _data.Length; j++)
             {
-                int index = 0;
-                double tmp = 0.0;
-
-                for (int j = 1; j < _data.Length; j++)
+                for (int i = j; i < _data.Length; i++)
                 {
-                    for (int i = j; i < _data.Length; i++)
+                    if (_data[index] > _data[i])
                     {
-                        if (_data[index] > _data[i])
-                        {
-                            SwapIndexes?.Invoke(index, i);
+                        SwapIndexes?.Invoke(index, i);
 
-                            tmp = _data[index];
-                            _data[index] = _data[i];
-                            _data[i] = tmp;
-                        }
+                        tmp = _data[index];
+                        _data[index] = _data[i];
+                        _data[i] = tmp;
                     }
-
-                    index++;
                 }
 
-                return _data;
+                index++;
             }
+
+            return _data;
         }
 
         #endregion

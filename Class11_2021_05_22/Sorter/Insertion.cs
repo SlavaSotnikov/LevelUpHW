@@ -8,37 +8,29 @@ namespace Sorter
 {
     internal class Insertion : Sorter
     {
-        #region MyRegion
+        #region Member Functions
 
-        protected override double[] SortedArray
+        protected override double[] SortedArray()
         {
-            get
+            int i = 0;
+            int memory = 0;
+
+            while (i < _data.Length - 1)
             {
-                int i = 0;
-                int memory = 0;
-
-                while (i < _data.Length - 1)
+                if (_data[i] > _data[i + 1])
                 {
-                    if (_data[i] > _data[i + 1])
+                    if (SwapIndexes != null)
                     {
-                        if (SwapIndexes != null)
-                        {
-                            SwapIndexes(i, i + 1);
-                        }
+                        SwapIndexes(i, i + 1);
+                    }
 
-                        double tmp = _data[i];
-                        _data[i] = _data[i + 1];
-                        _data[i + 1] = tmp;
+                    double tmp = _data[i];
+                    _data[i] = _data[i + 1];
+                    _data[i + 1] = tmp;
 
-                        if (i != 0)
-                        {
-                            i--;
-                        }
-                        else
-                        {
-                            memory++;
-                            i = memory;
-                        }
+                    if (i != 0)
+                    {
+                        i--;
                     }
                     else
                     {
@@ -46,9 +38,14 @@ namespace Sorter
                         i = memory;
                     }
                 }
-
-                return _data;
+                else
+                {
+                    memory++;
+                    i = memory;
+                }
             }
+
+            return _data;
         }
 
         #endregion
