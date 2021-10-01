@@ -33,7 +33,7 @@ namespace SimplePuzzleGame
         private void InitializeComponent()
         {
             this.btnNewGame = new System.Windows.Forms.Button();
-            this.lblAmOfMoves = new System.Windows.Forms.Label();
+            this.lblMoves = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnNewGame
@@ -46,16 +46,17 @@ namespace SimplePuzzleGame
             this.btnNewGame.UseVisualStyleBackColor = true;
             this.btnNewGame.Click += new System.EventHandler(this.BtnNewGame_Click);
             // 
-            // lblAmOfMoves
+            // lblMoves
             // 
-            this.lblAmOfMoves.AutoSize = true;
-            this.lblAmOfMoves.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblAmOfMoves.Location = new System.Drawing.Point(335, 122);
-            this.lblAmOfMoves.Name = "lblAmOfMoves";
-            this.lblAmOfMoves.Size = new System.Drawing.Size(121, 15);
-            this.lblAmOfMoves.TabIndex = 1;
-            this.lblAmOfMoves.Text = "Number of movements: ";
-            this.lblAmOfMoves.Click += new System.EventHandler(this.Label1_Click);
+            this.lblMoves.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.lblMoves.AutoSize = true;
+            this.lblMoves.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblMoves.Location = new System.Drawing.Point(335, 122);
+            this.lblMoves.Name = "lblMoves";
+            this.lblMoves.Size = new System.Drawing.Size(127, 15);
+            this.lblMoves.TabIndex = 1;
+            this.lblMoves.Text = "Number of movements:   ";
+            this.lblMoves.Click += new System.EventHandler(this.Label1_Click);
             // 
             // Form1
             // 
@@ -63,12 +64,13 @@ namespace SimplePuzzleGame
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.OldLace;
             this.ClientSize = new System.Drawing.Size(484, 316);
-            this.Controls.Add(this.lblAmOfMoves);
+            this.Controls.Add(this.lblMoves);
             this.Controls.Add(this.btnNewGame);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Simple Puzzle Game";
+            this.Text = "Puzzle Game";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -101,6 +103,7 @@ namespace SimplePuzzleGame
                         Text = string.Format("{0}", _game.GetNumber(i, j)),
                         UseVisualStyleBackColor = true,
                         BackColor = Color.PeachPuff,
+                        TabStop = false,
                         Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0))),
                     };
 
@@ -120,32 +123,14 @@ namespace SimplePuzzleGame
             if (_buttons[i, j].Text == "16")
             {
                 _buttons[i, j].Text = string.Empty;
-                _buttons[i, j].BackColor = Color.AliceBlue;
+                _buttons[i, j].BackColor = Color.OldLace;
             }
         }
-
-        //public void ShowButt()
-        //{
-        //    for (int x = 0; x < FIELD_SIZE; x++)
-        //    {
-        //        for (int y = 0; y < FIELD_SIZE; y++)
-        //        {
-        //            ShowButton(_game.GetNumber(x, y), x, y);
-        //        }
-        //    }
-        //}
-
-        //private void ShowButton(int num, int x, int y)
-        //{
-        //    MyButton myButton = _buttons[x, y];
-        //    myButton.Text = num.ToString();
-        //    myButton.Visible = num > 0;
-        //}
 
         #endregion
 
         private Button btnNewGame;
-        private Label lblAmOfMoves;
+        private Label lblMoves;
     }
 }
 
