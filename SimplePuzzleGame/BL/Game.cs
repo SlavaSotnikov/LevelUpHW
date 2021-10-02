@@ -4,6 +4,8 @@ namespace BL
 {
     public class Game : IGame
     {
+        #region Private Data
+
         private static readonly Random rnd = new Random();
 
         private readonly int _size;
@@ -11,13 +13,25 @@ namespace BL
         private Coord _empty;
         private int _stepsCount;
 
+        #endregion
+
+        #region Properties
+
         public int StepsCount { get { return _stepsCount; } }
+
+        #endregion
+
+        #region Constructor
 
         public Game(int size)
         {
             _size = size;
             _map = new Field(size);
         }
+
+        #endregion
+
+        #region Member Functions
 
         public void Run()
         {
@@ -103,7 +117,7 @@ namespace BL
             int tempEmpt = _map[_empty];
             int tempSour = _map[source];
             Coord tempSource = source;
-            Coord tempEmpty = _empty; 
+            Coord tempEmpty = _empty;
             _map[tempEmpty] = tempSour;
             _map[tempSource] = tempEmpt;
             _empty = tempSource;
@@ -123,5 +137,7 @@ namespace BL
 
             _stepsCount = 0;
         }
+
+        #endregion
     }
 }

@@ -8,11 +8,9 @@ namespace SimplePuzzleGame
     public partial class Form1 : Form
     {
         private readonly IGame _game;
-        private const int FIELD_SIZE = 4;
-
-        private static Random _rnd = new Random();
 
         private MyButton[,] _buttons;
+        private const int FIELD_SIZE = 4;
         private const int SIZE = 75;
         private const int GAP = 10;
 
