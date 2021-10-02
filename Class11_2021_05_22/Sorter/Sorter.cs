@@ -2,11 +2,11 @@
 
 namespace Sorter
 {
-    public delegate void Start(int x);
-    public delegate void Finish(int x);
+    public delegate void Start(object sender, TimeEventArgs e);
+    public delegate void Finish(object sender, TimeEventArgs e);
 
-    public delegate void Indexes(int a, int b);
-    public delegate void Swap(int a, int b);
+    public delegate void Indexes(object sender, IndexEventArgs e);
+    public delegate void Swap(object sender, IndexEventArgs e);
 
     internal abstract class Sorter
     {
@@ -22,35 +22,57 @@ namespace Sorter
 
         #endregion
 
-        public void SubscribeStart(Start source)
+        #region Events
+
+        public event Start StartSort
         {
-            _doStart += source;
+            add
+            {
+                _doStart += value;
+            }
+            remove
+            {
+                _doStart -= value;
+            }
         }
 
-        public void StartMeasureUnsubscribe(Start source)
+        public event Finish FinishSort
         {
-            _doStart -= source;
+            add
+            {
+                _doFinish += value;
+            }
+            remove
+            {
+                _doFinish -= value;
+            }
         }
 
-        public void SubscribeFinish(Finish source)
+        public event Indexes CompareIndexes
         {
-            _doFinish += source;
+            add
+            {
+                _theseIndexes += value;
+            }
+            remove
+            {
+                _theseIndexes -= value;
+            }
         }
 
-        public void FinishMeasureUnSubscribe(Finish source)
+        public event Swap SwapIndexes
         {
-            _doFinish -= source;
+            add
+            {
+                _indexes += value;
+            }
+            remove
+            {
+                _indexes -= value;
+            }
         }
 
-        public void SubscribeGetIndexes(Indexes source)
-        {
-            _theseIndexes += source;
-        }
-
-        public void SubscribeWatchSwap(Swap source)
-        {
-            _indexes += source;
-        }
+        #endregion
 
         #region Properties
 
@@ -60,11 +82,11 @@ namespace Sorter
 
         public double[] Do()
         {
-            _doStart?.Invoke(DateTime.Now.Millisecond);
+            _doStart?.Invoke(this ,new TimeEventArgs("Start", DateTime.Now.Millisecond));
 
             double[] result = SortedArray();
 
-            _doFinish?.Invoke(DateTime.Now.Millisecond);
+            _doFinish?.Invoke(this, new TimeEventArgs("Finish", DateTime.Now.Millisecond));
 
             return result;
         }

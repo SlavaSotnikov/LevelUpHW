@@ -48,8 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selection.cs" />
     <Compile Include="Sorter.cs" />
+    <Compile Include="IndexEventArgs.cs" />
     <Compile Include="SpeedAnalizer.cs" />
     <Compile Include="TimeAnalizer.cs" />
+    <Compile Include="TimeEventArgs.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>

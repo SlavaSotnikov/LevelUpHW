@@ -17,15 +17,15 @@ namespace Sorter
 
             Selection selectionSorter = new Selection(8, 3, 7, 5, 1, 6, 4, 2, 9);
 
-            selectionSorter.SubscribeStart(UI.ShowTime);
-            selectionSorter.SubscribeFinish(UI.ShowTime);
-            selectionSorter.SubscribeStart(time.SetStart);
-            selectionSorter.SubscribeFinish(time.SetFinish);
+            selectionSorter.StartSort += UI.ShowTime;
+            selectionSorter.FinishSort += UI.ShowTime;
+            selectionSorter.StartSort += time.SetStart;
+            selectionSorter.FinishSort += time.SetFinish;
 
-            selectionSorter.SubscribeGetIndexes(UI.ShowIndexes);
-            selectionSorter.SubscribeWatchSwap(UI.ShowSwapIndexes);
-            selectionSorter.SubscribeGetIndexes(speed.CountCompare);
-            selectionSorter.SubscribeWatchSwap(speed.CountSwaps);
+            selectionSorter.CompareIndexes += UI.ShowIndexes;
+            selectionSorter.SwapIndexes += UI.ShowSwapIndexes;
+            selectionSorter.CompareIndexes += speed.CountCompare;
+            selectionSorter.SwapIndexes += speed.CountSwaps;
 
             double[] result = selectionSorter.Do();
 

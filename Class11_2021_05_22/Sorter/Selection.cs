@@ -23,7 +23,7 @@ namespace Sorter
 
                         if (_indexes != null)
                         {
-                            _indexes.Invoke(index, i);
+                            _indexes.Invoke(this, new IndexEventArgs(index, i));
                         }
                     }
                 }
@@ -38,7 +38,7 @@ namespace Sorter
         {
             if (_theseIndexes != null)
             {
-                _theseIndexes.Invoke(index, i);
+                _theseIndexes.Invoke(this, new IndexEventArgs(index, i));
             }
 
             return _data[index] > _data[i];

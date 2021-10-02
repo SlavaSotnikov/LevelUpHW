@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-namespace Sorter
+﻿namespace Sorter
 {
     internal class TimeAnalizer
     {
         private int _start;
         private int _finish;
 
-        public void SetStart(int source)    // TODO: Ask a question about just set properties.
+        public void SetStart(object sender, TimeEventArgs e)    
         {
-            _start = source;
+            _start = e.Time;
         }
 
-        public void SetFinish(int source)
+        public void SetFinish(object sender, TimeEventArgs e)
         {
-            _finish = source;
+            _finish = e.Time;
         }
 
         public int Total 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sorter
+﻿namespace Sorter
 {
     internal class SpeedAnalizer
     {
@@ -27,12 +21,12 @@ namespace Sorter
             }
         }
 
-        public void CountCompare(int a, int b)    // TODO: Ask a question about subscribers' signature.
-        {                                         // Is it necessary to add a specific delegate for Compare and Swaps separate UI?
+        public void CountCompare(object sender, IndexEventArgs e) 
+        {     
             ++_amountOfCompare;
         }
 
-        public void CountSwaps(int a, int b)
+        public void CountSwaps(object sender, IndexEventArgs e)
         {
             ++_amountOfSwaps;
         }

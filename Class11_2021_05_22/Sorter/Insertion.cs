@@ -21,7 +21,7 @@ namespace Sorter
                 {
                     if (_indexes != null)
                     {
-                        _indexes.Invoke(i, i + 1);
+                        _indexes.Invoke(this, new IndexEventArgs(i, i + 1));
                     }
 
                     double tmp = _data[i];
@@ -52,7 +52,7 @@ namespace Sorter
         {
             if (_theseIndexes != null)
             {
-                _theseIndexes.Invoke(i, i + 1);
+                _theseIndexes.Invoke(this, new IndexEventArgs(i, i + 1));
             }
 
             return _data[i] > _data[i + 1];

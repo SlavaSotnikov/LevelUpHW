@@ -4,19 +4,19 @@ namespace Sorter
 {
     internal class UI
     {
-        public static void ShowTime(int time)
+        public static void ShowTime(object sender, TimeEventArgs e)
         {
-            Console.WriteLine($"{time}");
+            Console.WriteLine($"{e.Text}: {e.Time}");
         }
 
-        public static void ShowSwapIndexes(int i, int j)
+        public static void ShowSwapIndexes(object sender, IndexEventArgs e)
         {
-            Console.WriteLine($"{i} <=> {j}");
+            Console.WriteLine($"{e.Index1} <=> {e.Index2}");
         }
 
-        public static void ShowIndexes(int i, int j)
+        public static void ShowIndexes(object sender, IndexEventArgs e)
         {
-            Console.WriteLine($"{i} - {j}");
+            Console.WriteLine($"{e.Index1} - {e.Index2}");
         }
     }
 }

@@ -44,7 +44,7 @@ namespace SimplePuzzleGame
             this.btnNewGame.TabIndex = 0;
             this.btnNewGame.Text = "New Game";
             this.btnNewGame.UseVisualStyleBackColor = true;
-            this.btnNewGame.Click += new System.EventHandler(this.BtnNewGame_Click);
+            this.btnNewGame.Click += BtnNewGame_Click;
             // 
             // lblMoves
             // 
