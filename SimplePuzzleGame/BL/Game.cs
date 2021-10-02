@@ -2,15 +2,16 @@
 
 namespace BL
 {
-    public class Game
+    public class Game : IGame
     {
-        private static Random rnd = new Random();
+        private static readonly Random rnd = new Random();
 
-        private int _size;
-        private Field _map;
+        private readonly int _size;
+        private readonly Field _map;
         private Coord _empty;
+        private int _stepsCount;
 
-        public int Move { get; set; }
+        public int StepsCount { get { return _stepsCount; } }
 
         public Game(int size)
         {
@@ -18,7 +19,7 @@ namespace BL
             _map = new Field(size);
         }
 
-        public void Run(int seed = 0)
+        public void Run()
         {
             int number = 0;
 
@@ -26,7 +27,7 @@ namespace BL
             {
                 for (int x = 0; x < _size; x++)
                 {
-                    _map.Set(new Coord(x, y), ++number);
+                    _map[new Coord(x, y)] = ++number;
                 }
             }
 
@@ -34,7 +35,7 @@ namespace BL
 
             Shuffle();
 
-            Move = 0;
+            _stepsCount = 0;
         }
 
         public void Click(int x, int y)
@@ -44,7 +45,7 @@ namespace BL
 
         public int GetNumber(int x, int y)
         {
-            return _map.Get(new Coord(x, y));
+            return _map[new Coord(x, y)];
         }
 
         public bool IsFinish()
@@ -56,7 +57,7 @@ namespace BL
             {
                 for (int x = 0; x < _size; x++)
                 {
-                    int res = _map.Get(new Coord(x, y));
+                    int res = _map[new Coord(x, y)];
 
                     if ((res) != ++num)
                     {
@@ -77,34 +78,34 @@ namespace BL
                 if (IsField(source.Y + 1) && _empty.Equals(new Coord(source.X, source.Y + 1)))
                 {
                     Shift(new Coord(source.X, source.Y));
-                    ++Move;
+                    ++_stepsCount;
                 }
                 else if (IsField(source.Y - 1) && _empty.Equals(new Coord(source.X, source.Y - 1)))
                 {
                     Shift(new Coord(source.X, source.Y));
-                    ++Move;
+                    ++_stepsCount;
                 }
                 else if (IsField(source.X + 1) && _empty.Equals(new Coord(source.X + 1, source.Y)))
                 {
                     Shift(new Coord(source.X, source.Y));
-                    ++Move;
+                    ++_stepsCount;
                 }
                 else if (IsField(source.X - 1) && _empty.Equals(new Coord(source.X - 1, source.Y)))
                 {
                     Shift(new Coord(source.X, source.Y));
-                    ++Move;
+                    ++_stepsCount;
                 }
             }
         }
 
         private void Shift(Coord source)
         {
-            int tempEmpt = _map.Get(_empty);
-            int tempSour = _map.Get(source);
+            int tempEmpt = _map[_empty];
+            int tempSour = _map[source];
             Coord tempSource = source;
             Coord tempEmpty = _empty; 
-            _map.Set(tempEmpty, tempSour);
-            _map.Set(tempSource, tempEmpt);
+            _map[tempEmpty] = tempSour;
+            _map[tempSource] = tempEmpt;
             _empty = tempSource;
         }
 
@@ -119,6 +120,8 @@ namespace BL
             {
                 Click(rnd.Next(_size), rnd.Next(_size));
             }
+
+            _stepsCount = 0;
         }
     }
 }

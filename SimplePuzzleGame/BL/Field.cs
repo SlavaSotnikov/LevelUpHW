@@ -1,22 +1,24 @@
 ﻿namespace BL
 {
-    internal struct Field
+    internal class Field
     {
-        private int[,] _gameField;
+        private readonly int[,] _gameField;
 
         public Field(int size)
         {
             _gameField = new int[size, size];
         }
 
-        public void Set(Coord position, int number)
+        public int this[Coord position]
         {
-            _gameField[position.X, position.Y] = number;
-        }
-
-        public int Get(Coord position)
-        {
-            return _gameField[position.X, position.Y];
+            get 
+            {
+                return _gameField[position.X, position.Y];
+            }
+            set
+            {
+                _gameField[position.X, position.Y] = value;
+            }
         }
     }
 }

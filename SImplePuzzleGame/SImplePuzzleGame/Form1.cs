@@ -7,7 +7,7 @@ namespace SimplePuzzleGame
 {
     public partial class Form1 : Form
     {
-        private Game _game;
+        private readonly IGame _game;
         private const int FIELD_SIZE = 4;
 
         private static Random _rnd = new Random();
@@ -16,7 +16,7 @@ namespace SimplePuzzleGame
         private const int SIZE = 75;
         private const int GAP = 10;
 
-        public Form1(Game source)
+        public Form1(IGame source)
         {
             _game = source;
             _game.Run();
@@ -34,7 +34,7 @@ namespace SimplePuzzleGame
 
                 ShowButtons();
 
-                lblMoves.Text = $"Number of movements: {_game.Move}";
+                lblMoves.Text = $"Number of movements: {_game.StepsCount}";
 
                 
             }
@@ -45,17 +45,11 @@ namespace SimplePuzzleGame
             }
         }
 
-        private void Label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void BtnNewGame_Click(object sender, EventArgs e)
         {
            _game.Shuffle();
-            _game.Move = 0;
             ShowButtons();
-            lblMoves.Text = $"Number of movements: {_game.Move}";
+            lblMoves.Text = $"Number of movements: {_game.StepsCount}";
         }
 
         private void ShowButtons()
@@ -75,11 +69,6 @@ namespace SimplePuzzleGame
             _buttons[x, y].BackColor = Color.PeachPuff;
 
             InitializeEmpty(y, x);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

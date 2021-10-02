@@ -6,17 +6,26 @@ namespace Sorter
     {
         static void Main()
         {
-            //Insertion sort = new Insertion(9, 2, 4, 5, 1, 6, 7, 3, 8)
+            //Insertion insertionSorter = new Insertion(9, 2, 4, 5, 1, 6, 7, 3, 8)
             //{
             //    TimeMeasure = UI.ShowTime,
             //    SwapIndexes = UI.ShowIndexes
             //};
 
-            Selection selectionSorter = new Selection(8, 3, 7, 5, 1, 6, 4, 2, 9)
-            {
-                TimeMeasure = UI.ShowTime,
-                SwapIndexes = UI.ShowIndexes
-            };
+            TimeAnalizer time = new TimeAnalizer();
+            SpeedAnalizer speed = new SpeedAnalizer();
+
+            Selection selectionSorter = new Selection(8, 3, 7, 5, 1, 6, 4, 2, 9);
+
+            selectionSorter.SubscribeStart(UI.ShowTime);
+            selectionSorter.SubscribeFinish(UI.ShowTime);
+            selectionSorter.SubscribeStart(time.SetStart);
+            selectionSorter.SubscribeFinish(time.SetFinish);
+
+            selectionSorter.SubscribeGetIndexes(UI.ShowIndexes);
+            selectionSorter.SubscribeWatchSwap(UI.ShowSwapIndexes);
+            selectionSorter.SubscribeGetIndexes(speed.CountCompare);
+            selectionSorter.SubscribeWatchSwap(speed.CountSwaps);
 
             double[] result = selectionSorter.Do();
 
@@ -24,6 +33,9 @@ namespace Sorter
             {
                 Console.Write("{0} ", result[i]);
             }
+
+            Console.WriteLine("\nTotal time: {0}", time.Total);
+            Console.WriteLine("\nTotal Compares: {0}, Swaps {1}", speed.Compare, speed.Swaps);
 
             Console.ReadKey();
         }

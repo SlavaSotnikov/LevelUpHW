@@ -15,13 +15,16 @@ namespace Sorter
             {
                 for (int i = j; i < _data.Length; i++)
                 {
-                    if (_data[index] > _data[i])
+                    if (IsMore(index, i))
                     {
-                        SwapIndexes?.Invoke(index, i);
-
                         tmp = _data[index];
                         _data[index] = _data[i];
                         _data[i] = tmp;
+
+                        if (_indexes != null)
+                        {
+                            _indexes.Invoke(index, i);
+                        }
                     }
                 }
 
@@ -29,6 +32,16 @@ namespace Sorter
             }
 
             return _data;
+        }
+
+        private bool IsMore(int index, int i)
+        {
+            if (_theseIndexes != null)
+            {
+                _theseIndexes.Invoke(index, i);
+            }
+
+            return _data[index] > _data[i];
         }
 
         #endregion

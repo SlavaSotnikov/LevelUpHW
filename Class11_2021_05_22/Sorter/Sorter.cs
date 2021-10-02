@@ -2,21 +2,57 @@
 
 namespace Sorter
 {
+    public delegate void Start(int x);
+    public delegate void Finish(int x);
+
+    public delegate void Indexes(int a, int b);
+    public delegate void Swap(int a, int b);
+
     internal abstract class Sorter
     {
         #region Private Data
+
+        private Start _doStart;
+        private Finish _doFinish;
+
+        public Indexes _theseIndexes;
+        public Swap _indexes;
 
         protected double[] _data;
 
         #endregion
 
+        public void SubscribeStart(Start source)
+        {
+            _doStart += source;
+        }
+
+        public void StartMeasureUnsubscribe(Start source)
+        {
+            _doStart -= source;
+        }
+
+        public void SubscribeFinish(Finish source)
+        {
+            _doFinish += source;
+        }
+
+        public void FinishMeasureUnSubscribe(Finish source)
+        {
+            _doFinish -= source;
+        }
+
+        public void SubscribeGetIndexes(Indexes source)
+        {
+            _theseIndexes += source;
+        }
+
+        public void SubscribeWatchSwap(Swap source)
+        {
+            _indexes += source;
+        }
+
         #region Properties
-
-        public Speed TimeMeasure { get; set; }
-
-        public Compare SwapIndexes { get; set; }
-
-        //protected abstract double[] SortedArray { get; }    // TODO: Method.
 
         protected abstract double[] SortedArray();
 
@@ -24,11 +60,11 @@ namespace Sorter
 
         public double[] Do()
         {
-            TimeMeasure?.Invoke("Start", DateTime.Now.Millisecond);
+            _doStart?.Invoke(DateTime.Now.Millisecond);
 
             double[] result = SortedArray();
 
-            TimeMeasure?.Invoke("Finish", DateTime.Now.Millisecond);
+            _doFinish?.Invoke(DateTime.Now.Millisecond);
 
             return result;
         }
@@ -43,11 +79,5 @@ namespace Sorter
         }
 
         #endregion
-
-        //public void TimeMeasure(Speed time)
-        //{
-        //    _time = time;
-        //}
-        
     }
 }
