@@ -126,9 +126,6 @@ namespace SimplePuzzleGame
         }
 
         #endregion
-
-        private Button btnNewGame;
-        private Label lblMoves;
     }
 }
 

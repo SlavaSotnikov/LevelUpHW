@@ -7,7 +7,6 @@ namespace Game
         #region Private Data
 
         protected const int CONST_Y = 1;
-        protected const int RESET = 0;
 
         protected int _leftBorder = 30;
         protected int _rightBorder = 83;
@@ -27,6 +26,8 @@ namespace Game
 
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
+
+        protected Finish _finishGame;
 
         #endregion
 
@@ -60,7 +61,9 @@ namespace Game
             {
                 if ((_gameObjects[i] is UserShip user) && !user.Active)
                 {
-                    gameOn = false;
+                    //gameOn = false;
+
+                    _finishGame?.Invoke(this, EventArgs.Empty);
                     break;
                 }
             }
@@ -70,17 +73,12 @@ namespace Game
 
         public void StepObjects()
         {
-            for (int i = 0; i < _amountOfObjects; i++)
+            for (int i = 0; i < _amountOfObjects; i++)    // TODO: Refactored.
             {
-                ++_gameObjects[i].Counter;    // TODO: Move to ship?
-
                 _gameObjects[i].MoveState();
 
-                if ((_gameObjects[i].Counter % _gameObjects[i].Speed == 0)    // ???
-                        && _gameObjects[i].Active)
+                if (_gameObjects[i].IsStep())
                 {
-                    _gameObjects[i].Counter = RESET;
-
                     _gameObjects[i].Step();
                 }
             }

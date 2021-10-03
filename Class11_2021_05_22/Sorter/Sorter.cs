@@ -2,11 +2,11 @@
 
 namespace Sorter
 {
-    public delegate void Start(object sender, TimeEventArgs e);
-    public delegate void Finish(object sender, TimeEventArgs e);
+    internal delegate void Start(object sender, TimeEventArgs e);
+    internal delegate void Finish(object sender, TimeEventArgs e);
 
-    public delegate void Indexes(object sender, IndexEventArgs e);
-    public delegate void Swap(object sender, IndexEventArgs e);
+    internal delegate void Indexes(object sender, IndexEventArgs e);
+    internal delegate void Swap(object sender, IndexEventArgs e);
 
     internal abstract class Sorter
     {

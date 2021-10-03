@@ -23,6 +23,8 @@ namespace Game
 
         private static string[] _enemyShip;
 
+        private static string[] _gameOver;
+
         #endregion
 
         #region Constructor
@@ -54,6 +56,11 @@ namespace Game
               "╲(|-|)╱",
               "˂=-O-=˃",
               "   ˅   "
+            };
+
+            _gameOver = new string[3];
+            {
+
             };
         }
 
@@ -210,6 +217,21 @@ namespace Game
             Console.Write("HP: {0, -2}", source.HP);
             Console.SetCursorPosition(54, 39);
             Console.Write("Life: {0}", source.Life);
+        }
+
+        public static void PrintGameOver(object sender, EventArgs e)
+        {
+            Console.SetCursorPosition(82, 18);
+            //Console.WriteLine(@"
+            //                           ____ ____ _  _ ____    ____ _  _ ____ ____ 
+            //                           | __ |__| |\/| |___    |  | |  | |___ |__/ 
+            //                           |__] |  | |  | |___    |__|  \/  |___ |  \ 
+            //                  ");
+
+            Console.WriteLine(@"
+                                   ____   ___  ___  __ _____     _____  __ __ _____ _____ 
+                                  (( ___ ||=|| || \/ | ||==     ((   )) \\ // ||==  ||_// 
+                                   \\_|| || || ||    | ||___     \\_//   \V/  ||___ || \\ ");
         }
 
         #endregion

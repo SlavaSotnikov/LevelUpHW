@@ -3,16 +3,15 @@
   <Class Name="BL.Game">
     <Position X="4.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAkEAQAAIAQAAAABAAQAAEAAAAIAEgI=</HashCode>
+      <HashCode>AAAEAAAAAAAAAAlEAQAAIgQAAAABAAQAAEAAAAIAEgI=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="BL.IGame">
     <Position X="6.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEEAAAAAAQAAAAAAAAAAAAAAAAAEgI=</HashCode>
-      <FileName>IGame.cs</FileName>
+      <FileName>Interface\IGame.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

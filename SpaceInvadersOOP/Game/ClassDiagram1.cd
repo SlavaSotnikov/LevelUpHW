@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Game.EnemyShip">
-    <Position X="6.75" Y="5.5" Width="1.5" />
+    <Position X="6.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAQAAKAAAAIAAAAAAAAAA=</HashCode>
       <FileName>EnemyShip.cs</FileName>
@@ -18,7 +18,7 @@
   <Class Name="Game.SpaceCraft">
     <Position X="3.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAADAAAAAAAAAAABCQAAAAAgIAAAAAAAYAQ=</HashCode>
+      <HashCode>AAIAIAAAAAADAAAAAAAAAAABCQAAAAAgIAAAAAAAYAQ=</HashCode>
       <FileName>SpaceCraft.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -72,7 +72,7 @@
   <Class Name="Game.GameField">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAIAgQAAhkAAAEAEAIAQgSBAAAAAAEAASCACAUAA=</HashCode>
+      <HashCode>AAIAAIAgQAAhkAAAEAEAIAQgCBAAAAAAEAASCACAUAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

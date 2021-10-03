@@ -2,6 +2,8 @@
 
 namespace Game
 {
+    public delegate void Finish(object sender, EventArgs e);
+
     class Space : GameField, ISpace
     {
         #region Private Data
@@ -9,7 +11,21 @@ namespace Game
         protected int _counterProduceEnemy;
         protected int _speed;
 
+        
+
         #endregion
+
+        public event Finish FinishedGame
+        {
+            add
+            {
+                _finishGame += value;
+            }
+            remove
+            {
+                _finishGame -= value;
+            }
+        }
 
         #region Properties
 
@@ -55,6 +71,8 @@ namespace Game
             _amountOfObjects = 0;
             _counterProduceEnemy = 0;
             _speed = speed;
+
+            FinishedGame += UI.PrintGameOver;
         }
 
         #endregion

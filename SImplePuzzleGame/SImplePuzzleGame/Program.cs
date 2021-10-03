@@ -12,7 +12,7 @@ namespace SimplePuzzleGame
         [STAThread]
         static void Main()
         {
-            Game puzzle= new Game(4);    // TODO: Ask a question about type of object. Where should I create an object?
+            Game puzzle = new Game(4);    // TODO: Ask a question about type of object. Where should I create an object?
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

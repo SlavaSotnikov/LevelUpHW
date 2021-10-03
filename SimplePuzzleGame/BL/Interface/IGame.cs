@@ -8,10 +8,12 @@
 
         int GetNumber(int x, int y);
 
-        bool IsFinish();
-
         void Shuffle();
 
+        void IsFinish();
+
         int StepsCount { get; }
+
+        event Finish FinishGame;
     }
 }

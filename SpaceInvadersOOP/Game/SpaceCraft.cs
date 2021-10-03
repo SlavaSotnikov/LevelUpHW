@@ -32,6 +32,22 @@ namespace Game
 
         #region Methods
 
+        public bool IsStep()
+        {
+            bool result = false;
+
+            ++Counter;
+
+            if ((Counter % Speed == 0) && Active)
+            {
+                Counter = 0;
+
+                result = true;
+            }
+
+            return result;
+        }
+
         public abstract void Step();
 
         public virtual void MoveState()

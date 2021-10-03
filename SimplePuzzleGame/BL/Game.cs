@@ -2,6 +2,8 @@
 
 namespace BL
 {
+    public delegate void Finish(object sender, EventArgs e);
+
     public class Game : IGame
     {
         #region Private Data
@@ -12,6 +14,23 @@ namespace BL
         private readonly Field _map;
         private Coord _empty;
         private int _stepsCount;
+        private Finish _finishGame;
+
+        #endregion
+
+        #region Events
+
+        public event Finish FinishGame
+        {
+            add
+            {
+                _finishGame += value;
+            }
+            remove
+            {
+                _finishGame -= value;
+            }
+        }
 
         #endregion
 
@@ -62,7 +81,7 @@ namespace BL
             return _map[new Coord(x, y)];
         }
 
-        public bool IsFinish()
+        public void IsFinish()    // TODO: Call here.
         {
             int num = 0;
             bool result = true;
@@ -76,13 +95,17 @@ namespace BL
                     if ((res) != ++num)
                     {
                         result = false;
+
                         y = _size;
                         x = _size;
                     }
                 }
             }
 
-            return result;
+            if (result)
+            {
+                _finishGame?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void Swap(Coord source)

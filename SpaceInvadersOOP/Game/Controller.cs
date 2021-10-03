@@ -39,9 +39,6 @@
                         UI.ShowDisplay(one);
                     }
 
-                    //one.OldLife = one.Life;    // TODO: Move to UserShip.
-                    //one.OldHP = one.HP;
-
                     break;
                 } 
             }

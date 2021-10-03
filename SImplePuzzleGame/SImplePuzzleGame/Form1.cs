@@ -13,11 +13,15 @@ namespace SimplePuzzleGame
         private const int FIELD_SIZE = 4;
         private const int SIZE = 75;
         private const int GAP = 10;
+        private Button btnNewGame;
+        private Label lblMoves;
 
         public Form1(IGame source)
         {
             _game = source;
             _game.Run();
+
+            _game.FinishGame += Finish;
 
             InitializeComponent();
 
@@ -26,27 +30,30 @@ namespace SimplePuzzleGame
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender is MyButton pressed)
+            if (sender is MyButton pressed)    // TODO: Custom ButtonEventArgs. Where is Button_Click?
             {
                 _game.Click(pressed.I, pressed.J);
 
                 ShowButtons();
 
                 lblMoves.Text = $"Number of movements: {_game.StepsCount}";
-
-                
             }
 
-            if (_game.IsFinish())
-            {
-                lblMoves.Text = "Congrats! You win!";
-            }
+            _game.IsFinish();
+
+        }
+
+        private void Finish(object sender, EventArgs e)
+        {
+            lblMoves.Text = "Congrats! You win!";
         }
 
         private void BtnNewGame_Click(object sender, EventArgs e)
         {
            _game.Shuffle();
+
             ShowButtons();
+
             lblMoves.Text = $"Number of movements: {_game.StepsCount}";
         }
 
