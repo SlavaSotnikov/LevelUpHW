@@ -15,6 +15,7 @@ namespace SimplePuzzleGame
         private const int GAP = 10;
         private Button btnNewGame;
         private Label lblMoves;
+        private bool _gameSatus = false;
 
         public Form1(IGame source)
         {
@@ -37,14 +38,18 @@ namespace SimplePuzzleGame
                 ShowButtons();
 
                 lblMoves.Text = $"Number of movements: {_game.StepsCount}";
+
+                if (_gameSatus)
+                {
+                    MessageBox.Show("Congrats! You win!");
+                    _gameSatus = false;
+                }
             }
         }
 
         private void Finish(object sender, EventArgs e)
         {
-            lblMoves.Text = "Congrats! You won!";
-
-            MessageBox.Show("Congrats! You won!");
+            _gameSatus = true;
         }
 
         private void BtnNewGame_Click(object sender, EventArgs e)
