@@ -2,18 +2,16 @@
 {
     public interface IGame
     {
-        void Run();
+        void InitializeBL();
 
-        void Click(int x, int y);
+        void ClickCell(int x, int y);
 
         int GetNumber(int x, int y);
 
         void Shuffle();
 
-        void IsFinish();
-
         int StepsCount { get; }
 
-        event Finish FinishGame;
+        event ChangeGameStatus FinishGame;
     }
 }

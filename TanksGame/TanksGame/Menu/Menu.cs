@@ -5,15 +5,15 @@ namespace Menu
 {
     class Menu
     {
-        private int SelectedIndex;
-        private string[] Options;
-        private string Prompt;
+        private int _selectedIndex;
+        private string[] _options;
+        private string _title;
 
-        public Menu(string prompt, string[] options)
+        public Menu(string title, string[] options)
         {
-            Prompt = prompt;
-            Options = options;
-            SelectedIndex = 0;
+            _title = title;
+            _options = options;
+            _selectedIndex = 0;
         }
 
         public void DisplayOptions()
@@ -22,29 +22,34 @@ namespace Menu
 
             ConsoleColor prevColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(Prompt);
+            Console.WriteLine(_title);
             Console.ForegroundColor = prevColor;
 
-            for (int i = 0; i < Options.Length; i++)
-            {
-                string currentOption = Options[i];
-                string prefix;
+            int count = 0;
 
-                if (i == SelectedIndex)
+            for (int i = 0; i < _options.Length; i++)
+            {
+                ++count;
+                string currentOption = _options[i];
+                string pointer;
+
+                if (i == _selectedIndex)
                 {                    
-                    prefix = "\u2192";
+                    pointer = "\u2192";
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                 }
                 else
                 {
                     Console.ResetColor();
-                    prefix = " ";
+                    pointer = " ";
                 }
-                Console.WriteLine($"\t\t\t\t\t\t{prefix} {currentOption} ");                                
+                Console.SetCursorPosition(50, 8 + count);
+                Console.WriteLine($"{pointer} {currentOption} ");                                
             }
             Console.ResetColor();
 
-            Console.WriteLine("\n\t\t\t\t\t\t\xA9 2021 LevelUp\x2122");
+            Console.SetCursorPosition(47, 25);
+            Console.WriteLine("\xA9 2021 LevelUp\x2122");
         }
 
         public int Run()
@@ -60,23 +65,24 @@ namespace Menu
 
                 if (keyPressed == ConsoleKey.UpArrow)
                 {                    
-                    SelectedIndex--;
-                    if (SelectedIndex == -1)
+                    _selectedIndex--;
+                    if (_selectedIndex == -1)
                     {
-                        SelectedIndex = Options.Length - 1;
+                        _selectedIndex = _options.Length - 1;
                     }
                 }
                 else if (keyPressed == ConsoleKey.DownArrow)
                 {
-                    SelectedIndex++;
-                    if (SelectedIndex == Options.Length)
+                    _selectedIndex++;
+                    if (_selectedIndex == _options.Length)
                     {
-                        SelectedIndex = 0;
+                        _selectedIndex = 0;
                     }
                 }
+
             } while (keyPressed != ConsoleKey.Enter);
 
-            return SelectedIndex;
+            return _selectedIndex;
         }
 
     }

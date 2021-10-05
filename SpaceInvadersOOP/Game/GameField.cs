@@ -27,7 +27,7 @@ namespace Game
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
 
-        protected Finish _finishGame;
+        protected ChangeGameStatus _finishGame;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace Game
 
         #region Member Functions
 
-        public bool IsGameOver()
+        public bool IsGameOver()    // TODO: Is it a right method?
         {
             bool gameOn = true;
 
@@ -61,8 +61,6 @@ namespace Game
             {
                 if ((_gameObjects[i] is UserShip user) && !user.Active)
                 {
-                    //gameOn = false;
-
                     _finishGame?.Invoke(this, EventArgs.Empty);
                     break;
                 }
@@ -73,11 +71,11 @@ namespace Game
 
         public void StepObjects()
         {
-            for (int i = 0; i < _amountOfObjects; i++)    // TODO: Refactored.
+            for (int i = 0; i < _amountOfObjects; i++)
             {
                 _gameObjects[i].MoveState();
 
-                if (_gameObjects[i].IsStep())
+                if (_gameObjects[i].IsNeedStep())    // TODO: Refactored.
                 {
                     _gameObjects[i].Step();
                 }

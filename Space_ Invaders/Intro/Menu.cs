@@ -1,6 +1,6 @@
 ﻿namespace Intro
 {
-    enum Menu : byte
+    public enum Menu : byte
     {
         None,
         OnePlayer,

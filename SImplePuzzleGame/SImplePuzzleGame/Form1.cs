@@ -19,7 +19,7 @@ namespace SimplePuzzleGame
         public Form1(IGame source)
         {
             _game = source;
-            _game.Run();
+            _game.InitializeBL();
 
             _game.FinishGame += Finish;
 
@@ -30,22 +30,21 @@ namespace SimplePuzzleGame
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender is MyButton pressed)    // TODO: Custom ButtonEventArgs. Where is Button_Click?
+            if (sender is MyButton pressed)
             {
-                _game.Click(pressed.I, pressed.J);
+                _game.ClickCell(pressed.I, pressed.J);
 
                 ShowButtons();
 
                 lblMoves.Text = $"Number of movements: {_game.StepsCount}";
             }
-
-            _game.IsFinish();
-
         }
 
         private void Finish(object sender, EventArgs e)
         {
-            lblMoves.Text = "Congrats! You win!";
+            lblMoves.Text = "Congrats! You won!";
+
+            MessageBox.Show("Congrats! You won!");
         }
 
         private void BtnNewGame_Click(object sender, EventArgs e)

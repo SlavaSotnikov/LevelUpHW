@@ -15,19 +15,10 @@ namespace Menu
         {
             Console.CursorVisible = false;
 
-            string prompt = @"
-                      _____                        _____                     _               
-                     / ____|                      |_   _|                   | |              
-                    | (___  _ __   __ _  ___ ___    | |  _ ____   ____ _  __| | ___ _ __ ___ 
-                     \___ \| '_ \ / _` |/ __/ _ \   | | | '_ \ \ / / _` |/ _` |/ _ \ '__/ __|
-                     ____) | |_) | (_| | (_|  __/  _| |_| | | \ V / (_| | (_| |  __/ |  \__ \
-                    |_____/| .__/ \__,_|\___\___| |_____|_| |_|\_/ \__,_|\__,_|\___|_|  |___/
-                           | |                                                               
-                           |_|                                                               
-";
+            
             
             string[] options = { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
-            Menu mainMenu = new Menu(prompt, options);
+            Menu mainMenu = new Menu(Text.Title, options);
             int selectedIndex = mainMenu.Run();
 
             Options menu = (Options)selectedIndex;

@@ -32,7 +32,7 @@ namespace Game
 
         #region Methods
 
-        public bool IsStep()
+        public bool IsNeedStep()
         {
             bool result = false;
 

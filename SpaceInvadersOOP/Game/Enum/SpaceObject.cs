@@ -10,6 +10,7 @@ namespace Game
         EnemyShip,
         ShotLeft,
         ShotRight,
-        ShotEnemy
+        ShotEnemy,
+        UserShip
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Menu
 {
-    internal class UI
+    public class UI
     {
         public void DisplayAboutInfo(string source)
         {

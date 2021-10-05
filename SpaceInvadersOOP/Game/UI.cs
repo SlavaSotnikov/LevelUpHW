@@ -23,7 +23,7 @@ namespace Game
 
         private static string[] _enemyShip;
 
-        private static string[] _gameOver;
+        private static string _gameOver;
 
         #endregion
 
@@ -58,10 +58,10 @@ namespace Game
               "   ˅   "
             };
 
-            _gameOver = new string[3];
-            {
-
-            };
+            _gameOver = @"
+                                       ____ ____ _  _ ____    ____ _  _ ____ ____ 
+                                       | __ |__| |\/| |___    |  | |  | |___ |__/ 
+                                       |__] |  | |  | |___    |__|  \/  |___ |  \ ";
         }
 
         #endregion
@@ -221,17 +221,8 @@ namespace Game
 
         public static void PrintGameOver(object sender, EventArgs e)
         {
-            Console.SetCursorPosition(82, 18);
-            //Console.WriteLine(@"
-            //                           ____ ____ _  _ ____    ____ _  _ ____ ____ 
-            //                           | __ |__| |\/| |___    |  | |  | |___ |__/ 
-            //                           |__] |  | |  | |___    |__|  \/  |___ |  \ 
-            //                  ");
-
-            Console.WriteLine(@"
-                                   ____   ___  ___  __ _____     _____  __ __ _____ _____ 
-                                  (( ___ ||=|| || \/ | ||==     ((   )) \\ // ||==  ||_// 
-                                   \\_|| || || ||    | ||___     \\_//   \V/  ||___ || \\ ");
+            Console.SetCursorPosition(0, 18);
+            Console.WriteLine("{0}", _gameOver);
         }
 
         #endregion

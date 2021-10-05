@@ -2,9 +2,7 @@
 
 namespace BL
 {
-    public delegate void Finish(object sender, EventArgs e);
-
-    public class Game : IGame
+    public class Game : IGame   // TODO: CheckGameStatus.
     {
         #region Private Data
 
@@ -14,13 +12,13 @@ namespace BL
         private readonly Field _map;
         private Coord _empty;
         private int _stepsCount;
-        private Finish _finishGame;
+        private ChangeGameStatus _finishGame;
 
         #endregion
 
         #region Events
 
-        public event Finish FinishGame
+        public event ChangeGameStatus FinishGame
         {
             add
             {
@@ -52,7 +50,7 @@ namespace BL
 
         #region Member Functions
 
-        public void Run()
+        public void InitializeBL()
         {
             int number = 0;
 
@@ -71,9 +69,16 @@ namespace BL
             _stepsCount = 0;
         }
 
-        public void Click(int x, int y)
+        public void SwapCell(int x, int y)
         {
             Swap(new Coord(x, y));
+        }
+
+        public void ClickCell(int x, int y)
+        {
+            SwapCell(x, y);
+
+            CheckFinish();
         }
 
         public int GetNumber(int x, int y)
@@ -81,7 +86,7 @@ namespace BL
             return _map[new Coord(x, y)];
         }
 
-        public void IsFinish()    // TODO: Call here.
+        public void CheckFinish()
         {
             int num = 0;
             bool result = true;
@@ -155,7 +160,7 @@ namespace BL
         {
             for (int i = 0; i < 20; i++)
             {
-                Click(rnd.Next(_size), rnd.Next(_size));
+                SwapCell(rnd.Next(_size), rnd.Next(_size));
             }
 
             _stepsCount = 0;

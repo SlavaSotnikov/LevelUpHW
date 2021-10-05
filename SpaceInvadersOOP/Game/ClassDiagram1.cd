@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Game.UserShip">
-    <Position X="4.25" Y="5.5" Width="1.5" />
+    <Position X="4.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAASAACAAAACAAAAAABAAA=</HashCode>
       <FileName>UserShip.cs</FileName>
@@ -18,7 +18,7 @@
   <Class Name="Game.SpaceCraft">
     <Position X="3.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAIAAAAAADAAAAAAAAAAABCQAAAAAgIAAAAAAAYAQ=</HashCode>
+      <HashCode>AAAAIAAgAAADAAAAAAAAAAABCQAAAAAgIAAAAAAAYAQ=</HashCode>
       <FileName>SpaceCraft.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -57,7 +57,7 @@
   <Class Name="Game.Space">
     <Position X="9.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAQAAhAgAAAAABAAAADAAAAAEABgAAAAAAAAI=</HashCode>
+      <HashCode>AAACAEAAQAAhAgAQAAABAAAADAAAAAEABgAAAAAAAAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
@@ -72,7 +72,7 @@
   <Class Name="Game.GameField">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAIAgQAAhkAAAEAEAIAQgCBAAAAAAEAASCACAUAA=</HashCode>
+      <HashCode>AAIAAIAgQAAhkAAAEAEAIgQgCBAAAAAAEAASCACAUAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -99,7 +99,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Game.IUserShip" Collapsed="true">
-    <Position X="2.5" Y="5.5" Width="1.5" />
+    <Position X="2.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAACAAAACAAAAAABAAA=</HashCode>
       <FileName>Interfaces\IUserShip.cs</FileName>

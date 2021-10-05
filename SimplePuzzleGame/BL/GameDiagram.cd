@@ -3,16 +3,38 @@
   <Class Name="BL.Game">
     <Position X="4.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAlEAQAAIgQAAAABAAQAAEAAAAIAEgI=</HashCode>
+      <HashCode>AAAEQAAAAAAAAAlEAQAAIgQAAAAhAASAAEAAAAIAEAA=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
+  <Class Name="BL.Field">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="BL.Coord">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>Coord.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Interface Name="BL.IGame">
     <Position X="6.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAEEAAAAAAQAAAAAAAAAAAAAAAAAEgI=</HashCode>
+      <HashCode>AAAAQAAAAAAAAAFEAAAAAAQAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Interface\IGame.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Delegate Name="BL.ChangeGameStatus">
+    <Position X="2.5" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChangeGameStatus.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
