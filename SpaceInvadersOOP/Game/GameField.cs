@@ -27,7 +27,7 @@ namespace Game
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
 
-        protected ChangeGameStatus _finishGame;
+        protected GameStatus _finishGame;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace Game
 
         #region Member Functions
 
-        public bool IsGameOver()    // TODO: Is it a right method?
+        public bool IsGameOver()
         {
             bool gameOn = true;
 
@@ -75,7 +75,7 @@ namespace Game
             {
                 _gameObjects[i].MoveState();
 
-                if (_gameObjects[i].IsNeedStep())    // TODO: Refactored.
+                if (_gameObjects[i].IsNeedStep())
                 {
                     _gameObjects[i].Step();
                 }

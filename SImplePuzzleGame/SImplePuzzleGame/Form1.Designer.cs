@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace SimplePuzzleGame
 {
@@ -44,7 +43,7 @@ namespace SimplePuzzleGame
             this.btnNewGame.TabIndex = 0;
             this.btnNewGame.Text = "New Game";
             this.btnNewGame.UseVisualStyleBackColor = true;
-            this.btnNewGame.Click += BtnNewGame_Click;
+            this.btnNewGame.Click += new System.EventHandler(this.btnNewGame_Click_1);
             // 
             // lblMoves
             // 

@@ -6,33 +6,60 @@ namespace Menu
     class Menu
     {
         private int _selectedIndex;
-        private string[] _options;
-        private string _title;
+        private readonly string[] _options;
 
-        public Menu(string title, string[] options)
+        GameStatus _game;
+
+        public event GameStatus Start
         {
-            _title = title;
-            _options = options;
+            add
+            {
+                _game += value;
+            }
+            remove
+            {
+                _game -= value;
+            }
+        }
+
+        public Menu()
+        {
+            _options = new[] { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
             _selectedIndex = 0;
+            Start += UI.ShowTitle;
+        }
+
+        public void Run()
+        {
+            _game?.Invoke(this, EventArgs.Empty);
+
+            switch ((Options)SelectOption())
+            {
+                case Options.OnePlayer:
+                    //RunFirstChoice();
+                    break;
+                case Options.TwoPlayers:
+                    //RunSecondChoice();
+                    break;
+                case Options.About:
+                    //UI.DisplayAboutInfo(Text.About);
+                    break;
+                case Options.Exit:
+                    //ExitGame();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void DisplayOptions()
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            ConsoleColor prevColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(_title);
-            Console.ForegroundColor = prevColor;
-
-            int count = 0;
+            string pointer;
 
             for (int i = 0; i < _options.Length; i++)
             {
-                ++count;
-                string currentOption = _options[i];
-                string pointer;
-
                 if (i == _selectedIndex)
                 {                    
                     pointer = "\u2192";
@@ -40,30 +67,26 @@ namespace Menu
                 }
                 else
                 {
-                    Console.ResetColor();
                     pointer = " ";
+                    Console.ResetColor();
                 }
-                Console.SetCursorPosition(50, 8 + count);
-                Console.WriteLine($"{pointer} {currentOption} ");                                
-            }
-            Console.ResetColor();
 
-            Console.SetCursorPosition(47, 25);
-            Console.WriteLine("\xA9 2021 LevelUp\x2122");
+                Console.SetCursorPosition(50, 8 + i);
+                Console.WriteLine($"{pointer} {_options[i]} ");                                
+            }
         }
 
-        public int Run()
+        public int SelectOption()
         {
-            ConsoleKey keyPressed;
+            ConsoleKeyInfo keyPressed;
+
             do
             {
-                Console.Clear();
                 DisplayOptions();
 
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                keyPressed = keyInfo.Key;
+                keyPressed = Console.ReadKey(true);
 
-                if (keyPressed == ConsoleKey.UpArrow)
+                if (keyPressed.Key == ConsoleKey.UpArrow)
                 {                    
                     _selectedIndex--;
                     if (_selectedIndex == -1)
@@ -71,7 +94,8 @@ namespace Menu
                         _selectedIndex = _options.Length - 1;
                     }
                 }
-                else if (keyPressed == ConsoleKey.DownArrow)
+
+                if (keyPressed.Key == ConsoleKey.DownArrow)
                 {
                     _selectedIndex++;
                     if (_selectedIndex == _options.Length)
@@ -80,7 +104,7 @@ namespace Menu
                     }
                 }
 
-            } while (keyPressed != ConsoleKey.Enter);
+            } while (keyPressed.Key != ConsoleKey.Enter);
 
             return _selectedIndex;
         }

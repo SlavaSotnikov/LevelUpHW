@@ -79,5 +79,10 @@ namespace SimplePuzzleGame
 
             InitializeEmpty(y, x);
         }
+
+        private void btnNewGame_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

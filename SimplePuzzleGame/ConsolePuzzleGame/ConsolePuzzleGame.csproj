@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{612CD06A-1528-42C6-B61E-A2CAC9CE56B9}</ProjectGuid>
+    <ProjectGuid>{3979B115-89DF-4005-BCF0-CB27288FEA9A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Menu</RootNamespace>
-    <AssemblyName>Menu</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>ConsolePuzzleGame</RootNamespace>
+    <AssemblyName>ConsolePuzzleGame</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -43,16 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameStatus.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="Options.cs" />
+    <Compile Include="ConsoleUI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Text.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{2f84e691-5f3d-4971-9923-b5ef9a90e065}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

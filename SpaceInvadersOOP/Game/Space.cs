@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    public delegate void ChangeGameStatus(object sender, EventArgs e);    // TODO: The difference between delegate and event.
+    public delegate void GameStatus(object sender, EventArgs e);
 
     class Space : GameField, ISpace
     {
@@ -13,7 +13,7 @@ namespace Game
 
         #endregion
 
-        public event ChangeGameStatus FinishedGame
+        public event GameStatus FinishedGame
         {
             add
             {

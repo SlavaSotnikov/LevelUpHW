@@ -69,15 +69,6 @@ namespace Intro
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            ConsoleColor prevColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(Title);
-            Console.ForegroundColor = prevColor;
-
-            Console.ResetColor();
-            Console.SetCursorPosition(47, 25);
-            Console.WriteLine("\xA9 2021 LevelUp\x2122");
-
             int count = 0;
 
             for (int i = 0; i < Options.Length; i++)
@@ -106,9 +97,21 @@ namespace Intro
         {
             ConsoleKey keyPressed;
 
+            Console.Clear();
+
+            Console.OutputEncoding = Encoding.UTF8;
+
+            ConsoleColor prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(Title);
+            Console.ForegroundColor = prevColor;
+
+            Console.ResetColor();
+            Console.SetCursorPosition(47, 25);
+            Console.WriteLine("\xA9 2021 LevelUp\x2122");
+
             do
             {
-                Console.Clear();
                 DisplayOptions();
 
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
