@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using BL;
 
@@ -10,16 +6,14 @@ namespace ConsolePuzzleGame
 {
     public class ConsoleUI
     {
-        private int[,] _buttons;
-        IGame _game;
-        byte _size;
+        readonly IGame _game;
+        readonly byte _size;
 
         public ConsoleUI(IGame source, byte size)
         {
             source.InitializeBL();
             _game = source;
             _size = size;
-            _buttons = new int[_size, _size];
             _game.FinishGame += ShowFinish;
         }
 
@@ -27,6 +21,11 @@ namespace ConsolePuzzleGame
         {
             ShowButtons();
 
+            AskUser();
+        }
+
+        private void AskUser()
+        {
             int x = 15;
             int y = 3;
 
@@ -66,7 +65,7 @@ namespace ConsolePuzzleGame
 
                 Console.SetCursorPosition(x, y);
 
-            } while (true);
+            } while (consoleKey.Key != ConsoleKey.Escape);
         }
 
         private void ShowButtons()
