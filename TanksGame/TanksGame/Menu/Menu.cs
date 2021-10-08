@@ -23,9 +23,8 @@ namespace Menu
 
         public Menu()
         {
-            _options = new[] { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
+            _options = new[] { "1 PLAYER", "2 PLAYERS", "ABOUT", "EXIT" };
             _selectedIndex = 0;
-            Start += UI.ShowTitle;
         }
 
         public void Run()
@@ -34,7 +33,9 @@ namespace Menu
 
             do
             {
-                _game?.Invoke(this, EventArgs.Empty);
+
+                UI.ShowTitle();
+                //_game?.Invoke(this, EventArgs.Empty);
 
                 switch ((Options)SelectOption())
                 {
@@ -57,7 +58,6 @@ namespace Menu
                     default:
                         break;
                 }
-
 
             } while (options != Options.Exit);
         }

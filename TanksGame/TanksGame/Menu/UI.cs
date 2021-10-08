@@ -14,7 +14,7 @@ namespace Menu
 
         public readonly string[] _options = { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
 
-        public static void ShowTitle(object sender, EventArgs e)
+        public static void ShowTitle()
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
