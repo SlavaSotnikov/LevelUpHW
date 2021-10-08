@@ -7,7 +7,6 @@ namespace Menu
     {
         private int _selectedIndex;
         private readonly string[] _options;
-
         GameStatus _game;
 
         public event GameStatus Start
@@ -31,25 +30,36 @@ namespace Menu
 
         public void Run()
         {
-            _game?.Invoke(this, EventArgs.Empty);
+            Options options = Options.None;
 
-            switch ((Options)SelectOption())
+            do
             {
-                case Options.OnePlayer:
-                    //RunFirstChoice();
-                    break;
-                case Options.TwoPlayers:
-                    //RunSecondChoice();
-                    break;
-                case Options.About:
-                    //UI.DisplayAboutInfo(Text.About);
-                    break;
-                case Options.Exit:
-                    //ExitGame();
-                    break;
-                default:
-                    break;
-            }
+                _game?.Invoke(this, EventArgs.Empty);
+
+                switch ((Options)SelectOption())
+                {
+                    case Options.None:
+                        break;
+                    case Options.OnePlayer:
+                        UI.Print(Text.Introduction);
+                        UI.PrintDialogue(Text.Dialogue, 30, 10, 0);
+                        UI.PickAShip();
+                        break;
+                    case Options.TwoPlayers:
+                        //RunSecondChoice();
+                        break;
+                    case Options.About:
+                        UI.ShowAboutInfo(Text.About);
+                        break;
+                    case Options.Exit:
+                        options = Options.Exit;
+                        break;
+                    default:
+                        break;
+                }
+
+
+            } while (options != Options.Exit);
         }
 
         public void DisplayOptions()

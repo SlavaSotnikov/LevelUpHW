@@ -378,6 +378,7 @@ namespace Intro
                 {
                     Console.Write(text[i]);
                     Thread.Sleep(sleep);
+                
                 }
 
                 if (Console.KeyAvailable)

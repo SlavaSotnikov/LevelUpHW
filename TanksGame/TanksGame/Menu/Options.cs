@@ -2,10 +2,10 @@
 {
     internal enum Options
     {
-        None,
         OnePlayer,
         TwoPlayers,
         About,
-        Exit
+        Exit,
+        None
     }
 }
