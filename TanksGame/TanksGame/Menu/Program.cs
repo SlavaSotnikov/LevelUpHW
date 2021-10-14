@@ -1,4 +1,7 @@
-﻿namespace Menu
+﻿using System;
+using MenuLibrary;
+
+namespace GameMenu
 {
     class Program
     {
@@ -6,6 +9,15 @@
         {
             Menu gameMenu = new Menu();
             gameMenu.Run();
+
+            Data one = Meth(gameMenu);
+
+            Console.WriteLine();
+        }
+
+        public static Data Meth(IMenu source)
+        {
+            return source.GetUserData();
         }
     }
 }

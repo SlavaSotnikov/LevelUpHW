@@ -24,13 +24,13 @@ namespace Game
 
         public EnemyShip(ISpace game, int coordX, int coordY, bool active,
                 uint speed, sbyte step, byte rndY, uint counter = 0,
-                    int oldCoordX = 0, int oldCoordY = 0, byte hitPoints = 6)
+                    int oldX = 0, int oldY = 0, byte hitPoints = 6)
         {
             _game = game;
             X = coordX;
             Y = coordY;
-            OldX = oldCoordX;
-            OldY = oldCoordY;
+            OldX = oldX;
+            OldY = oldY;
             Active = true;
             Counter = 0;
             Speed = speed;

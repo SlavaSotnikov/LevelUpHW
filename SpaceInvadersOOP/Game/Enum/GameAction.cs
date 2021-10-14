@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    enum GameAction
+    public enum GameAction
     {
         NoAction,
         LeftMove,

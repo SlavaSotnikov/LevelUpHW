@@ -7,9 +7,8 @@ namespace Game
     static class UI
     {
         #region Constants
-
-        private const int WIDTH = 120;         // Width buffer of consol window.
-        private const int HEIGHT = 40;         // Height buffer of console window.
+        private const int WIDTH = 120;    // Width buffer of consol window.
+        private const int HEIGHT = 40;    // Height buffer of console window.
 
         #endregion
 
@@ -114,15 +113,15 @@ namespace Game
             return shipModel;
         }
 
-        public static GameAction AskConsole()
+        public static GameAction PressKey()
         {
             GameAction userEvent = GameAction.NoAction;
 
             if (Console.KeyAvailable)
             {
-                ConsoleKey key = Console.ReadKey(true).Key;
+                ConsoleKeyInfo key = Console.ReadKey(true);
 
-                switch (key)
+                switch (key.Key)
                 {
                     case ConsoleKey.LeftArrow:
                         userEvent = GameAction.LeftMove;

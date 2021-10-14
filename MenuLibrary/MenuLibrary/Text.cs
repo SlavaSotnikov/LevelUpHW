@@ -1,4 +1,4 @@
-﻿namespace Menu
+﻿namespace MenuLibrary
 {
     internal class Text
     {
@@ -6,13 +6,13 @@
 
         public static string About { get; private set; }
 
-        public static string Introduction {  get; private set;}
+        public static string Introduction { get; private set; }
 
-        public static string Dialogue {  get; private set;}
+        public static string Dialogue { get; private set; }
 
-        public static string[] LightShip {  get; private set;}
+        public static string[] LightShip { get; private set; }
 
-        public static string[] HeavyShip {  get; private set;}
+        public static string[] HeavyShip { get; private set; }
 
         static Text()
         {
@@ -20,7 +20,7 @@
                                   "It uses assets from http://patorjk.com.\n" +
                                 "\nPress any key to return to the menu...";
 
-             Title = @"
+            Title = @"
                         _____                        _____                     _               
                        / ____|                      |_   _|                   | |              
                       | (___  _ __   __ _  ___ ___    | |  _ ____   ____ _  __| | ___ _ __ ___ 

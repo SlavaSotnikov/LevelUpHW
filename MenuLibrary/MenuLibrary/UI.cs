@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading;
 
-namespace Menu
+namespace MenuLibrary
 {
     internal class UI
     {
@@ -10,7 +10,7 @@ namespace Menu
 
         public static string Country { get; private set; }
 
-        public static string Model {  get; private set;}
+        public static string Model { get; private set; }
 
         public readonly string[] _options = { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
 
@@ -43,7 +43,7 @@ namespace Menu
             Console.Clear();
         }
 
-        public static void Print(string text, int sleep=50)
+        public static void Print(string text, int sleep = 50)
         {
             Console.Clear();
             Console.SetCursorPosition(30, 10);
@@ -111,7 +111,7 @@ namespace Menu
                             Console.SetCursorPosition(left, top + count);
                             Name = Console.ReadLine();
 
-                        } while (string.IsNullOrWhiteSpace(Name)); 
+                        } while (string.IsNullOrWhiteSpace(Name));
                     }
 
                     if (count == 2)
@@ -121,7 +121,7 @@ namespace Menu
                             Console.SetCursorPosition(left, top + 3);
                             Country = Console.ReadLine();
 
-                        } while (string.IsNullOrWhiteSpace(Country)); 
+                        } while (string.IsNullOrWhiteSpace(Country));
                     }
 
                     Console.SetCursorPosition(left, top + count + 1);
@@ -177,7 +177,7 @@ namespace Menu
                 Console.ForegroundColor = ConsoleColor.White;
                 userInput = Console.ReadLine();
 
-            } while (!byte.TryParse(userInput, out model) 
+            } while (!byte.TryParse(userInput, out model)
                 || (model != 1) && (model != 2));
         }
     }

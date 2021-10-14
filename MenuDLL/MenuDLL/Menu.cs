@@ -1,25 +1,12 @@
 ﻿using System;
 using System.Text;
 
-namespace Menu
+namespace MenuDLL
 {
-    class Menu
+    public class Menu : IUser
     {
         private int _selectedIndex;
         private readonly string[] _options;
-        GameStatus _game;
-
-        public event GameStatus Start
-        {
-            add
-            {
-                _game += value;
-            }
-            remove
-            {
-                _game -= value;
-            }
-        }
 
         public Menu()
         {
@@ -33,9 +20,7 @@ namespace Menu
 
             do
             {
-
                 UI.ShowTitle();
-                //_game?.Invoke(this, EventArgs.Empty);
 
                 switch ((Options)SelectOption())
                 {
@@ -45,9 +30,9 @@ namespace Menu
                         UI.Print(Text.Introduction);
                         UI.PrintDialogue(Text.Dialogue, 30, 10, 0);
                         UI.PickAShip();
+                        options = Options.Exit;
                         break;
                     case Options.TwoPlayers:
-                        //RunSecondChoice();
                         break;
                     case Options.About:
                         UI.ShowAboutInfo(Text.About);
@@ -71,7 +56,7 @@ namespace Menu
             for (int i = 0; i < _options.Length; i++)
             {
                 if (i == _selectedIndex)
-                {                    
+                {
                     pointer = "\u2192";
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                 }
@@ -82,7 +67,7 @@ namespace Menu
                 }
 
                 Console.SetCursorPosition(50, 8 + i);
-                Console.WriteLine($"{pointer} {_options[i]} ");                                
+                Console.WriteLine($"{pointer} {_options[i]} ");
             }
         }
 
@@ -97,7 +82,7 @@ namespace Menu
                 keyPressed = Console.ReadKey(true);
 
                 if (keyPressed.Key == ConsoleKey.UpArrow)
-                {                    
+                {
                     _selectedIndex--;
                     if (_selectedIndex == -1)
                     {
@@ -119,5 +104,9 @@ namespace Menu
             return _selectedIndex;
         }
 
+        public Data GetUserData()
+        {
+            return new Data(UI.Name, UI.Country, UI.Model);
+        }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Menu
+﻿namespace MenuLibrary
 {
     public struct Data
     {
@@ -17,7 +11,7 @@ namespace Menu
         public Data(string name, string country, string model)
         {
             Name = name;
-            Country = country;  
+            Country = country;
             Model = model;
         }
     }

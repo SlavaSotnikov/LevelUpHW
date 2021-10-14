@@ -2,10 +2,10 @@
 {
     class Controller
     {
-        public static GameAction GetEvent()
-        {
-            return UI.AskConsole();
-        }
+        //public static GameAction GetEvent()
+        //{
+        //    return UI.AskConsole();
+        //}
 
         public static void Hide(IGame source)
         {

@@ -22,7 +22,6 @@ namespace Game
             : base(game, coordX, coordY, active, speed, counter, 
                     hitpoints, lifes, oldCoordX, oldCoordY)
         {
-
         }
 
         #endregion
@@ -31,43 +30,45 @@ namespace Game
 
         public override void Step()
         {
-            switch (Controller.GetEvent())
+            switch (_keyEvent?.Invoke())
             {
                 case GameAction.LeftMove:
-                    --X;
-                    if (X <= _game.LeftBorder)
+                    
+                    if (X > _game.LeftBorder)
                     {
-                        X = _game.LeftBorder;
+                        --X;
                     }
                     break;
 
                 case GameAction.RightMove:
-                    ++X;
-                    if (X >= _game.RightBorder)
+                    
+                    if (X < _game.RightBorder)
                     {
-                        X = _game.RightBorder;
+                        ++X;
                     }
                     break;
 
                 case GameAction.UpMove:
-                    --Y;
-                    if (Y <= _game.TopBorder)
+                    
+                    if (Y > _game.TopBorder)
                     {
-                        Y = _game.TopBorder;
+                        --Y;
                     }
                     break;
 
                 case GameAction.DownMove:
-                    ++Y;
-                    if (Y >= _game.BottomBorder)
+
+                    if (Y < _game.BottomBorder)
                     {
-                        Y = _game.BottomBorder;
+                        ++Y;
                     }
                     break;
 
                 case GameAction.Shooting:
                     _game.AddObject(SpaceObject.ShotLeft);
                     _game.AddObject(SpaceObject.ShotRight);
+                    break;
+                case GameAction.NoAction:
                     break;
 
                 default:

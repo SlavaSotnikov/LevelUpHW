@@ -43,12 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Delegate\GameStatus.cs" />
+    <Compile Include="Delegate\UIListener.cs" />
     <Compile Include="Exception\ClashException.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Enum\GameAction.cs" />
     <Compile Include="BL_Random.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="GameField.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Interfaces\IUserShip.cs" />
     <Compile Include="Interfaces\ISpace.cs" />
     <Compile Include="Interfaces\IGame.cs" />
@@ -63,6 +66,7 @@
     <Compile Include="Shot.cs" />
     <Compile Include="SpaceCraft.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="UIEventArgs.cs" />
     <Compile Include="UserShip.cs" />
   </ItemGroup>
   <ItemGroup>

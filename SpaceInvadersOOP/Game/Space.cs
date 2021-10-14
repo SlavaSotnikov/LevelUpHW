@@ -2,8 +2,6 @@
 
 namespace Game
 {
-    public delegate void GameStatus(object sender, EventArgs e);
-
     class Space : GameField, ISpace
     {
         #region Private Data
@@ -13,51 +11,17 @@ namespace Game
 
         #endregion
 
-        public event GameStatus FinishedGame
-        {
-            add
-            {
-                _finishGame += value;
-            }
-            remove
-            {
-                _finishGame -= value;
-            }
-        }
+        public event GameStatus FinishedGame;
 
         #region Properties
 
-        public int LeftBorder
-        {
-            get
-            {
-                return _leftBorder;
-            }
-        }
+        public int LeftBorder { get { return _leftBorder; } }
 
-        public int RightBorder
-        {
-            get
-            {
-                return _rightBorder;
-            }
-        }
+        public int RightBorder { get { return _rightBorder; } }
 
-        public int TopBorder
-        {
-            get
-            {
-                return _topBorder;
-            }
-        }
+        public int TopBorder { get { return _topBorder; } }
 
-        public int BottomBorder
-        {
-            get
-            {
-                return _bottomBorder;
-            }
-        }
+        public int BottomBorder { get { return _bottomBorder; } }
 
         #endregion
 
@@ -79,6 +43,8 @@ namespace Game
 
         public void Run()
         {
+            AddObject((SpaceObject)1);
+
             do
             {
                 Controller.Hide(this);
