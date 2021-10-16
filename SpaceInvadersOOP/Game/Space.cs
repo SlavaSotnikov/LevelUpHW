@@ -11,7 +11,17 @@ namespace Game
 
         #endregion
 
-        public event GameStatus FinishedGame;
+        public event GameStatus FinishedGame
+        {
+            add
+            {
+                _finishGame += value;
+            }
+            remove
+            {
+                _finishGame -= value;
+            }
+        }
 
         #region Properties
 

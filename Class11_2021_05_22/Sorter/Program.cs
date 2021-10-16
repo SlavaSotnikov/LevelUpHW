@@ -13,19 +13,33 @@ namespace Sorter
             //};
 
             TimeAnalizer time = new TimeAnalizer();
-            SpeedAnalizer speed = new SpeedAnalizer();
+            //SpeedAnalizer speed = new SpeedAnalizer();
 
             Selection selectionSorter = new Selection(8, 3, 7, 5, 1, 6, 4, 2, 9);
 
-            selectionSorter.StartSort += UI.ShowTime;
-            selectionSorter.FinishSort += UI.ShowTime;
+            selectionSorter.StartSort += (sender, e) => 
+            Console.WriteLine($"{e.Text}: {e.Time}");
+
+            selectionSorter.FinishSort += (sender, e) => 
+            Console.WriteLine($"{e.Text}: {e.Time}"); 
+
             selectionSorter.StartSort += time.SetStart;
             selectionSorter.FinishSort += time.SetFinish;
 
-            selectionSorter.CompareIndexes += UI.ShowIndexes;
-            selectionSorter.SwapIndexes += UI.ShowSwapIndexes;
-            selectionSorter.CompareIndexes += speed.CountCompare;
-            selectionSorter.SwapIndexes += speed.CountSwaps;
+            selectionSorter.CompareIndexes += (sender, e) => 
+            Console.WriteLine($"{e.Index1} - {e.Index2}");
+
+            selectionSorter.SwapIndexes += (sender, e) => 
+            Console.WriteLine($"{e.Index1} <=> {e.Index2}");
+
+            int compare = 0;
+            selectionSorter.CompareIndexes += delegate(object sender, IndexEventArgs e) 
+            {
+                ++compare; 
+            };
+
+            int swaps = 0;
+            selectionSorter.SwapIndexes += (sender, e) => ++swaps;
 
             double[] result = selectionSorter.Do();
 
@@ -35,7 +49,7 @@ namespace Sorter
             }
 
             Console.WriteLine("\nTotal time: {0}", time.Total);
-            Console.WriteLine("\nTotal Compares: {0}, Swaps {1}", speed.Compare, speed.Swaps);
+            Console.WriteLine("\nTotal Compares: {0}, Swaps {1}", compare, swaps);
 
             Console.ReadKey();
         }

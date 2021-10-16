@@ -21,10 +21,7 @@ namespace Sorter
                         _data[index] = _data[i];
                         _data[i] = tmp;
 
-                        if (_indexes != null)
-                        {
-                            _indexes.Invoke(this, new IndexEventArgs(index, i));
-                        }
+                        _indexes?.Invoke(this, new IndexEventArgs(index, i));
                     }
                 }
 
@@ -36,10 +33,7 @@ namespace Sorter
 
         private bool IsMore(int index, int i)
         {
-            if (_theseIndexes != null)
-            {
-                _theseIndexes.Invoke(this, new IndexEventArgs(index, i));
-            }
+            _theseIndexes?.Invoke(this, new IndexEventArgs(index, i));
 
             return _data[index] > _data[i];
         }

@@ -1,4 +1,4 @@
 ﻿namespace SpaceInvadersDLL
 {
-    internal delegate GameAction UIListener();
+    public delegate GameAction UIListener();
 }

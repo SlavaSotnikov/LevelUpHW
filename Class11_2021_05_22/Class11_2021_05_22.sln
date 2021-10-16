@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swap_Min_Max", "Swap_Min_Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sorter", "Sorter\Sorter.csproj", "{FA0245CA-CF94-42E7-BB7C-3EB050C1F657}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anonymous method", "Anonymous method\Anonymous method.csproj", "{A89F3A18-9B4B-433E-B5E1-4A940742B338}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{FA0245CA-CF94-42E7-BB7C-3EB050C1F657}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA0245CA-CF94-42E7-BB7C-3EB050C1F657}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA0245CA-CF94-42E7-BB7C-3EB050C1F657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A89F3A18-9B4B-433E-B5E1-4A940742B338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89F3A18-9B4B-433E-B5E1-4A940742B338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89F3A18-9B4B-433E-B5E1-4A940742B338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89F3A18-9B4B-433E-B5E1-4A940742B338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

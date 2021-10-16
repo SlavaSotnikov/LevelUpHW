@@ -6,6 +6,9 @@ namespace ConsolePuzzleGame
 {
     public class ConsoleUI
     {
+        const byte X = 15;
+        const byte Y = 3;
+
         readonly IGame _game;
         readonly byte _size;
 
@@ -26,8 +29,8 @@ namespace ConsolePuzzleGame
 
         private void AskUser()
         {
-            int x = 15;
-            int y = 3;
+            int x = X;
+            int y = Y;
 
             Console.SetCursorPosition(x, y);
             ConsoleKeyInfo consoleKey;

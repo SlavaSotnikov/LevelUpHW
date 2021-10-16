@@ -11,5 +11,7 @@ namespace SpaceInvadersDLL
         ISpaceCraft this[int index] { get; }
 
         int Amount { get; }
+
+        //event
     }
 }

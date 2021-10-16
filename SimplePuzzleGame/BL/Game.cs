@@ -18,17 +18,7 @@ namespace BL
 
         #region Events
 
-        public event ChangeGameStatus FinishGame
-        {
-            add
-            {
-                _finishGame += value;
-            }
-            remove
-            {
-                _finishGame -= value;
-            }
-        }
+        public event ChangeGameStatus FinishGame;
 
         #endregion
 

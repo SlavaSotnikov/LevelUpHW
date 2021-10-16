@@ -2,7 +2,7 @@
 
 namespace CovariantAndContravariant
 {
-    public delegate void Test(C obj);
+    public delegate A Test();    // TODO: Did they do it on purpose? Forbidden upcast.
 
     public class A { }
 
@@ -14,11 +14,11 @@ namespace CovariantAndContravariant
     {
         static void Main()
         {
-            Test test = Method;
+            Test test = Method2;
         }
 
-        public static void Method(A obj)  { }
-        public static void Method1(B obj) { }
-        public static void Method2(C obj) { }
+        public static A Method() { return new A(); }
+        public static B Method1() { return new B(); }
+        public static C Method2() { return new C(); }
     }
 }

@@ -5,7 +5,7 @@
         private int _start;
         private int _finish;
 
-        public void SetStart(object sender, TimeEventArgs e)    
+        public void SetStart(object sender, TimeEventArgs e)
         {
             _start = e.Time;
         }

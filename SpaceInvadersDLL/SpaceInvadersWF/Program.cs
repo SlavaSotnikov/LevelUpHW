@@ -14,7 +14,7 @@ namespace SpaceInvadersWF
         static void Main()
         {
             Space game = new Space();
-            game.Run();
+            //game.Run();    // TODO: do while().
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

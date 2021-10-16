@@ -84,5 +84,15 @@ namespace SimplePuzzleGame
         {
 
         }
+
+        private void test1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
