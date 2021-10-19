@@ -46,9 +46,17 @@ namespace SpaceInvadersWF
         {
             for (int i = 0; i < _game.Amount; i++)
             {
+                if (!_game[i].Active)
+                {
+                    _pictures[i].Visible = false;
+                }
+
                 if (_game[i] is UserShip)    // TODO: All types of BL's classes are public.???
                 {
-                    _pictures[i].Location = new Point(_game[i].X, _game[i].Y);
+                    if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
+                    {
+                        _pictures[i].Location = new Point(_game[i].X, _game[i].Y); 
+                    }
                 }
 
                 if (_game[i] is Shot)
@@ -62,23 +70,25 @@ namespace SpaceInvadersWF
         {
             for (int i = 0; i < _game.Amount; i++)
             {
-                if (_game[i] is UserShip && _game[i].Active)
+                if (_game[i] is UserShip)
                 {
                     InitPicture(i, Properties.Resources.UserShip, new Size(75, 82));
                 }
 
-                if (_game[i] is Shot && _game[i].Active)    // TODO: All types of BL's classes are public.???
+                if (_game[i] is Shot)    // TODO: All types of BL's classes are public.???
                 {
                     InitPicture(i, Properties.Resources.Bullet, new Size(15, 50));
                 }
 
-                Controls.Add(_pictures[i]);
+                if (_game[i] is EnemyShip)    // TODO: All types of BL's classes are public.???
+                {
+                }
             }
         }
 
         private void InitPicture(int i, Image picture, Size source)
         {
-            if (_pictures[i] == null)
+            if (_pictures[i] == null || !_pictures[i].Visible)
             {
                 _pictures[i] = new PictureBox()
                 {
@@ -87,6 +97,8 @@ namespace SpaceInvadersWF
                     Size = source,
                     SizeMode = PictureBoxSizeMode.Zoom,
                 };
+
+                Controls.Add(_pictures[i]);
             }
         }
     }

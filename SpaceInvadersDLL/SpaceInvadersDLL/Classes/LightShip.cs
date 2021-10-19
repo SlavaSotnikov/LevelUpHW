@@ -28,7 +28,7 @@
 
         public override void Do(Action source)
         {
-            switch (source /*Controller.GetEvent()*/)
+            switch (source /*Controller.GetEvent()*/)    // TODO: It's necessary to set source = NoActions.
             {
                 case Action.LeftMove:
                     if (X > _game.LeftBorder)

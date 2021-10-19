@@ -54,7 +54,6 @@ namespace SpaceInvadersWF
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             this.ResumeLayout(false);
-
         }
 
         #endregion

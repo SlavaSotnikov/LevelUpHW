@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace SpaceInvadersDLL
 {
-    public class GameField /*: IGame*/
+    public class GameField
     {
         #region Private Data
 
@@ -21,8 +21,8 @@ namespace SpaceInvadersDLL
         protected bool _active = true;
         protected uint _counter = 0;
         protected byte _hitpoints = 10;
-        protected byte _leftShift = 2;     // This shift tunes the Left bullet. 
-        protected byte _rightShift = 60;    // This shift tunes the Right bullet.
+        protected byte _leftShift = 7;     // This shift tunes the Left bullet. 
+        protected byte _rightShift = 52;    // This shift tunes the Right bullet.
         protected byte _shotEnemyShift = 3;
 
         protected Action Action { get; private set; }
@@ -84,7 +84,7 @@ namespace SpaceInvadersDLL
                 if (_gameObjects[i].IsNeedStep())
                 {
                     _gameObjects[i].Do(Action);
-                    //Action = Action.NoAction;
+                    Action = Action.NoAction;
                 }
             }
         }

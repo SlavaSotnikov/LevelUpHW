@@ -204,7 +204,7 @@ namespace SpaceInvadersDLL
             {
                 if (_gameObjects[i] is UserShip user)
                 {
-                    bullet = new Shot(user.X + shift, user.Y - 1, 1, 5000);
+                    bullet = new Shot(user.X + shift, user.Y - 1, 1, 1);
                     break;
                 }
             }

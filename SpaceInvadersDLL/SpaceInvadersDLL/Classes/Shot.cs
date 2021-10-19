@@ -23,7 +23,7 @@
 
         public override void Do(Action source)
         {
-            Y -= _step;
+            Y -= 4;
         }
 
         #endregion
