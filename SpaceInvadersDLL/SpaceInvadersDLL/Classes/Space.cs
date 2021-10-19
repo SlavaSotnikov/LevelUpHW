@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceInvadersDLL
 {
-    public class Space : GameField, ISpace
+    public class Space : GameField, ISpace, IGame
     {
         #region Private Data
 
@@ -71,8 +71,7 @@ namespace SpaceInvadersDLL
             _amountOfObjects = 0;
             _counterProduceEnemy = 0;
             _speed = speed;
-
-            //FinishedGame += UI.PrintGameOver;
+            AddObject(SpaceObject.LightShip);
         }
 
         #endregion
@@ -81,9 +80,9 @@ namespace SpaceInvadersDLL
 
         public void Run()
         {
-            AddObject((SpaceObject)1);
-
-            do
+            //do
+            //{
+            if (IsGameOver())
             {
                 //Controller.Hide(this);
 
@@ -91,7 +90,7 @@ namespace SpaceInvadersDLL
 
                 //Controller.ShowDisplay(this);
 
-                StepObjects();
+                ProcessObjects();
 
                 ProduceEnemies();
 
@@ -104,9 +103,10 @@ namespace SpaceInvadersDLL
                 catch (ClashException ex)
                 {
                     //Controller.ShowExplosion(ex);
-                }
+                } 
+            }
 
-            } while (IsGameOver());
+            //} while (IsGameOver());
         }
 
         public void AddObject(SpaceObject source)

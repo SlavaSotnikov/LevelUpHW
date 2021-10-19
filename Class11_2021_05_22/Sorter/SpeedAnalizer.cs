@@ -2,8 +2,14 @@
 {
     internal class SpeedAnalizer
     {
-        private int _amountOfCompare = 0;
-        private int _amountOfSwaps = 0;
+        private int _amountOfCompare;
+        private int _amountOfSwaps;
+
+        public SpeedAnalizer()
+        {
+            _amountOfCompare = 0;
+            _amountOfSwaps = 0;
+        }
 
         public int Compare 
         { 

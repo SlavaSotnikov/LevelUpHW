@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using SpaceInvadersDLL;
-
-namespace SpaceInvadersWF
+namespace Timer
 {
     internal static class Program
     {
@@ -13,11 +14,9 @@ namespace SpaceInvadersWF
         [STAThread]
         static void Main()
         {
-            Space game = new Space();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(game));
+            Application.Run(new Form1());
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Game
         {
             switch (_keyEvent?.Invoke())
             {
-                case GameAction.LeftMove:
+                case Action.LeftMove:
                     
                     if (X > _game.LeftBorder)
                     {
@@ -40,7 +40,7 @@ namespace Game
                     }
                     break;
 
-                case GameAction.RightMove:
+                case Action.RightMove:
                     
                     if (X < _game.RightBorder)
                     {
@@ -48,7 +48,7 @@ namespace Game
                     }
                     break;
 
-                case GameAction.UpMove:
+                case Action.UpMove:
                     
                     if (Y > _game.TopBorder)
                     {
@@ -56,7 +56,7 @@ namespace Game
                     }
                     break;
 
-                case GameAction.DownMove:
+                case Action.DownMove:
 
                     if (Y < _game.BottomBorder)
                     {
@@ -64,11 +64,11 @@ namespace Game
                     }
                     break;
 
-                case GameAction.Shooting:
+                case Action.Shooting:
                     _game.AddObject(SpaceObject.ShotLeft);
                     _game.AddObject(SpaceObject.ShotRight);
                     break;
-                case GameAction.NoAction:
+                case Action.NoAction:
                     break;
 
                 default:

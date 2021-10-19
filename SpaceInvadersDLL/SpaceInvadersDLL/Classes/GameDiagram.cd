@@ -11,10 +11,9 @@
   <Class Name="SpaceInvadersDLL.GameField">
     <Position X="10.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAIAgQAAhkAAAEAEAIgQgCBAAAAAAEAASCACAUAA=</HashCode>
+      <HashCode>AAIAAIAgQAAhEAAAWAEAIgSgCBAAAAAAEAASiACAUAA=</HashCode>
       <FileName>Classes\GameField.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="SpaceInvadersDLL.SpaceCraft">
     <Position X="2.75" Y="2" Width="1.5" />
@@ -44,20 +43,20 @@
   <Class Name="SpaceInvadersDLL.UserShip">
     <Position X="3" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAASAACAAAACAAAAAABAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAASAACAAAACAAAAAABAAA=</HashCode>
       <FileName>Classes\UserShip.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SpaceInvadersDLL.LightShip" Collapsed="true">
-    <Position X="3" Y="9.75" Width="1.5" />
+    <Position X="3" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAQAACAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Classes\LightShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SpaceInvadersDLL.HeavyShip" Collapsed="true">
-    <Position X="3" Y="10.75" Width="1.5" />
+    <Position X="3" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Classes\HeavyShip.cs</FileName>

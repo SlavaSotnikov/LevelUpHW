@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvadersDLL
 {
-    internal class Shot : SpaceCraft
+    public class Shot : SpaceCraft
     {
         #region Constructors
 
@@ -21,7 +21,7 @@
 
         #region Methods
 
-        public override void Step()
+        public override void Do(Action source)
         {
             Y -= _step;
         }

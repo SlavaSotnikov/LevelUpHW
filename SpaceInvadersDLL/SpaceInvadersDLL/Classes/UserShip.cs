@@ -1,9 +1,7 @@
 ﻿namespace SpaceInvadersDLL
 {
-    internal abstract class UserShip : Ship, IUserShip
+    public abstract class UserShip : Ship, IUserShip
     {
-        protected UIListener _keyEvent;
-
         #region Properties
 
         public override byte HP { get; set; }
@@ -32,7 +30,6 @@
             HP = hitpoints;
             Life = lifes;
             Width = 9;
-            //_keyEvent += UI.PressKey;
         }
 
         #endregion

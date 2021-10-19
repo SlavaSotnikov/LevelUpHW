@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvadersDLL
 {
-    internal class EnemyShip : Ship
+    public class EnemyShip : Ship
     {
         #region Private Data
 
@@ -42,7 +42,7 @@
 
         #region Member Functions
 
-        public override void Step()
+        public override void Do(Action source)
         {
             Y += _step;
         }

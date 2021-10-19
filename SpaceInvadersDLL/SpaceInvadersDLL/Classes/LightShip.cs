@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvadersDLL
 {
-    internal class LightShip : UserShip
+    public class LightShip : UserShip
     {
         #region Properties
 
@@ -20,54 +20,50 @@
             : base(game, coordX, coordY, active, speed, counter,
                     hitpoints, lifes, oldCoordX, oldCoordY)
         {
-
         }
 
         #endregion
 
         #region Member Functions
 
-        public override void Step()
+        public override void Do(Action source)
         {
-            switch (_keyEvent?.Invoke()/*Controller.GetEvent()*/)
+            switch (source /*Controller.GetEvent()*/)
             {
-                case GameAction.LeftMove:
-
+                case Action.LeftMove:
                     if (X > _game.LeftBorder)
                     {
-                        --X;
+                        X -= 3;
                     }
                     break;
 
-                case GameAction.RightMove:
-
+                case Action.RightMove:
                     if (X < _game.RightBorder)
                     {
-                        ++X;
+                        X += 3;
                     }
                     break;
 
-                case GameAction.UpMove:
-
+                case Action.UpMove:
                     if (Y > _game.TopBorder)
                     {
-                        --Y;
+                        Y -= 3;
                     }
                     break;
 
-                case GameAction.DownMove:
-
+                case Action.DownMove:
                     if (Y < _game.BottomBorder)
                     {
-                        ++Y;
+                        Y += 3;
                     }
                     break;
 
-                case GameAction.Shooting:
+                case Action.Shooting:
                     _game.AddObject(SpaceObject.ShotLeft);
                     _game.AddObject(SpaceObject.ShotRight);
                     break;
-                case GameAction.NoAction:
+
+                case Action.NoAction:
                     break;
 
                 default:

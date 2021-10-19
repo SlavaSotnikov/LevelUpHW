@@ -46,7 +46,7 @@
             return result;
         }
 
-        public abstract void Step();
+        public abstract void Do(Action source);
 
         public virtual void MoveState()
         {

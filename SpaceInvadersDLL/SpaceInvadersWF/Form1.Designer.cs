@@ -1,7 +1,11 @@
-﻿namespace SpaceInvadersWF
+﻿using System.Windows.Forms;
+
+namespace SpaceInvadersWF
 {
     partial class Form1
     {
+        protected PictureBox[] _pictures;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -29,24 +33,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.player = new System.Windows.Forms.PictureBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
+            this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // player
+            // MainTimer
             // 
-            this.player.Image = global::SpaceInvadersWF.Properties.Resources.UserShip;
-            this.player.Location = new System.Drawing.Point(212, 472);
-            this.player.Name = "player";
-            this.player.Size = new System.Drawing.Size(199, 77);
-            this.player.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.player.TabIndex = 0;
-            this.player.TabStop = false;
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.MainTimer.Interval = 1;
+            this.MainTimer.Tick += new System.EventHandler(this.RunGame);
             // 
             // Form1
             // 
@@ -54,22 +47,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(684, 561);
-            this.Controls.Add(this.player);
             this.ForeColor = System.Drawing.Color.Cornsilk;
             this.Name = "Form1";
             this.Text = "Space Invaders";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
-            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox player;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer MainTimer;
     }
 }
 

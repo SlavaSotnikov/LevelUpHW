@@ -47,7 +47,7 @@
     <Compile Include="Delegate\UIListener.cs" />
     <Compile Include="Exception\ClashException.cs" />
     <Compile Include="Controller.cs" />
-    <Compile Include="Enum\GameAction.cs" />
+    <Compile Include="Enum\Action.cs" />
     <Compile Include="BL_Random.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="GameField.cs" />

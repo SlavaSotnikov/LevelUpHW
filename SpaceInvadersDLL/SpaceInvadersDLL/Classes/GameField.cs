@@ -1,32 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SpaceInvadersDLL
 {
-    public class GameField : IGame
+    public class GameField /*: IGame*/
     {
         #region Private Data
 
         protected const int CONST_Y = 1;
 
-        protected int _leftBorder = 30;
-        protected int _rightBorder = 83;
+        protected int _leftBorder = 0;
+        protected int _rightBorder = 684;
         protected int _topBorder = 0;
-        protected int _bottomBorder = 33;
+        protected int _bottomBorder = 561;
 
-        protected int _initialX = 53;      // Initial X position of Spaceship.
-        protected int _initialY = 28;      // Initial Y position of Spaceship.
+        protected int _initialX = 300;      // Initial X position of Spaceship.
+        protected int _initialY = 469;      // Initial Y position of Spaceship.
         protected byte _lifes = 3;
         protected uint _shipSpeed = 1;
         protected bool _active = true;
         protected uint _counter = 0;
         protected byte _hitpoints = 10;
         protected byte _leftShift = 2;     // This shift tunes the Left bullet. 
-        protected byte _rightShift = 6;    // This shift tunes the Right bullet.
+        protected byte _rightShift = 60;    // This shift tunes the Right bullet.
         protected byte _shotEnemyShift = 3;
+
+        protected Action Action { get; private set; }
 
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
@@ -37,7 +36,7 @@ namespace SpaceInvadersDLL
 
         #region IGame implementation
 
-        ISpaceCraft IGame.this[int index]
+        public ISpaceCraft this[int index]
         {
             get
             {
@@ -45,7 +44,7 @@ namespace SpaceInvadersDLL
             }
         }
 
-        int IGame.Amount
+        public int Amount
         {
             get
             {
@@ -63,17 +62,20 @@ namespace SpaceInvadersDLL
 
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                if ((_gameObjects[i] is UserShip user) && !user.Active)
+                if ((_gameObjects[i] is UserShip user) && user.Active)
                 {
-                    _finishGame?.Invoke(this, EventArgs.Empty);
                     break;
                 }
+
+                _finishGame?.Invoke(this, EventArgs.Empty);
+                gameOn = false;
+                break;
             }
 
             return gameOn;
         }
 
-        public void StepObjects()
+        public void ProcessObjects()
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
@@ -81,10 +83,46 @@ namespace SpaceInvadersDLL
 
                 if (_gameObjects[i].IsNeedStep())
                 {
-                    _gameObjects[i].Step();
+                    _gameObjects[i].Do(Action);
+                    //Action = Action.NoAction;
                 }
             }
         }
+
+        public void PressKey(Keys source)    // TODO: Enum Keys here. Is it ok?
+        {
+            Action = Action.NoAction;
+
+            switch (source)
+            {
+                case Keys.Up:
+                    Action = Action.UpMove;
+                    break;
+                case Keys.Down:
+                    Action = Action.DownMove;
+                    break;
+                case Keys.Left:
+                    Action = Action.LeftMove;
+                    break;
+                case Keys.Right:
+                    Action = Action.RightMove;
+                    break;
+                case Keys.Space:
+                    Action = Action.Shooting;
+                    break;
+                case Keys.Escape:
+                    Action = Action.Exit;
+                    break;
+                default:
+                    Action = Action.NoAction;
+                    break;
+            }
+        }
+
+        //private Action GetAction()
+        //{
+        //    return _action;
+        //}
 
         public void CheckObjects()
         {
@@ -120,7 +158,7 @@ namespace SpaceInvadersDLL
                                     if (ship.HP <= 0)
                                     {
                                         ship.Active = false;
-                                        ship.Step();
+                                        ship.Do(Action);
                                     }
                                 }
                             }

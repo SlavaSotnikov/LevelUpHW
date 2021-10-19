@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvadersDLL
 {
-    internal abstract class Ship : SpaceCraft
+    public abstract class Ship : SpaceCraft
     {
         public abstract byte HP { get; set; }
 

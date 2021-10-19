@@ -113,9 +113,9 @@ namespace Game
             return shipModel;
         }
 
-        public static GameAction PressKey()
+        public static Action PressKey()
         {
-            GameAction userEvent = GameAction.NoAction;
+            Action userEvent = Action.NoAction;
 
             if (Console.KeyAvailable)
             {
@@ -124,25 +124,25 @@ namespace Game
                 switch (key.Key)
                 {
                     case ConsoleKey.LeftArrow:
-                        userEvent = GameAction.LeftMove;
+                        userEvent = Action.LeftMove;
                         break;
                     case ConsoleKey.RightArrow:
-                        userEvent = GameAction.RightMove;
+                        userEvent = Action.RightMove;
                         break;
                     case ConsoleKey.UpArrow:
-                        userEvent = GameAction.UpMove;
+                        userEvent = Action.UpMove;
                         break;
                     case ConsoleKey.DownArrow:
-                        userEvent = GameAction.DownMove;
+                        userEvent = Action.DownMove;
                         break;
                     case ConsoleKey.Spacebar:
-                        userEvent = GameAction.Shooting;
+                        userEvent = Action.Shooting;
                         break;
                     case ConsoleKey.Escape:
-                        userEvent = GameAction.Exit;
+                        userEvent = Action.Exit;
                         break;
                     default:
-                        userEvent = GameAction.NoAction;
+                        userEvent = Action.NoAction;
                         break;
                 }
             }
