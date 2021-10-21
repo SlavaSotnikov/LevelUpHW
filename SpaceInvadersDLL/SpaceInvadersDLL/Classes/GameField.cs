@@ -25,7 +25,7 @@ namespace SpaceInvadersDLL
         protected byte _rightShift = 52;    // This shift tunes the Right bullet.
         protected byte _shotEnemyShift = 3;
 
-        protected Action Action { get; private set; }
+        protected GameAction Action { get; private set; }
 
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
@@ -84,45 +84,15 @@ namespace SpaceInvadersDLL
                 if (_gameObjects[i].IsNeedStep())
                 {
                     _gameObjects[i].Do(Action);
-                    Action = Action.NoAction;
+                    Action = GameAction.NoAction;
                 }
             }
         }
 
-        public void PressKey(Keys source)    // TODO: Enum Keys here. Is it ok?
+        public void PressKey(GameAction source)
         {
-            Action = Action.NoAction;
-
-            switch (source)
-            {
-                case Keys.Up:
-                    Action = Action.UpMove;
-                    break;
-                case Keys.Down:
-                    Action = Action.DownMove;
-                    break;
-                case Keys.Left:
-                    Action = Action.LeftMove;
-                    break;
-                case Keys.Right:
-                    Action = Action.RightMove;
-                    break;
-                case Keys.Space:
-                    Action = Action.Shooting;
-                    break;
-                case Keys.Escape:
-                    Action = Action.Exit;
-                    break;
-                default:
-                    Action = Action.NoAction;
-                    break;
-            }
+            Action = source;    // TODO: Kind of the Buffer of GameAction.
         }
-
-        //private Action GetAction()
-        //{
-        //    return _action;
-        //}
 
         public void CheckObjects()
         {

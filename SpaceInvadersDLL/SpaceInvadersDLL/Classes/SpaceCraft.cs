@@ -46,7 +46,7 @@
             return result;
         }
 
-        public abstract void Do(Action source);
+        public abstract void Do(GameAction source);
 
         public virtual void MoveState()
         {

@@ -4,7 +4,7 @@
     {
         #region Constructors
 
-        public Shot(int x, int y, sbyte step, uint speed,
+        internal Shot(int x, int y, sbyte step, uint speed,
                 int oldX = 0, int oldY = 0, uint counter = 0)
         {
             X = x;
@@ -21,7 +21,7 @@
 
         #region Methods
 
-        public override void Do(Action source)
+        public override void Do(GameAction source)
         {
             Y -= 4;
         }

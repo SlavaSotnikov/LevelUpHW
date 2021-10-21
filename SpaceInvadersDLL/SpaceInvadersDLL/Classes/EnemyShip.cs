@@ -20,7 +20,7 @@
 
         #region Constructor
 
-        public EnemyShip(ISpace game, int coordX, int coordY, bool active,
+        internal EnemyShip(ISpace game, int coordX, int coordY, bool active,
                 uint speed, sbyte step, byte rndY, uint counter = 0,
                     int oldCoordX = 0, int oldCoordY = 0, byte hitPoints = 6)
         {
@@ -42,7 +42,7 @@
 
         #region Member Functions
 
-        public override void Do(Action source)
+        public override void Do(GameAction source)
         {
             Y += _step;
         }

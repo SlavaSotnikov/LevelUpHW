@@ -8,7 +8,7 @@ namespace SpaceInvadersDLL
 
         int Amount { get; }
 
-        void PressKey(Keys source);
+        void PressKey(GameAction source);
 
         void Run();
     }

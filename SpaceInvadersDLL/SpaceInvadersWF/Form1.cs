@@ -8,6 +8,7 @@ namespace SpaceInvadersWF
 {
     public partial class Form1 : Form
     {
+        private const byte FACTOR = 1;
         private IGame _game;
 
         public Form1(IGame source)
@@ -25,12 +26,39 @@ namespace SpaceInvadersWF
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            _game.PressKey(e.KeyData);
+            GameAction userAction;
+
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                    userAction = GameAction.UpMove;
+                    break;
+                case Keys.Down:
+                    userAction = GameAction.DownMove;
+                    break;
+                case Keys.Left:
+                    userAction = GameAction.LeftMove;
+                    break;
+                case Keys.Right:
+                    userAction = GameAction.RightMove;
+                    break;
+                case Keys.Space:
+                    userAction = GameAction.Shooting;
+                    break;
+                case Keys.Escape:
+                    userAction = GameAction.Exit;
+                    break;
+                default:
+                    userAction = GameAction.NoAction;
+                    break;
+            }
+
+            _game.PressKey(userAction);
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
-            _game.PressKey(Keys.None);
+            _game.PressKey(GameAction.NoAction);
         }
 
         private void RunGame(object sender, EventArgs e)
@@ -88,9 +116,9 @@ namespace SpaceInvadersWF
 
         private void InitPicture(int i, Image picture, Size source)
         {
-            if (_pictures[i] == null || !_pictures[i].Visible)
+            if ((_pictures[i] == null) || (!_pictures[i].Visible))
             {
-                _pictures[i] = new PictureBox()
+                _pictures[i] = new PictureBox()    // TODO: Make factors.
                 {
                     Image = picture,
                     Location = new Point(_game[i].X, _game[i].Y),

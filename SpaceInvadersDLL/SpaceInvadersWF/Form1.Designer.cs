@@ -38,7 +38,7 @@ namespace SpaceInvadersWF
             // 
             // MainTimer
             // 
-            this.MainTimer.Interval = 1;
+            this.MainTimer.Interval = 1;    // TODO: It's the speed in general.
             this.MainTimer.Tick += new System.EventHandler(this.RunGame);
             // 
             // Form1
@@ -54,6 +54,7 @@ namespace SpaceInvadersWF
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             this.ResumeLayout(false);
+
         }
 
         #endregion

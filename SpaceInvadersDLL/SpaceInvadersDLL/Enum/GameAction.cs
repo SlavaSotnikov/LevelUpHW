@@ -1,6 +1,6 @@
 ﻿namespace SpaceInvadersDLL
 {
-    public enum Action
+    public enum GameAction
     {
         NoAction,
         LeftMove,

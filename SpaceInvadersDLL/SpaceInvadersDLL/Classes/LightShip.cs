@@ -14,7 +14,7 @@
 
         #region Constructors
 
-        public LightShip(ISpace game, int coordX, int coordY, bool active,
+        internal LightShip(ISpace game, int coordX, int coordY, bool active,
                 uint speed, uint counter, byte hitpoints, byte lifes,
                     int oldCoordX = 0, int oldCoordY = 0)
             : base(game, coordX, coordY, active, speed, counter,
@@ -26,44 +26,44 @@
 
         #region Member Functions
 
-        public override void Do(Action source)
+        public override void Do(GameAction source)
         {
             switch (source /*Controller.GetEvent()*/)    // TODO: It's necessary to set source = NoActions.
             {
-                case Action.LeftMove:
+                case GameAction.LeftMove:
                     if (X > _game.LeftBorder)
                     {
-                        X -= 3;
+                        --X;
                     }
                     break;
 
-                case Action.RightMove:
+                case GameAction.RightMove:
                     if (X < _game.RightBorder)
                     {
-                        X += 3;
+                        ++X;
                     }
                     break;
 
-                case Action.UpMove:
+                case GameAction.UpMove:
                     if (Y > _game.TopBorder)
                     {
-                        Y -= 3;
+                        --Y;
                     }
                     break;
 
-                case Action.DownMove:
+                case GameAction.DownMove:
                     if (Y < _game.BottomBorder)
                     {
-                        Y += 3;
+                        ++Y;
                     }
                     break;
 
-                case Action.Shooting:
+                case GameAction.Shooting:
                     _game.AddObject(SpaceObject.ShotLeft);
                     _game.AddObject(SpaceObject.ShotRight);
                     break;
 
-                case Action.NoAction:
+                case GameAction.NoAction:
                     break;
 
                 default:
