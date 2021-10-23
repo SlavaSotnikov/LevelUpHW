@@ -18,7 +18,7 @@
                 return _amountOfCompare;
             }
         }
-
+        
         public int Swaps
         {
             get

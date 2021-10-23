@@ -8,8 +8,8 @@ namespace SpaceInvadersWF
 {
     public partial class Form1 : Form
     {
-        private const byte FACTOR = 1;
         private IGame _game;
+        private PictureBox[] _pictures;
 
         public Form1(IGame source)
         {
@@ -26,7 +26,7 @@ namespace SpaceInvadersWF
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            GameAction userAction;
+            GameAction userAction;    // TODO: Should we leave the enum?
 
             switch (e.KeyCode)
             {
@@ -61,9 +61,9 @@ namespace SpaceInvadersWF
             _game.PressKey(GameAction.NoAction);
         }
 
-        private void RunGame(object sender, EventArgs e)
+        private void RunGame(object sender, EventArgs e)    // TODO: Check the timer.
         {
-            _game.Run();
+            _game.Run();    // TODO: Move to Controller RunGame method. Timer for Console.
 
             InitPictures();
 
@@ -72,6 +72,8 @@ namespace SpaceInvadersWF
 
         private void ShowPictures()
         {
+            Point one = new Point(0, 0);
+
             for (int i = 0; i < _game.Amount; i++)
             {
                 if (!_game[i].Active)
@@ -79,18 +81,24 @@ namespace SpaceInvadersWF
                     _pictures[i].Visible = false;
                 }
 
-                if (_game[i] is UserShip)    // TODO: All types of BL's classes are public.???
+                if (_game[i] is UserShip && _pictures[i].Visible)
                 {
                     if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
                     {
-                        _pictures[i].Location = new Point(_game[i].X, _game[i].Y); 
+                        one.X = _game[i].X*2;
+                        one.Y = _game[i].Y*2;
+
+                        _pictures[i].Location = one;
                     }
                 }
 
-                if (_game[i] is Shot)
+                if (_game[i] is Shot && _pictures[i].Visible)
                 {
-                    _pictures[i].Location = new Point(_game[i].X, _game[i].Y);
-                }
+                    if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
+                    {
+                        _pictures[i].Location = new Point(_game[i].X*2, _game[i].Y*2);
+                    }
+                } 
             }
         }
 
@@ -98,17 +106,17 @@ namespace SpaceInvadersWF
         {
             for (int i = 0; i < _game.Amount; i++)
             {
-                if (_game[i] is UserShip)
+                if (_game[i] is UserShip && _pictures[i] == null)
                 {
                     InitPicture(i, Properties.Resources.UserShip, new Size(75, 82));
                 }
 
-                if (_game[i] is Shot)    // TODO: All types of BL's classes are public.???
+                if (_game[i] is Shot two && two.Active)
                 {
                     InitPicture(i, Properties.Resources.Bullet, new Size(15, 50));
                 }
 
-                if (_game[i] is EnemyShip)    // TODO: All types of BL's classes are public.???
+                if (_game[i] is EnemyShip three && three.Active)
                 {
                 }
             }
@@ -116,18 +124,34 @@ namespace SpaceInvadersWF
 
         private void InitPicture(int i, Image picture, Size source)
         {
-            if ((_pictures[i] == null) || (!_pictures[i].Visible))
+            if (_pictures[i] == null)
             {
-                _pictures[i] = new PictureBox()    // TODO: Make factors.
-                {
-                    Image = picture,
-                    Location = new Point(_game[i].X, _game[i].Y),
-                    Size = source,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                };
-
-                Controls.Add(_pictures[i]);
+                AddPictureBox(i, picture, source);
             }
+
+            if (!_pictures[i].Visible)
+            {
+                AddPictureBox(i, picture, source);
+            }
+        }
+
+        private void AddPictureBox(int i, Image picture, Size source)
+        {
+            _pictures[i] = new PictureBox()
+            {
+                Image = picture,
+                Location = new Point(_game[i].X * 2, _game[i].Y * 2),
+                Size = source,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Visible = true
+            };
+
+            Controls.Add(_pictures[i]);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

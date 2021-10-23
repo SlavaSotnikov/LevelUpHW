@@ -9,20 +9,20 @@ namespace SpaceInvadersDLL
 
         protected const int CONST_Y = 1;
 
-        protected int _leftBorder = 0;
-        protected int _rightBorder = 684;
+        protected int _leftBorder = 50;
+        protected int _rightBorder = 280;
         protected int _topBorder = 0;
-        protected int _bottomBorder = 561;
+        protected int _bottomBorder = 300;    // TODO: New initial values. Is it ok?
 
-        protected int _initialX = 300;      // Initial X position of Spaceship.
-        protected int _initialY = 469;      // Initial Y position of Spaceship.
+        protected int _initialX = 153;      // Initial X position of Spaceship.
+        protected int _initialY = 228;      // Initial Y position of Spaceship.
         protected byte _lifes = 3;
         protected uint _shipSpeed = 1;
         protected bool _active = true;
         protected uint _counter = 0;
         protected byte _hitpoints = 10;
-        protected byte _leftShift = 7;     // This shift tunes the Left bullet. 
-        protected byte _rightShift = 52;    // This shift tunes the Right bullet.
+        protected byte _leftShift = 2;     // This shift tunes the Left bullet. 
+        protected byte _rightShift = 27;    // This shift tunes the Right bullet.
         protected byte _shotEnemyShift = 3;
 
         protected GameAction Action { get; private set; }
@@ -84,7 +84,7 @@ namespace SpaceInvadersDLL
                 if (_gameObjects[i].IsNeedStep())
                 {
                     _gameObjects[i].Do(Action);
-                    Action = GameAction.NoAction;
+                    Action = GameAction.NoAction; // TODO: Resetting.
                 }
             }
         }

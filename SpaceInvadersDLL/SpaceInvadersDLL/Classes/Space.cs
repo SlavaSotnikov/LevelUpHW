@@ -102,6 +102,8 @@ namespace SpaceInvadersDLL
                 } 
             }
 
+            //      TODO: Reset Action here.
+
             //} while (IsGameOver());
         }
 
@@ -192,7 +194,7 @@ namespace SpaceInvadersDLL
             return new EnemyShip(this, rndX, CONST_Y, _active, speed, 1, rndYShot);
         }
 
-        internal Shot AddShot(int shift)
+        private Shot AddShot(int shift)
         {
             Shot bullet = null;
 
@@ -208,7 +210,7 @@ namespace SpaceInvadersDLL
             return bullet;
         }
 
-        internal Shot AddEnemyShot(int shift)
+        private Shot AddEnemyShot(int shift)
         {
             Shot bullet = null;
 
@@ -225,7 +227,7 @@ namespace SpaceInvadersDLL
             return bullet;
         }
 
-        public void ShotEnemies()
+        private void ShotEnemies()
         {
             for (int i = _amountOfObjects; i >= 0; i--)
             {
@@ -239,7 +241,7 @@ namespace SpaceInvadersDLL
             }
         }
 
-        public void ProduceEnemies()
+        private void ProduceEnemies()
         {
             ++_counterProduceEnemy;
 

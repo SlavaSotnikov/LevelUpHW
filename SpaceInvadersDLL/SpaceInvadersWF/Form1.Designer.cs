@@ -4,8 +4,6 @@ namespace SpaceInvadersWF
 {
     partial class Form1
     {
-        protected PictureBox[] _pictures;
-
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -38,7 +36,7 @@ namespace SpaceInvadersWF
             // 
             // MainTimer
             // 
-            this.MainTimer.Interval = 1;    // TODO: It's the speed in general.
+            this.MainTimer.Interval = 1;
             this.MainTimer.Tick += new System.EventHandler(this.RunGame);
             // 
             // Form1
