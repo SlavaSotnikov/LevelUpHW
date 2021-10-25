@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QueueList
+﻿namespace QueueList
 {
     public class Queue<T>
     {
@@ -49,17 +43,14 @@ namespace QueueList
         }
 
         public bool IsEmpty => _head == null;
-        //{
-        //    get { return _head == null; }
-        //}
 
-        public class Entry<T>
+        public class Entry<U>
         {
-            public T Data { get; set; }
+            public U Data { get; set; }
 
-            public Entry<T> Next { get; set; }
+            public Entry<U> Next { get; set; }
 
-            public Entry(T data)
+            public Entry(U data)
             {
                 Data = data;
             }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QueueList
 {
@@ -10,23 +6,21 @@ namespace QueueList
     {
         static void Main()
         {
-            Queue<int> one = new Queue<int>();
+            Queue<string> one = new Queue<string>();
 
-            one.Enqueue(1);
-            one.Enqueue(2);
-            one.Enqueue(3);
-            one.Enqueue(4);
-            one.Enqueue(5);
+            for (int i = 0; i < 5; i++)
+            {
+                one.Enqueue($"Word - {i}");
+            }
 
-            Console.WriteLine(one.Amount);
+            Console.WriteLine("Amount {0}", one.Amount);
 
-            one.Dequeue();
-            one.Dequeue();
-            one.Dequeue();
-            one.Dequeue();
-            one.Dequeue();
+            while (!one.IsEmpty)
+            {
+                Console.WriteLine(one.Dequeue().Data);
+            }
 
-            Console.WriteLine(one.Amount);
+            Console.WriteLine("Amount {0}", one.Amount);
 
             Console.ReadKey();
         }
