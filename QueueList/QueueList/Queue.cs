@@ -15,7 +15,7 @@ namespace QueueList
 
 
 
-        public void Enqueue(T data)    // TODO: Design IsFool method.
+        public void Enqueue(T data)
         {
             try
             {
@@ -71,7 +71,6 @@ namespace QueueList
             public Entry(U data)
             {
                 Data = data;
-                //_weight = new int[1000]; 
             }
         }
     }
