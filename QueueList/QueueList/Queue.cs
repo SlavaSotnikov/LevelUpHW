@@ -11,23 +11,19 @@ namespace QueueList
 
         public ulong Amount { get; private set; }
 
-        public bool IsFool
-        {
-            get
-            {
-                return Amount > 0 && _node == null;
-            }
-        }
+        public bool IsFool { get; private set; }
 
 
 
         public void Enqueue(T data)    // TODO: Design IsFool method.
         {
-            _node = new Entry<T>(data);
-
-            if (_node == null)
+            try
             {
-                throw new NoObjectException("A new object wasn't created!");
+                _node = new Entry<T>(data);
+            }
+            catch (Exception ex)
+            {
+                throw new NoObjectException("A new object wasn't created!", ex);
             }
 
             if (_head == null)
