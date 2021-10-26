@@ -16,9 +16,9 @@ namespace QueueList
                     one.Enqueue($"{++i}");
                 }
             }
-            catch (Exception ex)
+            catch (NoObjectException ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex);
             }
 
             Console.ReadKey();

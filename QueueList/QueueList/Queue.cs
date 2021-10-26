@@ -21,13 +21,15 @@ namespace QueueList
 
 
 
-        public void Enqueue(T data)    // TODO: Design IsFool method.
+        public void Enqueue(T data)
         {
-            _node = new Entry<T>(data);
-
-            if (_node == null)
+            try
             {
-                throw new NoObjectException("A new object wasn't created!");
+                _node = new Entry<T>(data);
+            }
+            catch (Exception ex)
+            {
+                throw new NoObjectException("A new object wasn't created!", ex);
             }
 
             if (_head == null)
@@ -75,7 +77,6 @@ namespace QueueList
             public Entry(U data)
             {
                 Data = data;
-                //_weight = new int[1000]; 
             }
         }
     }
