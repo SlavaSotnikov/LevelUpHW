@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Numerics;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace QueueList
 {
-    public class Queue<T>
+    public class Queue : IEnumerable
     {
-        private Entry<T> _head = null;
-        private Entry<T> _tail = null;
-        private Entry<T> _node = null;
+        private Entry _head = null;
+        private Entry _tail = null;
+        private Entry _node = null;
 
         public ulong Amount { get; private set; }
 
-        public bool IsFool { get; private set; }
+        public bool IsFool => Amount > 0 && _node == null;
 
-
-
-        public void Enqueue(T data)
+        public void Enqueue(uint data)
         {
             try
             {
-                _node = new Entry<T>(data);
+                _node = new Entry(data);
             }
             catch (Exception ex)
             {
@@ -40,14 +39,14 @@ namespace QueueList
             ++Amount;
         }
 
-        public Entry<T> Dequeue()
+        public Entry Dequeue()
         {
             if (IsEmpty)
             {
                 throw new MissingMemberException("No objects.");
             }
 
-            Entry <T> result = _head;
+            Entry result = _head;
             _head = _head.Next;
 
             --Amount;
@@ -57,21 +56,37 @@ namespace QueueList
 
         public bool IsEmpty => _head == null;
 
-        public class Entry<U>
+        public IEnumerator GetEnumerator()
         {
-            public U Data { get; set; }
+            return new QueueEnumerator(_head);
+        }
 
-            public Entry<U> Next { get; set; }
-
-            private decimal _weight = decimal.MaxValue;
-            private decimal _weight1 = decimal.MaxValue;
-            private decimal _weight2 = decimal.MaxValue;
-            private decimal _weight3 = decimal.MaxValue;
-
-            public Entry(U data)
-            {
-                Data = data;
-            }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new QueueEnumerator(_head);
         }
     }
+
+    public class Entry
+    {
+        public uint Data { get; set; }
+
+        public Entry Next { get; set; }
+
+        private decimal _weight;
+        private decimal _weight1;
+        private decimal _weight2;
+        private decimal _weight3;
+
+        public Entry(uint data)
+        {
+            Data = data;
+            _weight = decimal.MaxValue;
+            _weight1 = decimal.MaxValue;
+            _weight2 = decimal.MaxValue;
+            _weight3 = decimal.MaxValue;
+        }
+    }
+
+
 }

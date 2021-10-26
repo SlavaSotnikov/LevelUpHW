@@ -6,20 +6,31 @@ namespace QueueList
     {
         static void Main()
         {
-            Queue<string> one = new Queue<string>();
+            Queue one = new Queue();
 
-            try
+            one.Enqueue(1); 
+            one.Enqueue(2);
+            one.Enqueue(3);
+            one.Enqueue(4);
+            one.Enqueue(5);
+
+            foreach (Entry item in one)
             {
-                uint i = 0;
-                while (!one.IsFool)
-                {
-                    one.Enqueue($"{++i}");
-                }
+                Console.WriteLine("{0}", item.Data);
             }
-            catch (NoObjectException ex)
-            {
-                Console.WriteLine(ex);
-            }
+
+            //try
+            //{
+            //    uint i = 0;
+            //    while (!one.IsFool)
+            //    {
+            //        one.Enqueue(++i);
+            //    }
+            //}
+            //catch (NoObjectException ex)
+            //{
+            //    Console.WriteLine(ex);
+            //}
 
             Console.ReadKey();
         }
