@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Benchmark")]
+[assembly: AssemblyTitle("TwoStacks")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Benchmark")]
+[assembly: AssemblyProduct("TwoStacks")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("53dc3b19-1efd-4100-94f6-51dc4e4c7623")]
+[assembly: Guid("852a0dce-22fa-423e-a8b5-20684151ac95")]
 
 // Version information for an assembly consists of the following four values:
 //

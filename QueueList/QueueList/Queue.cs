@@ -1,25 +1,43 @@
-﻿namespace QueueList
+﻿using System;
+
+namespace QueueList
 {
     public class Queue<T>
     {
-        private Entry<T> _head;
-        private Entry<T> _tail;
+        private Entry<T> _head = null;
+        private Entry<T> _tail = null;
+        private Entry<T> _node = null;
 
-        public int Amount { get; private set; }
+        public ulong Amount { get; private set; }
 
-        public void Enqueue(T data)
+        public bool IsFool
         {
-            Entry<T> node = new Entry<T>(data);
+            get
+            {
+                return Amount > 0 && _node == null;
+            }
+        }
+
+
+
+        public void Enqueue(T data)    // TODO: Design IsFool method.
+        {
+            _node = new Entry<T>(data);
+
+            if (_node == null)
+            {
+                throw new NoObjectException("A new object wasn't created!");
+            }
 
             if (_head == null)
             {
-                _head = node;
-                _tail = node;
+                _head = _node;
+                _tail = _node;
             }
             else
             {
-                _tail.Next = node;
-                _tail = node;
+                _tail.Next = _node;
+                _tail = _node;
             }
 
             ++Amount;
@@ -27,14 +45,12 @@
 
         public Entry<T> Dequeue()
         {
-            Entry<T> result;
-
             if (IsEmpty)
             {
-                return null;
+                throw new MissingMemberException("No objects.");
             }
 
-            result = _head;
+            Entry <T> result = _head;
             _head = _head.Next;
 
             --Amount;

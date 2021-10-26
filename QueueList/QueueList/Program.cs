@@ -8,19 +8,34 @@ namespace QueueList
         {
             Queue<string> one = new Queue<string>();
 
-            for (int i = 0; i < 5; i++)
+            Console.WriteLine(one.IsFool);
+
+            uint i = 0;
+            while (!one.IsFool)
             {
-                one.Enqueue($"Word - {i}");
+                one.Enqueue($"{++i}");
             }
 
-            Console.WriteLine("Amount {0}", one.Amount);
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    try
+            //    {
+            //        one.Enqueue($"Word - {i}");
+            //    }
+            //    catch (NoObjectException ex)
+            //    {
+            //        Console.WriteLine(ex.Message, ex.StackTrace);
+            //    }
+            //}
 
-            while (!one.IsEmpty)
-            {
-                Console.WriteLine(one.Dequeue().Data);
-            }
+            //Console.WriteLine("Amount {0}", one.Amount);
 
-            Console.WriteLine("Amount {0}", one.Amount);
+            //while (!one.IsEmpty)
+            //{
+            //    Console.WriteLine(one.Dequeue().Data);
+            //}
+
+            //Console.WriteLine("Amount {0}", one.Amount);
 
             Console.ReadKey();
         }
