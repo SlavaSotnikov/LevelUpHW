@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace QueueList
 {
@@ -66,9 +67,15 @@ namespace QueueList
 
             public Entry<U> Next { get; set; }
 
+            private decimal _weight = decimal.MaxValue;
+            private decimal _weight1 = decimal.MaxValue;
+            private decimal _weight2 = decimal.MaxValue;
+            private decimal _weight3 = decimal.MaxValue;
+
             public Entry(U data)
             {
                 Data = data;
+                //_weight = new int[1000]; 
             }
         }
     }
