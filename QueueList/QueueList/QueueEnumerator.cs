@@ -1,39 +1,45 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace QueueList
 {
-    public class QueueEnumerator : IEnumerator
+    public class QueueEnumerator<Entry> : IEnumerator<Entry>
     {
+        private Entry _current;
+
         public QueueEnumerator(Entry head)
         {
-            Current = head;
+            _current =  head;
         }
 
-        public object Current { get; private set; }
-        //{ 
-        //    get 
-        //    {
-        //        return _current;
-        //    }
-        //    set
-        //    {
-        //        _current = (Entry)value;
-        //    }   
-        //}
+        public Entry Current
+        {
+            get { return _current; }
+
+            private set { _current = value; }
+        }
+
+        object IEnumerator.Current => throw new NotImplementedException();
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
         public bool MoveNext()
         {
             bool result = true;
 
-            Entry entry = (Entry)Current;
+            Entry entry = Current;
 
-            if (entry.Next == null)
+
+            if (false/*entry.Next == null*/)
             {
                 result = false;
             }
 
-            Current = entry.Next;
+            //_current = _current.Next;
 
             return result;
         }

@@ -6,7 +6,7 @@ namespace QueueList
     {
         static void Main()
         {
-            Queue one = new Queue();
+            Queue<int> one = new Queue<int>();
 
             one.Enqueue(1); 
             one.Enqueue(2);
@@ -14,9 +14,11 @@ namespace QueueList
             one.Enqueue(4);
             one.Enqueue(5);
 
-            foreach (Entry item in one)
+            one.Reverse();
+
+            foreach (var item in one)
             {
-                Console.WriteLine("{0}", item.Data);
+                Console.WriteLine("{0}", item);
             }
 
             //try
