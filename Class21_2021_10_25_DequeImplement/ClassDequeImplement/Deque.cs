@@ -1,4 +1,6 @@
-﻿namespace ClassDequeImplement
+﻿using System;
+
+namespace ClassDequeImplement
 {
     internal class Deque
     {
@@ -26,7 +28,7 @@
                         _head = node;
                         break;
 
-                    case Position.End:
+                    case Position.Back:
                         _tail.Previous = node;
                         node.Next = _tail;
                         _tail = node;
@@ -42,7 +44,7 @@
         {
             if (IsEmpty)
             {
-
+                throw new MissingMemberException("No objects.");    // TODO: Where is dangerous code chunk?
             }
 
             Entry result = null;
@@ -62,7 +64,7 @@
                     }
 
                     break;
-                case Position.End:
+                case Position.Back:
                     result = _tail;
                     _tail = _tail.Next;
                     if (_tail != null)

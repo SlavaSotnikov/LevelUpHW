@@ -19,16 +19,16 @@ namespace ClassDequeImplement
             Deque one = new Deque();
 
             one.Add(1, Position.Front);
-            one.Add(2, Position.End);
+            one.Add(2, Position.Back);
             one.Add(3, Position.Front);
-            one.Add(4, Position.End);
+            one.Add(4, Position.Back);
             one.Add(5, Position.Front);
 
-            one.Get(Position.End);
+            one.Get(Position.Back);
             one.Get(Position.Front);
-            one.Get(Position.End);
+            one.Get(Position.Back);
             one.Get(Position.Front);
-            one.Get(Position.End);
+            one.Get(Position.Back);
 
             Console.ReadKey();
         }
