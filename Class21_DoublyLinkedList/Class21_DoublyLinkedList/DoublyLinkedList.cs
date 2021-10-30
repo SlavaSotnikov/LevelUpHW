@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Class21_DoublyLinkedList
+﻿namespace Class21_DoublyLinkedList
 {
     internal class DoublyLinkedList
     {
         private Entry _head = null;
         private Entry _tail = null;
         private Entry _current = null;
+        private Entry _temp = null;
 
         public bool IsEmpty => _head is null;
 
@@ -109,35 +104,67 @@ namespace Class21_DoublyLinkedList
 
         public void Sort()
         {
+            Entry index = _tail;
             _current = _tail;
-            Entry temp = _current.Previous;
+            _temp = _current.Previous;
 
-            if (_current.Data < temp.Data)
+            for (; index.Previous != null; index = index.Previous )
             {
-                while ((_current.Data < temp.Data) && (_current.Previous != null))
+                if (_current.Data < _temp.Data)
                 {
-                    _current.Previous = temp.Previous;
-                    temp.Next = _current.Next;
-                    _current.Next = temp;
-
-                    if (_current.Previous != null)
+                    while ((_current.Data < _temp.Data) && (_current.Previous != null))
                     {
-                        temp = _current.Previous;
-                        temp.Next = _current;
-                    }
-                    else
-                    {
-                        temp.Previous = _current;
+                        _current.Previous = _temp.Previous;
+                        _temp.Next = _current.Next;
+                        _current.Next = _temp;
+
+                        if (_current.Previous != null)
+                        {
+                            _temp = _current.Previous;
+                            _temp.Next = _current;
+                        }
+                        else
+                        {
+                            _temp.Previous = _current;
+                        }
                     }
 
+                    _current.Next.Previous = _current;
+
+                    if (_temp.Next != null)
+                    {
+                        _temp.Next.Previous = _temp; 
+                    }
+
+                    while (_temp.Next != null)
+                    {
+                        _temp.Next.Previous = _temp;
+                        _temp = _temp.Next;
+                    }
+
+                    while (index.Next != null)
+                    {
+                        index = index.Next;
+                    }
+
+                    _current = index;
+                    _temp = _current.Previous;
                 }
-
-                _current.Next.Previous = _current;
-
-                while (_tail.Next != null)
+                else
                 {
-                    _tail = _tail.Next;
-                } 
+                    _current = _current.Previous;
+                    _temp = _current.Previous;
+                }
+            }
+
+            while (_tail.Next != null)    // Set _tail after sort.
+            {
+                _tail = _tail.Next;
+            }
+
+            while (_head.Previous != null)    // Set _head after sort.
+            {
+                _head = _head.Previous;
             }
         }
 

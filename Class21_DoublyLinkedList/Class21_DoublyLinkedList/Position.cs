@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Class21_DoublyLinkedList
+﻿namespace Class21_DoublyLinkedList
 {
-    internal enum Position
+    internal enum Position : byte
     {
         None,
         Front,

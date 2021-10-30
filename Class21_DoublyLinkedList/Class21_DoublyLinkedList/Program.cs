@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Class21_DoublyLinkedList
 {
@@ -11,21 +7,29 @@ namespace Class21_DoublyLinkedList
         static void Main()
         {
             /*
+             *            Doubly Linked List
+             *            
+             * Use Position enum for adding data to list.
              * 
+             * Example: 
+             *  Add(data, Position.Front);
+             *  Add(data, Position.Back);
              */
 
             DoublyLinkedList one = new DoublyLinkedList();
 
+            one.Add(6, Position.Back);
+            one.Add(5, Position.Back);
             one.Add(4, Position.Back);
             one.Add(3, Position.Back);
             one.Add(2, Position.Back);
             one.Add(1, Position.Back);
+            one.Add(7, Position.Back);
+            one.Add(8, Position.Back);
+            one.Add(9, Position.Back);
+            one.Add(0, Position.Back);
 
-            for (int i = 0; i < 4; i++)
-            {
-                one.Sort();
-            }
-            //one.Sort();
+            one.Sort();
 
             Console.ReadKey();
         }
