@@ -70,6 +70,33 @@
             }
         }
 
+        public bool Insert(int element, int data)
+        {
+            bool result = false;
+
+            if (IsExist(element))
+            {
+                Entry node = new Entry(data);
+
+                if (_current == _tail)
+                {
+                    node.Previous = _current;
+                    _current.Next = node; 
+                }
+                else
+                {
+                    node.Previous = _current;
+                    node.Next = _current.Next;
+                    _current.Next = node;
+                    node.Next.Previous = node;
+                }
+
+                result = true;
+            }
+
+            return result;
+        }
+
         public bool Delete(int source)
         {
             bool result = false;

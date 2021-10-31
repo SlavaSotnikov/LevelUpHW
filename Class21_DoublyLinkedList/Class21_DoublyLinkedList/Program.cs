@@ -27,9 +27,10 @@ namespace Class21_DoublyLinkedList
             one.Add(7, Position.Back);
             one.Add(8, Position.Back);
             one.Add(9, Position.Back);
-            one.Add(0, Position.Back);
 
-            one.Sort();
+            one.Insert(9, 0);
+
+            //one.Sort();
 
             Console.ReadKey();
         }
