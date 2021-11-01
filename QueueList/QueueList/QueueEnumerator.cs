@@ -39,7 +39,7 @@ namespace QueueList
                 result = false;
             }
 
-            //_current = _current.Next;
+            //_current = (Entry)_current.Next;
 
             return result;
         }

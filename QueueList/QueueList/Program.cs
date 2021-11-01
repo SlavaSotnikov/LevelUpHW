@@ -13,6 +13,8 @@ namespace QueueList
             one.Enqueue(3);
             one.Enqueue(4);
             one.Enqueue(5);
+            one.Enqueue(6);
+            one.Enqueue(7);
 
             one.Reverse();
 

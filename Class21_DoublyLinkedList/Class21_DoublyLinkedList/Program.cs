@@ -14,6 +14,8 @@ namespace Class21_DoublyLinkedList
              * Example: 
              *  Add(data, Position.Front);
              *  Add(data, Position.Back);
+             *  
+             *  Insert(Data of previos item, Data);
              */
 
             DoublyLinkedList one = new DoublyLinkedList();
@@ -30,7 +32,12 @@ namespace Class21_DoublyLinkedList
 
             one.Insert(9, 0);
 
-            //one.Sort();
+            one.Sort();
+
+            foreach (Entry item in one)
+            {
+                Console.Write("{0} ", item.Data);
+            }
 
             Console.ReadKey();
         }

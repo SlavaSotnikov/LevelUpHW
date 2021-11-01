@@ -1,6 +1,8 @@
-﻿namespace Class21_DoublyLinkedList
+﻿using System.Collections;
+
+namespace Class21_DoublyLinkedList
 {
-    internal class DoublyLinkedList
+    internal class DoublyLinkedList : IEnumerable
     {
         private Entry _head = null;
         private Entry _tail = null;
@@ -195,16 +197,21 @@
             }
         }
 
-        private class Entry
+        public IEnumerator GetEnumerator()
         {
-            public int Data { get; set; }
-            public Entry Previous { get; set; }
-            public Entry Next { get; set; }
+            return new DLEnumerator(_head);
+        }
+    }
 
-            public Entry(int data)
-            {
-                Data = data;
-            }
+    public class Entry
+    {
+        public int Data { get; set; }
+        public Entry Previous { get; set; }
+        public Entry Next { get; set; }
+
+        public Entry(int data)
+        {
+            Data = data;
         }
     }
 }

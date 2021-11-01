@@ -79,31 +79,31 @@ namespace QueueList
             throw new NotImplementedException();
         }
 
-        private Entry _p = null;
-        private Entry _c = null;
-        private Entry _h = null;
-
         public void Reverse()
         {
-            _p = _head;
-            _c = _head;
-            _h = _head;
+            Entry prev = _head;
+            Entry curr = _head;
+            Entry head = _head;
 
-            _c = _c.Next;
-            _h = _c.Next;
-            _p.Next = null;
+            curr = curr.Next;
+            head = curr.Next;
+            prev.Next = null;
 
-            while (_c.Next != null && _h.Next != null)
+            while (curr.Next != null)
             {
-                _c.Next = _p;
-                _p = _h.Next;
-                _h.Next = _c;
-                _c = _p.Next;
-                _p.Next = _h;
-                _h = _c.Next;
+                curr.Next = prev;
+                prev = curr;
+                curr = head;
+                if (head.Next == null)
+                {
+                    curr.Next = prev;
+                    break;
+                }
+
+                head = head.Next;
             }
 
-            _head = _c;
+            _head = curr;
         }
 
         public bool IsEmpty => _head == null;
