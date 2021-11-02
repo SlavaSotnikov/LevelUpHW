@@ -4,15 +4,11 @@ using System.Collections.Generic;
 
 namespace QueueList
 {
-    public class Queue<T> : IEnumerable<T>
+    internal class Queue<T> : IEnumerable<T>
     {
         private Entry _head = null;
         private Entry _tail = null;
         private Entry _node = null;
-
-        
-
-        public Entry Head => _head;
 
         public ulong Amount { get; private set; }
 
@@ -24,9 +20,9 @@ namespace QueueList
             {
                 _node = new Entry(data);
             }
-            catch (Exception ex)
+            catch (Exception ex)    // TODO: Ask about IsFool property;
             {
-                throw new NoObjectException("A new object wasn't created!", ex);
+                throw new NoObjectException("A new object wasn't created!", ex);    
             }
 
             if (_head == null)
@@ -58,26 +54,24 @@ namespace QueueList
             return result;
         }
 
-        public IEnumerator<Entry> GetEnumerator()
-        {
-            return new QueueEnumerator<Entry>(_head);
+        #region IEnumerable
 
-
-            //for (Entry en = _head; en != null; en = en.Next)
-            //{
-            //    yield return en.Data;
-            //}
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
+        private IEnumerator GetEnumerator()
         {
             return GetEnumerator();
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return new QueueEnumerator(_head);
+        }
+
+        #endregion
 
         public void Reverse()
         {
@@ -94,6 +88,7 @@ namespace QueueList
                 curr.Next = prev;
                 prev = curr;
                 curr = head;
+
                 if (head.Next == null)
                 {
                     curr.Next = prev;
@@ -106,28 +101,65 @@ namespace QueueList
             _head = curr;
         }
 
-        public bool IsEmpty => _head == null;
+        
 
-        public class Entry
+        public bool IsEmpty => _head is null;
+
+        #region Entry
+
+        internal class Entry
         {
             public T Data { get; set; }
 
             public Entry Next { get; set; }
 
-            public Entry(T data)
+            internal Entry(T data)
             {
                 Data = data;
             }
-
-            public Entry(Entry source)
-            {
-                Data = source.Data;
-                Next = source.Next;
-            }
         }
+
+        #endregion
+
+        #region Enumerator
+
+        private class QueueEnumerator : IEnumerator<T>
+        {
+            private Entry _current;
+
+            public QueueEnumerator(Entry head)
+            {
+                _current = head;
+            }
+
+            public object Current { get { return _current; } }
+
+            T IEnumerator<T>.Current
+            {
+                get { return _current.Data; }
+            }
+
+            public void Reset()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool MoveNext()
+            {
+                bool result = false;
+
+                if (_current.Next != null)
+                {
+                    _current = _current.Next;
+                    result = true;
+                }
+
+                return result;
+            }
+
+            public void Dispose() {}
+        } 
+
+        #endregion
     }
-
-    
-
-
 }

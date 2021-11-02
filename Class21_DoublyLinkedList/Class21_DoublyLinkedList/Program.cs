@@ -18,7 +18,7 @@ namespace Class21_DoublyLinkedList
              *  Insert(Data of previos item, Data);
              */
 
-            DoublyLinkedList one = new DoublyLinkedList();
+            DoublyLinkedList<int> one = new DoublyLinkedList<int>();
 
             one.Add(6, Position.Back);
             one.Add(5, Position.Back);
@@ -34,9 +34,9 @@ namespace Class21_DoublyLinkedList
 
             one.Sort();
 
-            foreach (Entry item in one)
+            foreach (int item in one)
             {
-                Console.Write("{0} ", item.Data);
+                Console.Write("{0} ", item);
             }
 
             Console.ReadKey();

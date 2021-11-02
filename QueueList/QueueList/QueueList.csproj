@@ -47,7 +47,6 @@
     <Compile Include="NoObjectException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueEnumerator.cs" />
     <Compile Include="Queue.cs" />
   </ItemGroup>
   <ItemGroup>

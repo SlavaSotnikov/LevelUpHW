@@ -24,11 +24,18 @@ namespace ClassDequeImplement
             one.Add(4, Position.Back);
             one.Add(5, Position.Front);
 
-            one.Get(Position.Back);
-            one.Get(Position.Front);
-            one.Get(Position.Back);
-            one.Get(Position.Front);
-            one.Get(Position.Back);
+            try
+            {
+                one.Get(Position.Back);
+                one.Get(Position.Front);
+                one.Get(Position.Back);
+                one.Get(Position.Front);
+                one.Get(Position.Back);
+            }
+            catch (NoObjectException ex)
+            {
+                Console.WriteLine("{0}", ex);
+            }
 
             Console.ReadKey();
         }

@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace Class21_DoublyLinkedList
 {
     internal class DLEnumerator : IEnumerator
     {
         private Entry _head;
+        private Entry _temp;
 
         public DLEnumerator(Entry source)
         {
             _head = source;
+            _temp = new Entry(0) { Next = _head };    // Try bool.
         }
 
         public object Current
         {
-            get { return _head; }
-            set { _head = (Entry)value; }
+            get { return _temp; }
+            set { _temp = (Entry)value; }
         }
 
-        public bool MoveNext()    // TODO: What about a very first item?
+        public bool MoveNext()
         {
             bool result = false;
 

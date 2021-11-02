@@ -16,11 +16,11 @@ namespace QueueList
             one.Enqueue(6);
             one.Enqueue(7);
 
-            one.Reverse();
+            //one.Reverse();
 
-            foreach (var item in one)
+            foreach (int item in one)
             {
-                Console.WriteLine("{0}", item);
+                Console.WriteLine(item);    // TODO: Search OutOfMemoryException.
             }
 
             //try

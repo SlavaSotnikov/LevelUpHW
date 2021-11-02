@@ -23,28 +23,39 @@ namespace ClassDequeImplement
                 switch (source)
                 {
                     case Position.Front:
-                        _head.Next = node;
-                        node.Previous = _head;
-                        _head = node;
+                        AddToFront(node);
                         break;
 
                     case Position.Back:
-                        _tail.Previous = node;
-                        node.Next = _tail;
-                        _tail = node;
+                        AddToBack(node);
                         break;
 
                     default:
+                        AddToBack(node);
                         break;
                 }
             }
+        }
+
+        private void AddToBack(Entry node)
+        {
+            _tail.Previous = node;
+            node.Next = _tail;
+            _tail = node;
+        }
+
+        private void AddToFront(Entry node)
+        {
+            _head.Next = node;
+            node.Previous = _head;
+            _head = node;
         }
 
         public Entry Get(Position source)
         {
             if (IsEmpty)
             {
-                throw new MissingMemberException("No objects.");    // TODO: Where is dangerous code chunk?
+                throw new NoObjectException("Deque is empty.");
             }
 
             Entry result = null;

@@ -1,40 +1,45 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Class21_DoublyLinkedList
 {
-    internal class DoublyLinkedList : IEnumerable
+    internal class DoublyLinkedList<T> : IEnumerable
+        where T : IComparable<T>
     {
         private Entry _head = null;
         private Entry _tail = null;
         private Entry _current = null;
         private Entry _temp = null;
 
-        public bool IsEmpty => _head is null;
+        public bool IsEmpty => _head is null; 
 
-        public bool IsExist(int source)    // TODO: How about a Property?
+        public bool IsExist(T source)
         {
             bool result = false;
 
             if (!IsEmpty)
             {
-                _current = _head;
+                Entry current = _head;
 
-                while (_current.Next != null)
+                while (current.Next != null)
                 {
-                    if (_current.Data == source)
+                    source.CompareTo(T);    // TODO: Read IComparable.
+
+                    if (current.Data == source)
                     {
                         result = true;
                         break;
                     }
 
-                    if (_current.Next.Data == source)
+                    if (current.Next.Data == source)
                     {
                         result = true;
-                        _current = _current.Next;
+                        current = _current.Next;
                         break;
                     }
 
-                    _current = _current.Next;
+                    current = current.Next;
                 } 
             }
 
@@ -121,7 +126,7 @@ namespace Class21_DoublyLinkedList
                 {
                     _current.Next.Previous = _current.Previous;
                     _current.Previous.Next = _current.Next;
-                    _current.Previous = null;    // TODO: What about GC?
+                    _current.Previous = null;
                     _current.Next = null;
                 }
 
@@ -201,17 +206,62 @@ namespace Class21_DoublyLinkedList
         {
             return new DLEnumerator(_head);
         }
-    }
 
-    public class Entry
-    {
-        public int Data { get; set; }
-        public Entry Previous { get; set; }
-        public Entry Next { get; set; }
-
-        public Entry(int data)
+        public class Entry
         {
-            Data = data;
+            public int Data { get; set; }
+            public Entry Previous { get; set; }
+            public Entry Next { get; set; }
+
+            public Entry(int data)
+            {
+                Data = data;
+            }
+        }
+
+        internal class DLEnumerator : IEnumerator<T>
+        {
+            private Entry _head;
+            private Entry _temp;
+
+            public DLEnumerator(Entry source)
+            {
+                _head = source;
+                _temp = new Entry(0) { Next = _head };    // Try bool.
+            }
+
+            public object Current
+            {
+                get { return _temp; }
+                set { _temp = (Entry)value; }
+            }
+
+            T IEnumerator<T>.Current 
+            {
+            }
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool MoveNext()
+            {
+                bool result = false;
+
+                if (Current is Entry one && one.Next != null)
+                {
+                    Current = one.Next;
+                    result = true;
+                }
+
+                return result;
+            }
+
+            public void Reset()
+            {
+                Current = _head;
+            }
         }
     }
 }
