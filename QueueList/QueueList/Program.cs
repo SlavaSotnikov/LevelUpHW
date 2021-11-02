@@ -16,7 +16,7 @@ namespace QueueList
             one.Enqueue(6);
             one.Enqueue(7);
 
-            //one.Reverse();
+            one.Reverse();
 
             foreach (int item in one)
             {

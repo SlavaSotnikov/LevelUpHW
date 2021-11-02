@@ -6,11 +6,17 @@ namespace QueueList
 {
     internal class Queue<T> : IEnumerable<T>
     {
+        #region Private Data
+
         private Entry _head = null;
         private Entry _tail = null;
         private Entry _node = null;
+        
+        #endregion
 
         public ulong Amount { get; private set; }
+
+        public bool IsEmpty => _head is null;
 
         public bool IsFool => Amount > 0 && _node == null;
 
@@ -20,7 +26,7 @@ namespace QueueList
             {
                 _node = new Entry(data);
             }
-            catch (Exception ex)    // TODO: Ask about IsFool property;
+            catch (Exception ex)
             {
                 throw new NoObjectException("A new object wasn't created!", ex);    
             }
@@ -101,9 +107,7 @@ namespace QueueList
             _head = curr;
         }
 
-        
-
-        public bool IsEmpty => _head is null;
+       
 
         #region Entry
 
@@ -139,10 +143,7 @@ namespace QueueList
                 get { return _current.Data; }
             }
 
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
+            public void Reset() {}
 
             public bool MoveNext()
             {
