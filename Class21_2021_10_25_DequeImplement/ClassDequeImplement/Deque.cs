@@ -2,14 +2,14 @@
 
 namespace ClassDequeImplement
 {
-    internal class Deque
+    internal class Deque<T>
     {
         private Entry _head = null;
         private Entry _tail = null;
 
         public bool IsEmpty => _head is null;
 
-        public void Add(int data, Position source = Position.Back)
+        public void Add(T data, Position source = Position.Back)
         {
             Entry node = new Entry(data);
 
@@ -62,29 +62,11 @@ namespace ClassDequeImplement
             switch (source)
             {
                 case Position.Front:
-                    result = _head;
-                    _head = _head.Previous;
-                    if (_head != null)
-                    {
-                        _head.Next = null; 
-                    }
-                    else
-                    {
-                        _tail = null;
-                    }
+                    result = GetFromFront();
 
                     break;
                 case Position.Back:
-                    result = _tail;
-                    _tail = _tail.Next;
-                    if (_tail != null)
-                    {
-                        _tail.Previous = null; 
-                    }
-                    else
-                    {
-                        _head = null;
-                    }
+                    result = GetFromBack();
 
                     break;
                 default:
@@ -94,13 +76,47 @@ namespace ClassDequeImplement
             return result;
         }
 
+        private Entry GetFromBack()
+        {
+            Entry result = _tail;
+
+            _tail = _tail.Next;
+            if (_tail != null)
+            {
+                _tail.Previous = null;
+            }
+            else
+            {
+                _head = null;
+            }
+
+            return result;
+        }
+
+        private Entry GetFromFront()
+        {
+            Entry result = _head;
+
+            _head = _head.Previous;
+            if (_head != null)
+            {
+                _head.Next = null;
+            }
+            else
+            {
+                _tail = null;
+            }
+
+            return result;
+        }
+
         public class Entry
         {
-            public int Data { get; set; }
+            public T Data { get; set; }
             public Entry Previous { get; set; }
             public Entry Next { get; set; }
 
-            public Entry(int data)
+            public Entry(T data)
             {
                 Data = data;
             }

@@ -16,7 +16,7 @@ namespace ClassDequeImplement
              *  Get(data, Position.End);
              */
 
-            Deque one = new Deque();
+            Deque<int> one = new Deque<int>();
 
             one.Add(1, Position.Front);
             one.Add(2);
