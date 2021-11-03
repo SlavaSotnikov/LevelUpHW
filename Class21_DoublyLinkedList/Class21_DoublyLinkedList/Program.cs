@@ -20,15 +20,15 @@ namespace Class21_DoublyLinkedList
 
             DoublyLinkedList<int> one = new DoublyLinkedList<int>();
 
-            one.Add(6, Position.Back);
-            one.Add(5, Position.Back);
-            one.Add(4, Position.Back);
-            one.Add(3, Position.Back);
-            one.Add(2, Position.Back);
-            one.Add(1, Position.Back);
-            one.Add(7, Position.Back);
-            one.Add(8, Position.Back);
-            one.Add(9, Position.Back);
+            one.Add(6);
+            one.Add(5);
+            one.Add(4);
+            one.Add(3);
+            one.Add(2);
+            one.Add(1);
+            one.Add(7);
+            one.Add(8);
+            one.Add(9);
 
             one.Insert(9, 0);
 

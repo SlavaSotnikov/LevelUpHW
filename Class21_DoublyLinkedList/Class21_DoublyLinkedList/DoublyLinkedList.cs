@@ -20,26 +20,26 @@ namespace Class21_DoublyLinkedList
 
             if (!IsEmpty)
             {
-                Entry current = _head;
+                _current = _head;
 
-                while (current.Next != null)
+                while (_current.Next != null)
                 {
-                    source.CompareTo(T);    // TODO: Read IComparable.
+                    //source.CompareTo();    // TODO: Read IComparable.
 
-                    if (current.Data == source)
+                    if (source.CompareTo(_current.Data) == 0)
                     {
                         result = true;
                         break;
                     }
 
-                    if (current.Next.Data == source)
+                    if (source.CompareTo(_current.Next.Data) == 0)
                     {
                         result = true;
-                        current = _current.Next;
+                        _current = _current.Next;
                         break;
                     }
 
-                    current = current.Next;
+                    _current = _current.Next;
                 } 
             }
 
@@ -154,9 +154,9 @@ namespace Class21_DoublyLinkedList
 
             for (; index.Previous != null; index = index.Previous )
             {
-                if (_current.Data < _temp.Data)
+                if (_current.Data.CompareTo(_temp.Data) == -1)
                 {
-                    while ((_current.Data < _temp.Data) && (_current.Previous != null))
+                    while ((_current.Data.CompareTo(_temp.Data) == -1) && (_current.Previous != null))
                     {
                         _current.Previous = _temp.Previous;
                         _temp.Next = _current.Next;
@@ -248,6 +248,7 @@ namespace Class21_DoublyLinkedList
         private class DLEnumerator : IEnumerator<T>
         {
             private Entry _head;
+            private bool _result = false;
 
             public DLEnumerator(Entry source)
             {
@@ -266,20 +267,21 @@ namespace Class21_DoublyLinkedList
 
             public bool MoveNext()
             {
-                bool result = false;
-
-                if (_head.Previous == null)
+                if (_result == false)
                 {
-                    return true;
+                    _result = true;
                 }
-
-                if (_head.Next != null)
+                else
                 {
+                    if (_head.Next == null)
+                    {
+                        _result = false;
+                    }
+
                     _head = _head.Next;
-                    result = true;
                 }
 
-                return result;
+                return _result;
             }
 
             public void Reset() {}
