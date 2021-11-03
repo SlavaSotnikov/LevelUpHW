@@ -107,8 +107,6 @@ namespace QueueList
             _head = curr;
         }
 
-       
-
         #region Entry
 
         internal class Entry
@@ -130,6 +128,7 @@ namespace QueueList
         private class QueueEnumerator : IEnumerator<T>
         {
             private Entry _current;
+            private bool _result = false;
 
             public QueueEnumerator(Entry head)
             {
@@ -147,15 +146,21 @@ namespace QueueList
 
             public bool MoveNext()
             {
-                bool result = false;
-
-                if (_current.Next != null)
+                if (_result == false)
                 {
+                    _result = true;
+                }
+                else
+                {
+                    if (_current.Next == null)
+                    {
+                        _result = false;
+                    }
+
                     _current = _current.Next;
-                    result = true;
                 }
 
-                return result;
+                return _result;
             }
 
             public void Dispose() {}

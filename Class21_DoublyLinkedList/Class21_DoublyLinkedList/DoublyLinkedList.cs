@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Class21_DoublyLinkedList
 {
-    internal class DoublyLinkedList<T> : IEnumerable
+    internal class DoublyLinkedList<T> : IEnumerable<T>
         where T : IComparable<T>
     {
         private Entry _head = null;
@@ -46,7 +46,7 @@ namespace Class21_DoublyLinkedList
             return result;
         }
 
-        public void Add(int data, Position source)
+        public void Add(T data, Position source = Position.Back)
         {
             Entry node = new Entry(data);
 
@@ -60,15 +60,11 @@ namespace Class21_DoublyLinkedList
                 switch (source)
                 {
                     case Position.Front:
-                        _head.Previous = node;
-                        node.Next = _head;
-                        _head = node;
+                        AddToFront(node);
                         break;
 
                     case Position.Back:
-                        node.Previous = _tail;
-                        _tail.Next = node;
-                        _tail = node;
+                        AddToBack(node);
                         break;
 
                     default:
@@ -77,7 +73,21 @@ namespace Class21_DoublyLinkedList
             }
         }
 
-        public bool Insert(int element, int data)
+        private void AddToBack(Entry node)
+        {
+            node.Previous = _tail;
+            _tail.Next = node;
+            _tail = node;
+        }
+
+        private void AddToFront(Entry node)
+        {
+            _head.Previous = node;
+            node.Next = _head;
+            _head = node;
+        }
+
+        public bool Insert(T element, T data)
         {
             bool result = false;
 
@@ -104,7 +114,7 @@ namespace Class21_DoublyLinkedList
             return result;
         }
 
-        public bool Delete(int source)
+        public bool Delete(T source)
         {
             bool result = false;
 
@@ -202,66 +212,81 @@ namespace Class21_DoublyLinkedList
             }
         }
 
-        public IEnumerator GetEnumerator()
+        private IEnumerator GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
             return new DLEnumerator(_head);
         }
 
-        public class Entry
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            public int Data { get; set; }
+            throw new NotImplementedException();
+        }
+
+        #region Entry
+
+        internal class Entry
+        {
+            public T Data { get; set; }
             public Entry Previous { get; set; }
             public Entry Next { get; set; }
 
-            public Entry(int data)
+            public Entry(T data)
             {
                 Data = data;
             }
         }
 
-        internal class DLEnumerator : IEnumerator<T>
+        #endregion
+
+        #region Enumerator
+
+        private class DLEnumerator : IEnumerator<T>
         {
             private Entry _head;
-            private Entry _temp;
 
             public DLEnumerator(Entry source)
             {
                 _head = source;
-                _temp = new Entry(0) { Next = _head };    // Try bool.
             }
 
-            public object Current
-            {
-                get { return _temp; }
-                set { _temp = (Entry)value; }
-            }
+            public object Current{ get { return _head; } }
 
-            T IEnumerator<T>.Current 
+            T IEnumerator<T>.Current
             {
-            }
-
-            public void Dispose()
-            {
-                throw new NotImplementedException();
+                get
+                {
+                    return _head.Data;
+                }
             }
 
             public bool MoveNext()
             {
                 bool result = false;
 
-                if (Current is Entry one && one.Next != null)
+                if (_head.Previous == null)
                 {
-                    Current = one.Next;
+                    return true;
+                }
+
+                if (_head.Next != null)
+                {
+                    _head = _head.Next;
                     result = true;
                 }
 
                 return result;
             }
 
-            public void Reset()
-            {
-                Current = _head;
-            }
-        }
+            public void Reset() {}
+
+            public void Dispose() {}
+        } 
+
+        #endregion
     }
 }

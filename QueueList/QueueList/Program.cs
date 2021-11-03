@@ -20,7 +20,7 @@ namespace QueueList
 
             foreach (int item in one)
             {
-                Console.WriteLine(item);    // TODO: Search OutOfMemoryException.
+                Console.Write("{0} ", item);    // TODO: Search OutOfMemoryException.
             }
 
             //try
