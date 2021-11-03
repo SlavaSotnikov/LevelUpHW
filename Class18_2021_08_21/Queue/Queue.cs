@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Queue
 {
-    class Queue : IQueue, IEnumerable
+    class Queue<T> : IQueue<T>, IEnumerable<T>
     {
         #region Private Data
 
-        private object[] _elements;
+        private T[] _elements;
         private int _head;
         private int _tail;
         private int _size;
-
-        private const sbyte INITIAL_VALUE = -1;
 
         private QueueStatus _warning;
 
@@ -25,7 +24,7 @@ namespace Queue
             _size = 0;
             _head = 0;
             _tail = -1;
-            _elements = new object[capacity];
+            _elements = new T[capacity];
         }
 
         #endregion
@@ -40,7 +39,7 @@ namespace Queue
             }
         }
 
-        public void Add(object source)
+        public void Add(T source)
         {
             _warning = QueueStatus.Ok;
 
@@ -55,25 +54,35 @@ namespace Queue
             ++_size;
         }
 
-        public object Get()
+        public T Get()
         {
             if (IsEmpty())
             {
                 throw new QueueException("The Queue is empty!");    // TODO: Exception 1
             }
 
-            object removed = _elements[_head];
+            T removed = _elements[_head];
 
-            _elements[_head] = null;
+            _elements[_head] = default;
             _head = (_head + 1) % _elements.Length;
             --_size;
 
             return removed;
         }
 
-        public IEnumerator GetEnumerator()
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return new QueueIterator(_elements, _head, _tail);    
+            return new QueueIterator(_elements, _head, _tail);
+        }
+
+        private IEnumerator GetEnumerator()
+        {
+            return GetEnumerator();  
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsEmpty()
@@ -101,13 +110,13 @@ namespace Queue
 
         #region QueueIterator
 
-        private struct QueueIterator : IEnumerator
+        private struct QueueIterator : IEnumerator<T>
         {
-            private object[] _elements;
+            private T[] _elements;
             private int _head;
             private int _tail;
 
-            public QueueIterator(object[] elements, int head, int tail)
+            public QueueIterator(T[] elements, int head, int tail)
             {
                 _elements = elements;
                 _head = head - 1;
@@ -115,6 +124,14 @@ namespace Queue
             }
 
             public object Current
+            {
+                get
+                {
+                    return _elements[_head];
+                }
+            }
+
+            T IEnumerator<T>.Current
             {
                 get
                 {
@@ -145,6 +162,8 @@ namespace Queue
             {
                 _head = -1;
             }
+
+            public void Dispose() {}
         }
 
         #endregion

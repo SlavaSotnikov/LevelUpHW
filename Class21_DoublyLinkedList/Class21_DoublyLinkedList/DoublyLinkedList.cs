@@ -154,9 +154,9 @@ namespace Class21_DoublyLinkedList
 
             for (; index.Previous != null; index = index.Previous )
             {
-                if (_current.Data.CompareTo(_temp.Data) == -1)
+                if (_current.Data.CompareTo(_temp.Data) < 0)
                 {
-                    while ((_current.Data.CompareTo(_temp.Data) == -1) && (_current.Previous != null))
+                    while ((_current.Data.CompareTo(_temp.Data) < 0) && (_current.Previous != null))
                     {
                         _current.Previous = _temp.Previous;
                         _temp.Next = _current.Next;
@@ -273,7 +273,7 @@ namespace Class21_DoublyLinkedList
                 }
                 else
                 {
-                    if (_head.Next == null)
+                    if (_head.Next is null)
                     {
                         _result = false;
                     }

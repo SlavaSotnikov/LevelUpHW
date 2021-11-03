@@ -19,18 +19,18 @@ namespace ClassDequeImplement
             Deque one = new Deque();
 
             one.Add(1, Position.Front);
-            one.Add(2, Position.Back);
+            one.Add(2);
             one.Add(3, Position.Front);
-            one.Add(4, Position.Back);
+            one.Add(4);
             one.Add(5, Position.Front);
 
             try
             {
-                one.Get(Position.Back);
+                one.Get();
                 one.Get(Position.Front);
-                one.Get(Position.Back);
+                one.Get();
                 one.Get(Position.Front);
-                one.Get(Position.Back);
+                one.Get();
             }
             catch (NoObjectException ex)
             {

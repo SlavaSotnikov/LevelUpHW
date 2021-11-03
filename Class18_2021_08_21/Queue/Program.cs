@@ -8,7 +8,7 @@ namespace Queue
         {
             try
             {
-                Queue one = new Queue(5);
+                Queue<int> one = new Queue<int>(5);
 
                 one.Add(1);
                 one.Add(2);
@@ -21,7 +21,7 @@ namespace Queue
                 //one.Get();
                 //one.Get();
 
-                one.Add(6);
+                //one.Add(6);
 
                 foreach (object item in one)
                 {

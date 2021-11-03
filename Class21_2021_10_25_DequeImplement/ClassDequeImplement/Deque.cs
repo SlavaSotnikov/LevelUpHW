@@ -9,7 +9,7 @@ namespace ClassDequeImplement
 
         public bool IsEmpty => _head is null;
 
-        public void Add(int data, Position source)
+        public void Add(int data, Position source = Position.Back)
         {
             Entry node = new Entry(data);
 
@@ -31,7 +31,6 @@ namespace ClassDequeImplement
                         break;
 
                     default:
-                        AddToBack(node);
                         break;
                 }
             }
@@ -51,7 +50,7 @@ namespace ClassDequeImplement
             _head = node;
         }
 
-        public Entry Get(Position source)
+        public Entry Get(Position source = Position.Back)
         {
             if (IsEmpty)
             {

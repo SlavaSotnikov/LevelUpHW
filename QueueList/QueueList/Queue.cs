@@ -31,7 +31,7 @@ namespace QueueList
                 throw new NoObjectException("A new object wasn't created!", ex);    
             }
 
-            if (_head == null)
+            if (_head is null)
             {
                 _head = _node;
                 _tail = _node;
@@ -95,7 +95,7 @@ namespace QueueList
                 prev = curr;
                 curr = head;
 
-                if (head.Next == null)
+                if (head.Next is null)
                 {
                     curr.Next = prev;
                     break;
@@ -152,7 +152,7 @@ namespace QueueList
                 }
                 else
                 {
-                    if (_current.Next == null)
+                    if (_current.Next is null)
                     {
                         _result = false;
                     }

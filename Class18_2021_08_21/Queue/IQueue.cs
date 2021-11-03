@@ -1,10 +1,10 @@
 ﻿namespace Queue
 {
-    interface IQueue
+    interface IQueue<T>
     {
-        void Add(object source);
+        void Add(T source);
 
-        object Get();
+        T Get();
 
         bool IsEmpty();
 
