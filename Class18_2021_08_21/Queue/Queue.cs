@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace Queue
 {
-    class Queue<T> : IQueue<T>, IEnumerable<T>
+    class Queue<T> : IQueue<T>, IEnumerable<T>, IList<T>
+        where T : IComparable<T>
     {
         #region Private Data
 
@@ -26,6 +27,107 @@ namespace Queue
             _tail = -1;
             _elements = new T[capacity];
         }
+
+        #endregion
+
+        #region IList
+
+        public int Count => _size;
+
+        public bool IsReadOnly => false;
+
+        public T this[int index] 
+        { 
+            get => _elements[index]; 
+            set => _elements[index] = value; 
+        }
+
+        public int IndexOf(T item)
+        {
+            int index = -1;
+
+            for (int i = 0; i < _size; i++)
+            {
+                if (_elements[i].CompareTo(item) == 0)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        public void Insert(int index, T item)
+        {
+            if ((Count + 1 <= _elements.Length) && (index >= 0) && (index < Count))
+            {
+                for (int i = Count - 1; i > index; i--)
+                {
+                    _elements[i] = _elements[i - 1];
+                }
+
+                _elements[index] = item;
+                _size++;
+            }
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (index >= 0 && index < Count)
+            {
+                for (int i = index; i < Count - 1; i++)
+                {
+                    _elements[i] = _elements[i + 1];
+                }
+
+                _size--;
+                _tail--;
+            }
+        }
+
+        public void Clear()
+        {
+            _size = 0;
+        }
+
+        public bool Contains(T item)
+        {
+            bool result = false;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (_elements[i].CompareTo(item) == 0)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                array.SetValue(_elements[i], arrayIndex++);    // TODO: Pay attention to shallow copy.
+            }
+        }
+
+        public bool Remove(T item)
+        {
+            bool result = false;
+            int index = IndexOf(item);
+
+            if (index >= 0)
+            {
+                RemoveAt(index);
+                result = true;
+            }
+
+            return result;
+        } 
 
         #endregion
 
@@ -105,6 +207,8 @@ namespace Queue
         {
             return (_head == 0 && _tail == _elements.Length - 1);
         }
+
+        
 
         #endregion
 

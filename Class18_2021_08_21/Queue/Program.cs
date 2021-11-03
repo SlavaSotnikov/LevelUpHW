@@ -6,27 +6,26 @@ namespace Queue
     {
         static void Main()
         {
+            Queue<string> one = new Queue<string>();
+
             try
             {
-                Queue<int> one = new Queue<int>(5);
+                one.Add("1");
+                one.Add("2");
+                one.Add("3");
+                one.Add("4");
+                one.Add("5");
 
-                one.Add(1);
-                one.Add(2);
-                one.Add(3);
-                one.Add(4);
-                one.Add(5);
+                one.Remove("1");
 
-                //one.Resize(6);
+                one.Add("6");
+
+                one.Resize(6);
 
                 //one.Get();
                 //one.Get();
 
-                //one.Add(6);
-
-                foreach (object item in one)
-                {
-                    Console.Write("{0} ", item);
-                }
+                one.Add("7");
             }
             catch(QueueException ex)
             {
@@ -36,6 +35,12 @@ namespace Queue
             {
                 Console.WriteLine($"{ex.Message} \n{ex.StackTrace}");
             }
+
+            foreach (string item in one)
+            {
+                Console.Write("{0} ", item);
+            }
+
             Console.ReadKey();
         }
     }
