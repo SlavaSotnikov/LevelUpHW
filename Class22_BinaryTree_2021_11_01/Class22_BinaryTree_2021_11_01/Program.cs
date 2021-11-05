@@ -12,9 +12,16 @@ namespace Class22_BinaryTree_2021_11_01
         {
             Tree<int> t1 = new Tree<int>();
 
-            t1.Add(10);
-            t1.Add(1);
-            t1.Add(20);
+            for (int i = 10; i < 20; i++)
+            {
+                t1.Add(i);
+            }
+
+            t1.Delete(15);
+
+            //t1.Search(59);
+
+            Console.WriteLine(t1);
 
             Console.ReadKey();
         }

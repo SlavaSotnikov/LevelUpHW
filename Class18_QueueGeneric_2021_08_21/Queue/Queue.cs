@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace Queue
 {
     class Queue<T> : IQueue<T>, IEnumerable<T>, IList<T>
-        where T : IComparable<T>
     {
         #region Private Data
 
@@ -48,7 +47,7 @@ namespace Queue
 
             for (int i = 0; i < _size; i++)
             {
-                if (_elements[i].CompareTo(item) == 0)
+                if (_elements[i].Equals(item))
                 {
                     index = i;
                     break;
@@ -97,7 +96,7 @@ namespace Queue
 
             for (int i = 0; i < Count; i++)
             {
-                if (_elements[i].CompareTo(item) == 0)
+                if (_elements[i].Equals(item))
                 {
                     result = true;
                     break;
@@ -111,7 +110,14 @@ namespace Queue
         {
             for (int i = 0; i < Count; i++)
             {
-                array.SetValue(_elements[i], arrayIndex++);    // TODO: Pay attention to shallow copy.
+                if (_elements[i] is ICloneable)
+                {
+                    array[i] = (T)((ICloneable)_elements[i]).Clone();
+                }
+                else
+                {
+                    array.SetValue(_elements[i], arrayIndex++);
+                }
             }
         }
 
@@ -207,8 +213,6 @@ namespace Queue
         {
             return (_head == 0 && _tail == _elements.Length - 1);
         }
-
-        
 
         #endregion
 
