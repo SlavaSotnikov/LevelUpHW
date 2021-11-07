@@ -1,30 +1,115 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Class22_BinaryTree_2021_11_01
 {
-    internal class Tree<T>
-        where T : IComparable<T>
+    internal class Tree<K, V> : IDictionary<K, V>
+        where K : IComparable<K>
     {
         private Node _root = null;
 
-        public void Add(T info)
-        {
-            Add(ref _root, info);
+        #region IDictionary
+
+        public ICollection<K> Keys => throw new NotImplementedException();
+
+        public ICollection<V> Values => throw new NotImplementedException();
+
+        public int Count => throw new NotImplementedException();
+
+        public bool IsReadOnly => throw new NotImplementedException();
+
+        public V this[K key] 
+        { 
+            get => throw new NotImplementedException(); 
+            set => throw new NotImplementedException(); 
         }
 
-        private static void Add(ref Node root, T info)
+        public bool ContainsKey(K key)
+        {
+            Node node = Search(key);
+
+            return node != null;
+        }
+
+        public bool Remove(K key)
+        {
+            return Delete(key);
+        }
+
+        public bool TryGetValue(K key, out V value)
+        {
+            Node node = Search(key);
+            bool found = false;
+
+            if (node is null)
+            {
+                value = default;
+            }
+            else
+            {
+                value = node.Info;
+                found = true;
+            }
+
+            return found;
+        }
+
+        public void Add(KeyValuePair<K, V> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(KeyValuePair<K, V> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(KeyValuePair<K, V>[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(KeyValuePair<K, V> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        public void Add(K key, V info)
+        {
+            Add(ref _root, key, info);
+        }
+
+        private static void Add(ref Node root, K key, V info)
         {
             if (root is null)
             {
-                root = new Node(info);
+                root = new Node(key, info);
                 return;
             }
             else
             {
-                if (root.Data.CompareTo(info) < 0)
+                if (root.Key.CompareTo(key) < 0)
                 {
-                    Add(ref root._right, info);
+                    Add(ref root._right,key, info);
 
                     if (CalculateHeight(root._right) - CalculateHeight(root._left) > 1)
                     {
@@ -38,7 +123,7 @@ namespace Class22_BinaryTree_2021_11_01
                 }
                 else
                 {
-                    Add(ref root._left, info);
+                    Add(ref root._left, key, info);
 
                     if (CalculateHeight(root._left) - CalculateHeight(root._right) > 1)
                     {
@@ -51,13 +136,13 @@ namespace Class22_BinaryTree_2021_11_01
                     }
                 }
             }
-
-            
             
             SetBalance(root);
         }
 
-        public bool Delete(T data)
+        #region Delete
+
+        public bool Delete(K key)
         {
             bool result = true;
 
@@ -65,11 +150,11 @@ namespace Class22_BinaryTree_2021_11_01
             Node current = _root;
 
             // Find current & previous items.
-            while ((current != null) && (current.Data.CompareTo(data) != 0))
+            while ((current != null) && (current.Key.CompareTo(key) != 0))
             {
                 previous = current;
 
-                if (current.Data.CompareTo(data) < 0)
+                if (current.Key.CompareTo(key) < 0)
                 {
                     current = current._right;
                 }
@@ -147,7 +232,7 @@ namespace Class22_BinaryTree_2021_11_01
                     else
                     {
                         previous._right = current;
-                    } 
+                    }
                 }
                 else
                 {
@@ -156,12 +241,12 @@ namespace Class22_BinaryTree_2021_11_01
 
                 if (current._right is null)
                 {
-                    
+
                     current._left = objective._left;
 
                     if (objective._right != current)
                     {
-                        current._right = objective._right; 
+                        current._right = objective._right;
                     }
                     prevCurr._left = null;
                 }
@@ -172,9 +257,9 @@ namespace Class22_BinaryTree_2021_11_01
                     if (prevCurr != objective)
                     {
                         prevCurr._left = current._right;
-                        current._right = prevCurr; 
+                        current._right = prevCurr;
                     }
-                    
+
                 }
 
                 result = true;
@@ -182,18 +267,20 @@ namespace Class22_BinaryTree_2021_11_01
             }
 
             return result;
+        } 
+
+        #endregion
+
+        public Node Search(K key)
+        {
+            return Search(_root, key); ;
         }
 
-        public Node Search(T data)
+        private static Node Search(Node source, K data)
         {
-            return Search(_root, data); ;
-        }
-
-        private static Node Search(Node source, T data)
-        {
-            while ((source != null) && (source.Data.CompareTo(data) != 0))
+            while ((source != null) && (source.Key.CompareTo(data) != 0))
             {
-                if (source.Data.CompareTo(data) < 0)
+                if (source.Key.CompareTo(data) < 0)
                 {
                     source = source._right;
                 }
@@ -220,7 +307,7 @@ namespace Class22_BinaryTree_2021_11_01
 
             Print(root._left);
 
-            Console.Write("{0} ", root.Data);
+            Console.Write("{0} ", root.Key);
 
             Print(root._right);
         }
@@ -248,7 +335,7 @@ namespace Class22_BinaryTree_2021_11_01
                 result.Append("\t");
             }
 
-            result.AppendFormat("{0}\n", root.Data);
+            result.AppendFormat("{0}\n", root.Key);
 
             ToString(root._left, result, level+1);
         }
@@ -341,11 +428,13 @@ namespace Class22_BinaryTree_2021_11_01
             public Node _right = null;
             public int _balance = 0;
 
-            public T Data { get; private set; }
+            public K Key { get; private set; }
+            public V Info { get; private set; }
 
-            public Node(T info)
+            public Node(K key, V info)
             {
-                Data = info;
+                Key = key;
+                Info = info;
             }
         }
     }

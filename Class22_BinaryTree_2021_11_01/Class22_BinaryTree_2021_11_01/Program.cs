@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Class22_BinaryTree_2021_11_01
 {
@@ -6,11 +7,11 @@ namespace Class22_BinaryTree_2021_11_01
     {
         static void Main()
         {
-            Tree<int> t1 = new Tree<int>();
+            IDictionary<int, string> t1 = new Tree<int, string>();
 
             for (int i = 0; i < 20; i++)
             {
-                t1.Add(i);
+                t1.Add(i, $"Value {i}");
             }
 
             //t1.Add(1);
@@ -25,11 +26,12 @@ namespace Class22_BinaryTree_2021_11_01
             //t1.Add(20);
             //t1.Add(14);
 
-            // t1.Delete(15);
+            Console.WriteLine(t1.TryGetValue(5, out var data));
+            Console.WriteLine(data);
 
             //t1.Search(59);
 
-            Console.WriteLine(t1);
+            //Console.WriteLine(t1);
 
             Console.ReadKey();
         }
