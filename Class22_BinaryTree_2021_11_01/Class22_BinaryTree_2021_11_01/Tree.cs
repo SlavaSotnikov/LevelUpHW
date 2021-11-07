@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Class22_BinaryTree_2021_11_01
 {
@@ -23,15 +20,41 @@ namespace Class22_BinaryTree_2021_11_01
                 root = new Node(info);
                 return;
             }
-
-            if (root.Data.CompareTo(info) < 0)
-            {
-                Add(ref root._right, info);
-            }
             else
             {
-                Add(ref root._left, info);
+                if (root.Data.CompareTo(info) < 0)
+                {
+                    Add(ref root._right, info);
+
+                    if (CalculateHeight(root._right) - CalculateHeight(root._left) > 1)
+                    {
+                        if (CalculateHeight(root._right._right) < CalculateHeight(root._right._left))
+                        {
+                            TurnRight(ref root._right);
+                        }
+
+                        TurnLeft(ref root);
+                    }
+                }
+                else
+                {
+                    Add(ref root._left, info);
+
+                    if (CalculateHeight(root._left) - CalculateHeight(root._right) > 1)
+                    {
+                        if (CalculateHeight(root._left._left) < CalculateHeight(root._left._right))
+                        {
+                            TurnLeft(ref root._left);
+                        }
+
+                        TurnRight(ref root);
+                    }
+                }
             }
+
+            
+            
+            SetBalance(root);
         }
 
         public bool Delete(T data)
@@ -230,10 +253,93 @@ namespace Class22_BinaryTree_2021_11_01
             ToString(root._left, result, level+1);
         }
 
+        public int GetHeight()
+        {
+            return CalculateHeight(_root);
+        }
+
+        private static int CalculateHeight(Node source)
+        {
+            int result = 0;
+
+            if (source is null)
+            {
+                return result;
+            }
+
+            int heightL = CalculateHeight(source._left);
+            int heightR = CalculateHeight(source._right);
+
+            //while (source._left != null)
+            //{
+            //    source = source._left;
+            //    ++heightL;
+            //}
+
+            //while (source._right != null)
+            //{
+            //    source = source._right;
+            //    ++heightR;
+            //}
+
+            if (heightL > heightR)
+            {
+                result = heightL + 1;
+            }
+            else
+            {
+                result = heightR + 1;
+            }
+
+            return result;
+        }
+
+        private static void SetBalance(Node source)
+        {
+            if (source != null)
+            {
+                source._balance = CalculateHeight(source._right)
+                        - CalculateHeight(source._left);
+            }
+        }
+
+        private static void TurnLeft(ref Node root)
+        {
+            Node rightTree = null;
+            Node rightTreeLeft = null;
+
+            rightTree = root._right;
+            rightTreeLeft = rightTree._left;
+
+            rightTree._left = root;
+            root._right = rightTreeLeft;
+            root = rightTree;
+
+            SetBalance(root._left);
+            SetBalance(root);
+        }
+
+        private static void TurnRight(ref Node root)
+        {
+            Node leftTree = null;
+            Node leftTreeRight = null;
+
+            leftTree = root._left;
+            leftTreeRight = leftTree._right;
+
+            leftTree._right = root;
+            root._left = leftTreeRight;
+            root = leftTree;
+
+            SetBalance(root._right);
+            SetBalance(root);
+        }
+
         public class Node
         {
             public Node _left = null;
             public Node _right = null;
+            public int _balance = 0;
 
             public T Data { get; private set; }
 
