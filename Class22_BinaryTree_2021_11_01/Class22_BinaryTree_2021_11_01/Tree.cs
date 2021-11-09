@@ -7,23 +7,108 @@ namespace Class22_BinaryTree_2021_11_01
 {
     internal class Tree<K, V> : IDictionary<K, V>
         where K : IComparable<K>
+        where V : ICloneable
     {
         private Node _root = null;
+        private int _amount = 0;
+        
+        private List<V> _values = null;
 
         #region IDictionary
 
-        public ICollection<K> Keys => throw new NotImplementedException();
+        public Tree()
+        {
+            _values = new List<V>();
+        }
 
-        public ICollection<V> Values => throw new NotImplementedException();
+        public ICollection<K> Keys 
+        {
+            get => GetKeys(_root);
+        }
 
-        public int Count => throw new NotImplementedException();
+        public ICollection<V> Values
+        {
+            get => GetValues(_root);
+        }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        private List<K> GetKeys(Node root)
+        {
+            Stack<Node> stack = new Stack<Node>(_amount);
+            stack.Push(root);
+
+            List<K> keys = new List<K>(_amount);
+
+            bool flag = true;
+
+            while (stack.Count > 0)
+            {
+                Node node = stack.Pop();
+
+                if (flag)
+                {
+                    keys.Add(node.Key);
+                    flag = false;
+                }
+
+                if (node._right != null)
+                {
+                    stack.Push(node._right);
+                    keys.Add(node._right.Key);
+                }
+
+                if (node._left != null)
+                {
+                    stack.Push(node._left);
+                    keys.Add(node._left.Key);
+                }
+            }
+
+            return keys;
+        }
+
+        private List<V> GetValues(Node root)
+        {
+            Stack<Node> stack = new Stack<Node>(_amount);
+            stack.Push(root);
+
+            List<V> values = new List<V>(_amount);
+
+            bool flag = true;
+
+            while (stack.Count > 0)
+            {
+                Node node = stack.Pop();
+
+                if (flag)
+                {
+                    values.Add(node.Info);
+                    flag = false;
+                }
+
+                if (node._right != null)
+                {
+                    stack.Push(node._right);
+                    values.Add(node._right.Info);
+                }
+
+                if (node._left != null)
+                {
+                    stack.Push(node._left);
+                    values.Add(node._left.Info);
+                }
+            }
+
+            return values;
+        }
+
+        public int Count => _amount;
+
+        public bool IsReadOnly => false;
 
         public V this[K key] 
         { 
-            get => throw new NotImplementedException(); 
-            set => throw new NotImplementedException(); 
+            get => Search(key).Info; 
+            set => Search(key).Info = (V)value.Clone();    // TODO: What about incapsulation? 
         }
 
         public bool ContainsKey(K key)
@@ -58,17 +143,25 @@ namespace Class22_BinaryTree_2021_11_01
 
         public void Add(KeyValuePair<K, V> item)
         {
-            throw new NotImplementedException();
+            Add(item.Key, item.Value);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _amount = 0;
         }
 
         public bool Contains(KeyValuePair<K, V> item)
         {
-            throw new NotImplementedException();
+            Node one = Search(item.Key);
+            bool result = true;
+
+            if (one is null)
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         public void CopyTo(KeyValuePair<K, V>[] array, int arrayIndex)
@@ -78,17 +171,43 @@ namespace Class22_BinaryTree_2021_11_01
 
         public bool Remove(KeyValuePair<K, V> item)
         {
-            throw new NotImplementedException();
+            Delete(item.Key);
+
+            return Search(item.Key) != null;
         }
 
         public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            Node current = _root;
+
+            if(current != null)
+            {
+                current = current._left;
+                yield return new KeyValuePair<K, V>(current.Key, current.Info);
+            }
+
+            if (current != null)
+            {
+                current = current._right;
+                yield return new KeyValuePair<K, V>(current._right.Key, current.Info);
+            }
+        }
+
+        internal struct KeyValuePair    // TODO: KeyValuePair struct.
+        {
+            private K _key;
+            private V _value;
+
+            public KeyValuePair(K key, V value)
+            {
+                _key = key;
+                _value = value;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         #endregion
@@ -96,6 +215,8 @@ namespace Class22_BinaryTree_2021_11_01
         public void Add(K key, V info)
         {
             Add(ref _root, key, info);
+            _values.Add(info);
+            ++_amount;
         }
 
         private static void Add(ref Node root, K key, V info)
@@ -357,18 +478,6 @@ namespace Class22_BinaryTree_2021_11_01
             int heightL = CalculateHeight(source._left);
             int heightR = CalculateHeight(source._right);
 
-            //while (source._left != null)
-            //{
-            //    source = source._left;
-            //    ++heightL;
-            //}
-
-            //while (source._right != null)
-            //{
-            //    source = source._right;
-            //    ++heightR;
-            //}
-
             if (heightL > heightR)
             {
                 result = heightL + 1;
@@ -429,7 +538,7 @@ namespace Class22_BinaryTree_2021_11_01
             public int _balance = 0;
 
             public K Key { get; private set; }
-            public V Info { get; private set; }
+            public V Info { get; set; }
 
             public Node(K key, V info)
             {
@@ -437,5 +546,7 @@ namespace Class22_BinaryTree_2021_11_01
                 Info = info;
             }
         }
+
+        
     }
 }

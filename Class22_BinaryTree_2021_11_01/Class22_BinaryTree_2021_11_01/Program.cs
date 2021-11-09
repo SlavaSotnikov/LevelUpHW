@@ -9,12 +9,12 @@ namespace Class22_BinaryTree_2021_11_01
         {
             IDictionary<int, string> t1 = new Tree<int, string>();
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10; i++)
             {
                 t1.Add(i, $"Value {i}");
             }
 
-            //t1.Add(1);
+            //t1.Add(new KeyValuePair<int, string>(5, "Value"));
             //t1.Add(2);
             //t1.Add(3);
             //t1.Add(4);
@@ -26,12 +26,29 @@ namespace Class22_BinaryTree_2021_11_01
             //t1.Add(20);
             //t1.Add(14);
 
-            Console.WriteLine(t1.TryGetValue(5, out var data));
-            Console.WriteLine(data);
+            //foreach (KeyValuePair<int, string> i in t1)
+            //{
+            //    Console.WriteLine("{0} {1}", i.Key, i.Value);
+            //}
+
+            //Console.WriteLine(t1.Count);
 
             //t1.Search(59);
 
-            //Console.WriteLine(t1);
+            //string[] keys = new string[10];
+            //t1.Values.CopyTo(keys, 0);
+
+            //for (int i = 0; i < keys.Length; i++)
+            //{
+            //    //keys[i] = "100";
+            //    Console.WriteLine(keys[i]);
+            //}
+
+            List<int> keys = (List<int>)t1.Keys;
+
+            Console.WriteLine(t1.Keys);
+
+            Console.WriteLine(t1);
 
             Console.ReadKey();
         }
