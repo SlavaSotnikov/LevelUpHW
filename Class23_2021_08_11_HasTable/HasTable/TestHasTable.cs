@@ -106,11 +106,11 @@ namespace HasTable
 
         public void CopyTo(KVPair<Key, bool>[] array, int arrayIndex)
         {
-            int index = arrayIndex - 1;
+            arrayIndex -= 1;
 
             foreach (Key item in this)
             {
-                array[++index] = new KVPair<Key, bool>(item, true);
+                array[++arrayIndex] = new KVPair<Key, bool>(item, true);
             }
         }
 
@@ -280,7 +280,17 @@ namespace HasTable
 
         public bool IsSupersetOf(IEnumerable<Key> other)
         {
-            throw new NotImplementedException();
+            bool result = true;
+
+            foreach (var item in other)
+            {
+                if (!Exists(item))
+                {
+                    result = false;
+                }
+            }
+
+            return result;
         }
 
         public bool IsProperSupersetOf(IEnumerable<Key> other)
@@ -295,22 +305,49 @@ namespace HasTable
 
         public bool Overlaps(IEnumerable<Key> other)
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            foreach (var item in other)
+            {
+                if (Exists(item))
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
         }
 
         public bool SetEquals(IEnumerable<Key> other)
         {
-            throw new NotImplementedException();
+            bool result = true;
+
+            foreach (var item in other)
+            {
+                if (!Exists(item))
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            return result;
         }
 
         public bool Contains(Key item)
         {
-            throw new NotImplementedException();
+            return Exists(item);
         }
 
         public void CopyTo(Key[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            arrayIndex -= 1;
+
+            foreach (Key item in this)
+            {
+                array[++arrayIndex] = item;
+            }
         }
 
         #endregion
