@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace HasTable
 {
-    internal class TestHasTable : IDictionary<Key, bool>, ISet<KVPair<Key, bool>>
+    internal class TestHasTable : IDictionary<Key, bool>, ISet<Key>
     {
         private Key[] _items;
         private int _amount;
@@ -193,68 +193,122 @@ namespace HasTable
             throw new NotImplementedException();
         }
 
+
         #endregion
 
         #endregion
 
         #region ISet
 
-        bool ISet<KVPair<Key, bool>>.Add(KVPair<Key, bool> item)
+        bool ISet<Key>.Add(Key item)
+        {
+            if (Exists(item))
+            {
+                return false; 
+            }
+
+            Add(item);
+
+            return true;
+        }
+
+        public void UnionWith(IEnumerable<Key> other)
+        {
+            foreach (var item in other)
+            {
+                if (Exists(item))
+                {
+                    continue;
+                }
+
+                Add(item);
+            }
+        }
+
+        public void IntersectWith(IEnumerable<Key> other)
+        {
+            List<Key> common = new List<Key>();
+            int amount = 0;
+
+            foreach (var item in other)
+            {
+                if (Exists(item))
+                {
+                    common.Add(item);
+                    ++amount;
+                }
+            }
+
+            Clear();
+
+            for (int i = 0; i < amount; i++)
+            {
+                Add(common[i]);
+            }
+        }
+
+        public void ExceptWith(IEnumerable<Key> other)
+        {
+            foreach (var item in other)
+            {
+                if (Exists(item))
+                {
+                    Remove(item);
+                }
+            }
+        }
+
+        public void SymmetricExceptWith(IEnumerable<Key> other)
+        {
+            foreach (var item in other)
+            {
+                if (Exists(item))
+                {
+                    Remove(item);
+                }
+                else
+                {
+                    Add(item);
+                }
+            }
+        }
+
+        public bool IsSubsetOf(IEnumerable<Key> other)
         {
             throw new NotImplementedException();
         }
 
-        public void UnionWith(IEnumerable<KVPair<Key, bool>> other)
+        public bool IsSupersetOf(IEnumerable<Key> other)
         {
             throw new NotImplementedException();
         }
 
-        public void IntersectWith(IEnumerable<KVPair<Key, bool>> other)
+        public bool IsProperSupersetOf(IEnumerable<Key> other)
         {
             throw new NotImplementedException();
         }
 
-        public void ExceptWith(IEnumerable<KVPair<Key, bool>> other)
+        public bool IsProperSubsetOf(IEnumerable<Key> other)
         {
             throw new NotImplementedException();
         }
 
-        public void SymmetricExceptWith(IEnumerable<KVPair<Key, bool>> other)
+        public bool Overlaps(IEnumerable<Key> other)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsSubsetOf(IEnumerable<KVPair<Key, bool>> other)
+        public bool SetEquals(IEnumerable<Key> other)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsSupersetOf(IEnumerable<KVPair<Key, bool>> other)
+        public bool Contains(Key item)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsProperSupersetOf(IEnumerable<KVPair<Key, bool>> other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsProperSubsetOf(IEnumerable<KVPair<Key, bool>> other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Overlaps(IEnumerable<KVPair<Key, bool>> other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SetEquals(IEnumerable<KVPair<Key, bool>> other)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator<KVPair<Key, bool>> IEnumerable<KVPair<Key, bool>>.GetEnumerator()
+        public void CopyTo(Key[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }

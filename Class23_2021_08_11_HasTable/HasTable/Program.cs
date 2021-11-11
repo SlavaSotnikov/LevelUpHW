@@ -33,6 +33,9 @@ namespace HasTable
 
             //one.TryGetValue(new Key("Sam"), out bool val);
 
+            //bool res = one.Add(new Key("Sam"));
+
+
             Console.ReadKey();
         }
     }
