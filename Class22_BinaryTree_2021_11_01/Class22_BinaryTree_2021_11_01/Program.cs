@@ -26,10 +26,10 @@ namespace Class22_BinaryTree_2021_11_01
             //t1.Add(20);
             //t1.Add(14);
 
-            //foreach (KeyValuePair<int, string> i in t1)
-            //{
-            //    Console.WriteLine("{0} {1}", i.Key, i.Value);
-            //}
+            foreach (KeyValuePair<int, string> i in t1)
+            {
+                Console.WriteLine("{0} {1}", i.Key, i.Value);
+            }
 
             //Console.WriteLine(t1.Count);
 
@@ -44,9 +44,9 @@ namespace Class22_BinaryTree_2021_11_01
             //    Console.WriteLine(keys[i]);
             //}
 
-            List<int> keys = (List<int>)t1.Keys;
+            //List<int> keys = (List<int>)t1.Keys;
 
-            Console.WriteLine(t1.Keys);
+            //Console.WriteLine(t1.Keys);
 
             Console.WriteLine(t1);
 

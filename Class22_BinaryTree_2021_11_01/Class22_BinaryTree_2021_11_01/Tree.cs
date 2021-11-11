@@ -12,14 +12,7 @@ namespace Class22_BinaryTree_2021_11_01
         private Node _root = null;
         private int _amount = 0;
         
-        private List<V> _values = null;
-
         #region IDictionary
-
-        public Tree()
-        {
-            _values = new List<V>();
-        }
 
         public ICollection<K> Keys 
         {
@@ -108,14 +101,12 @@ namespace Class22_BinaryTree_2021_11_01
         public V this[K key] 
         { 
             get => Search(key).Info; 
-            set => Search(key).Info = (V)value.Clone();    // TODO: What about incapsulation? 
+            set => Search(key).Info = (V)value.Clone();
         }
 
         public bool ContainsKey(K key)
         {
-            Node node = Search(key);
-
-            return node != null;
+            return Search(key) != null;
         }
 
         public bool Remove(K key)
@@ -153,15 +144,7 @@ namespace Class22_BinaryTree_2021_11_01
 
         public bool Contains(KeyValuePair<K, V> item)
         {
-            Node one = Search(item.Key);
-            bool result = true;
-
-            if (one is null)
-            {
-                result = false;
-            }
-
-            return result;
+            return Search(item.Key) != null;
         }
 
         public void CopyTo(KeyValuePair<K, V>[] array, int arrayIndex)
@@ -176,24 +159,61 @@ namespace Class22_BinaryTree_2021_11_01
             return Search(item.Key) != null;
         }
 
+        private Node _iter = null;
+
         public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
         {
-            Node current = _root;
-
-            if(current != null)
+            if (_iter is null)
             {
-                current = current._left;
-                yield return new KeyValuePair<K, V>(current.Key, current.Info);
+                _iter = _root;
+            };
+
+            yield return new KeyValuePair<K, V>(_iter.Key, _iter.Info);
+
+            if (_iter._left != null)
+            {
+                foreach (KeyValuePair<K, V> i in PreOrder(_iter._left))
+                {
+                    yield return i;
+                }
             }
 
-            if (current != null)
+            if (_iter._right != null)
             {
-                current = current._right;
-                yield return new KeyValuePair<K, V>(current._right.Key, current.Info);
+                foreach (KeyValuePair<K, V> i in PreOrder(_iter._right))
+                {
+                    yield return i;
+                }
             }
         }
 
-        internal struct KeyValuePair    // TODO: KeyValuePair struct.
+        public IEnumerable<K> PreOrder(Node root)
+        {
+            if (_iter is null)
+            {
+                _iter = root;
+            };
+
+            yield return _iter.Key;
+
+            if (_iter._left != null)
+            {
+                foreach (K i in PreOrder(_iter._left))
+                {
+                    yield return i;
+                }
+            }
+                
+            if (_iter._right != null)
+            {
+                foreach (K i in PreOrder(_iter._right))
+                {
+                    yield return i;
+                }
+            }
+        }
+
+        internal struct KeyValuePair
         {
             private K _key;
             private V _value;
@@ -215,7 +235,6 @@ namespace Class22_BinaryTree_2021_11_01
         public void Add(K key, V info)
         {
             Add(ref _root, key, info);
-            _values.Add(info);
             ++_amount;
         }
 
@@ -530,6 +549,8 @@ namespace Class22_BinaryTree_2021_11_01
             SetBalance(root._right);
             SetBalance(root);
         }
+
+        
 
         public class Node
         {

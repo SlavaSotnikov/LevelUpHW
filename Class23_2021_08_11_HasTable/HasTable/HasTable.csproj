@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36115CCB-0F79-4702-B9E7-E0EA7B28E17E}</ProjectGuid>
+    <ProjectGuid>{DE09390F-D4A7-4FF0-95E9-29F5CC041A87}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Class22_BinaryTree_2021_11_01</RootNamespace>
-    <AssemblyName>`</AssemblyName>
+    <RootNamespace>HasTable</RootNamespace>
+    <AssemblyName>HasTable</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Key.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tree.cs" />
+    <Compile Include="TestHasTable.cs" />
+    <Compile Include="Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
