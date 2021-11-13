@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace HasTable
 {
-    internal class TestHasTable<T> : IDictionary<Key, Value>
+    internal class TestHasTable<K, V> : IDictionary<K, V> 
     {
-        private T[] _items;
+        private K[] _keys;
+        private V[] _values;
         private int _amount;
 
         public TestHasTable(int capacity = 100)

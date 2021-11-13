@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HasTable
 {
@@ -6,12 +7,12 @@ namespace HasTable
     {
         static void Main()
         {
-            TestHasTable one = new TestHasTable
+            ISet<Key> one = new TestHasTable
             {
-                //new Key("Jim"),
-                //new Key("Dodo"),
-                //new Key("Sam"),
-                //new Key("Bob")
+                new Key("Jim"),
+                new Key("Dodo"),
+                new Key("Sam"),
+                new Key("Bob")
             };
 
             //foreach (var item in one)

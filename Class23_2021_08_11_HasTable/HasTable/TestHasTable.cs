@@ -30,7 +30,7 @@ namespace HasTable
             return (_items[index] != null) && key.Equals(_items[index]);
         }
 
-        private List<Key> GetKeys()
+        private List<Key> GetKeys()    // TODO: Try yield.
         {
             List<Key> keys = new List<Key>();
 
@@ -275,10 +275,21 @@ namespace HasTable
 
         public bool IsSubsetOf(IEnumerable<Key> other)
         {
-            throw new NotImplementedException();
+            bool result = true;
+
+            foreach (var item in this)    // TODO: foreach other.
+            {
+                if (!Exists(item))
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            return result;
         }
 
-        public bool IsSupersetOf(IEnumerable<Key> other)
+        public bool IsSupersetOf(IEnumerable<Key> other)    // TODO: Refactor
         {
             bool result = true;
 
@@ -287,6 +298,7 @@ namespace HasTable
                 if (!Exists(item))
                 {
                     result = false;
+                    break;
                 }
             }
 
