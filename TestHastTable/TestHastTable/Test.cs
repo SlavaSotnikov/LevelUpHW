@@ -7,7 +7,7 @@ namespace TestHastTable
     {
         public void TestHashTable(Hashtable source, int iterations)
         {
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < iterations; i++)
             {
                 source[$"Key{i}"] = i;
             }
