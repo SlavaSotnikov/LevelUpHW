@@ -34,12 +34,9 @@ namespace HasTable
         {
             List<Key> keys = new List<Key>();
 
-            for (int i = 0; i < _items.Length; i++)
+            foreach (var item in this)
             {
-                if (_items[i] != null)
-                {
-                    keys.Add(_items[i]);
-                }
+                keys.Add(item);
             }
 
             return keys;
@@ -47,17 +44,14 @@ namespace HasTable
 
         private List<bool> GetValues()
         {
-            List<bool> keys = new List<bool>();
+            List<bool> values = new List<bool>();
 
-            for (int i = 0; i < _items.Length; i++)
+            foreach (var item in this)
             {
-                if (_items[i] != null)
-                {
-                    keys.Add(true);
-                }
+                values.Add(true);
             }
 
-            return keys;
+            return values;
         }
 
         #region IDictionary
@@ -158,6 +152,11 @@ namespace HasTable
 
         public IEnumerator<Key> GetEnumerator()
         {
+            //for (int i = 0; i < _items.Length; i++)
+            //{
+            //    yield return _items[i];
+            //}
+
             return new HasTableIterator<Key>(_amount, _items);
         }
 
@@ -168,22 +167,22 @@ namespace HasTable
 
         #region System.Collections.Generic.KeyValuePair
 
-        public void Add(System.Collections.Generic.KeyValuePair<Key, bool> item)
+        public void Add(KeyValuePair<Key, bool> item)
+        {
+            Add(item.Key);
+        }
+
+        public bool Contains(KeyValuePair<Key, bool> item)
+        {
+            return Exists(item.Key);
+        }
+
+        public void CopyTo(KeyValuePair<Key, bool>[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        public bool Contains(System.Collections.Generic.KeyValuePair<Key, bool> item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(System.Collections.Generic.KeyValuePair<Key, bool>[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(System.Collections.Generic.KeyValuePair<Key, bool> item)
+        public bool Remove(KeyValuePair<Key, bool> item)
         {
             throw new NotImplementedException();
         }
@@ -192,7 +191,6 @@ namespace HasTable
         {
             throw new NotImplementedException();
         }
-
 
         #endregion
 

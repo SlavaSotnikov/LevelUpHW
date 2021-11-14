@@ -7,13 +7,15 @@ namespace HasTable
     {
         static void Main()
         {
-            ISet<Key> one = new TestHasTable
+            IDictionary<Key, bool> one = new TestHasTable
             {
                 new Key("Jim"),
                 new Key("Dodo"),
                 new Key("Sam"),
                 new Key("Bob")
             };
+
+            List<Key> k = (List<Key>)one.Keys;
 
             //foreach (var item in one)
             //{
