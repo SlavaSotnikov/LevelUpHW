@@ -13,27 +13,27 @@ namespace Benchmark
         private readonly DataStructure _test = new DataStructure();
 
         [Benchmark]
-        public void TestDictionary()
+        public void Dictionary()
         {
             _test.Test(new Dictionary<string, int>(), 10000);
         }
 
         [Benchmark]
-        public void TestHashTable()
+        public void HashTable()
         {
             _test.TestHashTable(new Hashtable(), 10000);
         }
 
-        //[Benchmark]
-        //public void TestSortedDictionary()
-        //{
-        //    _test.Test(new SortedDictionary<string, int>(), 1000);
-        //}
+        [Benchmark]
+        public void SList()
+        {
+            _test.Test(new SortedList<string, int>(), 10000);
+        }
 
-        //[Benchmark]
-        //public void TestSortedList()
-        //{
-        //    _test.Test(new SortedList<string, int>(), 1000);
-        //}
+        [Benchmark]
+        public void SDictionary()
+        {
+            _test.Test(new SortedDictionary<string, int>(), 10000);
+        }
     }
 }

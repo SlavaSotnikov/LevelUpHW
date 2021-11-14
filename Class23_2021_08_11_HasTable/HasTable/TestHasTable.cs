@@ -187,7 +187,7 @@ namespace HasTable
             throw new NotImplementedException();
         }
 
-        IEnumerator<System.Collections.Generic.KeyValuePair<Key, bool>> IEnumerable<System.Collections.Generic.KeyValuePair<Key, bool>>.GetEnumerator()
+        IEnumerator<KeyValuePair<Key, bool>> IEnumerable<KeyValuePair<Key, bool>>.GetEnumerator()
         {
             throw new NotImplementedException();
         }

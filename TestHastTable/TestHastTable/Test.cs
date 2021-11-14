@@ -15,7 +15,8 @@ namespace TestHastTable
             for (int i = iterations; i > 0; i--)
             {
                 r = rnd.Next(0, 10000);
-                source.Add($"Key{r}", r);
+                source[$"Key{r}"] = r;
+                //source.Add($"Key{r}", r);
             }
 
             foreach (var item in source)
@@ -35,7 +36,8 @@ namespace TestHastTable
             for (int i = iterations; i > 0; i--)
             {
                 r = rnd.Next(0, 10000);
-                source.Add($"Key{r}", r);
+                source[$"Key{r}"] = r;
+                //source.Add($"Key{r}", r);
             }
 
             foreach (var item in source)
