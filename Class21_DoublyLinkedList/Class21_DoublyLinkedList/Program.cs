@@ -34,10 +34,10 @@ namespace Class21_DoublyLinkedList
 
             one.Sort();
 
-            foreach (int item in one)
-            {
-                Console.Write("{0} ", item);
-            }
+            //foreach (int item in one)
+            //{
+            //    Console.Write("{0} ", item);
+            //}
 
             Console.ReadKey();
         }

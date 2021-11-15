@@ -14,19 +14,24 @@ namespace TestHastTable
 
             for (int i = iterations; i > 0; i--)
             {
-                r = rnd.Next(0, 10000);
+                r = rnd.Next(iterations);
                 source[$"Key{r}"] = r;
-                //source.Add($"Key{r}", r);
+                //source.Add($"Key{i}", i);
             }
 
-            foreach (var item in source)
+            for (int i = 0; i < iterations; i++)
             {
-                if (item is DictionaryEntry node)
-                {
-                    string k = (string)node.Key;
-                    int v = (int)node.Value;
-                }
+                source[$"Key{i}"] = i;
             }
+
+            //foreach (var item in source)
+            //{
+            //    if (item is DictionaryEntry node)
+            //    {
+            //        string k = (string)node.Key;
+            //        int v = (int)node.Value;
+            //    }
+            //}
         }
 
         public void TestDictionary(IDictionary<string, int> source, int iterations)
@@ -35,16 +40,21 @@ namespace TestHastTable
 
             for (int i = iterations; i > 0; i--)
             {
-                r = rnd.Next(0, 10000);
+                r = rnd.Next(iterations);
                 source[$"Key{r}"] = r;
-                //source.Add($"Key{r}", r);
+                //source.Add($"Key{i}", i);
             }
 
-            foreach (var item in source)
+            for (int i = 0; i < iterations; i++)
             {
-                string key = item.Key;
-                int value = item.Value;
+                source[$"Key{i}"] = i;
             }
+
+            //foreach (var item in source)
+            //{
+            //    string key = item.Key;
+            //    int value = item.Value;
+            //}
         }
     }
 }

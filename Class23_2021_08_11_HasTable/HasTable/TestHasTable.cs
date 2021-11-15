@@ -30,16 +30,17 @@ namespace HasTable
             return (_items[index] != null) && key.Equals(_items[index]);
         }
 
-        private List<Key> GetKeys()    // TODO: Try yield.
+        private IEnumerable<Key> GetKeys()    // TODO: Try yield.
         {
-            List<Key> keys = new List<Key>();
+            //List<Key> keys = new List<Key>();
 
             foreach (var item in this)
             {
-                keys.Add(item);
+                //keys.Add(item);
+                yield return item;
             }
 
-            return keys;
+            //return keys;
         }
 
         private List<bool> GetValues()
@@ -62,7 +63,7 @@ namespace HasTable
             set => throw new NotSupportedException(); 
         }
 
-        public ICollection<Key> Keys => GetKeys();
+        public ICollection<Key> Keys => new List<Key>(GetKeys());
 
         public ICollection<bool> Values => GetValues();
 
@@ -305,12 +306,30 @@ namespace HasTable
 
         public bool IsProperSupersetOf(IEnumerable<Key> other)
         {
-            throw new NotImplementedException();
+            return IsSubOrSuper(other);
         }
 
         public bool IsProperSubsetOf(IEnumerable<Key> other)
         {
-            throw new NotImplementedException();
+            return !IsSubOrSuper(other);
+        }
+
+        private bool IsSubOrSuper(IEnumerable<Key> other)
+        {
+            int thisAmount = 0;
+            int otherAmount = 0;
+
+            foreach (var item in this)
+            {
+                ++thisAmount;
+            }
+
+            foreach (var item in other)
+            {
+                ++otherAmount;
+            }
+
+            return thisAmount > otherAmount;
         }
 
         public bool Overlaps(IEnumerable<Key> other)

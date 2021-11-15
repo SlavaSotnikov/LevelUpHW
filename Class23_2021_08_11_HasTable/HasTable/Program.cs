@@ -15,12 +15,12 @@ namespace HasTable
                 new Key("Bob")
             };
 
-            List<Key> k = (List<Key>)one.Keys;
+            //List<Key> k = one.Keys;
 
-            //foreach (var item in one)
-            //{
-            //    Console.WriteLine("{0}", item.Data);
-            //}
+            foreach (var item in one.Keys)
+            {
+                Console.WriteLine("{0}", item);
+            }
 
             //Console.WriteLine(one.Exists(new Key("Jim")));
             //Console.WriteLine(one.Exists(new Key("Bob")));

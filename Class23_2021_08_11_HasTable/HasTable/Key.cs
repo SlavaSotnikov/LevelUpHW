@@ -9,6 +9,11 @@
             Data = source;
         }
 
+        public override string ToString()
+        {
+            return Data;
+        }
+
         public override int GetHashCode()
         {
             return Data[0] + Data[1] + Data[2];

@@ -212,6 +212,16 @@ namespace Class21_DoublyLinkedList
             }
         }
 
+        public void RecursiveSort(Entry source)    // TODO: Recursive.
+        {
+            if (source == null)
+            {
+                return;
+            }
+
+            RecursiveSort(source.Next);
+        }
+
         private IEnumerator GetEnumerator()
         {
             return GetEnumerator();
