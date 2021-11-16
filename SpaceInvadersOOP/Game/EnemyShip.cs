@@ -23,14 +23,13 @@ namespace Game
         #region Constructor
 
         public EnemyShip(ISpace game, int coordX, int coordY, bool active,
-                uint speed, sbyte step, byte rndY, uint counter = 0,
-                    int oldX = 0, int oldY = 0, byte hitPoints = 6)
+                uint speed, sbyte step, byte rndY, byte hitPoints = 6)
         {
             _game = game;
             X = coordX;
             Y = coordY;
-            OldX = oldX;
-            OldY = oldY;
+            OldX = 0;
+            OldY = 0;
             Active = true;
             Counter = 0;
             Speed = speed;

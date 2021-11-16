@@ -3,7 +3,7 @@
   <Class Name="Game.UserShip">
     <Position X="4.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAASAACAQAACAAAAAABAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAASAACAAAACAAAAAABAIA=</HashCode>
       <FileName>UserShip.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -57,7 +57,7 @@
   <Class Name="Game.Space">
     <Position X="9.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAQAAhAgAQAAABAAAADAAAAAEABgAAAAAAAAI=</HashCode>
+      <HashCode>CAACAEAAQAAhAgAQAAABAAAADAAAAAEABgAAAAAAAAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
@@ -72,10 +72,17 @@
   <Class Name="Game.GameField">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAIAgQAAhkAAAEAEAIgQgCBAAAAAAEAASCACAUAA=</HashCode>
+      <HashCode>AAIAAIAgQAAhkAAAGAEAIgQgCBAAAAAAEAASCACAUAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Game.Star" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Star.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Interface Name="Game.ISpace" Collapsed="true">
     <Position X="7.5" Y="1.5" Width="1.5" />

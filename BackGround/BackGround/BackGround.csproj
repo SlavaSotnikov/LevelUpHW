@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E02069C0-EE96-4D44-B0DE-8823F7F4C08F}</ProjectGuid>
+    <ProjectGuid>{5D5259B0-9962-407E-99AB-4CC9B82EF4B6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Game</RootNamespace>
-    <AssemblyName>Game</AssemblyName>
+    <RootNamespace>BackGround</RootNamespace>
+    <AssemblyName>BackGround</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,35 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Delegate\GameStatus.cs" />
-    <Compile Include="Delegate\UIListener.cs" />
-    <Compile Include="Exception\ClashException.cs" />
-    <Compile Include="Controller.cs" />
-    <Compile Include="Enum\Action.cs" />
-    <Compile Include="BL_Random.cs" />
-    <Compile Include="EnemyShip.cs" />
-    <Compile Include="GameField.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Interfaces\IUserShip.cs" />
-    <Compile Include="Interfaces\ISpace.cs" />
-    <Compile Include="Interfaces\IGame.cs" />
-    <Compile Include="Interfaces\ISpaceCraft.cs" />
-    <Compile Include="Space.cs" />
-    <Compile Include="Enum\SpaceObject.cs" />
-    <Compile Include="HeavyShip.cs" />
-    <Compile Include="LightShip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ship.cs" />
-    <Compile Include="Shot.cs" />
-    <Compile Include="SpaceCraft.cs" />
-    <Compile Include="Star.cs" />
-    <Compile Include="UI.cs" />
-    <Compile Include="UserShip.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

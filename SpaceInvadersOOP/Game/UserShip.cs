@@ -21,13 +21,13 @@ namespace Game
         #region Constructor
 
         public UserShip(ISpace game, int coordX, int coordY, bool active,
-                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX = 0, int oldCoordY = 0)
+                uint speed, uint counter, byte hitpoints, byte lifes)
         {
             _game = game;
             X = coordX;
             Y = coordY;
-            OldX = oldCoordX;
-            OldY = oldCoordY;
+            OldX = 0;
+            OldY = 0;
             Active = active;
             Speed = speed;
             Counter = counter;

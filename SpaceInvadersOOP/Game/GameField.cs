@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -26,6 +27,8 @@ namespace Game
 
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
+        protected List<Star> _stars;
+        protected int _amountOfStars;
 
         protected GameStatus _finishGame;
 
@@ -90,6 +93,14 @@ namespace Game
                 {
                     if (i != j)
                     {
+                        if (_gameObjects[i] is Star star && star.Y == _bottomBorder)
+                        {
+                            star.X = BL_Random.GetX();
+                            star.Y = BL_Random.GetY();
+                            star.Active = true;
+                            continue;
+                        }
+
                         if (_gameObjects[i] is UserShip user && _gameObjects[j] is EnemyShip enemy)
                         {
                             if (IsClash(user, enemy))
@@ -104,6 +115,18 @@ namespace Game
                             }
                         }
 
+                        //if (_gameObjects[i] is UserShip usr && _gameObjects[j] is Star str)
+                        //{
+                        //    if (IsNear(usr, str))
+                        //    {
+                        //        str.Active = false;
+                        //    }
+                        //    else
+                        //    {
+                        //        str.Active = true;
+                        //    }
+                        //}
+
                         if (_gameObjects[i] is Shot bullet && _gameObjects[j] is Ship ship)
                         {
                             if (bullet.Active && ship.Active)
@@ -117,6 +140,7 @@ namespace Game
                                     {
                                         ship.Active = false;
                                         ship.Step();
+                                        continue;
                                     }
                                 }
                             }
@@ -127,6 +151,7 @@ namespace Game
                             if (one.Y == _bottomBorder)
                             {
                                 one.Active = false;
+                                continue;
                             }
                         }
 
@@ -135,11 +160,18 @@ namespace Game
                             if (two.Y == _topBorder || two.Y == _bottomBorder)
                             {
                                 two.Active = false;
+                                continue;
                             }
                         }
                     }
                 }
             }
+        }
+
+        private bool IsNear(UserShip user, Star star)
+        {
+            return user.Y == star.Y && star.X >= user.X
+                    && star.X <= user.X + user.Width;
         }
 
         private bool IsClash(UserShip user, EnemyShip enemy)

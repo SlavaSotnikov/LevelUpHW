@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -25,19 +26,19 @@ namespace Game
 
         #region Properties
 
-        public int LeftBorder { get { return _leftBorder; } }
+        public int LeftBorder => _leftBorder;
 
-        public int RightBorder { get { return _rightBorder; } }
+        public int RightBorder => _rightBorder;
 
-        public int TopBorder { get { return _topBorder; } }
+        public int TopBorder => _topBorder;
 
-        public int BottomBorder { get { return _bottomBorder; } }
+        public int BottomBorder => _bottomBorder;
 
         #endregion
 
         #region Constructor
 
-        public Space(int capacity = 13, int speed = 330000)
+        public Space(int capacity = 23, int speed = 330000)
         {
             _gameObjects = new SpaceCraft[capacity];
             _amountOfObjects = 0;
@@ -51,8 +52,19 @@ namespace Game
 
         #region Member Functions
 
+        public void AddStars()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                _gameObjects[i] = new Star(BL_Random.GetX(), BL_Random.GetY(), 1, 2000);
+                ++_amountOfObjects;
+            }
+        }
+
         public void Run()
         {
+            AddStars();
+
             AddObject((SpaceObject)1);
 
             do
@@ -145,7 +157,7 @@ namespace Game
 
             do
             {
-                rndX = BL_Random.GetCoordinateX();
+                rndX = BL_Random.GetX();
 
                 isExist = false;
 

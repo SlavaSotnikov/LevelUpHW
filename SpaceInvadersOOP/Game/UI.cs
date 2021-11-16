@@ -16,6 +16,8 @@ namespace Game
 
         private static string[] _shot;
 
+        private static string[] _star;
+
         private static string[] _lightShip;
 
         private static string[] _heavyShip;
@@ -31,6 +33,8 @@ namespace Game
         static UI()
         {
             _shot = new string[] { "|" };
+
+            _star = new string[] { "." };
 
             _lightShip = new string[5]
             {
@@ -189,7 +193,7 @@ namespace Game
 
         private static string[] GetImage(ISpaceCraft source)
         {
-            string[] image = _shot;
+            string[] image = _star;
 
             if (source is LightShip)
             {
@@ -204,6 +208,11 @@ namespace Game
             if (source is EnemyShip)
             {
                 image = _enemyShip;
+            }
+
+            if (source is Shot)
+            {
+                image = _shot;
             }
 
             return image;

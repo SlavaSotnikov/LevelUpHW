@@ -4,21 +4,26 @@ namespace Game
 {
     class BL_Random
     {
-        private static Random value = new Random();
+        private static Random _rndValue = new Random();
 
-        public static int GetCoordinateX()
+        public static int GetX()
         {
-            return value.Next(30, 83);
+            return _rndValue.Next(30, 83);
+        }
+
+        public static int GetY()
+        {
+            return _rndValue.Next(0, 18);
         }
 
         public static uint GetFlySpeed()
         {
-            return (uint)value.Next(40000, 50000);
+            return (uint)_rndValue.Next(40000, 50000);
         }
 
         public static byte GetRndY()
         {
-            return (byte)value.Next(1, 20);
+            return (byte)_rndValue.Next(1, 20);
         }
     }
 }
