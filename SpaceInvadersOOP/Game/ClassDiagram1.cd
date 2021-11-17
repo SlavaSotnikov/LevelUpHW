@@ -34,14 +34,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Game.LightShip" Collapsed="true">
-    <Position X="4.25" Y="9.5" Width="1.5" />
+    <Position X="4.25" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAQAACAAAAIAAAAAAAAAA=</HashCode>
       <FileName>LightShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.HeavyShip" Collapsed="true">
-    <Position X="4.25" Y="10.5" Width="1.5" />
+    <Position X="4.25" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>HeavyShip.cs</FileName>
@@ -72,7 +72,7 @@
   <Class Name="Game.GameField">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAIAgQAAhkAAAGAEAIgQgCBAAAAAAEAASCACAUAA=</HashCode>
+      <HashCode>AAIAAIAgQAAhkAAAEAEAMgQgCBAAAAAAEAASCACAUAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

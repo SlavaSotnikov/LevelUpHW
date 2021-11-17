@@ -25,10 +25,9 @@ namespace Game
         protected byte _rightShift = 6;    // This shift tunes the Right bullet.
         protected byte _shotEnemyShift = 3;
 
-        protected SpaceCraft[] _gameObjects;
+        //protected SpaceCraft[] _gameObjects;
+        protected List<SpaceCraft> _gameObjects;
         protected int _amountOfObjects;
-        protected List<Star> _stars;
-        protected int _amountOfStars;
 
         protected GameStatus _finishGame;
 
@@ -60,7 +59,7 @@ namespace Game
         {
             bool gameOn = true;
 
-            for (int i = 0; i < _amountOfObjects; i++)
+            for (int i = 10; i < _amountOfObjects; i++)
             {
                 if ((_gameObjects[i] is UserShip user) && !user.Active)
                 {
@@ -93,7 +92,7 @@ namespace Game
                 {
                     if (i != j)
                     {
-                        if (_gameObjects[i] is Star star && star.Y == _bottomBorder)
+                        if (_gameObjects[i] is Star star && star.Y == _bottomBorder + 4)
                         {
                             star.X = BL_Random.GetX();
                             star.Y = BL_Random.GetY();
@@ -115,17 +114,23 @@ namespace Game
                             }
                         }
 
-                        //if (_gameObjects[i] is UserShip usr && _gameObjects[j] is Star str)
-                        //{
-                        //    if (IsNear(usr, str))
-                        //    {
-                        //        str.Active = false;
-                        //    }
-                        //    else
-                        //    {
-                        //        str.Active = true;
-                        //    }
-                        //}
+                        if (_gameObjects[i] is UserShip usr
+                                && _gameObjects[j] is Star str)
+                        {
+                            if (IsNear(usr, str))
+                            {
+                                str.Y += 5;
+                            }
+                        }
+
+                        if (_gameObjects[i] is EnemyShip usr1
+                                && _gameObjects[j] is Star str1)
+                        {
+                            if (IsNear(usr1, str1))
+                            {
+                                str1.Y += 3;
+                            }
+                        }
 
                         if (_gameObjects[i] is Shot bullet && _gameObjects[j] is Ship ship)
                         {
@@ -168,7 +173,7 @@ namespace Game
             }
         }
 
-        private bool IsNear(UserShip user, Star star)
+        private bool IsNear(Ship user, Star star)
         {
             return user.Y == star.Y && star.X >= user.X
                     && star.X <= user.X + user.Width;

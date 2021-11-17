@@ -170,13 +170,14 @@ namespace Game
             {
                 string[] image = GetImage(source);
 
-                Print(source.X, source.Y, ConsoleColor.White, image);
+                ConsoleColor color = ConsoleColor.White;
 
                 if ((source is Ship one) && one.HP <= 2)
                 {
-                    Print(one.X, one.Y, ConsoleColor.DarkRed, image);
-                    Console.ResetColor();
+                    color = ConsoleColor.DarkRed;
                 }
+
+                Print(source.X, source.Y, color, image);
             }
         }
 

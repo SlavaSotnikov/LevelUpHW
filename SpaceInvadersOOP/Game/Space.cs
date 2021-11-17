@@ -40,10 +40,15 @@ namespace Game
 
         public Space(int capacity = 23, int speed = 330000)
         {
-            _gameObjects = new SpaceCraft[capacity];
+            _gameObjects = new List<SpaceCraft>(capacity);
             _amountOfObjects = 0;
             _counterProduceEnemy = 0;
             _speed = speed;
+
+            for (int i = 0; i < _gameObjects.Capacity; i++)
+            {
+                _gameObjects.Add(null);
+            }
 
             FinishedGame += UI.PrintGameOver;
         }
@@ -125,12 +130,12 @@ namespace Game
                     break;
             }
 
-            if (_amountOfObjects >= _gameObjects.Length - 1)
-            {
-                Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
-            }
+            //if (_amountOfObjects >= _gameObjects.Length - 1)
+            //{
+            //    Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
+            //}
 
-            for (int i = 0; i <= _amountOfObjects; i++)
+            for (int i = 10; i <= _gameObjects.Count/*_amountOfObjects*/; i++)
             {
                 if (_gameObjects[i] is null)
                 {
@@ -144,6 +149,11 @@ namespace Game
                 {
                     _gameObjects[i] = creature;
                     break;
+                }
+
+                if (i == _gameObjects.Count - 1)
+                {
+                    _gameObjects.Add(creature);
                 }
             }
         }
