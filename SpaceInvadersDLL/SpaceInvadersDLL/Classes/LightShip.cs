@@ -15,10 +15,9 @@
         #region Constructors
 
         internal LightShip(ISpace game, int coordX, int coordY, bool active,
-                uint speed, uint counter, byte hitpoints, byte lifes,
-                    int oldCoordX = 0, int oldCoordY = 0)
+                uint speed, uint counter, byte hitpoints, byte lifes)
             : base(game, coordX, coordY, active, speed, counter,
-                    hitpoints, lifes, oldCoordX, oldCoordY)
+                    hitpoints, lifes)
         {
         }
 

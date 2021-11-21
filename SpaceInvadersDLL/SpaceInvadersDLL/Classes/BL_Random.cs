@@ -13,7 +13,7 @@ namespace SpaceInvadersDLL
 
         public static uint GetFlySpeed()
         {
-            return (uint)value.Next(40000, 50000);
+            return (uint)value.Next(40, 50); // 40000, 50000
         }
 
         public static byte GetRndY()

@@ -20,19 +20,17 @@
 
         #region Constructor
 
-        internal EnemyShip(ISpace game, int coordX, int coordY, bool active,
-                uint speed, sbyte step, byte rndY, uint counter = 0,
-                    int oldCoordX = 0, int oldCoordY = 0, byte hitPoints = 6)
+        internal EnemyShip(ISpace game, int coordX, int coordY, uint speed, sbyte step, byte rndY)
         {
             _game = game;
             X = coordX;
             Y = coordY;
-            OldX = oldCoordX;
-            OldY = oldCoordY;
+            OldX = 0;
+            OldY = 0;
             Active = true;
             Counter = 0;
             Speed = speed;
-            HP = hitPoints;
+            HP = 6;
             Shot = rndY;
             _step = step;
             Width = 7;

@@ -73,6 +73,16 @@ namespace SpaceInvadersWF.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap enemy {
+            get {
+                object obj = ResourceManager.GetObject("enemy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Player1 {
             get {
                 object obj = ResourceManager.GetObject("Player1", resourceCulture);

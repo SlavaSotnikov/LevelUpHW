@@ -51,6 +51,7 @@
     <Compile Include="BL_Random.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="GameField.cs" />
+    <Compile Include="ITimer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Interfaces\IUserShip.cs" />
     <Compile Include="Interfaces\ISpace.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Shot.cs" />
     <Compile Include="SpaceCraft.cs" />
     <Compile Include="Star.cs" />
+    <Compile Include="Timer.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="UserShip.cs" />
   </ItemGroup>

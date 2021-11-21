@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game
 {
-    class Space : GameField, ISpace
+    class Space : GameField, ISpace, ITimer
     {
         #region Private Data
 
@@ -40,6 +40,7 @@ namespace Game
 
         public Space(int capacity = 23, int speed = 330000)
         {
+            //_gameObjects = new SpaceCraft[capacity];
             _gameObjects = new List<SpaceCraft>(capacity);
             _amountOfObjects = 0;
             _counterProduceEnemy = 0;
@@ -154,6 +155,7 @@ namespace Game
                 if (i == _gameObjects.Count - 1)
                 {
                     _gameObjects.Add(creature);
+                    break;
                 }
             }
         }
@@ -171,7 +173,7 @@ namespace Game
 
                 isExist = false;
 
-                for (int i = 0; i < _amountOfObjects; i++)
+                for (int i = 10; i < _gameObjects.Count; i++)
                 {
                     if (_gameObjects[i] is EnemyShip enemy)
                     {
@@ -194,11 +196,11 @@ namespace Game
         {
             Shot bullet = null;
 
-            for (int i = 0; i < _amountOfObjects; i++)
+            for (int i = 10; i < _gameObjects.Count; i++)
             {
                 if (_gameObjects[i] is UserShip user)
                 {
-                    bullet = new Shot(user.X + shift, user.Y - 1, 1, 5000);
+                    bullet = new Shot(user.X + shift, user.Y - 1, 1, 4000);
                     break;
                 }
             }
@@ -210,11 +212,11 @@ namespace Game
         {
             Shot bullet = null;
 
-            for (int i = 0; i < _amountOfObjects; i++)
+            for (int i = 10; i < _gameObjects.Count; i++)
             {
                 if (_gameObjects[i] is EnemyShip one && one.Shot != 0)
                 {
-                    bullet = new Shot(one.X + shift, one.Y + 3, -1, 28000);
+                    bullet = new Shot(one.X + shift, one.Y + 3, -1, 24000);
                     one.Shot = 0;
                     break;
                 }
@@ -225,7 +227,7 @@ namespace Game
 
         public void ShotEnemies()
         {
-            for (int i = _amountOfObjects; i >= 0; i--)
+            for (int i = 10; i < _gameObjects.Count; i++)
             {
                 if (_gameObjects[i] is EnemyShip one)
                 {

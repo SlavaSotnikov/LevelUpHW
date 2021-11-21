@@ -9,7 +9,7 @@ namespace SpaceInvadersWF
     public partial class Form1 : Form
     {
         private IGame _game;
-        private PictureBox[] _pictures;
+        private readonly PictureBox[] _pictures;
 
         public Form1(IGame source)
         {
@@ -61,7 +61,7 @@ namespace SpaceInvadersWF
             _game.PressKey(GameAction.NoAction);
         }
 
-        private void RunGame(object sender, EventArgs e)    // TODO: Check the timer.
+        private void RunGame(object sender, EventArgs e)    // TODO: ITimer Interface.
         {
             _game.Run();    // TODO: Move to Controller RunGame method. Timer for Console.
 
@@ -79,16 +79,18 @@ namespace SpaceInvadersWF
                 if (!_game[i].Active)
                 {
                     _pictures[i].Visible = false;
+                    continue;
                 }
 
                 if (_game[i] is UserShip && _pictures[i].Visible)
                 {
                     if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
                     {
-                        one.X = _game[i].X*2;
-                        one.Y = _game[i].Y*2;
+                        one.X = _game[i].X * 2;
+                        one.Y = _game[i].Y * 2;
 
                         _pictures[i].Location = one;
+                        continue;
                     }
                 }
 
@@ -96,28 +98,59 @@ namespace SpaceInvadersWF
                 {
                     if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
                     {
-                        _pictures[i].Location = new Point(_game[i].X*2, _game[i].Y*2);
+                        one.X = _game[i].X * 2;
+                        one.Y = _game[i].Y * 2;
+
+                        _pictures[i].Location = one;
+                        continue;
                     }
-                } 
+                }
+
+                if (_game[i] is EnemyShip && _pictures[i].Visible)
+                {
+                    if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
+                    {
+                        one.X = _game[i].X * 2;
+                        one.Y = _game[i].Y * 2;
+
+                        _pictures[i].Location = one;
+                        continue;
+                    }
+                }
             }
         }
 
         private void InitPictures()
         {
+            Size size = new Size(0, 0);
+
             for (int i = 0; i < _game.Amount; i++)
             {
                 if (_game[i] is UserShip && _pictures[i] == null)
                 {
-                    InitPicture(i, Properties.Resources.UserShip, new Size(75, 82));
+                    size.Width = 75;
+                    size.Height = 82;
+
+                    InitPicture(i, Properties.Resources.UserShip, size);
+                    continue;
                 }
 
                 if (_game[i] is Shot two && two.Active)
                 {
-                    InitPicture(i, Properties.Resources.Bullet, new Size(15, 50));
+                    size.Width = 15;
+                    size.Height = 50;
+
+                    InitPicture(i, Properties.Resources.Bullet, size);
+                    continue;
                 }
 
                 if (_game[i] is EnemyShip three && three.Active)
                 {
+                    size.Width = 100;
+                    size.Height = 50;
+
+                    InitPicture(i, Properties.Resources.enemy, size);
+                    continue;
                 }
             }
         }
@@ -147,11 +180,6 @@ namespace SpaceInvadersWF
             };
 
             Controls.Add(_pictures[i]);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -61,12 +61,13 @@ namespace SpaceInvadersDLL
 
         #region Constructor
 
-        public Space(int capacity = 13, int speed = 330000)
+        public Space(int capacity = 13, int speed = 600)
         {
             _gameObjects = new SpaceCraft[capacity];
             _amountOfObjects = 0;
             _counterProduceEnemy = 0;
             _speed = speed;
+
             AddObject(SpaceObject.LightShip);
         }
 
@@ -191,7 +192,7 @@ namespace SpaceInvadersDLL
 
             } while (isExist);
 
-            return new EnemyShip(this, rndX, CONST_Y, _active, speed, 1, rndYShot);
+            return new EnemyShip(this, rndX, CONST_Y, speed, 1, rndYShot);
         }
 
         private Shot AddShot(int shift)

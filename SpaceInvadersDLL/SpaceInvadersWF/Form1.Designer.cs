@@ -37,7 +37,7 @@ namespace SpaceInvadersWF
             // MainTimer
             // 
             this.MainTimer.Interval = 1;
-            this.MainTimer.Tick += new System.EventHandler(this.RunGame);
+            this.MainTimer.Tick += new System.EventHandler(RunGame);
             // 
             // Form1
             // 
@@ -49,8 +49,8 @@ namespace SpaceInvadersWF
             this.Name = "Form1";
             this.Text = "Space Invaders";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(KeyIsDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(KeyIsUp);
             this.ResumeLayout(false);
 
         }
