@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -10,7 +11,7 @@ namespace Game
 
         public override byte OldHP { get; set; }
 
-        public override byte Width { get; set; }
+        //public override byte Width { get; set; }
 
         #endregion
 
@@ -21,6 +22,48 @@ namespace Game
             : base(game, coordX, coordY, active, speed, counter, 
                     hitpoints, lifes)
         {
+            Position = SetInitPosition();
+            OldPosition = SetOldPosition();
+        }
+
+        private HashSet<Coordinate> SetOldPosition()
+        {
+            HashSet<Coordinate> result = new HashSet<Coordinate>(19, new CoordinateComparer());
+
+            for (int i = 0; i < 19; i++)
+            {
+                result.Add(new Coordinate(i, 0));    // TODO: ???
+            }
+
+            return result;
+        }
+
+        private HashSet<Coordinate> SetInitPosition()
+        {
+            HashSet<Coordinate> result = new HashSet<Coordinate>(19, new CoordinateComparer())
+            {
+                new Coordinate(56, 28),
+                new Coordinate(56, 29),
+                new Coordinate(54, 30),
+                new Coordinate(56, 30),
+                new Coordinate(58, 30),
+                new Coordinate(52, 31),
+                new Coordinate(53, 31),
+                new Coordinate(54, 31),
+                new Coordinate(55, 31),
+                new Coordinate(56, 31),
+                new Coordinate(57, 31),
+                new Coordinate(58, 31),
+                new Coordinate(59, 31),
+                new Coordinate(60, 31),
+                new Coordinate(54, 32),
+                new Coordinate(55, 32),
+                new Coordinate(56, 32),
+                new Coordinate(57, 32),
+                new Coordinate(58, 32)
+            };
+
+            return result;
         }
 
         #endregion
@@ -32,34 +75,41 @@ namespace Game
             switch (_keyEvent?.Invoke())
             {
                 case Action.LeftMove:
-                    
-                    if (X > _game.LeftBorder)
+
+                    if (!IsCross())
                     {
-                        --X;
+                        foreach (var item in Position)
+                        {
+                            --item.X;
+                        } 
                     }
+                    
                     break;
 
                 case Action.RightMove:
-                    
-                    if (X < _game.RightBorder)
+
+                    if (!IsCross())
                     {
-                        ++X;
+                        foreach (var item in Position)
+                        { ++item.X; }
                     }
                     break;
 
                 case Action.UpMove:
-                    
-                    if (Y > _game.TopBorder)
+
+                    if (!IsCross())
                     {
-                        --Y;
+                        foreach (var item in Position)
+                        { --item.Y; }
                     }
                     break;
 
                 case Action.DownMove:
 
-                    if (Y < _game.BottomBorder)
+                    if (!IsCross())
                     {
-                        ++Y;
+                        foreach (var item in Position)
+                        { ++item.Y; }
                     }
                     break;
 
@@ -73,6 +123,13 @@ namespace Game
                 default:
                     break;
             }
+        }
+
+        private bool IsCross()
+        {
+            bool result = Position.Overlaps(_game.Borders);
+
+            return result;
         }
 
         #endregion

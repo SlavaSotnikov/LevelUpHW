@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game
 {
-    class Space : GameField, ISpace, ITimer
+    internal class Space : GameField, ISpace, ITimer
     {
         #region Private Data
 
@@ -26,13 +26,13 @@ namespace Game
 
         #region Properties
 
-        public int LeftBorder => _leftBorder;
+        //public int LeftBorder => _leftBorder;
 
-        public int RightBorder => _rightBorder;
+        //public int RightBorder => _rightBorder;
 
-        public int TopBorder => _topBorder;
+        //public int TopBorder => _topBorder;
 
-        public int BottomBorder => _bottomBorder;
+        //public int BottomBorder => _bottomBorder;
 
         #endregion
 
@@ -45,6 +45,8 @@ namespace Game
             _amountOfObjects = 0;
             _counterProduceEnemy = 0;
             _speed = speed;
+
+            InitBorders();
 
             for (int i = 0; i < _gameObjects.Capacity; i++)
             {
@@ -69,7 +71,7 @@ namespace Game
 
         public void Run()
         {
-            AddStars();
+            //AddStars();
 
             AddObject((SpaceObject)1);
 
@@ -136,7 +138,7 @@ namespace Game
             //    Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
             //}
 
-            for (int i = 10; i <= _gameObjects.Count/*_amountOfObjects*/; i++)
+            for (int i = /*10*/0; i <= _gameObjects.Count/*_amountOfObjects*/; i++)
             {
                 if (_gameObjects[i] is null)
                 {
@@ -163,13 +165,16 @@ namespace Game
         private SpaceCraft AddEnemy()
         {
             bool isExist;
-            int rndX = 0;
+            //int rndX = 0;
             uint speed = BL_Random.GetFlySpeed();
             byte rndYShot = BL_Random.GetRndY();
+            HashSet<Coordinate> newPosition = null;
 
             do
             {
-                rndX = BL_Random.GetX();
+                //rndX = BL_Random.GetX();
+
+                newPosition = InitNewEnemy(BL_Random.GetX());
 
                 isExist = false;
 
@@ -177,11 +182,9 @@ namespace Game
                 {
                     if (_gameObjects[i] is EnemyShip enemy)
                     {
-                        if (!((rndX > enemy.X + enemy.Width) || (rndX + enemy.Width < enemy.X)))
+                        if (newPosition.Overlaps(enemy.Position) /*!((rndX > enemy.X + enemy.Width) || (rndX + enemy.Width < enemy.X))*/)
                         {
                             isExist = true;
-                            i = 0;
-
                             break;
                         }
                     }
@@ -189,7 +192,22 @@ namespace Game
 
             } while (isExist);
 
-            return new EnemyShip(this, rndX, CONST_Y, _active, speed, 1, rndYShot);
+            return new EnemyShip(this, newPosition, 0/*rndX*/, CONST_Y, _active, speed, 1, rndYShot);
+        }
+
+        private HashSet<Coordinate> InitNewEnemy(int x)
+        {
+            HashSet<Coordinate> result = new HashSet<Coordinate>(new CoordinateComparer());
+
+            for (int y = 0; y < 1; y++)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    result.Add(new Coordinate(x + i, y));
+                }
+            }
+
+            return result;
         }
 
         public Shot AddShot(int shift)
@@ -200,7 +218,7 @@ namespace Game
             {
                 if (_gameObjects[i] is UserShip user)
                 {
-                    bullet = new Shot(user.X + shift, user.Y - 1, 1, 4000);
+                    //bullet = new Shot(user.X + shift, user.Y - 1, 1, 4000);
                     break;
                 }
             }
@@ -216,7 +234,7 @@ namespace Game
             {
                 if (_gameObjects[i] is EnemyShip one && one.Shot != 0)
                 {
-                    bullet = new Shot(one.X + shift, one.Y + 3, -1, 24000);
+                    //bullet = new Shot(one.X + shift, one.Y + 3, -1, 24000);
                     one.Shot = 0;
                     break;
                 }
@@ -231,10 +249,10 @@ namespace Game
             {
                 if (_gameObjects[i] is EnemyShip one)
                 {
-                    if (one.Y == one.Shot)
-                    {
-                        AddObject(SpaceObject.ShotEnemy);
-                    }
+                    //if (one.Y == one.Shot)
+                    //{
+                    //    AddObject(SpaceObject.ShotEnemy);
+                    //}
                 }
             }
         }

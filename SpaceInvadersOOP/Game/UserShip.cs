@@ -24,16 +24,16 @@ namespace Game
                 uint speed, uint counter, byte hitpoints, byte lifes)
         {
             _game = game;
-            X = coordX;
-            Y = coordY;
-            OldX = 0;
-            OldY = 0;
+            //X = coordX;
+            //Y = coordY;
+            //OldX = 0;
+            //OldY = 0;
             Active = active;
             Speed = speed;
             Counter = counter;
             HP = hitpoints;
             Life = lifes;
-            Width = 9;
+            //Width = 9;
             _keyEvent += UI.PressKey;
         }
 

@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinate.cs" />
+    <Compile Include="CoordinateComparer.cs" />
     <Compile Include="Delegate\GameStatus.cs" />
     <Compile Include="Delegate\UIListener.cs" />
     <Compile Include="Exception\ClashException.cs" />

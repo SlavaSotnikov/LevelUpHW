@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
@@ -26,12 +27,17 @@ namespace Game
 
         private static string _gameOver;
 
+        private static HashSet<char> _userShip;
+
         #endregion
 
         #region Constructor
 
         static UI()
         {
+
+            _userShip = new HashSet<char>(30);
+
             _shot = new string[] { "|" };
 
             _star = new string[] { "." };
@@ -156,40 +162,67 @@ namespace Game
 
         public static void Hide(ISpaceCraft source)
         {
-            if (source.X != source.OldX
-                        || source.Y != source.OldY)
+            bool res = source.Position.SetEquals(source.OldPosition);
+
+            if (!res)
             {
-                Print(source.OldX, source.OldY, ConsoleColor.Black, GetImage(source));
+                foreach (var item in source.OldPosition)
+                {
+                    Print(item, ConsoleColor.Black, '│' /*GetImage(source)*/); 
+                }
             }
+
+            //if (source.X != source.OldX
+            //            || source.Y != source.OldY)
+            //{
+            //    Print(source.OldX, source.OldY, ConsoleColor.Black, GetImage(source));
+            //}
         }
 
         public static void Show(ISpaceCraft source)
         {
-            if ((source.X != source.OldX
-                    || source.Y != source.OldY) && source.Active)
-            {
-                string[] image = GetImage(source);
+            bool res = source.Position.SetEquals(source.OldPosition) && source.Active;
 
+            if (!res)
+            {
                 ConsoleColor color = ConsoleColor.White;
 
-                if ((source is Ship one) && one.HP <= 2)
+                foreach (var item in source.Position)
                 {
-                    color = ConsoleColor.DarkRed;
+                    Print(item, color, '║'); 
                 }
-
-                Print(source.X, source.Y, color, image);
             }
+
+            //if ((source.X != source.OldX
+            //        || source.Y != source.OldY) && source.Active)
+            //{
+            //    string[] image = GetImage(source);
+
+            //    ConsoleColor color = ConsoleColor.White;
+
+            //    if ((source is Ship one) && one.HP <= 2)
+            //    {
+            //        color = ConsoleColor.DarkRed;
+            //    }
+
+            //    Print(source.X, source.Y, color, image);
+            //}
         }
 
-        public static void Print(int x, int y, ConsoleColor color, params string[] view)
+        public static void Print(Coordinate source, ConsoleColor color, char view)
         {
-            for (int i = 0; i < view.Length; i++)
-            {
-                Console.SetCursorPosition(x, y + i);
+            Console.SetCursorPosition(source.X, source.Y);
 
-                Console.ForegroundColor = color;
-                Console.Write(view[i]);
-            }
+            Console.ForegroundColor = color;
+            Console.Write(view);
+
+            //for (int i = 0; i < view.Length; i++)
+            //{
+            //    Console.SetCursorPosition(source.X, source.Y + i);
+
+            //    Console.ForegroundColor = color;
+            //    Console.Write(view[i]);
+            //}
         }
 
         private static string[] GetImage(ISpaceCraft source)

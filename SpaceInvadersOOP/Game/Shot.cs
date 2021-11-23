@@ -8,10 +8,10 @@ namespace Game
 
         public Shot(int x, int y, sbyte step, uint speed)
         {
-            X = x;
-            Y = y;
-            OldX = 0;
-            OldY = 0;
+            //X = x;
+            //Y = y;
+            //OldX = 0;
+            //OldY = 0;
             Counter = 0;
             Speed = speed;
             Active = true;
@@ -24,7 +24,7 @@ namespace Game
 
         public override void Step()
         {
-            Y -= _step;
+            //Y -= _step;
         }
 
         #endregion

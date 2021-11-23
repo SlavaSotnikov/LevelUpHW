@@ -10,19 +10,19 @@ namespace Game
     {
         internal Star(int x, int y, sbyte step, uint speed)
         {
-            X = x;
-            Y = y;
-            _step = step;
-            Speed = speed;
-            OldX = 0;
-            OldY = 0;
-            Counter = 0;
-            Active = true;
+            //X = x;
+            //Y = y;
+            //_step = step;
+            //Speed = speed;
+            //OldX = 0;
+            //OldY = 0;
+            //Counter = 0;
+            //Active = true;
         }
 
         public override void Step()
         {
-            Y += _step;
+            //Y += _step;
         }
     }
 }

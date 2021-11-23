@@ -8,6 +8,6 @@ namespace Game
 
         public abstract byte OldHP { get; set; }
 
-        public abstract byte Width { get; set; }
+        //public abstract byte Width { get; set; }
     }
 }

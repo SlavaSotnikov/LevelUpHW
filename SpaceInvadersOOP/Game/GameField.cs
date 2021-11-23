@@ -31,6 +31,45 @@ namespace Game
 
         protected GameStatus _finishGame;
 
+        public HashSet<Coordinate> Borders { get; private set; }
+
+        protected void InitBorders()
+        {
+            Borders = new HashSet<Coordinate>(new CoordinateComparer());
+
+            int y = _topBorder;
+            int x = _leftBorder;
+
+            for (; x <= _rightBorder; x++)
+            {
+                Borders.Add(new Coordinate(x, y));
+            }
+
+            y = _bottomBorder + 4;
+            x = _leftBorder;
+
+            for (; x <= _rightBorder; x++)
+            {
+                Borders.Add(new Coordinate(x, y));
+            }
+            
+            y = _topBorder + 1;
+            x = _leftBorder;
+
+            for (; y < _bottomBorder + 4; y++)
+            {
+                Borders.Add(new Coordinate(x, y));
+            }
+            
+            y = _topBorder + 1;
+            x = _rightBorder;
+
+            for (; y < _bottomBorder + 4; y++)
+            {
+                Borders.Add(new Coordinate(x, y));
+            }
+        }
+
         #endregion
 
         #region IGame implementation
@@ -59,7 +98,7 @@ namespace Game
         {
             bool gameOn = true;
 
-            for (int i = 10; i < _amountOfObjects; i++)
+            for (int i = 0; i < _amountOfObjects; i++)
             {
                 if ((_gameObjects[i] is UserShip user) && !user.Active)
                 {
@@ -92,104 +131,104 @@ namespace Game
                 {
                     if (i != j)
                     {
-                        if (_gameObjects[i] is Star star && star.Y == _bottomBorder + 4)
-                        {
-                            star.X = BL_Random.GetX();
-                            star.Y = BL_Random.GetY();
-                            star.Active = true;
-                            continue;
-                        }
+                        //if (_gameObjects[i] is Star star && star.Y == _bottomBorder + 4)
+                        //{
+                        //    star.X = BL_Random.GetX();
+                        //    star.Y = BL_Random.GetY();
+                        //    star.Active = true;
+                        //    continue;
+                        //}
 
-                        if (_gameObjects[i] is UserShip user && _gameObjects[j] is EnemyShip enemy)
-                        {
-                            if (IsClash(user, enemy))
-                            {
-                                int x = user.X;
-                                int y = user.Y;
+                        //if (_gameObjects[i] is UserShip user && _gameObjects[j] is EnemyShip enemy)
+                        //{
+                        //    if (IsClash(user, enemy))
+                        //    {
+                        //        int x = user.X;
+                        //        int y = user.Y;
 
-                                user.Y += 2;
-                                enemy.Y -= 2;
+                        //        user.Y += 2;
+                        //        enemy.Y -= 2;
 
-                                throw new ClashException("BOOM!!!", x, y);
-                            }
-                        }
+                        //        throw new ClashException("BOOM!!!", x, y);
+                        //    }
+                        //}
 
                         if (_gameObjects[i] is UserShip usr
                                 && _gameObjects[j] is Star str)
                         {
-                            if (IsNear(usr, str))
-                            {
-                                str.Y += 5;
-                            }
+                            //if (IsNear(usr, str))
+                            //{
+                            //    //str.Y += 5;
+                            //}
                         }
 
                         if (_gameObjects[i] is EnemyShip usr1
                                 && _gameObjects[j] is Star str1)
                         {
-                            if (IsNear(usr1, str1))
-                            {
-                                str1.Y += 3;
-                            }
+                            //if (IsNear(usr1, str1))
+                            //{
+                            //    //str1.Y += 3;
+                            //}
                         }
 
                         if (_gameObjects[i] is Shot bullet && _gameObjects[j] is Ship ship)
                         {
                             if (bullet.Active && ship.Active)
                             {
-                                if (IsHit(bullet, ship))
-                                {
-                                    bullet.Active = false;
-                                    --ship.HP;
+                                //if (IsHit(bullet, ship))
+                                //{
+                                //    bullet.Active = false;
+                                //    --ship.HP;
 
-                                    if (ship.HP <= 0)
-                                    {
-                                        ship.Active = false;
-                                        ship.Step();
-                                        continue;
-                                    }
-                                }
+                                //    if (ship.HP <= 0)
+                                //    {
+                                //        ship.Active = false;
+                                //        ship.Step();
+                                //        continue;
+                                //    }
+                                //}
                             }
                         }
 
                         if (_gameObjects[i] is EnemyShip one)
                         {
-                            if (one.Y == _bottomBorder)
-                            {
-                                one.Active = false;
-                                continue;
-                            }
+                            //if (one.Y == _bottomBorder)
+                            //{
+                            //    one.Active = false;
+                            //    continue;
+                            //}
                         }
 
                         if (_gameObjects[i] is Shot two)
                         {
-                            if (two.Y == _topBorder || two.Y == _bottomBorder)
-                            {
-                                two.Active = false;
-                                continue;
-                            }
+                            //if (two.Y == _topBorder || two.Y == _bottomBorder)
+                            //{
+                            //    two.Active = false;
+                            //    continue;
+                            //}
                         }
                     }
                 }
             }
         }
 
-        private bool IsNear(Ship user, Star star)
-        {
-            return user.Y == star.Y && star.X >= user.X
-                    && star.X <= user.X + user.Width;
-        }
+        //private bool IsNear(Ship user, Star star)
+        //{
+        //    return user.Y == star.Y && star.X >= user.X
+        //            && star.X <= user.X + user.Width;
+        //}
 
-        private bool IsClash(UserShip user, EnemyShip enemy)
-        {
-            return user.Y - 1 == enemy.Y && enemy.X >= user.X
-                    && enemy.X + enemy.Width <= user.X + user.Width;
-        }
+        //private bool IsClash(UserShip user, EnemyShip enemy)
+        //{
+        //    return user.Y - 1 == enemy.Y && enemy.X >= user.X
+        //            && enemy.X + enemy.Width <= user.X + user.Width;
+        //}
 
-        private bool IsHit(Shot bullet, Ship user)
-        {
-            return bullet.Y == user.Y && user.X < bullet.X
-                    && bullet.X < user.X + user.Width;
-        }
+        //private bool IsHit(Shot bullet, Ship user)
+        //{
+        //    return bullet.Y == user.Y && user.X < bullet.X
+        //            && bullet.X < user.X + user.Width;
+        //}
 
         #endregion
     }

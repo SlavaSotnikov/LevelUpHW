@@ -21,6 +21,11 @@
             {
                 UI.Show(source[i]);
             }
+
+            foreach (var item in source.Borders)
+            {
+                UI.Print(item, System.ConsoleColor.White, '|');
+            }
         }
 
         public static void ShowExplosion(ClashException ex)
