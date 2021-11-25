@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    internal class CoordinateComparer : IEqualityComparer<Coordinate>
+    internal class Comparer : IEqualityComparer<Coordinate>
     {
         public bool Equals(Coordinate first, Coordinate second)
         {
-            return (first.X == second.X) && (first.Y == second.Y);
+            bool result = (first.X == second.X) && (first.Y == second.Y);
+
+            return result;
         }
 
         public int GetHashCode(Coordinate obj)

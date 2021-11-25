@@ -30,19 +30,20 @@ namespace Game
         protected int _amountOfObjects;
 
         protected GameStatus _finishGame;
+        public HashSet<Coordinate> _borders;
 
-        public HashSet<Coordinate> Borders { get; private set; }
+        public HashSet<Coordinate> Borders => _borders;
 
         protected void InitBorders()
         {
-            Borders = new HashSet<Coordinate>(new CoordinateComparer());
+            _borders = new HashSet<Coordinate>(180/*new CoordinateEqualityComparer()*/);
 
             int y = _topBorder;
             int x = _leftBorder;
 
             for (; x <= _rightBorder; x++)
             {
-                Borders.Add(new Coordinate(x, y));
+                _borders.Add(new Coordinate(x, y));
             }
 
             y = _bottomBorder + 4;
@@ -50,7 +51,7 @@ namespace Game
 
             for (; x <= _rightBorder; x++)
             {
-                Borders.Add(new Coordinate(x, y));
+                _borders.Add(new Coordinate(x, y));
             }
             
             y = _topBorder + 1;
@@ -58,7 +59,7 @@ namespace Game
 
             for (; y < _bottomBorder + 4; y++)
             {
-                Borders.Add(new Coordinate(x, y));
+                _borders.Add(new Coordinate(x, y));
             }
             
             y = _topBorder + 1;
@@ -66,7 +67,7 @@ namespace Game
 
             for (; y < _bottomBorder + 4; y++)
             {
-                Borders.Add(new Coordinate(x, y));
+                _borders.Add(new Coordinate(x, y));
             }
         }
 

@@ -75,6 +75,8 @@ namespace Game
 
             AddObject((SpaceObject)1);
 
+            Controller.ShowBorders(this);
+
             do
             {
                 Controller.Hide(this);
@@ -100,6 +102,8 @@ namespace Game
 
             } while (IsGameOver());
         }
+
+
 
         public void AddObject(SpaceObject source)
         {
@@ -168,13 +172,14 @@ namespace Game
             //int rndX = 0;
             uint speed = BL_Random.GetFlySpeed();
             byte rndYShot = BL_Random.GetRndY();
-            HashSet<Coordinate> newPosition = null;
+            HashSet<Coordinate> position;
 
             do
             {
                 //rndX = BL_Random.GetX();
 
-                newPosition = InitNewEnemy(BL_Random.GetX());
+                position = InitNewEnemy(BL_Random.GetX());
+                
 
                 isExist = false;
 
@@ -182,7 +187,7 @@ namespace Game
                 {
                     if (_gameObjects[i] is EnemyShip enemy)
                     {
-                        if (newPosition.Overlaps(enemy.Position) /*!((rndX > enemy.X + enemy.Width) || (rndX + enemy.Width < enemy.X))*/)
+                        if (position.Overlaps(enemy.Position) /*!((rndX > enemy.X + enemy.Width) || (rndX + enemy.Width < enemy.X))*/)
                         {
                             isExist = true;
                             break;
@@ -192,19 +197,21 @@ namespace Game
 
             } while (isExist);
 
-            return new EnemyShip(this, newPosition, 0/*rndX*/, CONST_Y, _active, speed, 1, rndYShot);
+            return new EnemyShip(this, position, 0/*rndX*/, CONST_Y, _active, speed, 1, rndYShot);
         }
-
         private HashSet<Coordinate> InitNewEnemy(int x)
         {
-            HashSet<Coordinate> result = new HashSet<Coordinate>(new CoordinateComparer());
+            HashSet<Coordinate> result = new HashSet<Coordinate>(new Comparer());
+            int width = 7;
 
-            for (int y = 0; y < 1; y++)
+            for (int y = 0; y < 4; y++)
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = y; i < width; i++)
                 {
-                    result.Add(new Coordinate(x + i, y));
+                    result.Add(new Coordinate(x + i, y + 1));
                 }
+
+                width--;
             }
 
             return result;

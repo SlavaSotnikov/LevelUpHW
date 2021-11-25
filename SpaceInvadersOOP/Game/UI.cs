@@ -168,7 +168,7 @@ namespace Game
             {
                 foreach (var item in source.OldPosition)
                 {
-                    Print(item, ConsoleColor.Black, '│' /*GetImage(source)*/); 
+                    Print(item, ConsoleColor.Black, ' ' /*GetImage(source)*/); 
                 }
             }
 

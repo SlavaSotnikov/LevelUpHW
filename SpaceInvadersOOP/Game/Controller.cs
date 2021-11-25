@@ -7,6 +7,14 @@
         //    return UI.AskConsole();
         //}
 
+        public static void ShowBorders(IGame source)
+        {
+            foreach (var item in source.Borders)
+            {
+                UI.Print(item, System.ConsoleColor.White, '|');
+            }
+        }
+
         public static void Hide(IGame source)
         {
             for (int i = 0; i < source.Amount; i++)
@@ -20,11 +28,6 @@
             for (int i = 0; i < source.Amount; i++)
             {
                 UI.Show(source[i]);
-            }
-
-            foreach (var item in source.Borders)
-            {
-                UI.Print(item, System.ConsoleColor.White, '|');
             }
         }
 

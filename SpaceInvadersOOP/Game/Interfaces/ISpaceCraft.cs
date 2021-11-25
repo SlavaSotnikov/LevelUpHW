@@ -14,8 +14,8 @@ namespace Game
 
         bool Active {  get; }
 
-        HashSet<Coordinate> Position { get; }
+        HashSet<Coordinate> Position { get; set; }
 
-        HashSet<Coordinate> OldPosition { get; }
+        HashSet<Coordinate> OldPosition { get; set; }
     }
 }

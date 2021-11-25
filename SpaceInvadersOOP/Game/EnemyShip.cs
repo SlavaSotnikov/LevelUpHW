@@ -40,6 +40,19 @@ namespace Game
             //Width = 7;
 
             Position = position;
+            OldPosition = new HashSet<Coordinate>(19, new Comparer());
+
+            foreach (var item in Position)
+            {
+                OldPosition.Add(new Coordinate(item));
+            }
+
+            foreach (var item in OldPosition)
+            {
+                item.X++;
+                item.Y++;
+                break;
+            }
         }
 
         #endregion
@@ -49,10 +62,18 @@ namespace Game
         public override void Step()    // TODO: ref return.
         {
             //Y += _step;
+            HashSet<Coordinate> temp = new HashSet<Coordinate>(7, new Comparer());
+
             foreach (var item in Position)
             {
-                item.Y += _step;
+                temp.Add(new Coordinate(item.X, ++item.Y));
             }
+
+            Position.Clear();
+            Position.TrimExcess();
+            Position.UnionWith(temp);
+            temp.Clear();
+            temp.TrimExcess();
         }
 
         #endregion

@@ -59,13 +59,13 @@ namespace Game
         {
             //OldX = X;
             //OldY = Y;
-            HashSet<Coordinate> destination = new HashSet<Coordinate>(19, new CoordinateComparer());
 
             OldPosition.Clear();
+            OldPosition.TrimExcess();
 
             foreach (var item in Position)
             {
-                OldPosition.Add(new Coordinate(item));
+                OldPosition.Add(new Coordinate(item.X, item.Y));
             }
         }
 

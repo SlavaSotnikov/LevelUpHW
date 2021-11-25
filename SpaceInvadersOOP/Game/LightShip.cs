@@ -22,25 +22,12 @@ namespace Game
             : base(game, coordX, coordY, active, speed, counter, 
                     hitpoints, lifes)
         {
-            Position = SetInitPosition();
-            OldPosition = SetOldPosition();
+            SetPosition();
         }
 
-        private HashSet<Coordinate> SetOldPosition()
+        private void SetPosition()
         {
-            HashSet<Coordinate> result = new HashSet<Coordinate>(19, new CoordinateComparer());
-
-            for (int i = 0; i < 19; i++)
-            {
-                result.Add(new Coordinate(i, 0));    // TODO: ???
-            }
-
-            return result;
-        }
-
-        private HashSet<Coordinate> SetInitPosition()
-        {
-            HashSet<Coordinate> result = new HashSet<Coordinate>(19, new CoordinateComparer())
+            Position = new HashSet<Coordinate>(19, new Comparer())
             {
                 new Coordinate(56, 28),
                 new Coordinate(56, 29),
@@ -63,7 +50,19 @@ namespace Game
                 new Coordinate(58, 32)
             };
 
-            return result;
+            OldPosition = new HashSet<Coordinate>(19, new Comparer());
+
+            foreach (var item in Position)
+            {
+                OldPosition.Add(new Coordinate(item));
+            }
+
+            foreach (var item in OldPosition)
+            {
+                item.X++;
+                item.Y++;
+                break;
+            }
         }
 
         #endregion
@@ -72,26 +71,33 @@ namespace Game
 
         public override void Step()
         {
+            HashSet<Coordinate> temp = null;
+
             switch (_keyEvent?.Invoke())
             {
                 case Action.LeftMove:
 
                     if (!IsCross())
                     {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+
                         foreach (var item in Position)
                         {
-                            --item.X;
+                            temp.Add(new Coordinate(--item.X, item.Y)); 
                         } 
                     }
-                    
                     break;
 
                 case Action.RightMove:
 
                     if (!IsCross())
                     {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+
                         foreach (var item in Position)
-                        { ++item.X; }
+                        {
+                            temp.Add(new Coordinate(++item.X, item.Y));
+                        }
                     }
                     break;
 
@@ -99,8 +105,12 @@ namespace Game
 
                     if (!IsCross())
                     {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+
                         foreach (var item in Position)
-                        { --item.Y; }
+                        {
+                            temp.Add(new Coordinate(item.X, --item.Y));
+                        }
                     }
                     break;
 
@@ -108,8 +118,12 @@ namespace Game
 
                     if (!IsCross())
                     {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+
                         foreach (var item in Position)
-                        { ++item.Y; }
+                        {
+                            temp.Add(new Coordinate(item.X, ++item.Y));
+                        }
                     }
                     break;
 
@@ -122,6 +136,15 @@ namespace Game
 
                 default:
                     break;
+            }
+
+            if (temp != null)
+            {
+                Position.Clear();
+                Position.TrimExcess();
+                Position.UnionWith(temp);
+                temp.Clear(); 
+                temp.TrimExcess();
             }
         }
 

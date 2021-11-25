@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Game.EnemyShip">
-    <Position X="6.75" Y="5.5" Width="1.5" />
+    <Position X="7" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAKAAAAIAAAAAAAAAA=</HashCode>
       <FileName>EnemyShip.cs</FileName>
@@ -36,7 +36,7 @@
   <Class Name="Game.LightShip" Collapsed="true">
     <Position X="4.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAAAAAAAAAAAAAACAAAAAQAACAAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAACAgAAIAAAAAAEAAA=</HashCode>
       <FileName>LightShip.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -57,7 +57,7 @@
   <Class Name="Game.Space">
     <Position X="9.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAACAEAAQAAhAgAQAAABAAAADAAAAAEABgAAAAAAAAI=</HashCode>
+      <HashCode>CAAiAEAAQAAAAAAQAAABAAAABAAAAAEABgAAAAAAAAI=</HashCode>
       <FileName>Space.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.656" />
@@ -65,14 +65,14 @@
   <Class Name="Game.Controller">
     <Position X="14" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAgAEAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAAgAEAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Controller.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game.GameField">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAIAgQAghkAAAEAEAMgQgCBAAAAAAEAASCACAVAA=</HashCode>
+      <HashCode>AAIAAIAgQAghkAAAEAEAIgQgCBAAAAAAEAAQAACAVAA=</HashCode>
       <FileName>GameField.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -87,21 +87,21 @@
   <Interface Name="Game.ISpace" Collapsed="true">
     <Position X="7.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAghAgAAAAAAAAAADAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ISpace.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Game.ISpaceCraft" Collapsed="true">
     <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAADAAAAAAAAAAAAAAAAAAAgAAAAAAAAYAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAEAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ISpaceCraft.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Game.IGame" Collapsed="true">
     <Position X="11.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAACAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAgAAAAACAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IGame.cs</FileName>
     </TypeIdentifier>
   </Interface>
