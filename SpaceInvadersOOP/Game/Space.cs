@@ -128,7 +128,7 @@ namespace Game
                     creature = AddShot(_leftShift);
                     break;
                 case SpaceObject.ShotRight:
-                    creature = AddShot(_rightShift);
+                    //creature = AddShot(_rightShift);
                     break;
                 case SpaceObject.ShotEnemy:
                     creature = AddEnemyShot(_shotEnemyShift);
@@ -201,7 +201,7 @@ namespace Game
         }
         private HashSet<Coordinate> InitNewEnemy(int x)
         {
-            HashSet<Coordinate> result = new HashSet<Coordinate>(new Comparer());
+            HashSet<Coordinate> result = new HashSet<Coordinate>(16, new Comparer());
             int width = 7;
 
             for (int y = 0; y < 4; y++)
@@ -220,17 +220,35 @@ namespace Game
         public Shot AddShot(int shift)
         {
             Shot bullet = null;
+            Coordinate bow = null;
 
-            for (int i = 10; i < _gameObjects.Count; i++)
+            for (int i = 0; i < _gameObjects.Count; i++)
             {
                 if (_gameObjects[i] is UserShip user)
                 {
-                    //bullet = new Shot(user.X + shift, user.Y - 1, 1, 4000);
+                    bow = GetMinY(user);
+
+                    bullet = new Shot(bow.X/* + shift*/, bow.Y - 1, 1, 3000);
                     break;
                 }
             }
 
             return bullet;
+        }
+
+        private Coordinate GetMinY(UserShip source)
+        {
+            Coordinate min = new Coordinate(int.MaxValue, int.MaxValue);
+
+            foreach (var item in source.Position)
+            {
+                if (item.Y < min.Y)
+                {
+                    min = item;
+                }
+            }
+
+            return min;
         }
 
         public Shot AddEnemyShot(int shift)

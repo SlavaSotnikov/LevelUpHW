@@ -80,11 +80,13 @@ namespace Game
                     if (!IsCross())
                     {
                         temp = new HashSet<Coordinate>(19, new Comparer());
+                        ShiftSet(temp, -1, 0);
+                    }
+                    else
+                    {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+                        ShiftSet(temp, 2, 0);
 
-                        foreach (var item in Position)
-                        {
-                            temp.Add(new Coordinate(--item.X, item.Y)); 
-                        } 
                     }
                     break;
 
@@ -93,11 +95,13 @@ namespace Game
                     if (!IsCross())
                     {
                         temp = new HashSet<Coordinate>(19, new Comparer());
-
-                        foreach (var item in Position)
-                        {
-                            temp.Add(new Coordinate(++item.X, item.Y));
-                        }
+                        ShiftSet(temp, 1, 0);
+                    }
+                    else
+                    {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+                        ShiftSet(temp, -2, 0);
+                        
                     }
                     break;
 
@@ -106,11 +110,13 @@ namespace Game
                     if (!IsCross())
                     {
                         temp = new HashSet<Coordinate>(19, new Comparer());
+                        ShiftSet(temp, 0, -1);
+                    }
+                    else
+                    {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+                        ShiftSet(temp, 0, 2);
 
-                        foreach (var item in Position)
-                        {
-                            temp.Add(new Coordinate(item.X, --item.Y));
-                        }
                     }
                     break;
 
@@ -119,17 +125,19 @@ namespace Game
                     if (!IsCross())
                     {
                         temp = new HashSet<Coordinate>(19, new Comparer());
+                        ShiftSet(temp, 0, 1);
+                    }
+                    else
+                    {
+                        temp = new HashSet<Coordinate>(19, new Comparer());
+                        ShiftSet(temp, 0, -2);
 
-                        foreach (var item in Position)
-                        {
-                            temp.Add(new Coordinate(item.X, ++item.Y));
-                        }
                     }
                     break;
 
                 case Action.Shooting:
                     _game.AddObject(SpaceObject.ShotLeft);
-                    _game.AddObject(SpaceObject.ShotRight);
+                    //_game.AddObject(SpaceObject.ShotRight);
                     break;
                 case Action.NoAction:
                     break;
@@ -148,11 +156,17 @@ namespace Game
             }
         }
 
+        private void ShiftSet(HashSet<Coordinate> source, int x, int y)
+        {
+            foreach (var item in Position)
+            {
+                source.Add(new Coordinate(item.X + x, item.Y + y));
+            }
+        }
+
         private bool IsCross()
         {
-            bool result = Position.Overlaps(_game.Borders);
-
-            return result;
+            return Position.Overlaps(_game.Borders);
         }
 
         #endregion

@@ -176,6 +176,19 @@ namespace Game
                         {
                             if (bullet.Active && ship.Active)
                             {
+                                if (ship.Position.Overlaps(bullet.Position))
+                                {
+                                    bullet.Active = false;
+                                    --ship.HP;
+
+                                    if (ship.HP <= 0)
+                                    {
+                                        ship.Active = false;
+                                        //ship.Step();
+                                        continue;
+                                    }
+                                }
+
                                 //if (IsHit(bullet, ship))
                                 //{
                                 //    bullet.Active = false;
@@ -193,6 +206,12 @@ namespace Game
 
                         if (_gameObjects[i] is EnemyShip one)
                         {
+                            if (one.Position.Overlaps(Borders))
+                            {
+                                one.Active = false;
+                                continue;
+                            }
+
                             //if (one.Y == _bottomBorder)
                             //{
                             //    one.Active = false;
@@ -202,6 +221,12 @@ namespace Game
 
                         if (_gameObjects[i] is Shot two)
                         {
+                            if (two.Position.Overlaps(Borders))
+                            {
+                                two.Active = false;
+                                continue;
+                            }
+
                             //if (two.Y == _topBorder || two.Y == _bottomBorder)
                             //{
                             //    two.Active = false;

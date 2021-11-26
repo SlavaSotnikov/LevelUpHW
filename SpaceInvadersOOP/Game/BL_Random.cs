@@ -8,7 +8,7 @@ namespace Game
 
         public static int GetX()
         {
-            return _rndValue.Next(30, 83);
+            return _rndValue.Next(30, 76);
         }
 
         public static int GetY()

@@ -1,4 +1,6 @@
-﻿namespace Game
+﻿using System;
+
+namespace Game
 {
     class Controller
     {
@@ -11,7 +13,8 @@
         {
             foreach (var item in source.Borders)
             {
-                UI.Print(item, System.ConsoleColor.White, '|');
+                Coordinate res = new Coordinate(item); 
+                UI.Print(res, ConsoleColor.White, '|');
             }
         }
 

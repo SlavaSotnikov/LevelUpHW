@@ -23,6 +23,16 @@ namespace Game
             Y = source.Y;
         }
 
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         //public int CompareTo(Coordinate other)
         //{
         //    int result = 0;

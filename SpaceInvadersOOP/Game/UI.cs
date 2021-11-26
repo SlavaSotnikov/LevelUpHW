@@ -29,12 +29,23 @@ namespace Game
 
         private static HashSet<char> _userShip;
 
+        private static char _enemy;
+
+        private static char _light;
+
+        private static char _shot1;
+
         #endregion
 
         #region Constructor
 
         static UI()
         {
+            _light = '║';
+
+            _enemy = '│';
+
+            _shot1 = '|';
 
             _userShip = new HashSet<char>(30);
 
@@ -185,11 +196,13 @@ namespace Game
 
             if (!res)
             {
+                char image = GetChar(source);
+
                 ConsoleColor color = ConsoleColor.White;
 
                 foreach (var item in source.Position)
                 {
-                    Print(item, color, '║'); 
+                    Print(item, color, image); 
                 }
             }
 
@@ -223,6 +236,28 @@ namespace Game
             //    Console.ForegroundColor = color;
             //    Console.Write(view[i]);
             //}
+        }
+
+        private static char GetChar(ISpaceCraft source)
+        {
+            char image = _shot1;
+
+            if (source is LightShip)
+            {
+                image = _light;
+            }
+
+            if (source is HeavyShip)
+            {
+                
+            }
+
+            if (source is EnemyShip)
+            {
+                image = _enemy;
+            }
+
+            return image;
         }
 
         private static string[] GetImage(ISpaceCraft source)
