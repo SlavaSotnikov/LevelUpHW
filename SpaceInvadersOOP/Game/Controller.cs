@@ -13,8 +13,7 @@ namespace Game
         {
             foreach (var item in source.Borders)
             {
-                Coordinate res = new Coordinate(item); 
-                UI.Print(res, ConsoleColor.White, '|');
+                UI.Print(item, ConsoleColor.White, '|');
             }
         }
 

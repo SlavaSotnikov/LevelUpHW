@@ -25,7 +25,6 @@ namespace Game
         protected byte _rightShift = 6;    // This shift tunes the Right bullet.
         protected byte _shotEnemyShift = 3;
 
-        //protected SpaceCraft[] _gameObjects;
         protected List<SpaceCraft> _gameObjects;
         protected int _amountOfObjects;
 
@@ -184,7 +183,7 @@ namespace Game
                                     if (ship.HP <= 0)
                                     {
                                         ship.Active = false;
-                                        //ship.Step();
+                                        ship.Step();
                                         continue;
                                     }
                                 }

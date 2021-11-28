@@ -33,6 +33,8 @@ namespace Game
 
         public HashSet<Coordinate> OldPosition { get; set; }
 
+        public HashSet<Coordinate> Temp { get; set; }
+
         #endregion
 
         #region Methods
@@ -61,11 +63,10 @@ namespace Game
             //OldY = Y;
 
             OldPosition.Clear();
-            OldPosition.TrimExcess();
 
             foreach (var item in Position)
             {
-                OldPosition.Add(new Coordinate(item.X, item.Y));
+                OldPosition.Add(new Coordinate(item));
             }
         }
 

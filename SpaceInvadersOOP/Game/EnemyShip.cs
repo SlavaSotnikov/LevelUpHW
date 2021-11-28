@@ -38,42 +38,42 @@ namespace Game
             Shot = rndY;
             _step = step;
             //Width = 7;
+            int x1 = 0;
 
             Position = position;
-            OldPosition = new HashSet<Coordinate>(19, new Comparer());
+
+            OldPosition = new HashSet<Coordinate>(16);
 
             foreach (var item in Position)
             {
-                OldPosition.Add(new Coordinate(item));
+                x1 = item.X;
+
+                OldPosition.Add(new Coordinate(++x1, item.Y));
             }
 
-            foreach (var item in OldPosition)
-            {
-                item.X++;
-                item.Y++;
-                break;
-            }
+            Temp = new HashSet<Coordinate>(16);
         }
 
         #endregion
 
         #region Member Functions
 
-        public override void Step()    // TODO: ref return.
+        public override void Step()
         {
             //Y += _step;
-            HashSet<Coordinate> temp = new HashSet<Coordinate>(7, new Comparer());
-
+            int y = 0;
             foreach (var item in Position)
             {
-                temp.Add(new Coordinate(item.X, ++item.Y));
+                y = item.Y;
+                Temp.Add(new Coordinate(item.X, ++y));
             }
 
             Position.Clear();
-            Position.TrimExcess();
-            Position.UnionWith(temp);
-            temp.Clear();
-            temp.TrimExcess();
+            foreach (var item in Temp)
+            {
+                Position.Add(new Coordinate(item));
+            }
+            Temp.Clear();
         }
 
         #endregion

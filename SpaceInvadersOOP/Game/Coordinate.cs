@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    internal class Coordinate
+    internal struct Coordinate
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -25,42 +25,19 @@ namespace Game
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);
+            bool result = false;
+
+            if (obj is Coordinate source)
+            {
+                result = (X == source.X) && (Y == source.Y);
+            }
+
+            return result;
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return (Y << 8) + X;
         }
-
-        //public int CompareTo(Coordinate other)
-        //{
-        //    int result = 0;
-
-        //    if (Y < other.Y)
-        //    {
-        //        result = -1;
-        //    }
-
-        //    if (Y > other.Y)
-        //    {
-        //        result = 1;
-        //    }
-
-        //    if (result == 0)
-        //    {
-        //        if (X < other.X)
-        //        {
-        //            result = -1;
-        //        }
-
-        //        if (X > other.X)
-        //        {
-        //            result = 1;
-        //        }
-        //    }
-
-        //    return result;
-        //}
     }
 }

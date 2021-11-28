@@ -27,7 +27,7 @@ namespace Game
 
         private void SetPosition()
         {
-            Position = new HashSet<Coordinate>(19, new Comparer())
+            Position = new HashSet<Coordinate>(19)
             {
                 new Coordinate(56, 28),
                 new Coordinate(56, 29),
@@ -50,19 +50,17 @@ namespace Game
                 new Coordinate(58, 32)
             };
 
-            OldPosition = new HashSet<Coordinate>(19, new Comparer());
+            OldPosition = new HashSet<Coordinate>(19);
 
+            int x = 0;
             foreach (var item in Position)
             {
-                OldPosition.Add(new Coordinate(item));
+                x = item.X;
+
+                OldPosition.Add(new Coordinate(++x, item.Y));
             }
 
-            foreach (var item in OldPosition)
-            {
-                item.X++;
-                item.Y++;
-                break;
-            }
+            Temp = new HashSet<Coordinate>();
         }
 
         #endregion
@@ -71,67 +69,45 @@ namespace Game
 
         public override void Step()
         {
-            HashSet<Coordinate> temp = null;
-
             switch (_keyEvent?.Invoke())
             {
                 case Action.LeftMove:
 
-                    if (!IsCross())
-                    {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, -1, 0);
-                    }
-                    else
-                    {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, 2, 0);
+                    FakeShift(Temp, -1, 0);
 
+                    if (!Temp.Overlaps(_game.Borders))
+                    {
+                        Move();
                     }
                     break;
 
                 case Action.RightMove:
 
-                    if (!IsCross())
+                    FakeShift(Temp, 1, 0);
+
+                    if (!Temp.Overlaps(_game.Borders))
                     {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, 1, 0);
-                    }
-                    else
-                    {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, -2, 0);
-                        
+                        Move();
                     }
                     break;
 
                 case Action.UpMove:
 
-                    if (!IsCross())
-                    {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, 0, -1);
-                    }
-                    else
-                    {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, 0, 2);
+                    FakeShift(Temp, 0, -1);
 
+                    if (!Temp.Overlaps(_game.Borders))
+                    {
+                        Move();
                     }
                     break;
 
                 case Action.DownMove:
 
-                    if (!IsCross())
-                    {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, 0, 1);
-                    }
-                    else
-                    {
-                        temp = new HashSet<Coordinate>(19, new Comparer());
-                        ShiftSet(temp, 0, -2);
+                    FakeShift(Temp, 0, 1);
 
+                    if (!Temp.Overlaps(_game.Borders))
+                    {
+                        Move();
                     }
                     break;
 
@@ -146,27 +122,25 @@ namespace Game
                     break;
             }
 
-            if (temp != null)
+            Temp.Clear();
+        }
+
+        private void Move()
+        {
+            Position.Clear();
+
+            foreach (var item in Temp)
             {
-                Position.Clear();
-                Position.TrimExcess();
-                Position.UnionWith(temp);
-                temp.Clear(); 
-                temp.TrimExcess();
+                Position.Add(new Coordinate(item));
             }
         }
 
-        private void ShiftSet(HashSet<Coordinate> source, int x, int y)
+        private void FakeShift(HashSet<Coordinate> source, int x, int y)
         {
             foreach (var item in Position)
             {
                 source.Add(new Coordinate(item.X + x, item.Y + y));
             }
-        }
-
-        private bool IsCross()
-        {
-            return Position.Overlaps(_game.Borders);
         }
 
         #endregion

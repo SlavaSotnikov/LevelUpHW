@@ -25,8 +25,8 @@ namespace _2021_11_19_Class24_HashSet
             Console.ForegroundColor = ConsoleColor.Blue;
             Show(rect1);
 
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //Show(rect2);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Show(rect2);
 
             //Console.ForegroundColor = ConsoleColor.Red;
             //Show(rectResult1);
@@ -36,10 +36,13 @@ namespace _2021_11_19_Class24_HashSet
 
         private static void TestISet(ISet<Coordinate> rect1, ISet<Coordinate> rect2, ISet<Coordinate> rectResult, string nameOfStruct)
         {
+            GenerateCoordOfPoint(5, 5, rect1);
+            GenerateCoordOfPoint(6, 5, rect2);
+
             //Console.Write("{0,10} ", nameOfStruct);
-            GenerateCoordOfRectangle(9, 1, 10, 2, rect1);
+            //GenerateCoordOfRectangle(9, 1, 11, 2, rect1);
             //Console.Write("{0,10} ", nameOfStruct);
-            GenerateCoordOfRectangle(9, 1, 10, 2, rect2);
+            //GenerateCoordOfRectangle(9, 1, 10, 2, rect2);
             //Console.Write("  {0,10} ", nameOfStruct);
             GetCommonArea(rect1, rect2, rectResult);
         }
@@ -57,41 +60,39 @@ namespace _2021_11_19_Class24_HashSet
         {
             destination.Clear();
 
+            foreach (var item in source1)
+            {
+                ++item.X;
+            }
+
+            //foreach (Coordinate item in source2)
+            //{
+            //    ++item.X;
+            //}
+
             destination.UnionWith(source1);
+            //foreach (var item in source2)
+            //{
+            //    ++item.X;
+            //}
             
             bool overlaps = destination.SetEquals(source2);
         }
 
         public static void GenerateCoordOfRectangle(int x1, int y1, int x2, int y2, ISet<Coordinate> destination)
         {
-            //for (int x = x1; x < x2; x++)
-            //{
-            //    for (int y = y1; y < y2; y++)
-            //    {
-            //        destination.Add(new Coordinate(x, y));
-            //    }
-            //}
+            for (int x = x1; x < x2; x++)
+            {
+                for (int y = y1; y < y2; y++)
+                {
+                    destination.Add(new Coordinate(x, y));
+                }
+            }
+        }
 
-            //destination = new HashSet<Coordinate>(19/*, new CoordinateEqualityComparer()*/);
-            destination.Add(new Coordinate(56, 28));
-            destination.Add(new Coordinate(56, 29));
-            destination.Add(new Coordinate(54, 30));
-            destination.Add(new Coordinate(56, 30));
-            destination.Add(new Coordinate(58, 30));
-            destination.Add(new Coordinate(52, 31));
-            destination.Add(new Coordinate(53, 31));
-            destination.Add(new Coordinate(54, 31));
-            destination.Add(new Coordinate(55, 31));
-            destination.Add(new Coordinate(56, 31));
-            destination.Add(new Coordinate(57, 31));
-            destination.Add(new Coordinate(58, 31));
-            destination.Add(new Coordinate(59, 31));
-            destination.Add(new Coordinate(60, 31));
-            destination.Add(new Coordinate(54, 32));
-            destination.Add(new Coordinate(55, 32));
-            destination.Add(new Coordinate(56, 32));
-            destination.Add(new Coordinate(57, 32));
-            destination.Add(new Coordinate(58, 32));
+        public static void GenerateCoordOfPoint(int x, int y, ISet<Coordinate> destination)
+        {
+            destination.Add(new Coordinate(x, y));
         }
     }
 }

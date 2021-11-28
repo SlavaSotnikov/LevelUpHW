@@ -38,9 +38,8 @@ namespace Game
 
         #region Constructor
 
-        public Space(int capacity = 23, int speed = 330000)
+        public Space(int capacity = 13, int speed = 330000)
         {
-            //_gameObjects = new SpaceCraft[capacity];
             _gameObjects = new List<SpaceCraft>(capacity);
             _amountOfObjects = 0;
             _counterProduceEnemy = 0;
@@ -102,8 +101,6 @@ namespace Game
 
             } while (IsGameOver());
         }
-
-
 
         public void AddObject(SpaceObject source)
         {
@@ -179,11 +176,10 @@ namespace Game
                 //rndX = BL_Random.GetX();
 
                 position = InitNewEnemy(BL_Random.GetX());
-                
 
                 isExist = false;
 
-                for (int i = 10; i < _gameObjects.Count; i++)
+                for (int i = 0; i < _amountOfObjects; i++)
                 {
                     if (_gameObjects[i] is EnemyShip enemy)
                     {
@@ -201,7 +197,7 @@ namespace Game
         }
         private HashSet<Coordinate> InitNewEnemy(int x)
         {
-            HashSet<Coordinate> result = new HashSet<Coordinate>(16, new Comparer());
+            HashSet<Coordinate> result = new HashSet<Coordinate>(16);
             int width = 7;
 
             for (int y = 0; y < 4; y++)
@@ -220,7 +216,7 @@ namespace Game
         public Shot AddShot(int shift)
         {
             Shot bullet = null;
-            Coordinate bow = null;
+            Coordinate bow = default;
 
             for (int i = 0; i < _gameObjects.Count; i++)
             {
@@ -228,7 +224,7 @@ namespace Game
                 {
                     bow = GetMinY(user);
 
-                    bullet = new Shot(bow.X/* + shift*/, bow.Y - 1, 1, 3000);
+                    bullet = new Shot(bow.X/* + shift*/, bow.Y - 1, 1, 2000);
                     break;
                 }
             }

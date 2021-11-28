@@ -18,15 +18,17 @@ namespace Game
             Active = true;
             _step = step;
 
-            Position = new HashSet<Coordinate>(1, new Comparer())
+            Position = new HashSet<Coordinate>(1)
             {
                 new Coordinate(x, y)
             };
 
-            OldPosition = new HashSet<Coordinate>(1, new Comparer())
+            OldPosition = new HashSet<Coordinate>(1)
             {
                 new Coordinate(x - 1, y - 1)
             };
+
+            Temp = new HashSet<Coordinate>(1);
         }
 
         #endregion
@@ -36,18 +38,19 @@ namespace Game
         public override void Step()
         {
             //Y -= _step;
-            HashSet<Coordinate> temp = new HashSet<Coordinate>(7, new Comparer());
-
+            int y = 0;
             foreach (var item in Position)
             {
-                temp.Add(new Coordinate(item.X, --item.Y));
+                y = item.Y;
+                Temp.Add(new Coordinate(item.X, --y));
             }
 
             Position.Clear();
-            Position.TrimExcess();
-            Position.UnionWith(temp);
-            temp.Clear();
-            temp.TrimExcess();
+            foreach (var item in Temp)
+            {
+                Position.Add(new Coordinate(item));
+            }
+            Temp.Clear();
         }
 
         #endregion

@@ -192,17 +192,25 @@ namespace Game
 
         public static void Show(ISpaceCraft source)
         {
-            bool res = source.Position.SetEquals(source.OldPosition) && source.Active;
+            bool res = source.Position.SetEquals(source.OldPosition);
 
             if (!res)
             {
-                char image = GetChar(source);
-
-                ConsoleColor color = ConsoleColor.White;
-
-                foreach (var item in source.Position)
+                if (source.Active)
                 {
-                    Print(item, color, image); 
+                    char image = GetChar(source);
+
+                    ConsoleColor color = ConsoleColor.White;
+
+                    if ((source is Ship one) && one.HP <= 2)
+                    {
+                        color = ConsoleColor.DarkRed;
+                    }
+
+                    foreach (var item in source.Position)
+                    {
+                        Print(item, color, image);
+                    } 
                 }
             }
 
