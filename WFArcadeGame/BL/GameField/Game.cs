@@ -65,7 +65,7 @@ namespace BL
         #region Member Functions
 
         /// <summary>
-        /// The cycle of Business Logic.
+        /// The main cycle of Business Logic.
         /// </summary>
         public void RunBL()
         {
