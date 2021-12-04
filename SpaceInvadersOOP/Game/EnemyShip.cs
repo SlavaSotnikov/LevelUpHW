@@ -23,7 +23,7 @@ namespace Game
 
         #region Constructor
 
-        public EnemyShip(ISpace game, HashSet<Coordinate> position, int x, int y, bool active,
+        public EnemyShip(ISpace game, HashSet<Coord> position, int x, int y, bool active,
                 uint speed, sbyte step, byte rndY, byte hitPoints = 6)
         {
             _game = game;
@@ -38,20 +38,12 @@ namespace Game
             Shot = rndY;
             _step = step;
             //Width = 7;
-            int x1 = 0;
 
             Position = position;
 
-            OldPosition = new HashSet<Coordinate>(16);
+            OldPosition = new HashSet<Coord>(16);
 
-            foreach (var item in Position)
-            {
-                x1 = item.X;
-
-                OldPosition.Add(new Coordinate(++x1, item.Y));
-            }
-
-            Temp = new HashSet<Coordinate>(16);
+            NextPosition = new HashSet<Coord>(16);
         }
 
         #endregion
@@ -61,19 +53,17 @@ namespace Game
         public override void Step()
         {
             //Y += _step;
-            int y = 0;
+
+            int y;
             foreach (var item in Position)
             {
                 y = item.Y;
-                Temp.Add(new Coordinate(item.X, ++y));
+                NextPosition.Add(new Coord(item.X, ++y));
             }
 
             Position.Clear();
-            foreach (var item in Temp)
-            {
-                Position.Add(new Coordinate(item));
-            }
-            Temp.Clear();
+            Position.UnionWith(NextPosition);
+            NextPosition.Clear();
         }
 
         #endregion

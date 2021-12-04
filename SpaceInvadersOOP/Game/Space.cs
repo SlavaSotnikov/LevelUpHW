@@ -169,7 +169,7 @@ namespace Game
             //int rndX = 0;
             uint speed = BL_Random.GetFlySpeed();
             byte rndYShot = BL_Random.GetRndY();
-            HashSet<Coordinate> position;
+            HashSet<Coord> position;
 
             do
             {
@@ -195,18 +195,18 @@ namespace Game
 
             return new EnemyShip(this, position, 0/*rndX*/, CONST_Y, _active, speed, 1, rndYShot);
         }
-        private HashSet<Coordinate> InitNewEnemy(int x)
+        private HashSet<Coord> InitNewEnemy(int x)
         {
-            HashSet<Coordinate> result = new HashSet<Coordinate>(16);
+            HashSet<Coord> result = new HashSet<Coord>(16);
             int width = 7;
+            int height = 4;
 
-            for (int y = 0; y < 4; y++)
+            for (int y = 0; y < height; y++)
             {
                 for (int i = y; i < width; i++)
                 {
-                    result.Add(new Coordinate(x + i, y + 1));
+                    result.Add(new Coord(x + i, y + 1));
                 }
-
                 width--;
             }
 
@@ -216,7 +216,7 @@ namespace Game
         public Shot AddShot(int shift)
         {
             Shot bullet = null;
-            Coordinate bow = default;
+            Coord bow = default;
 
             for (int i = 0; i < _gameObjects.Count; i++)
             {
@@ -232,9 +232,9 @@ namespace Game
             return bullet;
         }
 
-        private Coordinate GetMinY(UserShip source)
+        private Coord GetMinY(Ship source)
         {
-            Coordinate min = new Coordinate(int.MaxValue, int.MaxValue);
+            Coord min = new Coord(0, int.MaxValue);
 
             foreach (var item in source.Position)
             {
@@ -247,15 +247,30 @@ namespace Game
             return min;
         }
 
+        private Coord GetMaxY(Ship source)
+        {
+            Coord min = new Coord(0, int.MinValue);
+
+            foreach (var item in source.Position)
+            {
+                if (item.Y > min.Y)
+                {
+                    min = item;
+                }
+            }
+
+            return min;
+        }
+
         public Shot AddEnemyShot(int shift)
         {
             Shot bullet = null;
 
-            for (int i = 10; i < _gameObjects.Count; i++)
+            for (int i = 0; i < _gameObjects.Count; i++)
             {
                 if (_gameObjects[i] is EnemyShip one && one.Shot != 0)
                 {
-                    //bullet = new Shot(one.X + shift, one.Y + 3, -1, 24000);
+                    bullet = new Shot(GetMaxY(one).X, GetMaxY(one).Y + 1, -1, 24000);
                     one.Shot = 0;
                     break;
                 }
@@ -266,10 +281,16 @@ namespace Game
 
         public void ShotEnemies()
         {
-            for (int i = 10; i < _gameObjects.Count; i++)
+            for (int i = 0; i < _gameObjects.Count; i++)
             {
                 if (_gameObjects[i] is EnemyShip one)
                 {
+                    if (GetMinY(one).Y == one.Shot)
+                    {
+                        AddObject(SpaceObject.ShotEnemy);
+                        break;
+                    }
+
                     //if (one.Y == one.Shot)
                     //{
                     //    AddObject(SpaceObject.ShotEnemy);

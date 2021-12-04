@@ -8,6 +8,6 @@ namespace Game
 
         int Amount { get; }
 
-        HashSet<Coordinate> Borders { get; }
+        HashSet<Coord> Borders { get; }
     }
 }

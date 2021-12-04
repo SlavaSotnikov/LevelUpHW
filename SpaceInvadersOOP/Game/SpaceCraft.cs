@@ -29,11 +29,11 @@ namespace Game
 
         public uint Speed { get; set; }
 
-        public HashSet<Coordinate> Position { get; set; }
+        public HashSet<Coord> Position { get; set; }
 
-        public HashSet<Coordinate> OldPosition { get; set; }
+        public HashSet<Coord> OldPosition { get; set; }
 
-        public HashSet<Coordinate> Temp { get; set; }
+        public HashSet<Coord> NextPosition { get; set; }
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace Game
 
             foreach (var item in Position)
             {
-                OldPosition.Add(new Coordinate(item));
+                OldPosition.Add(new Coord(item));
             }
         }
 

@@ -27,40 +27,40 @@ namespace Game
 
         private void SetPosition()
         {
-            Position = new HashSet<Coordinate>(19)
+            Position = new HashSet<Coord>(19)
             {
-                new Coordinate(56, 28),
-                new Coordinate(56, 29),
-                new Coordinate(54, 30),
-                new Coordinate(56, 30),
-                new Coordinate(58, 30),
-                new Coordinate(52, 31),
-                new Coordinate(53, 31),
-                new Coordinate(54, 31),
-                new Coordinate(55, 31),
-                new Coordinate(56, 31),
-                new Coordinate(57, 31),
-                new Coordinate(58, 31),
-                new Coordinate(59, 31),
-                new Coordinate(60, 31),
-                new Coordinate(54, 32),
-                new Coordinate(55, 32),
-                new Coordinate(56, 32),
-                new Coordinate(57, 32),
-                new Coordinate(58, 32)
+                new Coord(56, 28),
+                new Coord(56, 29),
+                new Coord(54, 30),
+                new Coord(56, 30),
+                new Coord(58, 30),
+                new Coord(52, 31),
+                new Coord(53, 31),
+                new Coord(54, 31),
+                new Coord(55, 31),
+                new Coord(56, 31),
+                new Coord(57, 31),
+                new Coord(58, 31),
+                new Coord(59, 31),
+                new Coord(60, 31),
+                new Coord(54, 32),
+                new Coord(55, 32),
+                new Coord(56, 32),
+                new Coord(57, 32),
+                new Coord(58, 32)
             };
 
-            OldPosition = new HashSet<Coordinate>(19);
+            OldPosition = new HashSet<Coord>(19);
 
             int x = 0;
             foreach (var item in Position)
             {
                 x = item.X;
 
-                OldPosition.Add(new Coordinate(++x, item.Y));
+                OldPosition.Add(new Coord(++x, item.Y));
             }
 
-            Temp = new HashSet<Coordinate>();
+            NextPosition = new HashSet<Coord>();
         }
 
         #endregion
@@ -73,9 +73,9 @@ namespace Game
             {
                 case Action.LeftMove:
 
-                    FakeShift(Temp, -1, 0);
+                    FakeShift(NextPosition, -1, 0);
 
-                    if (!Temp.Overlaps(_game.Borders))
+                    if (!NextPosition.Overlaps(_game.Borders))
                     {
                         Move();
                     }
@@ -83,9 +83,9 @@ namespace Game
 
                 case Action.RightMove:
 
-                    FakeShift(Temp, 1, 0);
+                    FakeShift(NextPosition, 1, 0);
 
-                    if (!Temp.Overlaps(_game.Borders))
+                    if (!NextPosition.Overlaps(_game.Borders))
                     {
                         Move();
                     }
@@ -93,9 +93,9 @@ namespace Game
 
                 case Action.UpMove:
 
-                    FakeShift(Temp, 0, -1);
+                    FakeShift(NextPosition, 0, -1);
 
-                    if (!Temp.Overlaps(_game.Borders))
+                    if (!NextPosition.Overlaps(_game.Borders))
                     {
                         Move();
                     }
@@ -103,9 +103,9 @@ namespace Game
 
                 case Action.DownMove:
 
-                    FakeShift(Temp, 0, 1);
+                    FakeShift(NextPosition, 0, 1);
 
-                    if (!Temp.Overlaps(_game.Borders))
+                    if (!NextPosition.Overlaps(_game.Borders))
                     {
                         Move();
                     }
@@ -122,24 +122,24 @@ namespace Game
                     break;
             }
 
-            Temp.Clear();
+            NextPosition.Clear();
         }
 
         private void Move()
         {
             Position.Clear();
 
-            foreach (var item in Temp)
+            foreach (var item in NextPosition)
             {
-                Position.Add(new Coordinate(item));
+                Position.Add(new Coord(item));
             }
         }
 
-        private void FakeShift(HashSet<Coordinate> source, int x, int y)
+        private void FakeShift(HashSet<Coord> source, int x, int y)
         {
             foreach (var item in Position)
             {
-                source.Add(new Coordinate(item.X + x, item.Y + y));
+                source.Add(new Coord(item.X + x, item.Y + y));
             }
         }
 

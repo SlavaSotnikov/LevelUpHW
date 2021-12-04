@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E02069C0-EE96-4D44-B0DE-8823F7F4C08F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Game</RootNamespace>
-    <AssemblyName>Game</AssemblyName>
+    <ProjectGuid>{FE790AD4-B41A-4CFE-B66E-F9167AD15831}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BL</RootNamespace>
+    <AssemblyName>BL</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,38 +41,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coord.cs" />
-    <Compile Include="Delegate\GameStatus.cs" />
-    <Compile Include="Delegate\UIListener.cs" />
-    <Compile Include="Exception\ClashException.cs" />
-    <Compile Include="Controller.cs" />
-    <Compile Include="Enum\Action.cs" />
-    <Compile Include="BL_Random.cs" />
-    <Compile Include="EnemyShip.cs" />
-    <Compile Include="GameField.cs" />
-    <Compile Include="ITimer.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Interfaces\IUserShip.cs" />
-    <Compile Include="Interfaces\ISpace.cs" />
+    <Compile Include="Interfaces\IView.cs" />
+    <Compile Include="GameField\Ship.cs" />
+    <Compile Include="ShipModules\Assembler.cs" />
+    <Compile Include="ShipModules\Battery.cs" />
+    <Compile Include="ShipModules\Converter.cs" />
+    <Compile Include="ShipModules\Generator.cs" />
+    <Compile Include="ShipModules\Gun.cs" />
+    <Compile Include="ShipModules\Hull.cs" />
+    <Compile Include="ShipModules\Repair.cs" />
+    <Compile Include="ShipModules\SpaceShipControl.cs" />
+    <Compile Include="Delegate\ChangeGameStatus.cs" />
+    <Compile Include="GameField\Coordinate.cs" />
+    <Compile Include="GameField\GameObject.cs" />
     <Compile Include="Interfaces\IGame.cs" />
-    <Compile Include="Interfaces\ISpaceCraft.cs" />
-    <Compile Include="Space.cs" />
-    <Compile Include="Enum\SpaceObject.cs" />
-    <Compile Include="HeavyShip.cs" />
-    <Compile Include="LightShip.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="GameField\Game.cs" />
+    <Compile Include="GameField\PirateShip.cs" />
+    <Compile Include="GameField\Planet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ship.cs" />
-    <Compile Include="Shot.cs" />
-    <Compile Include="SpaceCraft.cs" />
-    <Compile Include="Star.cs" />
-    <Compile Include="Timer.cs" />
-    <Compile Include="UI.cs" />
-    <Compile Include="UserShip.cs" />
+    <Compile Include="GameField\SpaceStation.cs" />
+    <Compile Include="GameField\UserShip.cs" />
+    <Compile Include="ShipModules\ShipModule.cs" />
+    <Compile Include="ShipModules\OreStorage.cs" />
+    <Compile Include="Enum\ObjectView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
+    <None Include="GameClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

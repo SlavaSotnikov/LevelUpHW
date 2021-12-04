@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Game
+﻿namespace BL
 {
-    internal struct Coordinate
+    public struct Coordinate
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -15,12 +9,6 @@ namespace Game
         {
             X = x;
             Y = y;
-        }
-
-        public Coordinate(Coordinate source)
-        {
-            X = source.X;
-            Y = source.Y;
         }
 
         public override bool Equals(object obj)

@@ -86,10 +86,7 @@ namespace SpaceInvadersWF
                 {
                     if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
                     {
-                        one.X = _game[i].X * 2;
-                        one.Y = _game[i].Y * 2;
-
-                        _pictures[i].Location = one;
+                        MoveObject(one, i);
                         continue;
                     }
                 }
@@ -98,10 +95,7 @@ namespace SpaceInvadersWF
                 {
                     if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
                     {
-                        one.X = _game[i].X * 2;
-                        one.Y = _game[i].Y * 2;
-
-                        _pictures[i].Location = one;
+                        MoveObject(one, i);
                         continue;
                     }
                 }
@@ -110,14 +104,19 @@ namespace SpaceInvadersWF
                 {
                     if (_game[i].X != _game[i].OldX || _game[i].Y != _game[i].OldY)
                     {
-                        one.X = _game[i].X * 2;
-                        one.Y = _game[i].Y * 2;
-
-                        _pictures[i].Location = one;
+                        MoveObject(one, i);
                         continue;
                     }
                 }
             }
+        }
+
+        private void MoveObject(Point source, int index)
+        {
+            source.X = _game[index].X * 2;
+            source.Y = _game[index].Y * 2;
+
+            _pictures[index].Location = source;
         }
 
         private void InitPictures()
