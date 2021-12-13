@@ -10,8 +10,6 @@ GO
 USE PublicLibrary
 GO
 
-
-
 CREATE TABLE Books
 (
     BookId     BIGINT        NOT NULL IDENTITY (1, 1),
@@ -35,15 +33,13 @@ CREATE TABLE ProcessBooks
     ReaderId   BIGINT        NOT NULL,
 	BookId     BIGINT        NOT NULL,
 	Given      DATE          NOT NULL,
-	Back       DATE          NULL,
-	DeletedOn  DATE          NULL
+	Back       DATE          NULL
 )
 
 CREATE TABLE BooksWriters
 (
     BookId     BIGINT        NOT NULL,
-	AuthorId   BIGINT        NOT NULL,
-	DeletedOn  SMALLDATETIME NULL
+	AuthorId   BIGINT        NOT NULL
 )
 
 CREATE TABLE Staff
@@ -52,10 +48,10 @@ CREATE TABLE Staff
 	FirstName  NCHAR(20)     NOT NULL,
 	LastName   NCHAR(20)     NOT NULL,
 	MiddleName NCHAR(20)     NULL,
-	Position   BIGINT        NOT NULL,
 	Haired     DATE          NOT NULL,
 	Faired     DATE          NULL,
-	DeletedOn  SMALLDATETIME NULL
+	DeletedOn  SMALLDATETIME NULL,
+	WhoRemoved BIGINT        NULL
 )
 
 CREATE TABLE WorkerPosition
@@ -133,7 +129,7 @@ ALTER TABLE BooksWriters
 ALTER TABLE ProcessBooks
     ADD CONSTRAINT FK_Reader_Books
 	    FOREIGN KEY(ReaderId) REFERENCES Books(BookId)
-		ON UPDATE CASCADE
+		ON UPDATE NO ACTION
 		ON DELETE NO ACTION
 
 ALTER TABLE BookAmount
@@ -173,19 +169,19 @@ GO
 
 INSERT INTO Writers(FirstName, LastName, MiddleName)
     VALUES('William', 'Shakespeare', NULL),
-	('Jane', 'Austen', NULL),
-	('George', 'Orwell', NULL),
-	('Thomas', 'Hardy', NULL),
-	('Thomas', 'Eliot', 'Stearns'),
-	('William', 'Blake', NULL),
-	('Lewis', 'Caroll', NULL),
-	('Lev', 'Tolstoy', 'Nikolaevich'),
-	('Fyodor', 'Dostoevsky', 'Mikhailovich'),
-	('Nikolai', 'Gogol', 'Vasilyevich'),
-	('Anton', 'Chekhov', 'Pavlovich'),
-	('Izabella', 'Akhmadulina', 'Akhatovna'),
-	('Ilya', 'Ilf', NULL),
-	('Yevgeny', 'Petrov', NULL)
+	      ('Jane', 'Austen', NULL),
+	      ('George', 'Orwell', NULL),
+	      ('Thomas', 'Hardy', NULL),
+	      ('Thomas', 'Eliot', 'Stearns'),
+	      ('William', 'Blake', NULL),
+	      ('Lewis', 'Caroll', NULL),
+	      ('Lev', 'Tolstoy', 'Nikolaevich'),
+	      ('Fyodor', 'Dostoevsky', 'Mikhailovich'),
+	      ('Nikolai', 'Gogol', 'Vasilyevich'),
+	      ('Anton', 'Chekhov', 'Pavlovich'),
+	      ('Izabella', 'Akhmadulina', 'Akhatovna'),
+	      ('Ilya', 'Ilf', NULL),
+	      ('Yevgeny', 'Petrov', NULL)
 GO
 
 INSERT INTO Books(Title)
@@ -256,7 +252,7 @@ INSERT INTO BooksWriters(BookId, AuthorId)
 GO
 
 INSERT INTO Staff(FirstName, LastName, MiddleName, Haired, Faired, DeletedOn)
-    VALUES--('Vasil', 'Klein', NULL,'2020-01-01', NULL, NULL),
+    VALUES('Vasil', 'Klein', NULL,'2020-01-01', NULL, NULL),
 	      ('Den', 'Fridel', NULL,'2020-02-02', NULL, NULL),
 		  ('Bob', 'Brown', NULL,'2020-03-03', NULL, NULL)
 
@@ -270,9 +266,9 @@ INSERT INTO Occupation(Position)
 INSERT INTO WorkerPosition(WorkerId, PositionId)
     VALUES(1, 1),
 	      (1, 2),
-		  (3, 3),
-		  (4, 4),
-		  (4, 5)
+		  (2, 3),
+		  (3, 4),
+		  (3, 5)
 GO
 
 SELECT * FROM WorkerPosition
