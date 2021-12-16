@@ -408,4 +408,29 @@ SELECT Title
 FROM Books
     WHERE Title LIKE 'v_%'
 
+SELECT DISTINCT Title
+FROM Books
 
+
+
+SELECT ReaderId, CopyId, Given, WhoGiven, Back
+FROM BooksOperation
+
+SELECT ReaderId, CopyId, Back AS WhenBack, WhoGiven, Given
+FROM BooksOperation
+    WHERE Back IS NOT NULL
+	
+
+
+
+SELECT FirstName, LastName, MiddleName, SubscribeDate, UnsubscribeDate
+FROM Readers
+
+SELECT ReaderId, FirstName, LastName
+FROM Readers 
+    WHERE SubscribeDate LIKE '%_05_%'
+	ORDER BY FirstName DESC
+
+SELECT COUNT(ReaderId) AS ReadersAmount
+FROM Readers
+    WHERE FirstName = 'Bob'
