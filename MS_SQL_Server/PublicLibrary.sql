@@ -442,3 +442,11 @@ FROM Readers
 SELECT COUNT(ReaderId) AS ReadersAmount
 FROM Readers
     WHERE SubscribeDate LIKE '%_05_%'
+
+
+SELECT BookId, Condition
+FROM BookCopy
+
+SELECT COUNT(BookId), Condition 
+FROM BookCopy
+	GROUP BY Condition
