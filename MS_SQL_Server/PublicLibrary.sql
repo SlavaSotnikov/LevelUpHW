@@ -391,6 +391,10 @@ FROM Writers
     WHERE Country = 'U.K.'
 	ORDER BY LastName
 
+SELECT COUNT(ALL FirstName), FirstName
+FROM Writers
+    GROUP BY FirstName
+
 
 
 SELECT Title, DeletedOn, WhoRemoved
@@ -434,3 +438,7 @@ FROM Readers
 SELECT COUNT(ReaderId) AS ReadersAmount
 FROM Readers
     WHERE FirstName = 'Bob'
+
+SELECT COUNT(ReaderId) AS ReadersAmount
+FROM Readers
+    WHERE SubscribeDate LIKE '%_05_%'
