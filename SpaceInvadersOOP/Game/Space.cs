@@ -134,6 +134,17 @@ namespace Game
                     break;
             }
 
+            for (int i = /*10*/0; i <= _gameObjects.Count/*_amountOfObjects*/; i++)
+            {
+                if (source == _gameObjects[i].View)
+                {
+                    // ResetObject(source);
+                    break;
+                }
+
+                // AddObject(source);
+            }
+
             //if (_amountOfObjects >= _gameObjects.Length - 1)
             //{
             //    Array.Resize(ref _gameObjects, _gameObjects.Length * 2);

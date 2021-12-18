@@ -15,10 +15,8 @@ GO
 CREATE TABLE Books
 (
     BookId     BIGINT        NOT NULL IDENTITY (1, 1),
-	Title      VARCHAR(50)   NOT NULL,
-	DeletedOn  SMALLDATETIME NULL,
-	WhoRemoved BIGINT        NULL
-)   
+	Title      VARCHAR(50)   NOT NULL
+)
 
 CREATE TABLE Writers
 (
@@ -70,7 +68,9 @@ CREATE TABLE BookCopy
 (
     CopyId       BIGINT      NOT NULL IDENTITY (1, 1),
 	BookId       BIGINT      NOT NULL,
-	Condition    TINYINT     NOT NULL
+	Condition    TINYINT     NOT NULL,
+	DeletedOn  SMALLDATETIME NULL,
+	WhoRemoved BIGINT        NULL
 )
 
 CREATE TABLE Readers
@@ -120,7 +120,7 @@ ALTER TABLE WorkerPosition
 	    FOREIGN KEY(PositionId) REFERENCES Occupation(PositionId)
 		ON UPDATE CASCADE
 		ON DELETE NO ACTION
-
+		
 ALTER TABLE BooksOperation
     ADD CONSTRAINT FK_Books_Readers
 	    FOREIGN KEY(ReaderId) REFERENCES Readers(ReaderId)
@@ -133,27 +133,27 @@ ALTER TABLE BooksOperation
 		ON UPDATE CASCADE
 		ON DELETE NO ACTION
 
-ALTER TABLE BookCopy
-    ADD CONSTRAINT FK_BookCopy_Book
+ALTER TABLE BooksWriters
+    ADD CONSTRAINT FK_BookId_BookId
 	    FOREIGN KEY(BookId) REFERENCES Books(BookId)
 		ON UPDATE CASCADE
 		ON DELETE NO ACTION
 
-ALTER TABLE BooksWriters
-    ADD CONSTRAINT FK_Books_Writers
-	    FOREIGN KEY(BookId) REFERENCES Books(BookId)
-		ON UPDATE CASCADE
-		ON DELETE NO ACTION
-
-ALTER TABLE BooksWriters
+ALTER TABLE BooksWriters 
     ADD CONSTRAINT FK_Author_Writers
 	    FOREIGN KEY(AuthorId) REFERENCES Writers(WriterId)
 		ON UPDATE CASCADE
 		ON DELETE NO ACTION
 
-ALTER TABLE Books
-    ADD CONSTRAINT FK_Book_Remove
+ALTER TABLE BookCopy
+    ADD CONSTRAINT FK_BookCopy_Remove
 	    FOREIGN KEY(WhoRemoved) REFERENCES Staff(WorkerId)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION
+
+ALTER TABLE BookCopy 
+    ADD CONSTRAINT FK_BookCopy_Books
+	    FOREIGN KEY(BookId) REFERENCES Books(BookId)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION
 
@@ -173,11 +173,16 @@ ALTER TABLE Writers
 
 GO
 
+DECLARE @BackupName VARCHAR(100) = 'Full Backup of PublicLibraryDB';
+SET @BackupName = @BackupName + CONVERT(VARCHAR(20), GETDATE());
+--PRINT @BackupName
 BACKUP DATABASE PublicLibrary
-TO DISK = 'D:\SQLBackups\PublicLibraryDB.bak'
+TO DISK = 'D:\SQLBackups\PublicLibraryDB.bak'     
    WITH FORMAT,
       MEDIANAME = 'SQLServerBackups',
-      NAME = 'Full Backup of PublicLibraryDB'; --Try GETDATE
+      NAME = @BackupName
+	 
+
 	  --CONVERT(VARCHAR, datetime [,style])
 	  --CONCAT(string_value1, string_value2 [, string_valueN ]);
 GO
@@ -205,22 +210,23 @@ INSERT INTO WorkerPosition(WorkerId, PositionId)
 GO
 
 INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
-    VALUES('William', 'Shakespeare', NULL, 'U.K.'),
-	      ('Jane', 'Austen', NULL, 'U.K.'),
-	      ('George', 'Orwell', NULL, 'U.K.'),
-	      ('Thomas', 'Hardy', NULL, 'U.K.'),
-	      ('Thomas', 'Eliot', 'Stearns', 'U.K.'),
-	      ('William', 'Blake', NULL, 'U.K.'),
-	      ('Lewis', 'Caroll', NULL, 'U.K.'),
-	      ('Lev', 'Tolstoy', 'Nikolaevich', 'Russian Empire'),
-	      ('Fyodor', 'Dostoevsky', 'Mikhailovich', 'Russian Empire'),
-	      ('Nikolai', 'Gogol', 'Vasilyevich', 'Russian Empire'),
-	      ('Anton', 'Chekhov', 'Pavlovich', 'Russian Empire'),
-	      ('Izabella', 'Akhmadulina', 'Akhatovna', 'Russian Federation'),
-	      ('Ilya', 'Ilf', NULL, 'Sovet Union'),
-	      ('Yevgeny', 'Petrov', NULL, 'Sovet Union'),
-		  ('Alexey', 'Tolstoy', 'Konstantinovich', 'Russian Empire'),
-		  ('Alexey', 'Tolstoy', 'Nikolaevich', 'Russian Empire')
+    VALUES--('William', 'Shakespeare', NULL, 'U.K.'),
+	      --('Jane', 'Austen', NULL, 'U.K.'),
+	      --('George', 'Orwell', NULL, 'U.K.'),
+	      --('Thomas', 'Hardy', NULL, 'U.K.'),
+	      --('Thomas', 'Eliot', 'Stearns', 'U.K.'),
+	      --('William', 'Blake', NULL, 'U.K.'),
+	      --('Lewis', 'Caroll', NULL, 'U.K.'),
+	      --('Lev', 'Tolstoy', 'Nikolaevich', 'Russian Empire'),
+	      --('Fyodor', 'Dostoevsky', 'Mikhailovich', 'Russian Empire'),
+	      --('Nikolai', 'Gogol', 'Vasilyevich', 'Russian Empire'),
+	      --('Anton', 'Chekhov', 'Pavlovich', 'Russian Empire'),
+	      --('Izabella', 'Akhmadulina', 'Akhatovna', 'Russian Federation'),
+	      --('Ilya', 'Ilf', NULL, 'Sovet Union'),
+	      --('Yevgeny', 'Petrov', NULL, 'Sovet Union'),
+		  --('Alexey', 'Tolstoy', 'Konstantinovich', 'Russian Empire'),
+		  --('Alexey', 'Tolstoy', 'Nikolaevich', 'Russian Empire'),
+		  ('Mikhail', 'Lermontov', 'Yuryevich', 'Russian Empire')
 GO
 
 INSERT INTO Books(Title)
@@ -248,36 +254,40 @@ INSERT INTO Books(Title)
 	      ('The Cherry Orchard'),
 	      ('The String'),
 	      ('Fever'),
-	      ('The Little Golden Calf')
+	      ('The Little Golden Calf'),
+		  ('A Confession'),
+		  ('A Confession')
 GO
-
+SELECT * FROM BooksWriters
 INSERT INTO BooksWriters(BookId, AuthorId)
-    VALUES(1, 1),
-	      (2, 1),
-	      (3, 1),
-		  (4, 2),
-		  (5, 2),
-		  (6, 3),
-		  (7, 4),
-		  (8, 4),
-		  (9, 5),
-		  (10, 5),
-		  (11, 6),
-		  (12, 6),
-		  (13, 7),
-		  (14, 7),
-		  (15, 8),
-		  (16, 8),
-		  (17, 9),
-		  (18, 9),
-		  (19, 10),
-		  (20, 10),
-		  (21, 11),
-		  (22, 11),
-		  (23, 12),
-		  (24, 12),
-		  (25, 13),
-		  (25, 14)
+    VALUES--(1, 1),
+	      --(2, 1),
+	      --(3, 1),
+		  --(4, 2),
+		  --(5, 2),
+		  --(6, 3),
+		  --(7, 4),
+		  --(8, 4),
+		  --(9, 5),
+		  --(10, 5),
+		  --(11, 6),
+		  --(12, 6),
+		  --(13, 7),
+		  --(14, 7),
+		  --(15, 8),
+		  --(16, 8),
+		  --(17, 9),
+		  --(18, 9),
+		  --(19, 10),
+		  --(20, 10),
+		  --(21, 11),
+		  --(22, 11),
+		  --(23, 12),
+		  --(24, 12),
+		  --(25, 13),
+		  --(25, 14),
+		  (26, 8),
+		  (27, 18)
 GO
 
 INSERT INTO Readers(FirstName, LastName, MiddleName, SubscribeDate, UnsubscribeDate)
@@ -292,67 +302,71 @@ INSERT INTO Readers(FirstName, LastName, MiddleName, SubscribeDate, UnsubscribeD
 GO
 
 INSERT INTO BookCopy(BookId, Condition)
-     VALUES(1, 10),
-	       (1, 10),
-	       (1, 10),
-	       (1, 10),
-	       (2, 10),
-	       (2, 5),
-	       (2, 9),
-	       (2, 1),
-	       (3, 3),
-	       (3, 8),
-	       (4, 10),
-	       (4, 6),
-	       (5, 10),
-	       (5, 8),
-	       (5, 2),
-		   (6, 2),
-		   (6, 10),
-		   (7, 2),
-		   (7, 10),
-		   (8, 1),
-		   (8, 2),
-		   (8, 3),
-		   (8, 9),
-		   (9, 2),
-		   (9, 10),
-		   (9, 7),
-		   (9, 3),
-		   (10, 2),
-		   (10, 7),
-		   (10, 8),
-		   (10, 2),
-		   (10, 2),
-		   (11, 10),
-		   (11, 10),
-		   (11, 10),
-		   (11, 10),
-		   (11, 10),
-		   (12, 9),
-		   (12, 9),
-		   (12, 9),
-		   (12, 9),
-		   (13, 8),
-		   (13, 7),
-		   (13, 6),
-		   (13, 5),
-		   (14, 10),
-		   (15, 8),
-		   (16, 9),
-		   (17, 10),
-		   (17, 10),
-		   (17, 10),
-		   (17, 10),
-		   (18, 9),
-		   (19, 1),
-		   (19, 0),
-		   (19, 0),
-		   (19, 0),
-		   (19, 1),
-		   (20, 0),
-		   (20, 10),
-		   (20, 7)
+     VALUES--(1, 10),
+	       --(1, 10),
+	       --(1, 10),
+	       --(1, 10),
+	       --(2, 10),
+	       --(2, 5),
+	       --(2, 9),
+	       --(2, 1),
+	       --(3, 3),
+	       --(3, 8),
+	       --(4, 10),
+	       --(4, 6),
+	       --(5, 10),
+	       --(5, 8),
+	       --(5, 2),
+		   --(6, 2),
+		   --(6, 10),
+		   --(7, 2),
+		   --(7, 10),
+		   --(8, 1),
+		   --(8, 2),
+		   --(8, 3),
+		   --(8, 9),
+		   --(9, 2),
+		   --(9, 10),
+		   --(9, 7),
+		   --(9, 3),
+		   --(10, 2),
+		   --(10, 7),
+		   --(10, 8),
+		   --(10, 2),
+		   --(10, 2),
+		   --(11, 10),
+		   --(11, 10),
+		   --(11, 10),
+		   --(11, 10),
+		   --(11, 10),
+		   --(12, 9),
+		   --(12, 9),
+		   --(12, 9),
+		   --(12, 9),
+		   --(13, 8),
+		   --(13, 7),
+		   --(13, 6),
+		   --(13, 5),
+		   --(14, 10),
+		   --(15, 8),
+		   --(16, 9),
+		   --(17, 10),
+		   --(17, 10),
+		   --(17, 10),
+		   --(17, 10),
+		   --(18, 9),
+		   --(19, 1),
+		   --(19, 0),
+		   --(19, 0),
+		   --(19, 0),
+		   --(19, 1),
+		   --(20, 0),
+		   --(20, 10),
+		   --(20, 7),
+		   (26, 8),
+		   (26, 10),
+		   (27, 9),
+		   (27, 10)
 GO
 
 INSERT INTO BooksOperation(ReaderId, CopyId, Given, WhoGiven, Back)
@@ -370,16 +384,16 @@ INSERT INTO BooksOperation(ReaderId, CopyId, Given, WhoGiven, Back)
 		  (8, 13, '2021-10-11', 3,  NULL)
 GO
 
-
-
+------- FROM Writers------------------
 
 SELECT WriterId, FirstName, LastName, MiddleName, Country
 FROM Writers
+ORDER BY FirstName
 
 SELECT LastName AS RussianWriters
 FROM Writers
-    WHERE (Country LIKE 'Russian%') OR
-          (Country LIKE 'Sovet%')
+    WHERE (Country LIKE 'Russian%') 
+          OR (Country LIKE 'Sovet%')
 
 SELECT WriterId AS BritishWriters
 FROM Writers
@@ -388,14 +402,18 @@ FROM Writers
 
 SELECT LastName AS BritishWriters
 FROM Writers
-    WHERE Country = 'U.K.'
-	ORDER BY LastName
+WHERE Country = 'U.K.'
+ORDER BY LastName
 
-SELECT COUNT(ALL FirstName), FirstName
+SELECT COUNT(ALL LastName), FirstName
 FROM Writers
     GROUP BY FirstName
 
+SELECT COUNT(DISTINCT LastName), FirstName
+FROM Writers
+    GROUP BY FirstName
 
+------- FROM Books------------------
 
 SELECT Title, DeletedOn, WhoRemoved
 FROM Books
@@ -412,20 +430,26 @@ SELECT Title
 FROM Books
     WHERE Title LIKE 'v_%'
 
-SELECT DISTINCT Title
+SELECT BookId, Title  --Find similar Titles
 FROM Books
+GROUP BY BookId, Title
+HAVING COUNT(Title) > 1
 
+SELECT BookId, COUNT(*) AS Books , Condition 
+FROM BookCopy
+GROUP BY BookId, Condition
 
+------- FROM BooksOperation------------------
 
 SELECT ReaderId, CopyId, Given, WhoGiven, Back
 FROM BooksOperation
 
-SELECT ReaderId, CopyId, Back AS WhenBack, WhoGiven, Given
+SELECT ReaderId, CopyId, Back AS WhenBack, WhoGiven, Given  -- ORDER BY Date
 FROM BooksOperation
     WHERE Back IS NOT NULL
 	
 
-
+------- FROM Readers------------------
 
 SELECT FirstName, LastName, MiddleName, SubscribeDate, UnsubscribeDate
 FROM Readers
@@ -435,6 +459,11 @@ FROM Readers
     WHERE SubscribeDate LIKE '%_05_%'
 	ORDER BY FirstName DESC
 
+SELECT ReaderId, FirstName, LastName
+FROM Readers 
+    WHERE MONTH(SubscribeDate) = 5
+	ORDER BY  FirstName DESC
+
 SELECT COUNT(ReaderId) AS ReadersAmount
 FROM Readers
     WHERE FirstName = 'Bob'
@@ -443,10 +472,13 @@ SELECT COUNT(ReaderId) AS ReadersAmount
 FROM Readers
     WHERE SubscribeDate LIKE '%_05_%'
 
+------- FROM BookCopy------------------
 
 SELECT BookId, Condition
 FROM BookCopy
+ORDER BY Condition
 
-SELECT COUNT(BookId), Condition 
+SELECT BookId, COUNT(*) AS Books , Condition 
 FROM BookCopy
-	GROUP BY Condition
+	GROUP BY BookId, Condition
+	--HAVING AVG(Condition) < 5
