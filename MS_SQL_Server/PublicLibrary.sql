@@ -482,3 +482,109 @@ SELECT BookId, COUNT(*) AS Books , Condition
 FROM BookCopy
 	GROUP BY BookId, Condition
 	--HAVING AVG(Condition) < 5
+
+------- UNION ------------------
+
+SELECT BookId 
+FROM Books
+UNION ALL
+SELECT CopyId
+FROM BookCopy
+ORDER BY BookId
+
+SELECT BookId, Title
+FROM Books
+UNION
+SELECT WriterId, LastName
+FROM Writers
+ORDER BY BookId
+
+------- Multi-Table Queries ------------------
+
+SELECT FirstName, LastName
+FROM Writers
+WHERE EXISTS
+(
+ SELECT CopyId
+ FROM BooksOperation
+)
+ORDER BY FirstName
+
+SELECT ReaderId, FirstName, LastName
+FROM Readers
+WHERE EXISTS
+(
+ SELECT ReaderId
+ FROM BooksOperation
+ WHERE Back IS NOT NULL AND Readers.ReaderId = BooksOperation.ReaderId
+)
+
+SELECT COUNT(CopyId) AS BooksCopy
+FROM BookCopy
+WHERE BookId = 
+(
+ SELECT BookId
+ FROM Books
+ WHERE Title = 'Macbeth'
+)
+
+SELECT FirstName, LastName, Haired
+FROM Staff
+WHERE WorkerId IN 
+(
+ SELECT WhoGiven
+ FROM BooksOperation
+ WHERE CopyId IN 
+ (
+  SELECT CopyId
+  FROM BookCopy
+  WHERE BookId = 
+  (
+   SELECT BookId
+   FROM Books
+   WHERE Title = 'Hamlet'
+  )
+ )
+)
+
+SELECT FirstName, LastName
+FROM Staff
+WHERE WorkerId IN
+(
+ SELECT WorkerId
+ FROM WorkerPosition
+ WHERE PositionId IN 
+ (
+  SELECT PositionId
+  FROM Occupation
+  WHERE Position = 'Librarian'
+ )
+)
+
+SELECT Title
+FROM Books
+WHERE BookId IN
+(
+ SELECT BookId
+ FROM BooksWriters
+ WHERE AuthorId IN
+ (
+  SELECT WriterId
+  FROM Writers
+  WHERE (Country NOT LIKE '%rus%') AND
+        (Country NOT LIKE '%sov%')
+ )
+)
+
+SELECT FirstName, LastName
+FROM Readers
+WHERE ReaderId IN
+(
+ SELECT ReaderId
+ FROM BooksOperation
+ GROUP BY ReaderId
+ HAVING COUNT(ReaderId) >= 2
+)
+
+SELECT * FROM BooksOperation
+SELECT * FROM Readers
