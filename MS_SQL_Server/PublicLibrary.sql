@@ -230,33 +230,37 @@ INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
 GO
 
 INSERT INTO Books(Title)
-    VALUES('Macbeth'),
-	      ('Hamlet'),
-	      ('A Midsummer Nights Dream'),
-	      ('Lady Susan'),
-	      ('The Watsons'),
-	      ('A Clergymans Daughter'),
-	      ('Far from the Madding Crowd'),
-	      ('The Mayor of Casterbridge '),
-	      ('The Waste Land'),
-	      ('Murder in the Cathedral '),
-	      (' Jerusalem'),
-	      ('The Four Zoas'),
-	      ('The Hunting of the Snark'),
-	      ('Alices Adventure in Wonderland'),
-	      ('War and Peace'),
-	      ('Anna Karenina'),
-	      ('The Brothers Karamazov'),
-	      ('Crime and Punishment'),
-	      ('Viy'),
-	      ('Dead Souls'),
-	      ('Three Sisters'),
-	      ('The Cherry Orchard'),
-	      ('The String'),
-	      ('Fever'),
-	      ('The Little Golden Calf'),
-		  ('A Confession'),
-		  ('A Confession')
+    VALUES--('Macbeth'),
+	      --('Hamlet'),
+	      --('A Midsummer Nights Dream'),
+	      --('Lady Susan'),
+	      --('The Watsons'),
+	      --('A Clergymans Daughter'),
+	      --('Far from the Madding Crowd'),
+	      --('The Mayor of Casterbridge '),
+	      --('The Waste Land'),
+	      --('Murder in the Cathedral '),
+	      --(' Jerusalem'),
+	      --('The Four Zoas'),
+	      --('The Hunting of the Snark'),
+	      --('Alices Adventure in Wonderland'),
+	      --('War and Peace'),
+	      --('Anna Karenina'),
+	      --('The Brothers Karamazov'),
+	      --('Crime and Punishment'),
+	      --('Viy'),
+	      --('Dead Souls'),
+	      --('Three Sisters'),
+	      --('The Cherry Orchard'),
+	      --('The String'),
+	      --('Fever'),
+	      --('The Little Golden Calf'),
+		  --('A Confession'),
+		  --('A Confession'),
+		  ('Prince Serebrenni'),-- Aleksey Konstantinovich Tolstoy
+		  ('Tsar Boris'), -- Aleksey Konstantinovich Tolstoy
+		  ('The Great Big Enormous Turnip'), -- Aleksey Nikolayevich Tolstoy
+		  ('Aelita, Or, The Decline of Mars') -- Aleksey Nikolayevich Tolstoy
 GO
 
 INSERT INTO BooksWriters(BookId, AuthorId)
@@ -287,7 +291,11 @@ INSERT INTO BooksWriters(BookId, AuthorId)
 		  (25, 13),
 		  (25, 14),
 		  (26, 8),
-		  (27, 17)
+		  (27, 17),
+		  (28, 15),
+		  (29, 15),
+		  (30, 16),
+		  (31, 16)
 GO
 
 INSERT INTO Readers(FirstName, LastName, MiddleName, SubscribeDate, UnsubscribeDate)
@@ -636,17 +644,23 @@ ON (DATEDIFF(DAY, Given, Back) > 30) AND (R.ReaderId = BO.ReaderId)
 WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
 ORDER BY FirstName
 
+DECLARE @days INT
+
 -- Who has books. How many days.
-SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, CONVERT(DATE, GETDATE())) AS DaysPassed
+SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, CONVERT(DATE, GETDATE())) AS DaysPass
 FROM Readers R
 RIGHT JOIN BooksOperation BO
 ON Back IS NULL AND R.ReaderId = BO.ReaderId
 WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
 ORDER BY FirstName
 
+-- All books all writers
+SELECT B.BookId, Title AS Book, FirstName, LastName, MiddleName
+FROM Books B
+RIGHT JOIN BooksWriters BW
+ON BW.BookId = B.BookId
+RIGHT JOIN Writers W
+ON W.WriterId = BW.AuthorId
+ORDER BY FirstName
 
-SELECT * FROM BooksOperation
-
-UPDATE BooksOperation
-SET Back = '2021-10-13'
-WHERE ReaderId = 1 AND CopyId = 1
+SELECT * FROM Books
