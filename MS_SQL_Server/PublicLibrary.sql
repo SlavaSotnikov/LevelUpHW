@@ -210,22 +210,22 @@ INSERT INTO WorkerPosition(WorkerId, PositionId)
 GO
 
 INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
-    VALUES--('William', 'Shakespeare', NULL, 'U.K.'),
-	      --('Jane', 'Austen', NULL, 'U.K.'),
-	      --('George', 'Orwell', NULL, 'U.K.'),
-	      --('Thomas', 'Hardy', NULL, 'U.K.'),
-	      --('Thomas', 'Eliot', 'Stearns', 'U.K.'),
-	      --('William', 'Blake', NULL, 'U.K.'),
-	      --('Lewis', 'Caroll', NULL, 'U.K.'),
-	      --('Lev', 'Tolstoy', 'Nikolaevich', 'Russian Empire'),
-	      --('Fyodor', 'Dostoevsky', 'Mikhailovich', 'Russian Empire'),
-	      --('Nikolai', 'Gogol', 'Vasilyevich', 'Russian Empire'),
-	      --('Anton', 'Chekhov', 'Pavlovich', 'Russian Empire'),
-	      --('Izabella', 'Akhmadulina', 'Akhatovna', 'Russian Federation'),
-	      --('Ilya', 'Ilf', NULL, 'Sovet Union'),
-	      --('Yevgeny', 'Petrov', NULL, 'Sovet Union'),
-		  --('Alexey', 'Tolstoy', 'Konstantinovich', 'Russian Empire'),
-		  --('Alexey', 'Tolstoy', 'Nikolaevich', 'Russian Empire'),
+    VALUES('William', 'Shakespeare', NULL, 'U.K.'),
+	      ('Jane', 'Austen', NULL, 'U.K.'),
+	      ('George', 'Orwell', NULL, 'U.K.'),
+	      ('Thomas', 'Hardy', NULL, 'U.K.'),
+	      ('Thomas', 'Eliot', 'Stearns', 'U.K.'),
+	      ('William', 'Blake', NULL, 'U.K.'),
+	      ('Lewis', 'Caroll', NULL, 'U.K.'),
+	      ('Lev', 'Tolstoy', 'Nikolaevich', 'Russian Empire'),
+	      ('Fyodor', 'Dostoevsky', 'Mikhailovich', 'Russian Empire'),
+	      ('Nikolai', 'Gogol', 'Vasilyevich', 'Russian Empire'),
+	      ('Anton', 'Chekhov', 'Pavlovich', 'Russian Empire'),
+	      ('Izabella', 'Akhmadulina', 'Akhatovna', 'Russian Federation'),
+	      ('Ilya', 'Ilf', NULL, 'Sovet Union'),
+	      ('Yevgeny', 'Petrov', NULL, 'Sovet Union'),
+		  ('Alexey', 'Tolstoy', 'Konstantinovich', 'Russian Empire'),
+		  ('Alexey', 'Tolstoy', 'Nikolaevich', 'Russian Empire'),
 		  ('Mikhail', 'Lermontov', 'Yuryevich', 'Russian Empire')
 GO
 
@@ -258,36 +258,36 @@ INSERT INTO Books(Title)
 		  ('A Confession'),
 		  ('A Confession')
 GO
-SELECT * FROM BooksWriters
+
 INSERT INTO BooksWriters(BookId, AuthorId)
-    VALUES--(1, 1),
-	      --(2, 1),
-	      --(3, 1),
-		  --(4, 2),
-		  --(5, 2),
-		  --(6, 3),
-		  --(7, 4),
-		  --(8, 4),
-		  --(9, 5),
-		  --(10, 5),
-		  --(11, 6),
-		  --(12, 6),
-		  --(13, 7),
-		  --(14, 7),
-		  --(15, 8),
-		  --(16, 8),
-		  --(17, 9),
-		  --(18, 9),
-		  --(19, 10),
-		  --(20, 10),
-		  --(21, 11),
-		  --(22, 11),
-		  --(23, 12),
-		  --(24, 12),
-		  --(25, 13),
-		  --(25, 14),
+    VALUES(1, 1),
+	      (2, 1),
+	      (3, 1),
+		  (4, 2),
+		  (5, 2),
+		  (6, 3),
+		  (7, 4),
+		  (8, 4),
+		  (9, 5),
+		  (10, 5),
+		  (11, 6),
+		  (12, 6),
+		  (13, 7),
+		  (14, 7),
+		  (15, 8),
+		  (16, 8),
+		  (17, 9),
+		  (18, 9),
+		  (19, 10),
+		  (20, 10),
+		  (21, 11),
+		  (22, 11),
+		  (23, 12),
+		  (24, 12),
+		  (25, 13),
+		  (25, 14),
 		  (26, 8),
-		  (27, 18)
+		  (27, 17)
 GO
 
 INSERT INTO Readers(FirstName, LastName, MiddleName, SubscribeDate, UnsubscribeDate)
@@ -302,67 +302,67 @@ INSERT INTO Readers(FirstName, LastName, MiddleName, SubscribeDate, UnsubscribeD
 GO
 
 INSERT INTO BookCopy(BookId, Condition)
-     VALUES--(1, 10),
-	       --(1, 10),
-	       --(1, 10),
-	       --(1, 10),
-	       --(2, 10),
-	       --(2, 5),
-	       --(2, 9),
-	       --(2, 1),
-	       --(3, 3),
-	       --(3, 8),
-	       --(4, 10),
-	       --(4, 6),
-	       --(5, 10),
-	       --(5, 8),
-	       --(5, 2),
-		   --(6, 2),
-		   --(6, 10),
-		   --(7, 2),
-		   --(7, 10),
-		   --(8, 1),
-		   --(8, 2),
-		   --(8, 3),
-		   --(8, 9),
-		   --(9, 2),
-		   --(9, 10),
-		   --(9, 7),
-		   --(9, 3),
-		   --(10, 2),
-		   --(10, 7),
-		   --(10, 8),
-		   --(10, 2),
-		   --(10, 2),
-		   --(11, 10),
-		   --(11, 10),
-		   --(11, 10),
-		   --(11, 10),
-		   --(11, 10),
-		   --(12, 9),
-		   --(12, 9),
-		   --(12, 9),
-		   --(12, 9),
-		   --(13, 8),
-		   --(13, 7),
-		   --(13, 6),
-		   --(13, 5),
-		   --(14, 10),
-		   --(15, 8),
-		   --(16, 9),
-		   --(17, 10),
-		   --(17, 10),
-		   --(17, 10),
-		   --(17, 10),
-		   --(18, 9),
-		   --(19, 1),
-		   --(19, 0),
-		   --(19, 0),
-		   --(19, 0),
-		   --(19, 1),
-		   --(20, 0),
-		   --(20, 10),
-		   --(20, 7),
+     VALUES(1, 10),
+	       (1, 10),
+	       (1, 10),
+	       (1, 10),
+	       (2, 10),
+	       (2, 5),
+	       (2, 9),
+	       (2, 1),
+	       (3, 3),
+	       (3, 8),
+	       (4, 10),
+	       (4, 6),
+	       (5, 10),
+	       (5, 8),
+	       (5, 2),
+		   (6, 2),
+		   (6, 10),
+		   (7, 2),
+		   (7, 10),
+		   (8, 1),
+		   (8, 2),
+		   (8, 3),
+		   (8, 9),
+		   (9, 2),
+		   (9, 10),
+		   (9, 7),
+		   (9, 3),
+		   (10, 2),
+		   (10, 7),
+		   (10, 8),
+		   (10, 2),
+		   (10, 2),
+		   (11, 10),
+		   (11, 10),
+		   (11, 10),
+		   (11, 10),
+		   (11, 10),
+		   (12, 9),
+		   (12, 9),
+		   (12, 9),
+		   (12, 9),
+		   (13, 8),
+		   (13, 7),
+		   (13, 6),
+		   (13, 5),
+		   (14, 10),
+		   (15, 8),
+		   (16, 9),
+		   (17, 10),
+		   (17, 10),
+		   (17, 10),
+		   (17, 10),
+		   (18, 9),
+		   (19, 1),
+		   (19, 0),
+		   (19, 0),
+		   (19, 0),
+		   (19, 1),
+		   (20, 0),
+		   (20, 10),
+		   (20, 7),
 		   (26, 8),
 		   (26, 10),
 		   (27, 9),
@@ -430,10 +430,10 @@ SELECT Title
 FROM Books
     WHERE Title LIKE 'v_%'
 
-SELECT BookId, Title  --Find similar Titles
+SELECT COUNT(BookId), Title  --Find similar Titles
 FROM Books
-GROUP BY BookId, Title
-HAVING COUNT(Title) > 1
+GROUP BY Title
+HAVING COUNT(BookId) > 1
 
 SELECT BookId, COUNT(*) AS Books , Condition 
 FROM BookCopy
@@ -509,15 +509,17 @@ WHERE EXISTS
  FROM BooksOperation
 )
 ORDER BY FirstName
+-- All Authors BETWEEN 
 
 SELECT ReaderId, FirstName, LastName
-FROM Readers
+FROM Readers R
 WHERE EXISTS
 (
  SELECT ReaderId
  FROM BooksOperation
- WHERE Back IS NOT NULL AND Readers.ReaderId = BooksOperation.ReaderId
+ WHERE Back IS NOT NULL AND R.ReaderId = BooksOperation.ReaderId
 )
+-- Try BETWEEN 
 
 SELECT COUNT(CopyId) AS BooksCopy
 FROM BookCopy
@@ -586,5 +588,65 @@ WHERE ReaderId IN
  HAVING COUNT(ReaderId) >= 2
 )
 
+------- JOINS ------------------
+
+SELECT * 
+FROM BooksWriters BW, Writers W
+WHERE W.WriterId = BW.AuthorId
+ORDER BY FirstName
+
+SELECT *
+FROM BooksWriters BW INNER JOIN Writers W
+ON BW.BookId = W.WriterId
+
+SELECT FirstName, LastName
+FROM Writers
+RIGHT JOIN BooksWriters 
+ON BooksWriters.AuthorId = Writers.WriterId
+
+SELECT FirstName, LastName
+FROM BooksWriters
+LEFT JOIN Writers 
+ON BooksWriters.AuthorId = Writers.WriterId
+
+-- Book's condition less than 5 
+SELECT CopyId, Title
+FROM Books B
+LEFT JOIN BookCopy BC
+ON BC.Condition < 5 AND BC.BookId = B.BookId
+WHERE CopyId IS NOT NULL
+
+SELECT COUNT(CopyId) AS Amount
+FROM BookCopy
+WHERE Condition = 0
+
+-- Who got back book on time
+SELECT CopyId, FirstName, LastName, Given, Back
+FROM Readers R
+RIGHT JOIN BooksOperation BO
+ON (DATEDIFF(DAY, Given, Back) <= 30) AND (R.ReaderId = BO.ReaderId)
+WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
+ORDER BY FirstName
+
+-- Who've got expired 
+SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, BO.Back) - 30 AS Expire
+FROM Readers R
+RIGHT JOIN BooksOperation BO
+ON (DATEDIFF(DAY, Given, Back) > 30) AND (R.ReaderId = BO.ReaderId)
+WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
+ORDER BY FirstName
+
+-- Who has books. How many days.
+SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, CONVERT(DATE, GETDATE())) AS DaysPassed
+FROM Readers R
+RIGHT JOIN BooksOperation BO
+ON Back IS NULL AND R.ReaderId = BO.ReaderId
+WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
+ORDER BY FirstName
+
+
 SELECT * FROM BooksOperation
-SELECT * FROM Readers
+
+UPDATE BooksOperation
+SET Back = '2021-10-13'
+WHERE ReaderId = 1 AND CopyId = 1
