@@ -620,9 +620,9 @@ ON BooksWriters.AuthorId = Writers.WriterId
 -- Book's condition less than 5 
 SELECT CopyId, Title
 FROM Books B
-LEFT JOIN BookCopy BC
+INNER JOIN BookCopy BC
 ON BC.Condition < 5 AND BC.BookId = B.BookId
-WHERE CopyId IS NOT NULL
+--WHERE CopyId IS NOT NULL
 
 SELECT COUNT(CopyId) AS Amount
 FROM BookCopy
@@ -647,11 +647,11 @@ ORDER BY FirstName
 DECLARE @days INT
 
 -- Who has books. How many days.
-SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, CONVERT(DATE, GETDATE())) AS DaysPass
+SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, GETDATE()) AS DaysPass
 FROM Readers R
 RIGHT JOIN BooksOperation BO
 ON Back IS NULL AND R.ReaderId = BO.ReaderId
-WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
+WHERE FirstName IS NOT NULL 
 ORDER BY FirstName
 
 -- All books all writers
@@ -663,4 +663,55 @@ RIGHT JOIN Writers W
 ON W.WriterId = BW.AuthorId
 ORDER BY FirstName
 
-SELECT * FROM Books
+-- All employees all positions
+SELECT Position, FirstName, LastName
+FROM Staff S
+RIGHT JOIN WorkerPosition WP
+ON WP.WorkerId = S.WorkerId
+RIGHT JOIN Occupation O
+ON O.PositionId = WP.PositionId
+ORDER BY Position
+
+-- Reader, Book copies, Title, Who given, When, When back.
+SELECT R.FirstName, R.LastName, BC.CopyId AS BookCopy, Title, S.FirstName, S.LastName, Given,
+DATEADD(DAY, 30, BO.Given) AS MustBack
+FROM BooksOperation BO
+LEFT JOIN Readers R
+ON R.ReaderId = BO.ReaderId
+LEFT JOIN BookCopy BC
+ON BC.CopyId = BO.CopyId
+LEFT JOIN Books B
+ON BC.BookId = B.BookId
+LEFT JOIN Staff S
+ON BO.WhoGiven = S.WorkerId
+ORDER BY R.FirstName
+
+-- Book title and who has been given for 4 months.
+DECLARE @quarter TINYINT = 4;
+
+SELECT Title, FirstName, LastName, Given
+FROM Staff S
+LEFT JOIN BooksOperation BO
+ON BO.WhoGiven = S.WorkerId
+LEFT JOIN BookCopy BC
+ON BC.CopyId = BO.CopyId
+LEFT JOIN Books B
+ON B.BookId = BC.BookId
+WHERE BO.Given BETWEEN DATEADD(DAY, 1, EOMONTH(GETDATE(), -@quarter)) 
+                   AND DATEADD(DAY, 1, EOMONTH(CURRENT_TIMESTAMP))
+
+SELECT R.FirstName, R.LastName, B.BookId
+FROM Readers R
+LEFT JOIN BooksOperation BO
+ON R.ReaderId = BO.ReaderId
+LEFT JOIN BookCopy BC
+ON BO.CopyId = BC.CopyId
+LEFT JOIN Books B
+ON BC.BookId = B.BookId
+LEFT JOIN BooksWriters BW
+ON B.BookId = BW.BookId
+LEFT JOIN Writers W
+ON BW.AuthorId = W.WriterId
+ORDER BY FirstName
+
+SELECT * FROM Writers
