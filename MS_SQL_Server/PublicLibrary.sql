@@ -4,8 +4,6 @@ GO
 --DROP DATABASE PublicLibrary
 --GO
 
-SELECT * FROM BooksOperation
-
 CREATE DATABASE PublicLibrary
 GO
 
@@ -230,33 +228,33 @@ INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
 GO
 
 INSERT INTO Books(Title)
-    VALUES--('Macbeth'),
-	      --('Hamlet'),
-	      --('A Midsummer Nights Dream'),
-	      --('Lady Susan'),
-	      --('The Watsons'),
-	      --('A Clergymans Daughter'),
-	      --('Far from the Madding Crowd'),
-	      --('The Mayor of Casterbridge '),
-	      --('The Waste Land'),
-	      --('Murder in the Cathedral '),
-	      --(' Jerusalem'),
-	      --('The Four Zoas'),
-	      --('The Hunting of the Snark'),
-	      --('Alices Adventure in Wonderland'),
-	      --('War and Peace'),
-	      --('Anna Karenina'),
-	      --('The Brothers Karamazov'),
-	      --('Crime and Punishment'),
-	      --('Viy'),
-	      --('Dead Souls'),
-	      --('Three Sisters'),
-	      --('The Cherry Orchard'),
-	      --('The String'),
-	      --('Fever'),
-	      --('The Little Golden Calf'),
-		  --('A Confession'),
-		  --('A Confession'),
+    VALUES('Macbeth'),
+	      ('Hamlet'),
+	      ('A Midsummer Nights Dream'),
+	      ('Lady Susan'),
+	      ('The Watsons'),
+	      ('A Clergymans Daughter'),
+	      ('Far from the Madding Crowd'),
+	      ('The Mayor of Casterbridge '),
+	      ('The Waste Land'),
+	      ('Murder in the Cathedral '),
+	      (' Jerusalem'),
+	      ('The Four Zoas'),
+	      ('The Hunting of the Snark'),
+	      ('Alices Adventure in Wonderland'),
+	      ('War and Peace'),
+	      ('Anna Karenina'),
+	      ('The Brothers Karamazov'),
+	      ('Crime and Punishment'),
+	      ('Viy'),
+	      ('Dead Souls'),
+	      ('Three Sisters'),
+	      ('The Cherry Orchard'),
+	      ('The String'),
+	      ('Fever'),
+	      ('The Little Golden Calf'),
+		  ('A Confession'),
+		  ('A Confession'),
 		  ('Prince Serebrenni'),-- Aleksey Konstantinovich Tolstoy
 		  ('Tsar Boris'), -- Aleksey Konstantinovich Tolstoy
 		  ('The Great Big Enormous Turnip'), -- Aleksey Nikolayevich Tolstoy
@@ -384,9 +382,9 @@ INSERT INTO BooksOperation(ReaderId, CopyId, Given, WhoGiven, Back)
 	      (6, 4, '2021-09-08', 3 ,'2021-10-03'),
 	      (8, 9, '2021-09-03', 2,  NULL),
 	      (8, 8, '2021-04-08', 2 ,'2021-05-08'),
-	      (5, 7, '2021-10-08', 3,  NULL),
-		  (6, 7, '2021-10-09', 4,  NULL),
-		  (7, 7, '2021-10-10', 3,  NULL),
+	      (5, 3, '2021-10-08', 3,  NULL),
+		  (6, 6, '2021-10-09', 4,  NULL),
+		  (7, 5, '2021-10-10', 3,  NULL),
 		  (8, 7, '2021-10-11', 3,  NULL),
 		  (8, 12, '2021-10-11', 3,  NULL),
 		  (8, 13, '2021-10-11', 3,  NULL)
@@ -700,18 +698,15 @@ ON B.BookId = BC.BookId
 WHERE BO.Given BETWEEN DATEADD(DAY, 1, EOMONTH(GETDATE(), -@quarter)) 
                    AND DATEADD(DAY, 1, EOMONTH(CURRENT_TIMESTAMP))
 
-SELECT R.FirstName, R.LastName, B.BookId
+SELECT R.ReaderId, FirstName, LastName, COUNT(BC.CopyId) AS Books
 FROM Readers R
-LEFT JOIN BooksOperation BO
+INNER JOIN BooksOperation BO
 ON R.ReaderId = BO.ReaderId
-LEFT JOIN BookCopy BC
+INNER JOIN BookCopy BC
 ON BO.CopyId = BC.CopyId
-LEFT JOIN Books B
+INNER JOIN Books B
 ON BC.BookId = B.BookId
-LEFT JOIN BooksWriters BW
-ON B.BookId = BW.BookId
-LEFT JOIN Writers W
-ON BW.AuthorId = W.WriterId
-ORDER BY FirstName
+GROUP BY R.ReaderId, R.FirstName, R.LastName
 
-SELECT * FROM Writers
+
+SELECT * FROM Readers
