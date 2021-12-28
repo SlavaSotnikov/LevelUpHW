@@ -618,95 +618,89 @@ ON BooksWriters.AuthorId = Writers.WriterId
 -- Book's condition less than 5 
 SELECT CopyId, Title
 FROM Books B
-INNER JOIN BookCopy BC
-ON BC.Condition < 5 AND BC.BookId = B.BookId
---WHERE CopyId IS NOT NULL
-
-SELECT COUNT(CopyId) AS Amount
-FROM BookCopy
-WHERE Condition = 0
+	INNER JOIN BookCopy BC ON BC.BookId = B.BookId
+WHERE BC.Condition < 5
 
 -- Who got back book on time
 SELECT CopyId, FirstName, LastName, Given, Back
 FROM Readers R
-RIGHT JOIN BooksOperation BO
-ON (DATEDIFF(DAY, Given, Back) <= 30) AND (R.ReaderId = BO.ReaderId)
-WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
+	RIGHT JOIN BooksOperation BO ON R.ReaderId = BO.ReaderId
+WHERE DATEDIFF(MONTH, Given, Back) <= 1
 ORDER BY FirstName
 
--- Who've got expired 
-SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, BO.Back) - 30 AS Expire
+-- Who've got expired, how many days.
+SELECT BO.CopyId, Title, FirstName, LastName, DATEDIFF(DAY, BO.Given, BO.Back) - 30 AS Expire
 FROM Readers R
-RIGHT JOIN BooksOperation BO
-ON (DATEDIFF(DAY, Given, Back) > 30) AND (R.ReaderId = BO.ReaderId)
-WHERE FirstName IS NOT NULL AND LastName IS NOT NULL
+	RIGHT JOIN BooksOperation BO ON R.ReaderId = BO.ReaderId
+	RIGHT JOIN BookCopy BC ON BO.CopyId = BC.CopyId
+	RIGHT JOIN Books B ON BC.BookId = B.BookId
+WHERE DATEDIFF(DAY, Given, Back) > 30
 ORDER BY FirstName
 
-DECLARE @days INT
-
--- Who has books. How many days.
-SELECT CopyId, FirstName, LastName, DATEDIFF(DAY, BO.Given, GETDATE()) AS DaysPass
+-- Who has books. How many days. Keep holding beyond 30 days. Not Back.
+SELECT BO.CopyId, Title, FirstName, LastName, DATEDIFF(DAY, BO.Given, GETDATE()) AS DaysPass
 FROM Readers R
-RIGHT JOIN BooksOperation BO
-ON Back IS NULL AND R.ReaderId = BO.ReaderId
-WHERE FirstName IS NOT NULL 
-ORDER BY FirstName
+	LEFT JOIN BooksOperation BO ON R.ReaderId = BO.ReaderId
+	LEFT JOIN BookCopy BC ON BO.CopyId = BC.CopyId
+	LEFT JOIN Books B ON BC.BookId = B.BookId
+WHERE DATEDIFF(DAY, BO.Given, GETDATE()) > 30 AND Back IS NULL
+ORDER BY FirstName 
+
+SELECT * FROM Readers
 
 -- All books all writers
 SELECT B.BookId, Title AS Book, FirstName, LastName, MiddleName
 FROM Books B
-RIGHT JOIN BooksWriters BW
-ON BW.BookId = B.BookId
-RIGHT JOIN Writers W
-ON W.WriterId = BW.AuthorId
+	RIGHT JOIN BooksWriters BW ON BW.BookId = B.BookId
+	RIGHT JOIN Writers W ON W.WriterId = BW.AuthorId
 ORDER BY FirstName
 
--- All employees all positions
-SELECT Position, FirstName, LastName
+-- Positions how many occupied a position. 
+SELECT Position, COUNT(*) AS Workers
 FROM Staff S
-RIGHT JOIN WorkerPosition WP
-ON WP.WorkerId = S.WorkerId
-RIGHT JOIN Occupation O
-ON O.PositionId = WP.PositionId
-ORDER BY Position
+	RIGHT JOIN WorkerPosition WP ON WP.WorkerId = S.WorkerId
+	RIGHT JOIN Occupation O ON O.PositionId = WP.PositionId
+GROUP BY Position
 
 -- Reader, Book copies, Title, Who given, When, When back.
 SELECT R.FirstName, R.LastName, BC.CopyId AS BookCopy, Title, S.FirstName, S.LastName, Given,
-DATEADD(DAY, 30, BO.Given) AS MustBack
+DATEADD(MONTH, 1, BO.Given) AS MustBack
 FROM BooksOperation BO
-LEFT JOIN Readers R
-ON R.ReaderId = BO.ReaderId
-LEFT JOIN BookCopy BC
-ON BC.CopyId = BO.CopyId
-LEFT JOIN Books B
-ON BC.BookId = B.BookId
-LEFT JOIN Staff S
-ON BO.WhoGiven = S.WorkerId
+	LEFT JOIN Readers R ON R.ReaderId = BO.ReaderId
+	LEFT JOIN BookCopy BC ON BC.CopyId = BO.CopyId
+	LEFT JOIN Books B ON BC.BookId = B.BookId
+	LEFT JOIN Staff S ON BO.WhoGiven = S.WorkerId
 ORDER BY R.FirstName
 
--- Book title and who has been given for 4 months.
+-- Book title and who has been given for 1 quarter.
 DECLARE @quarter TINYINT = 4;
+DECLARE @start DATETIME = CAST(YEAR(GETDATE()) AS CHAR(4)) + 
+'-' + CAST((@quarter - 1) * 3 + 1 AS CHAR(2)) + '-01'
+DECLARE @finish DATETIME = DATEADD(MONTH, 3, @start)
 
 SELECT Title, FirstName, LastName, Given
 FROM Staff S
-LEFT JOIN BooksOperation BO
-ON BO.WhoGiven = S.WorkerId
-LEFT JOIN BookCopy BC
-ON BC.CopyId = BO.CopyId
-LEFT JOIN Books B
-ON B.BookId = BC.BookId
-WHERE BO.Given BETWEEN DATEADD(DAY, 1, EOMONTH(GETDATE(), -@quarter)) 
-                   AND DATEADD(DAY, 1, EOMONTH(CURRENT_TIMESTAMP))
+	LEFT JOIN BooksOperation BO ON BO.WhoGiven = S.WorkerId
+	LEFT JOIN BookCopy BC ON BC.CopyId = BO.CopyId
+	LEFT JOIN Books B ON B.BookId = BC.BookId
+WHERE BO.Given BETWEEN @start AND @finish
 
+-- Sub Query
 SELECT R.ReaderId, FirstName, LastName, COUNT(BC.CopyId) AS Books
 FROM Readers R
-INNER JOIN BooksOperation BO
-ON R.ReaderId = BO.ReaderId
-INNER JOIN BookCopy BC
-ON BO.CopyId = BC.CopyId
-INNER JOIN Books B
-ON BC.BookId = B.BookId
+	INNER JOIN BooksOperation BO ON R.ReaderId = BO.ReaderId
+	INNER JOIN BookCopy BC ON BO.CopyId = BC.CopyId
+	INNER JOIN Books B ON BC.BookId = B.BookId
+GROUP BY R.ReaderId, R.FirstName, R.LastName
+
+SELECT R.ReaderId, FirstName, LastName,
+	(
+		SELECT COUNT(CopyId)
+		FROM BooksOperation BO
+		WHERE BO.ReaderId = R.ReaderId
+	) AS Books
+FROM Readers R
 GROUP BY R.ReaderId, R.FirstName, R.LastName
 
 
-SELECT * FROM Readers
+SELECT * FROM BooksOperation
