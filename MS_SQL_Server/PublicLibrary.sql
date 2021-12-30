@@ -373,21 +373,28 @@ INSERT INTO BookCopy(BookId, Condition)
 		   (26, 10),
 		   (27, 9),
 		   (27, 10)
+
 GO
 
 INSERT INTO BooksOperation(ReaderId, CopyId, Given, WhoGiven, Back)
-    VALUES(1, 1, '2021-09-08', 1 , NULL),
-	      (2, 2, '2021-10-11', 1,  NULL),
-	      (6, 10, '2021-12-08', 2, NULL),
-	      (6, 4, '2021-09-08', 3 ,'2021-10-03'),
-	      (8, 9, '2021-09-03', 2,  NULL),
-	      (8, 8, '2021-04-08', 2 ,'2021-05-08'),
-	      (5, 3, '2021-10-08', 3,  NULL),
-		  (6, 6, '2021-10-09', 4,  NULL),
-		  (7, 5, '2021-10-10', 3,  NULL),
-		  (8, 7, '2021-10-11', 3,  NULL),
-		  (8, 12, '2021-10-11', 3,  NULL),
-		  (8, 13, '2021-10-11', 3,  NULL)
+    VALUES--(1, 1, '2021-09-08', 1 , NULL),
+	      --(2, 2, '2021-10-11', 1,  NULL),
+	      --(6, 10, '2021-12-08', 2, NULL),
+	      --(6, 4, '2021-09-08', 3 ,'2021-10-03'),
+	      --(8, 9, '2021-09-03', 2,  NULL),
+	      --(8, 8, '2021-04-08', 2 ,'2021-05-08'),
+	      --(5, 3, '2021-10-08', 3,  NULL),
+		  --(6, 6, '2021-10-09', 4,  NULL),
+		  --(7, 5, '2021-10-10', 3,  NULL),
+		  --(8, 7, '2021-10-11', 3,  NULL),
+		  --(8, 12, '2021-10-11', 3,  NULL),
+		  --(8, 13, '2021-10-11', 3,  NULL),
+		  --(7, 20, '2021-12-12', 4, '2021-12-25'),
+		  --(5, 21, '2021-11-02', 2, '2021-12-20'),
+		  --(2, 47, '2021-09-02', 1, '2021-09-20'),
+		  --(2, 48, '2021-10-05', 1, '2021-11-04')
+		  (1, 17, '2021-10-05', 1, '2021-11-04'),
+		  (1, 17, '2021-10-05', 1, '2021-11-04')
 GO
 
 ------- FROM Writers------------------
@@ -685,7 +692,7 @@ FROM Staff S
 	LEFT JOIN Books B ON B.BookId = BC.BookId
 WHERE BO.Given BETWEEN @start AND @finish
 
--- Sub Query
+-- SubQuery
 SELECT R.ReaderId, FirstName, LastName, COUNT(BC.CopyId) AS Books
 FROM Readers R
 	INNER JOIN BooksOperation BO ON R.ReaderId = BO.ReaderId
@@ -702,5 +709,21 @@ SELECT R.ReaderId, FirstName, LastName,
 FROM Readers R
 GROUP BY R.ReaderId, R.FirstName, R.LastName
 
+-- Writer. How many times has been given.
+SELECT R.FirstName, R.LastName, R.MiddleName, W.FirstName, W.LastName, W.MiddleName
+FROM Writers W
+	RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+	RIGHT JOIN Books B ON BW.BookId = B.BookId
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
+	WHERE W.FirstName IS NOT NULL
+	ORDER BY R.FirstName, W.FirstName DESC
 
+
+
+
+SELECT * FROM Writers
 SELECT * FROM BooksOperation
+SELECT * FROM Books
+SELECT * FROM BookCopy
