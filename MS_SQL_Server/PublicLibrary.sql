@@ -709,8 +709,8 @@ SELECT R.ReaderId, FirstName, LastName,
 FROM Readers R
 GROUP BY R.ReaderId, R.FirstName, R.LastName
 
--- Writer. How many times has been given.
-SELECT R.FirstName, R.LastName, R.MiddleName, W.FirstName, W.LastName, W.MiddleName
+-- The most popular writer.
+SELECT W.FirstName, W.LastName, W.MiddleName, COUNT(BO.Given) AS Popularity
 FROM Writers W
 	RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
 	RIGHT JOIN Books B ON BW.BookId = B.BookId
@@ -718,12 +718,45 @@ FROM Writers W
 	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
 	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
 	WHERE W.FirstName IS NOT NULL
-	ORDER BY R.FirstName, W.FirstName DESC
+	GROUP BY W.FirstName, W.LastName, W.MiddleName
+	ORDER BY W.FirstName DESC
+	
+------====== VIEW ======------
 
+CREATE VIEW WriterWhoTookNotBack
+WITH ENCRYPTION
+AS
+SELECT R.ReaderId, R.FirstName, R.LastName, R.MiddleName, BO.Given
+FROM Writers W
+	RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+	RIGHT JOIN Books B ON BW.BookId = B.BookId
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
+	WHERE W.LastName IN ('Hardy') AND BO.Back IS NOT NULL
+GO
 
+SELECT ReaderId, FirstName, LastName 
+FROM WriterWhoTookNotBack
 
+-- How many workers were hired in a certain year.
+CREATE VIEW WorkersForYear
+AS
+	SELECT WorkerId, FirstName, LastName, Haired
+	FROM Staff
+	WHERE YEAR(Haired) = CONVERT(VARCHAR(4), YEAR(GETDATE()))
+WITH CHECK OPTION
+GO
+
+INSERT INTO Staff(FirstName, LastName, Haired)
+VALUES('Den', 'Novack', '')
+
+DELETE FROM Staff WHERE WorkerId = 16;
+
+SELECT FirstName, LastName, Haired
+FROM WorkersForYear
 
 SELECT * FROM Writers
 SELECT * FROM BooksOperation
 SELECT * FROM Books
-SELECT * FROM BookCopy
+SELECT * FROM Staff
