@@ -408,10 +408,11 @@ FROM Writers
     WHERE (Country LIKE 'Russian%') 
           OR (Country LIKE 'Sovet%')
 
-SELECT WriterId AS BritishWriters
+
+SELECT WriterId, FirstName, LastName
 FROM Writers
-    WHERE (FirstName = 'Thomas') AND
-	      (Country = 'U.K.')
+    WHERE Country = 'U.K.'
+
 
 SELECT LastName AS BritishWriters
 FROM Writers
@@ -427,13 +428,6 @@ FROM Writers
     GROUP BY FirstName
 
 ------- FROM Books------------------
-
-SELECT Title, DeletedOn, WhoRemoved
-FROM Books
-
-SELECT WhoRemoved, DeletedOn
-FROM Books
-    WHERE DeletedOn IS NOT NULL
 
 SELECT Title
 FROM Books
@@ -692,7 +686,7 @@ FROM Staff S
 	LEFT JOIN Books B ON B.BookId = BC.BookId
 WHERE BO.Given BETWEEN @start AND @finish
 
--- SubQuery
+-- Reader, How many books.
 SELECT R.ReaderId, FirstName, LastName, COUNT(BC.CopyId) AS Books
 FROM Readers R
 	INNER JOIN BooksOperation BO ON R.ReaderId = BO.ReaderId
@@ -740,23 +734,55 @@ SELECT ReaderId, FirstName, LastName
 FROM WriterWhoTookNotBack
 
 -- How many workers were hired in a certain year.
-CREATE VIEW WorkersForYear
+CREATE VIEW WorkersPrevYears
 AS
 	SELECT WorkerId, FirstName, LastName, Haired
 	FROM Staff
-	WHERE YEAR(Haired) = CONVERT(VARCHAR(4), YEAR(GETDATE()))
+	WHERE YEAR(Haired) < CONVERT(VARCHAR(4), YEAR(GETDATE()))
 WITH CHECK OPTION
 GO
 
 INSERT INTO Staff(FirstName, LastName, Haired)
-VALUES('Den', 'Novack', '')
-
-DELETE FROM Staff WHERE WorkerId = 16;
+VALUES('Den', 'Novack', CONVERT(VARCHAR(10), GETDATE(), 23))
 
 SELECT FirstName, LastName, Haired
-FROM WorkersForYear
+FROM WorkersPrevYears
+
+-- All books worse than 5 condition
+CREATE VIEW BadCondition
+WITH ENCRYPTION
+AS
+SELECT Condition, 
+	(
+	  SELECT Title FROM Books B 
+	  WHERE BC.BookId = B.BookId
+	) AS Title, CopyId 
+FROM BookCopy BC
+WHERE Condition < 5
+
+SELECT Condition, Title, CopyId
+FROM BadCondition
+
+-- British writers.
+CREATE VIEW BritishWriters
+WITH ENCRYPTION
+AS
+SELECT FirstName, LastName, MiddleName, Country
+FROM Writers
+    WHERE Country = 'U.K.'
+WITH CHECK OPTION
+
+SELECT FirstName, LastName
+FROM BritishWriters
+
+-- You can add U.K. writers only.
+INSERT INTO BritishWriters(FirstName, LastName, Country)
+VALUES('Virginia', 'Woolf', 'USA')
+
+
 
 SELECT * FROM Writers
 SELECT * FROM BooksOperation
 SELECT * FROM Books
 SELECT * FROM Staff
+
