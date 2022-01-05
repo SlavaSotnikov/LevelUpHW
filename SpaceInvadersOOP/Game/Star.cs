@@ -9,6 +9,7 @@ namespace Game
     internal class Star : SpaceCraft
     {
         internal Star(int x, int y, sbyte step, uint speed)
+        :base(SpaceObject.Star)
         {
             //X = x;
             //Y = y;

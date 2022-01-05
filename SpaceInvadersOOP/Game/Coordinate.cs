@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    internal struct Coord
+    internal struct Coordinate
     {
         public int X { get; set; }
         public int Y { get; set; }
 
-        public Coord(int x, int y)
+        public Coordinate(int x, int y)
         {
             X = x;
             Y = y;
         }
 
-        public Coord(Coord source)
+        public Coordinate(Coordinate source)
         {
             X = source.X;
             Y = source.Y;
@@ -27,7 +27,7 @@ namespace Game
         {
             bool result = false;
 
-            if (obj is Coord source)
+            if (obj is Coordinate source)
             {
                 result = (X == source.X) && (Y == source.Y);
             }

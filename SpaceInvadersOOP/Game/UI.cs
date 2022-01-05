@@ -230,7 +230,7 @@ namespace Game
             //}
         }
 
-        public static void Print(Coord source, ConsoleColor color, char view)
+        public static void Print(Coordinate source, ConsoleColor color, char view)
         {
             Console.SetCursorPosition(source.X, source.Y);
 

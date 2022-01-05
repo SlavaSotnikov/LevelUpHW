@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game
 {
-    class EnemyShip : Ship
+    internal class EnemyShip : Ship
     {
         #region Private Data
 
@@ -23,8 +23,9 @@ namespace Game
 
         #region Constructor
 
-        public EnemyShip(ISpace game, HashSet<Coord> position, int x, int y, bool active,
+        public EnemyShip(ISpace game, HashSet<Coordinate> position, int x, int y, bool active,
                 uint speed, sbyte step, byte rndY, byte hitPoints = 6)
+        :base(SpaceObject.EnemyShip)
         {
             _game = game;
             //X = coordX;
@@ -41,9 +42,9 @@ namespace Game
 
             Position = position;
 
-            OldPosition = new HashSet<Coord>(16);
+            OldPosition = new HashSet<Coordinate>(16);
 
-            NextPosition = new HashSet<Coord>(16);
+            NextPosition = new HashSet<Coordinate>(16);
         }
 
         #endregion
@@ -58,7 +59,7 @@ namespace Game
             foreach (var item in Position)
             {
                 y = item.Y;
-                NextPosition.Add(new Coord(item.X, ++y));
+                NextPosition.Add(new Coordinate(item.X, ++y));
             }
 
             Position.Clear();

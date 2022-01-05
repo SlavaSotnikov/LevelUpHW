@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game
 {
@@ -38,7 +39,7 @@ namespace Game
 
         #region Constructor
 
-        public Space(int capacity = 13, int speed = 330000)
+        public Space(int capacity = 0, int speed = 330000)
         {
             _gameObjects = new List<SpaceCraft>(capacity);
             _amountOfObjects = 0;
@@ -102,75 +103,216 @@ namespace Game
             } while (IsGameOver());
         }
 
-        public void AddObject(SpaceObject source)
+        public void ResetObject(SpaceCraft source)
         {
-            SpaceCraft creature = null;
-
-            switch (source)
+            switch (source.View)
             {
                 case SpaceObject.None:
                     break;
                 case SpaceObject.LightShip:
-                    creature = new LightShip(this, _initialX, _initialY,
-                            _active, _shipSpeed, _counter, _hitpoints, _lifes);
+                    //spaceObject = new LightShip(this, _initialX, _initialY,
+                    //    _active, _shipSpeed, _counter, _hitpoints, _lifes);
                     break;
                 case SpaceObject.HeavyShip:
-                    creature = new HeavyShip(this, _initialX, _initialY,
-                            _active, _shipSpeed, _counter, _hitpoints, _lifes);
+                    //creature = new HeavyShip(this, _initialX, _initialY,
+                    //    _active, _shipSpeed, _counter, _hitpoints, _lifes);
                     break;
                 case SpaceObject.EnemyShip:
-                    creature = AddEnemy();
+
+                    ResetEnemy((EnemyShip)source);
                     break;
+
                 case SpaceObject.ShotLeft:
-                    creature = AddShot(_leftShift);
-                    break;
+
+                    ResetShot((Shot)source);
+                     break;
+
                 case SpaceObject.ShotRight:
                     //creature = AddShot(_rightShift);
                     break;
                 case SpaceObject.ShotEnemy:
-                    creature = AddEnemyShot(_shotEnemyShift);
+                    
+
+                    for (int i = 0; i < _gameObjects.Count; i++)
+                    {
+                        if (_gameObjects[i] is EnemyShip one)
+                        {
+                            if (GetMinY(one).Y == one.Shot)
+                            {
+                                Coordinate newPosition = NewEnemyShotPosition();
+                                source.Position.Clear();
+                                source.Position.Add(newPosition);
+                                break;
+                            }
+                        }
+                    }
                     break;
                 default:
                     break;
             }
+        }
 
-            for (int i = /*10*/0; i <= _gameObjects.Count/*_amountOfObjects*/; i++)
+        private void ResetShot(Shot source)
+        {
+            Coordinate newPosition = NewShotPosition();
+            source.Position.Clear();
+            source.Position.Add(new Coordinate(newPosition.X, newPosition.Y - 1));
+            source.Active = true;
+            source.Counter = 0;
+        }
+
+        public Coordinate NewEnemyShotPosition()
+        {
+            Coordinate bow = default;
+
+            for (int i = 0; i < _gameObjects.Count; i++)
             {
-                if (source == _gameObjects[i].View)
+                if ((_gameObjects[i] is EnemyShip one) && (GetMinY(one).Y == one.Shot))  
                 {
-                    // ResetObject(source);
+                    bow = new Coordinate(GetMaxY(one).X, GetMaxY(one).Y + 1);
+                    one.Shot = 0;
                     break;
                 }
-
-                // AddObject(source);
             }
+
+            return bow;
+        }
+
+        public Coordinate NewShotPosition()
+        {
+            Coordinate bow = default;
+
+            for (int i = 0; i < _gameObjects.Count; i++)
+            {
+                if (_gameObjects[i] is UserShip user)
+                {
+                    bow = GetMinY(user);
+                    break;
+                }
+            }
+
+            return bow;
+        }
+
+        public void AddObject(SpaceObject source)
+        {
+            SpaceCraft creature = null;
+
+            bool reset = false;
+            for (int i = /*10*/0; i < _gameObjects.Count/*_amountOfObjects*/; i++)
+            {
+                if (source == _gameObjects[i].View && !_gameObjects[i].Active)
+                {
+                    ResetObject(_gameObjects[i]);
+                    reset = true;
+                    break;
+                }
+            }
+
+            if (!reset)
+            {
+                switch (source)
+                {
+                    case SpaceObject.None:
+                        break;
+                    case SpaceObject.LightShip:
+                        creature = new LightShip(this, _initialX, _initialY,
+                            _active, _shipSpeed, _counter, _hitpoints, _lifes);
+                        break;
+                    case SpaceObject.HeavyShip:
+                        creature = new HeavyShip(this, _initialX, _initialY,
+                            _active, _shipSpeed, _counter, _hitpoints, _lifes);
+                        break;
+                    case SpaceObject.EnemyShip:
+                        creature = AddEnemy();
+                        break;
+                    case SpaceObject.ShotLeft:
+                        creature = AddShot(_leftShift);
+                        break;
+                    case SpaceObject.ShotRight:
+                        //creature = AddShot(_rightShift);
+                        break;
+                    case SpaceObject.ShotEnemy:
+                        creature = AddEnemyShot(_shotEnemyShift);
+                        break;
+                    default:
+                        break;
+                }
+
+                _gameObjects.Add(creature);
+                ++_amountOfObjects;
+            }
+
+            
+
+            
 
             //if (_amountOfObjects >= _gameObjects.Length - 1)
             //{
             //    Array.Resize(ref _gameObjects, _gameObjects.Length * 2);
             //}
 
-            for (int i = /*10*/0; i <= _gameObjects.Count/*_amountOfObjects*/; i++)
+            //for (int i = /*10*/0; i <= _gameObjects.Count/*_amountOfObjects*/; i++)
+            //{
+            //    if (_gameObjects[i] is null)
+            //    {
+            //        _gameObjects[i] = creature;
+            //        ++_amountOfObjects;
+
+            //        break;
+            //    }
+
+            //    if (!_gameObjects[i].Active)
+            //    {
+            //        _gameObjects[i] = creature;
+            //        break;
+            //    }
+
+            //    if (i == _gameObjects.Count - 1)
+            //    {
+            //        _gameObjects.Add(creature);
+            //        break;
+            //    }
+            //}
+        }
+
+        private void ResetEnemy(EnemyShip source)
+        {
+            bool isExist;
+            //int rndX = 0;
+            uint speed = BL_Random.GetFlySpeed();
+            byte rndYShot = BL_Random.GetRndY();
+            HashSet<Coordinate> newPosition;
+
+            do
             {
-                if (_gameObjects[i] is null)
-                {
-                    _gameObjects[i] = creature;
-                    ++_amountOfObjects;
+                //rndX = BL_Random.GetX();
 
-                    break;
+                newPosition = InitNewEnemy(BL_Random.GetX());
+
+                isExist = false;
+
+                for (int i = 0; i < _amountOfObjects; i++)
+                {
+                    if (_gameObjects[i] is EnemyShip enemy)
+                    {
+                        if (newPosition.Overlaps(enemy.Position) /*!((rndX > enemy.X + enemy.Width) || (rndX + enemy.Width < enemy.X))*/)
+                        {
+                            isExist = true;
+                            break;
+                        }
+                    }
                 }
 
-                if (!_gameObjects[i].Active)
-                {
-                    _gameObjects[i] = creature;
-                    break;
-                }
+            } while (isExist);
 
-                if (i == _gameObjects.Count - 1)
-                {
-                    _gameObjects.Add(creature);
-                    break;
-                }
+            source.Active = true;
+            source.Counter = 0;
+            source.HP = 6;
+            source.Position.Clear();
+            foreach (var item in newPosition)
+            {
+                source.Position.Add(new Coordinate(item));
             }
         }
 
@@ -180,7 +322,7 @@ namespace Game
             //int rndX = 0;
             uint speed = BL_Random.GetFlySpeed();
             byte rndYShot = BL_Random.GetRndY();
-            HashSet<Coord> position;
+            HashSet<Coordinate> position;
 
             do
             {
@@ -206,9 +348,10 @@ namespace Game
 
             return new EnemyShip(this, position, 0/*rndX*/, CONST_Y, _active, speed, 1, rndYShot);
         }
-        private HashSet<Coord> InitNewEnemy(int x)
+
+        private HashSet<Coordinate> InitNewEnemy(int x)
         {
-            HashSet<Coord> result = new HashSet<Coord>(16);
+            HashSet<Coordinate> result = new HashSet<Coordinate>(16);
             int width = 7;
             int height = 4;
 
@@ -216,7 +359,7 @@ namespace Game
             {
                 for (int i = y; i < width; i++)
                 {
-                    result.Add(new Coord(x + i, y + 1));
+                    result.Add(new Coordinate(x + i, y + 1));
                 }
                 width--;
             }
@@ -227,14 +370,12 @@ namespace Game
         public Shot AddShot(int shift)
         {
             Shot bullet = null;
-            Coord bow = default;
 
             for (int i = 0; i < _gameObjects.Count; i++)
             {
                 if (_gameObjects[i] is UserShip user)
                 {
-                    bow = GetMinY(user);
-
+                    Coordinate bow = GetMinY(user);
                     bullet = new Shot(bow.X/* + shift*/, bow.Y - 1, 1, 2000);
                     break;
                 }
@@ -243,9 +384,9 @@ namespace Game
             return bullet;
         }
 
-        private Coord GetMinY(Ship source)
+        private Coordinate GetMinY(Ship source)
         {
-            Coord min = new Coord(0, int.MaxValue);
+            Coordinate min = new Coordinate(0, int.MaxValue);
 
             foreach (var item in source.Position)
             {
@@ -258,9 +399,9 @@ namespace Game
             return min;
         }
 
-        private Coord GetMaxY(Ship source)
+        private Coordinate GetMaxY(Ship source)
         {
-            Coord min = new Coord(0, int.MinValue);
+            Coordinate min = new Coordinate(0, int.MinValue);
 
             foreach (var item in source.Position)
             {
@@ -281,7 +422,7 @@ namespace Game
             {
                 if (_gameObjects[i] is EnemyShip one && one.Shot != 0)
                 {
-                    bullet = new Shot(GetMaxY(one).X, GetMaxY(one).Y + 1, -1, 24000);
+                    bullet = new Shot(GetMaxY(one).X, GetMaxY(one).Y + 1, -1, 2000);
                     one.Shot = 0;
                     break;
                 }

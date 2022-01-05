@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game
 {
-    class LightShip : UserShip
+    internal class LightShip : UserShip
     {
         #region Properties
 
@@ -18,49 +18,49 @@ namespace Game
         #region Constructors
 
         public LightShip(ISpace game, int coordX, int coordY, bool active,
-                uint speed, uint counter, byte hitpoints, byte lifes)
-            : base(game, coordX, coordY, active, speed, counter, 
-                    hitpoints, lifes)
+                uint speed, uint counter, byte hitpoints, byte lifes, SpaceObject source = SpaceObject.LightShip)
+            : base(game, coordX, coordY, active, speed, counter,
+                    hitpoints, lifes, source)
         {
             SetPosition();
         }
 
         private void SetPosition()
         {
-            Position = new HashSet<Coord>(19)
+            Position = new HashSet<Coordinate>(19)
             {
-                new Coord(56, 28),
-                new Coord(56, 29),
-                new Coord(54, 30),
-                new Coord(56, 30),
-                new Coord(58, 30),
-                new Coord(52, 31),
-                new Coord(53, 31),
-                new Coord(54, 31),
-                new Coord(55, 31),
-                new Coord(56, 31),
-                new Coord(57, 31),
-                new Coord(58, 31),
-                new Coord(59, 31),
-                new Coord(60, 31),
-                new Coord(54, 32),
-                new Coord(55, 32),
-                new Coord(56, 32),
-                new Coord(57, 32),
-                new Coord(58, 32)
+                new Coordinate(56, 28),
+                new Coordinate(56, 29),
+                new Coordinate(54, 30),
+                new Coordinate(56, 30),
+                new Coordinate(58, 30),
+                new Coordinate(52, 31),
+                new Coordinate(53, 31),
+                new Coordinate(54, 31),
+                new Coordinate(55, 31),
+                new Coordinate(56, 31),
+                new Coordinate(57, 31),
+                new Coordinate(58, 31),
+                new Coordinate(59, 31),
+                new Coordinate(60, 31),
+                new Coordinate(54, 32),
+                new Coordinate(55, 32),
+                new Coordinate(56, 32),
+                new Coordinate(57, 32),
+                new Coordinate(58, 32)
             };
 
-            OldPosition = new HashSet<Coord>(19);
+            OldPosition = new HashSet<Coordinate>(19);
 
             int x = 0;
             foreach (var item in Position)
             {
                 x = item.X;
 
-                OldPosition.Add(new Coord(++x, item.Y));
+                OldPosition.Add(new Coordinate(++x, item.Y));
             }
 
-            NextPosition = new HashSet<Coord>();
+            NextPosition = new HashSet<Coordinate>();
         }
 
         #endregion
@@ -131,15 +131,15 @@ namespace Game
 
             foreach (var item in NextPosition)
             {
-                Position.Add(new Coord(item));
+                Position.Add(new Coordinate(item));
             }
         }
 
-        private void FakeShift(HashSet<Coord> source, int x, int y)
+        private void FakeShift(HashSet<Coordinate> source, int x, int y)
         {
             foreach (var item in Position)
             {
-                source.Add(new Coord(item.X + x, item.Y + y));
+                source.Add(new Coordinate(item.X + x, item.Y + y));
             }
         }
 

@@ -15,6 +15,6 @@ namespace Game
 
         void AddObject(SpaceObject source);
 
-        HashSet<Coord> Borders { get; }
+        HashSet<Coordinate> Borders { get; }
     }
 }

@@ -7,7 +7,8 @@ namespace Game
     {
         #region Constructors
 
-        public Shot(int x, int y, sbyte step, uint speed)
+        public Shot(int x, int y, sbyte step, uint speed, SpaceObject source = SpaceObject.ShotLeft)
+            :base(source)
         {
             //X = x;
             //Y = y;
@@ -18,12 +19,14 @@ namespace Game
             Active = true;
             _step = step;
 
-            Position = new HashSet<Coord>(1);
-            Position.Add(new Coord(x, y));
+            Position = new HashSet<Coordinate>(1)
+            {
+                new Coordinate(x, y)
+            };
 
-            OldPosition = new HashSet<Coord>(1);
-         
-            NextPosition = new HashSet<Coord>(1);
+            OldPosition = new HashSet<Coordinate>(1);
+
+            NextPosition = new HashSet<Coordinate>(1);
         }
 
         #endregion
@@ -33,12 +36,11 @@ namespace Game
         public override void Step()
         {
             //Y -= _step;
-            
-            int y;
+
             foreach (var item in Position)
             {
-                y = item.Y;
-                NextPosition.Add(new Coord(item.X, --y));
+                int y = item.Y;
+                NextPosition.Add(new Coordinate(item.X, y - _step));
             }
 
             Position.Clear();

@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    abstract class UserShip : Ship, IUserShip
+    internal abstract class UserShip : Ship, IUserShip
     {
         protected UIListener _keyEvent;
 
@@ -20,8 +20,9 @@ namespace Game
 
         #region Constructor
 
-        public UserShip(ISpace game, int coordX, int coordY, bool active,
-                uint speed, uint counter, byte hitpoints, byte lifes)
+        protected UserShip(ISpace game, int coordX, int coordY, bool active,
+                uint speed, uint counter, byte hitpoints, byte lifes, SpaceObject source)
+        :base(source)
         {
             _game = game;
             //X = coordX;
