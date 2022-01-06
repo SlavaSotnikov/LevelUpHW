@@ -437,7 +437,7 @@ SELECT Title
 FROM Books
     WHERE Title LIKE 'v_%'
 
-SELECT COUNT(BookId), Title  --Find similar Titles
+SELECT COUNT(BookId) AS Amount, Title  --Find similar Titles
 FROM Books
 GROUP BY Title
 HAVING COUNT(BookId) > 1
@@ -595,6 +595,8 @@ WHERE ReaderId IN
  HAVING COUNT(ReaderId) >= 2
 )
 
+select * from BooksOperation
+
 ------- JOINS ------------------
 
 SELECT * 
@@ -711,7 +713,7 @@ FROM Writers W
 	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
 	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
 	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
-	WHERE W.FirstName IS NOT NULL
+	WHERE W.FirstName IS NOT NULL AND BO.ReaderId = 2
 	GROUP BY W.FirstName, W.LastName, W.MiddleName
 	ORDER BY W.FirstName DESC
 	
@@ -727,7 +729,7 @@ FROM Writers W
 	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
 	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
 	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
-	WHERE W.LastName IN ('Hardy') AND BO.Back IS NOT NULL
+	WHERE BO.Back IS NOT NULL AND W.LastName IN ('Hardy') 
 GO
 
 SELECT ReaderId, FirstName, LastName 
@@ -738,7 +740,7 @@ CREATE VIEW WorkersPrevYears
 AS
 	SELECT WorkerId, FirstName, LastName, Haired
 	FROM Staff
-	WHERE YEAR(Haired) < CONVERT(VARCHAR(4), YEAR(GETDATE()))
+	WHERE YEAR(Haired) = Year(GETDATE()) - 1 
 WITH CHECK OPTION
 GO
 
@@ -760,9 +762,42 @@ SELECT Condition,
 FROM BookCopy BC
 WHERE Condition < 5
 
-SELECT Condition, Title, CopyId
-FROM BadCondition
+---=== VIEW INCLUDED ===---
+-- All certain writer's books in bad condition.
+SELECT BC.CopyId, BC.Title
+FROM BadCondition BC
+LEFT JOIN BookCopy BCP ON BC.CopyId = BCP.CopyId
+LEFT JOIN Books B ON BCP.BookId = B.BookId
+LEFT JOIN BooksWriters BW ON B.BookId = BW.BookId
+LEFT JOIN Writers W ON BW.AuthorId = W.WriterId
+WHERE W.LastName = 'Shakespeare'
 
+-- Another option.						-- Ask a question.
+SELECT BCN.CopyId, BCN.Title
+FROM Writers W
+RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+RIGHT JOIN Books B ON BW.BookId = B.BookId
+RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+RIGHT JOIN BadCondition BCN ON BC.CopyId = BCN.CopyId
+WHERE W.LastName = 'Shakespeare'
+
+CREATE VIEW SimilarTiles
+AS
+SELECT COUNT(BookId) AS Amount, Title  --Find similar Titles
+FROM Books
+GROUP BY Title
+HAVING COUNT(BookId) > 1
+
+SELECT FirstName, LastName
+FROM Writers W
+RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+RIGHT JOIN Books B ON BW.BookId = B.BookId
+RIGHT JOIN SimilarTiles ST ON B.Title = ST.Title -- Ask a question.
+
+
+
+
+SELECT * FROM Writers
 -- British writers.
 CREATE VIEW BritishWriters
 WITH ENCRYPTION
@@ -777,7 +812,7 @@ FROM BritishWriters
 
 -- You can add U.K. writers only.
 INSERT INTO BritishWriters(FirstName, LastName, Country)
-VALUES('Virginia', 'Woolf', 'USA')
+VALUES('Virginia', 'Woolf', 'U.K.')
 
 
 
