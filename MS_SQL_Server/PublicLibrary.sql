@@ -451,9 +451,20 @@ GROUP BY BookId, Condition
 SELECT ReaderId, CopyId, Given, WhoGiven, Back
 FROM BooksOperation
 
-SELECT ReaderId, CopyId, Back AS WhenBack, WhoGiven, Given  -- ORDER BY Date
-FROM BooksOperation
+SELECT ReaderId, CopyId AS BookCopy, Back AS WhenBack, 
+	(	
+		SELECT FirstName		-- Ask a question about two sub queries.
+		FROM Staff S
+		WHERE BO.WhoGiven = S.WorkerId
+	) AS WorkerName,
+	(	
+		SELECT LastName
+		FROM Staff S
+		WHERE BO.WhoGiven = S.WorkerId
+	) AS LastName, Given  -- ORDER BY Date
+FROM BooksOperation BO
     WHERE Back IS NOT NULL
+	ORDER BY MONTH(Back) DESC
 	
 
 ------- FROM Readers------------------
@@ -523,8 +534,8 @@ FROM Readers R
 WHERE EXISTS
 (
  SELECT ReaderId
- FROM BooksOperation
- WHERE Back IS NOT NULL AND R.ReaderId = BooksOperation.ReaderId
+ FROM BooksOperation BO
+ WHERE Back IS NOT NULL AND R.ReaderId = BO.ReaderId
 )
 -- Try BETWEEN 
 
@@ -794,10 +805,45 @@ RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
 RIGHT JOIN Books B ON BW.BookId = B.BookId
 RIGHT JOIN SimilarTiles ST ON B.Title = ST.Title -- Ask a question.
 
+CREATE VIEW WhenBackWhoGiven
+AS
+SELECT ReaderId, CopyId AS BookCopy, Back AS WhenBack, 
+	(	
+		SELECT FirstName		-- Ask a question about two sub queries.
+		FROM Staff S
+		WHERE BO.WhoGiven = S.WorkerId
+	) AS WorkerName,
+	(	
+		SELECT LastName
+		FROM Staff S
+		WHERE BO.WhoGiven = S.WorkerId
+	) AS LastName, Given  -- ORDER BY Date
+FROM BooksOperation BO
+    WHERE Back IS NOT NULL
+
+----------------------------------------------
+SELECT R.ReaderId, R.FirstName, R.LastName, WBWG.BookCopy,
+	(
+		SELECT Title
+		FROM Books B
+		WHERE BookId = 
+		(
+			SELECT BookId
+			FROM BookCopy BC
+			WHERE CopyId = 
+			(
+				SELECT CopyId
+				FROM BooksOperation BO
+				WHERE WBWG.BookCopy = BO.CopyId
+			)
+		)
+	) AS Title, WBWG.WhenBack 
+FROM Readers R
+INNER JOIN WhenBackWhoGiven WBWG ON R.ReaderId = WBWG.ReaderId
+ 
 
 
-
-SELECT * FROM Writers
+SELECT * FROM Readers
 -- British writers.
 CREATE VIEW BritishWriters
 WITH ENCRYPTION
