@@ -726,7 +726,7 @@ FROM Writers W
 	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
 	WHERE W.FirstName IS NOT NULL AND BO.ReaderId = 2
 	GROUP BY W.FirstName, W.LastName, W.MiddleName
-	ORDER BY W.FirstName DESC
+	ORDER BY Popularity DESC
 	
 ------====== VIEW ======------
 
@@ -840,8 +840,33 @@ SELECT R.ReaderId, R.FirstName, R.LastName, WBWG.BookCopy,
 	) AS Title, WBWG.WhenBack 
 FROM Readers R
 INNER JOIN WhenBackWhoGiven WBWG ON R.ReaderId = WBWG.ReaderId
- 
+ORDER BY ReaderId
 
+CREATE VIEW FavoriteWriters
+AS
+SELECT W.FirstName, W.LastName, W.MiddleName, COUNT(BO.Given) AS Popularity
+FROM Writers W
+	RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+	RIGHT JOIN Books B ON BW.BookId = B.BookId
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
+	WHERE W.FirstName IS NOT NULL AND BO.ReaderId = 8
+	GROUP BY W.FirstName, W.LastName, W.MiddleName
+
+SELECT FirstName, LastName
+FROM FavoriteWriters
+WHERE Popularity = (SELECT MAX(Popularity) FROM FavoriteWriters)
+
+ 
+SELECT R.ReaderId, FirstName, LastName,
+	(
+		SELECT COUNT(CopyId)
+		FROM BooksOperation BO
+		WHERE BO.ReaderId = R.ReaderId
+	) AS Books
+FROM Readers R
+GROUP BY R.ReaderId, R.FirstName, R.LastName
 
 SELECT * FROM Readers
 -- British writers.
