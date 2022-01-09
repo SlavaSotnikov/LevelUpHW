@@ -851,14 +851,30 @@ FROM Writers W
 	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
 	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
 	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
-	WHERE W.FirstName IS NOT NULL AND BO.ReaderId = 8
+	WHERE W.FirstName IS NOT NULL
 	GROUP BY W.FirstName, W.LastName, W.MiddleName
 
 SELECT FirstName, LastName
 FROM FavoriteWriters
 WHERE Popularity = (SELECT MAX(Popularity) FROM FavoriteWriters)
 
- 
+CREATE VIEW WriterReader
+AS
+SELECT W.FirstName, W.LastName, W.MiddleName, BO.ReaderId
+FROM Writers W
+	RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+	RIGHT JOIN Books B ON BW.BookId = B.BookId
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
+	WHERE W.FirstName IS NOT NULL
+
+SELECT R.FirstName, R.LastName, WR.FirstName, WR.LastName
+FROM Readers R
+INNER JOIN WriterReader WR ON R.ReaderId = WR.ReaderId
+GROUP BY R.ReaderId
+
+
 SELECT R.ReaderId, FirstName, LastName,
 	(
 		SELECT COUNT(CopyId)
@@ -885,10 +901,160 @@ FROM BritishWriters
 INSERT INTO BritishWriters(FirstName, LastName, Country)
 VALUES('Virginia', 'Woolf', 'U.K.')
 
+------====== STORED PROCEDURES ======------
 
+CREATE PROCEDURE GetWorkers
+		@Id BIGINT = NULL
+AS
+	IF @Id IS NULL
+	BEGIN
+		PRINT 'Id is NULL'
+
+		SELECT *
+		FROM Occupation 
+		
+	END
+    ELSE
+	BEGIN
+		PRINT @Id
+
+		SELECT *
+		FROM Occupation 
+		WHERE PositionId = @Id
+	END
+	
+GO
+
+CREATE PROCEDURE GetWorkers2
+		@Id BIGINT = NULL,
+		@PositionFilter NVARCHAR(50) = NULL
+AS
+	SELECT PositionId, Position
+	FROM Occupation
+	WHERE ((@Id IS NULL) OR (@Id = PositionId))
+	AND ((@PositionFilter IS NULL) OR (Position LIKE @PositionFilter))
+GO
+
+EXECUTE GetWorkers
+
+EXECUTE GetWorkers 5
+
+EXECUTE GetWorkers2
+
+DECLARE @NFilter NVARCHAR(50)
+DECLARE @Id BIGINT
+SET @NFilter = N'%in%'
+SET @Id = NULL
+EXECUTE GetWorkers2 @Id, @NFilter
+
+EXECUTE GetWorkers2 @PositionFilter = N'%o%'
+
+-- All writers, amount of times he has taken.
+CREATE PROCEDURE TakenWriters
+		@Id BIGINT = NULL
+AS
+	IF @Id IS NULL
+	BEGIN
+		PRINT 'Wrong identifier.'
+	END
+	ELSE
+	BEGIN
+
+		SELECT W.FirstName, W.LastName, W.MiddleName, COUNT(BO.Given) AS Taken
+		FROM Writers W
+			RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+			RIGHT JOIN Books B ON BW.BookId = B.BookId
+			RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+			RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+			RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
+			WHERE W.FirstName IS NOT NULL AND BO.ReaderId = @Id
+			GROUP BY W.FirstName, W.LastName, W.MiddleName
+	END
+GO
+
+
+CREATE PROCEDURE TakenWriters2
+		@Id BIGINT = NULL
+AS
+		SELECT W.FirstName, W.LastName, W.MiddleName, COUNT(BO.Given) AS Taken
+		FROM Writers W
+			RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+			RIGHT JOIN Books B ON BW.BookId = B.BookId
+			RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+			RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+			RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
+			WHERE (W.FirstName IS NOT NULL) 
+			AND ((@Id IS NULL) OR (BO.ReaderId = @Id))
+			GROUP BY W.FirstName, W.LastName, W.MiddleName
+GO
+
+EXECUTE TakenWriters @Id = 1
+
+EXECUTE TakenWriters2 @Id = 1
+
+CREATE PROCEDURE GetBookBetween
+		@Id     BIGINT = NULL,
+		@From  DATE = NULL,
+		@To DATE = NULL
+AS
+	IF @Id IS NULL
+	BEGIN
+		PRINT 'Wrong identifier.'
+	END
+	IF (@From IS NULL) OR (@To IS NULL)
+	BEGIN
+		PRINT 'Wrong Date.'
+	END
+	ELSE
+	BEGIN
+SELECT 
+	(
+		SELECT Title 
+		FROM Books B
+		LEFT JOIN BookCopy BC ON B.BookId = BC.BookId
+		WHERE BC.CopyId = BO.CopyId
+	) AS Book, Given, 
+	(	
+		SELECT FirstName		-- Ask a question about two sub queries.
+		FROM Staff S
+		WHERE BO.WhoGiven = S.WorkerId
+	) AS WorkerName,
+	(	
+		SELECT LastName
+		FROM Staff S
+		WHERE BO.WhoGiven = S.WorkerId
+	) AS LastName -- ORDER BY Date
+FROM BooksOperation BO
+WHERE (ReaderId = @Id) AND (Given BETWEEN @From AND @To)
+END
+GO
+
+GetBookBetween @ID = 5, @From = '2021-08-01', @To = '2021-12-01'
+
+-- Get readers certain writer.
+CREATE PROCEDURE GetReaders
+		@AuthorSurname NVARCHAR(50) = NULL
+AS
+IF @AuthorSurname IS NULL
+BEGIN
+	PRINT 'Wrong Author Surname.'
+END
+ELSE
+BEGIN
+SELECT R.ReaderId, R.FirstName, R.LastName, R.MiddleName, BO.Given
+FROM Writers W
+	RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+	RIGHT JOIN Books B ON BW.BookId = B.BookId
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
+	WHERE W.LastName = @AuthorSurname
+END
+GO
+
+EXECUTE GetReaders @AuthorSurname = 'Hardy'
 
 SELECT * FROM Writers
 SELECT * FROM BooksOperation
 SELECT * FROM Books
 SELECT * FROM Staff
-
