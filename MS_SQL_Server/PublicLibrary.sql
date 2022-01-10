@@ -688,7 +688,7 @@ ORDER BY R.FirstName
 
 -- Book title and who has been given for 1 quarter.
 DECLARE @quarter TINYINT = 4;
-DECLARE @start DATETIME = CAST(YEAR(GETDATE()) AS CHAR(4)) + 
+DECLARE @start DATETIME = CAST(YEAR(GETDATE()) - 1 AS CHAR(4)) + 
 '-' + CAST((@quarter - 1) * 3 + 1 AS CHAR(2)) + '-01'
 DECLARE @finish DATETIME = DATEADD(MONTH, 3, @start)
 
@@ -751,7 +751,7 @@ CREATE VIEW WorkersPrevYears
 AS
 	SELECT WorkerId, FirstName, LastName, Haired
 	FROM Staff
-	WHERE YEAR(Haired) = Year(GETDATE()) - 1 
+	WHERE YEAR(Haired) = Year(GETDATE()) - 2 
 WITH CHECK OPTION
 GO
 
@@ -1053,6 +1053,47 @@ END
 GO
 
 EXECUTE GetReaders @AuthorSurname = 'Hardy'
+
+-- Get book's title and writer's data.
+CREATE PROCEDURE GetTitleWriter
+		@Title NVARCHAR(50) = NULL 
+AS
+	IF @Title IS NULL
+	BEGIN
+		PRINT 'Wrong Title.'
+    END
+	ELSE
+	BEGIN
+	SELECT Title, W.FirstName, W.LastName
+	FROM Books B
+	LEFT JOIN BooksWriters BW ON B.BookId = BW.BookId
+	LEFT JOIN Writers W ON BW.AuthorId = W.WriterId
+	WHERE B.Title LIKE @Title
+	ORDER BY W.LastName
+	END
+GO
+
+EXECUTE GetTitleWriter @Title = 'The%'
+
+-- GetGivenBooksForQuarter
+CREATE PROCEDURE GetGivenBooksForQuarter
+		@Quarter TINYINT = NULL
+AS
+DECLARE @start DATETIME = CAST(YEAR(GETDATE()) - 1 AS CHAR(4)) + 
+'-' + CAST((@quarter - 1) * 3 + 1 AS CHAR(2)) + '-01'
+DECLARE @finish DATETIME = DATEADD(MONTH, 3, @start)
+
+SELECT Title, FirstName, LastName, Given
+FROM Staff S
+	LEFT JOIN BooksOperation BO ON BO.WhoGiven = S.WorkerId
+	LEFT JOIN BookCopy BC ON BC.CopyId = BO.CopyId
+	LEFT JOIN Books B ON B.BookId = BC.BookId
+WHERE BO.Given BETWEEN @start AND @finish
+GO
+
+EXECUTE GetGivenBooksForQuarter @Quarter = 3
+
+
 
 SELECT * FROM Writers
 SELECT * FROM BooksOperation
