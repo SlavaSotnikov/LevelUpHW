@@ -799,6 +799,10 @@ FROM Books
 GROUP BY Title
 HAVING COUNT(BookId) > 1
 
+SELECT A.BookId, A.Title, B.BookId ,B.Title 
+FROM Books A, Books B
+WHERE A.BookId != B.BookId AND A.Title = B.Title
+
 SELECT FirstName, LastName
 FROM Writers W
 RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
@@ -869,11 +873,25 @@ FROM Writers W
 	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
 	WHERE W.FirstName IS NOT NULL
 
-SELECT R.FirstName, R.LastName, WR.FirstName, WR.LastName
+CREATE VIEW ReadWriters
+AS
+SELECT R.FirstName AS ReaderName, R.LastName AS ReaderLastName, WR.FirstName 
+	AS WriterName, WR.LastName AS WriterLastName, COUNT(WR.FirstName) AS Amount
 FROM Readers R
-INNER JOIN WriterReader WR ON R.ReaderId = WR.ReaderId
-GROUP BY R.ReaderId
+	LEFT JOIN WriterReader WR ON R.ReaderId = WR.ReaderId
+	GROUP BY R.FirstName, R.LastName, WR.FirstName, WR.LastName
 
+-- A favorite writer.
+SELECT ReaderName, ReaderLastName, MAX(Amount) AS Amount
+FROM ReadWriters
+GROUP BY ReaderName, ReaderLastName
+ORDER BY Amount DESC
+
+ 
+
+SELECT FirstName, LastName
+FROM FavoriteWriters
+WHERE Popularity = (SELECT MAX(Popularity) FROM FavoriteWriters)
 
 SELECT R.ReaderId, FirstName, LastName,
 	(
@@ -951,9 +969,9 @@ EXECUTE GetWorkers2 @PositionFilter = N'%o%'
 
 -- All writers, amount of times he has taken.
 CREATE PROCEDURE TakenWriters
-		@Id BIGINT = NULL
+		@ReaderId BIGINT = NULL
 AS
-	IF @Id IS NULL
+	IF @ReaderId IS NULL
 	BEGIN
 		PRINT 'Wrong identifier.'
 	END
@@ -967,14 +985,14 @@ AS
 			RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
 			RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
 			RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
-			WHERE W.FirstName IS NOT NULL AND BO.ReaderId = @Id
+			WHERE W.FirstName IS NOT NULL AND BO.ReaderId = @ReaderId
 			GROUP BY W.FirstName, W.LastName, W.MiddleName
 	END
 GO
 
 
 CREATE PROCEDURE TakenWriters2
-		@Id BIGINT = NULL
+		@ReaderId BIGINT = NULL
 AS
 		SELECT W.FirstName, W.LastName, W.MiddleName, COUNT(BO.Given) AS Taken
 		FROM Writers W
@@ -984,13 +1002,13 @@ AS
 			RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
 			RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
 			WHERE (W.FirstName IS NOT NULL) 
-			AND ((@Id IS NULL) OR (BO.ReaderId = @Id))
+			AND ((@ReaderId IS NULL) OR (BO.ReaderId = @ReaderId))
 			GROUP BY W.FirstName, W.LastName, W.MiddleName
 GO
 
-EXECUTE TakenWriters @Id = 1
+EXECUTE TakenWriters @ReaderId = 5
 
-EXECUTE TakenWriters2 @Id = 1
+EXECUTE TakenWriters2 @ReaderId = 1
 
 CREATE PROCEDURE GetBookBetween
 		@Id     BIGINT = NULL,
@@ -1037,7 +1055,13 @@ CREATE PROCEDURE GetReaders
 AS
 IF @AuthorSurname IS NULL
 BEGIN
-	PRINT 'Wrong Author Surname.'
+	SELECT R.ReaderId, R.FirstName, R.LastName, R.MiddleName, BO.Given
+FROM Writers W
+	RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+	RIGHT JOIN Books B ON BW.BookId = B.BookId
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+	RIGHT JOIN Readers R ON BO.ReaderId = R.ReaderId
 END
 ELSE
 BEGIN
@@ -1064,12 +1088,12 @@ AS
     END
 	ELSE
 	BEGIN
-	SELECT Title, W.FirstName, W.LastName
-	FROM Books B
-	LEFT JOIN BooksWriters BW ON B.BookId = BW.BookId
-	LEFT JOIN Writers W ON BW.AuthorId = W.WriterId
-	WHERE B.Title LIKE @Title
-	ORDER BY W.LastName
+		SELECT Title, W.FirstName, W.LastName
+		FROM Books B
+			LEFT JOIN BooksWriters BW ON B.BookId = BW.BookId
+			LEFT JOIN Writers W ON BW.AuthorId = W.WriterId
+		WHERE B.Title LIKE @Title
+		ORDER BY W.LastName
 	END
 GO
 
@@ -1079,20 +1103,92 @@ EXECUTE GetTitleWriter @Title = 'The%'
 CREATE PROCEDURE GetGivenBooksForQuarter
 		@Quarter TINYINT = NULL
 AS
-DECLARE @start DATETIME = CAST(YEAR(GETDATE()) - 1 AS CHAR(4)) + 
-'-' + CAST((@quarter - 1) * 3 + 1 AS CHAR(2)) + '-01'
-DECLARE @finish DATETIME = DATEADD(MONTH, 3, @start)
-
-SELECT Title, FirstName, LastName, Given
-FROM Staff S
-	LEFT JOIN BooksOperation BO ON BO.WhoGiven = S.WorkerId
-	LEFT JOIN BookCopy BC ON BC.CopyId = BO.CopyId
-	LEFT JOIN Books B ON B.BookId = BC.BookId
-WHERE BO.Given BETWEEN @start AND @finish
+BEGIN
+	DECLARE @start DATETIME = CAST(YEAR(GETDATE()) - 1 AS CHAR(4)) + 
+	'-' + CAST((@quarter - 1) * 3 + 1 AS CHAR(2)) + '-01'
+	DECLARE @finish DATETIME = DATEADD(MONTH, 3, @start)
+	
+	SELECT Title, FirstName, LastName, Given
+	FROM Staff S
+		LEFT JOIN BooksOperation BO ON BO.WhoGiven = S.WorkerId
+		LEFT JOIN BookCopy BC ON BC.CopyId = BO.CopyId
+		LEFT JOIN Books B ON B.BookId = BC.BookId
+	WHERE BO.Given BETWEEN @start AND @finish
+END
 GO
 
 EXECUTE GetGivenBooksForQuarter @Quarter = 3
 
+SELECT * FROM WorkersPrevYears
+
+-- SET NOCOUNT ON/OFF.
+
+-- SELF JOIN
+SELECT A.BookId, A.Title, B.BookId ,B.Title 
+FROM Books A, Books B
+WHERE A.BookId != B.BookId AND A.Title = B.Title
+
+------====== Functions ======------
+
+-- Get title of a book copy.
+CREATE PROCEDURE GetBookTitle
+		@CopyId INT,
+		@Title NVARCHAR(50) OUT		
+AS
+BEGIN
+	SELECT @Title = Title
+	FROM Books B
+		RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	WHERE BC.CopyId = @CopyId
+END
+GO
+
+DECLARE @Title NVARCHAR(50)
+
+EXEC GetBookTitle 44, @Title OUT --@CopyId = 44 ??? 
+
+IF @Title IS NULL
+	PRINT 'NULL'
+ELSE
+	PRINT @Title
+
+-- Get Writer's Name, LastName by CopyId
+CREATE PROCEDURE GetWriterData
+		@CopyId INT,
+		@WriterName NVARCHAR(15) OUT,
+		@WriterLastName NVARCHAR(15) OUT
+AS
+BEGIN
+	SELECT @WriterName = FirstName, @WriterLastName = LastName
+	FROM Writers W
+		RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+		RIGHT JOIN Books B ON BW.BookId = B.BookId
+		RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	WHERE BC.CopyId = @CopyId
+END
+GO
+
+DECLARE @FirstName NVARCHAR(15)
+DECLARE @LastName NVARCHAR(15)
+
+EXEC GetWriterData 40, @FirstName OUT, @LastName OUT 
+
+IF (@FirstName IS NULL) AND (@LastName IS NULL)
+	PRINT 'NULL'
+ELSE
+	PRINT @FirstName
+	PRINT @LastName
+
+CREATE PROCEDURE AddBook
+		@Title            NVARCHAR(50),
+		@AuthorName       NVARCHAR(15),
+		@AuthorLastName   NVARCHAR(15),
+		@AuthorMiddleName NVARCHAR(15)
+AS
+BEGIN 
+	IF (@AuthorName IS NULL) OR (@AuthorLastName IS NULL)
+
+	ELSE
 
 
 SELECT * FROM Writers
