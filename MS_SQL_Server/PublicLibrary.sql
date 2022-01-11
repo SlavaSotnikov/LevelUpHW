@@ -1183,12 +1183,53 @@ CREATE PROCEDURE AddBook
 		@Title            NVARCHAR(50),
 		@AuthorName       NVARCHAR(15),
 		@AuthorLastName   NVARCHAR(15),
-		@AuthorMiddleName NVARCHAR(15)
+		@AuthorMiddleName NVARCHAR(15),
+		@Country          NVARCHAR(15),
+		@SelectedAuthorName NVARCHAR(15) OUT,
+		@SelectedAuthorLastName NVARCHAR(15) OUT,
+		@SelectedAuthorMiddleName NVARCHAR(15) OUT,
+		@WriterId INT OUT,
+		@BookId INT OUT
 AS
 BEGIN 
 	IF (@AuthorName IS NULL) OR (@AuthorLastName IS NULL)
-
+		PRINT 'Provide Name and Last Name.'
 	ELSE
+	BEGIN
+		INSERT INTO Books(Title)
+		VALUES(@Title)
+    END
+	SET @BookId = @@IDENTITY
+
+	SELECT @WriterId = WriterId, @SelectedAuthorName = FirstName, @SelectedAuthorLastName = LastName, @SelectedAuthorMiddleName = MiddleName
+	FROM Writers
+
+	IF (@AuthorName = @SelectedAuthorName) AND (@AuthorLastName = @SelectedAuthorLastName) AND (@AuthorMiddleName = @SelectedAuthorMiddleName)
+	BEGIN
+		INSERT INTO BooksWriters(BookId, AuthorId)
+		VALUES (@BookId, @WriterId)
+	END
+	ELSE
+	BEGIN
+		INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
+		VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
+
+		SET @WriterId = @@IDENTITY
+
+		INSERT INTO BooksWriters(BookId, AuthorId)
+		VALUES (@BookId, @WriterId)
+    END
+
+END
+GO
+
+DECLARE @SelectedAuthorName NVARCHAR(15)
+DECLARE @SelectedAuthorLastName NVARCHAR(15)
+DECLARE @SelectedAuthorMiddleName NVARCHAR(15)
+DECLARE @WriterId INT
+DECLARE @BookId INT
+
+EXECUTE AddBook 'The Hyperboloid of Engineer Garin', 'Alexey', 'Tolstoy', 'Nikolaevich', 'Russian Empire', @SelectedAuthorName OUT, @SelectedAuthorLastName OUT, @SelectedAuthorMiddleName OUT, @WriterId OUT, @BookId OUT
 
 
 SELECT * FROM Writers
