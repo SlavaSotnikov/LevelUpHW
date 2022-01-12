@@ -1179,60 +1179,101 @@ ELSE
 	PRINT @FirstName
 	PRINT @LastName
 
-CREATE PROCEDURE AddBook
-		@Title            NVARCHAR(50),
+CREATE PROCEDURE AddBook	
+		@Title			  NVARCHAR(50),
 		@AuthorName       NVARCHAR(15),
 		@AuthorLastName   NVARCHAR(15),
 		@AuthorMiddleName NVARCHAR(15),
 		@Country          NVARCHAR(15),
-		@SelectedAuthorName NVARCHAR(15) OUT,
-		@SelectedAuthorLastName NVARCHAR(15) OUT,
-		@SelectedAuthorMiddleName NVARCHAR(15) OUT,
-		@WriterId INT OUT,
-		@BookId INT OUT
+		@SelectedAuthorName NVARCHAR(15) = NULL,
+		@SelectedAuthorLastName NVARCHAR(15) = NULL,
+		@SelectedAuthorMiddleName NVARCHAR(15) = NULL,
+		@BookId BIGINT = NULL,
+		@WriterId BIGINT = NULL
 AS
-BEGIN 
-	IF (@AuthorName IS NULL) OR (@AuthorLastName IS NULL)
-		PRINT 'Provide Name and Last Name.'
+BEGIN 		
+		SELECT @WriterId = WriterId, @SelectedAuthorName = FirstName, @SelectedAuthorLastName = LastName, @SelectedAuthorMiddleName = MiddleName
+		FROM Writers
+		WHERE FirstName = @AuthorName AND LastName = @AuthorLastName AND MiddleName = @AuthorMiddleName
+
+	IF (@AuthorName = @SelectedAuthorName) AND (@AuthorLastName = @SelectedAuthorLastName) AND (@AuthorMiddleName = @SelectedAuthorMiddleName)
+	BEGIN
+		INSERT INTO Books(Title)
+		VALUES(@Title)
+		SET @BookId = @@IDENTITY 
+
+		INSERT INTO BooksWriters(BookId, AuthorId)
+		VALUES (@BookId, @WriterId)
+
+		INSERT INTO BookCopy(BookId, Condition)
+		VALUES (@BookId, 10)
+	END
 	ELSE
 	BEGIN
 		INSERT INTO Books(Title)
 		VALUES(@Title)
-    END
-	SET @BookId = @@IDENTITY
-
-	SELECT @WriterId = WriterId, @SelectedAuthorName = FirstName, @SelectedAuthorLastName = LastName, @SelectedAuthorMiddleName = MiddleName
-	FROM Writers
-
-	IF (@AuthorName = @SelectedAuthorName) AND (@AuthorLastName = @SelectedAuthorLastName) AND (@AuthorMiddleName = @SelectedAuthorMiddleName)
-	BEGIN
-		INSERT INTO BooksWriters(BookId, AuthorId)
-		VALUES (@BookId, @WriterId)
-	END
-	ELSE
-	BEGIN
+		SET @BookId = @@IDENTITY 
+		
 		INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
 		VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
-
 		SET @WriterId = @@IDENTITY
 
 		INSERT INTO BooksWriters(BookId, AuthorId)
 		VALUES (@BookId, @WriterId)
-    END
 
+		INSERT INTO BookCopy(BookId, Condition)
+		VALUES (@BookId, 10)
+	END
 END
 GO
 
-DECLARE @SelectedAuthorName NVARCHAR(15)
-DECLARE @SelectedAuthorLastName NVARCHAR(15)
-DECLARE @SelectedAuthorMiddleName NVARCHAR(15)
-DECLARE @WriterId INT
-DECLARE @BookId INT
-
-EXECUTE AddBook 'The Hyperboloid of Engineer Garin', 'Alexey', 'Tolstoy', 'Nikolaevich', 'Russian Empire', @SelectedAuthorName OUT, @SelectedAuthorLastName OUT, @SelectedAuthorMiddleName OUT, @WriterId OUT, @BookId OUT
 
 
-SELECT * FROM Writers
+EXECUTE AddBook 'Adventures of Huckleberry Finn', 'Mark', 'Twain', NULL,'USA'
+
+DELETE FROM Books WHERE BookId = 35
+
+DROP PROCEDURE GetAuthor	
+
+CREATE PROCEDURE GetAuthor	
+
+		@AuthorName       NVARCHAR(30),
+		@AuthorLastName   NVARCHAR(30),
+		--@AuthorMiddleName NVARCHAR(30)
+		@WriterId BIGINT OUT
+		--@SelectedAuthorName NVARCHAR(30) = NULL OUT,
+		--@SelectedAuthorLastName NVARCHAR(30) = NULL,
+		--@SelectedAuthorMiddleName NVARCHAR(30) = NULL
+		
+AS
+		IF EXISTS 
+		(
+			SELECT *
+			FROM Writers 
+			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName
+		)
+		BEGIN
+			SELECT @WriterId = WriterId
+			FROM Writers
+		END
+		ELSE
+		BEGIN
+			PRINT 'NOT Exist'
+		END
+		--SELECT @WriterId = WriterId, @SelectedAuthorName = FirstName, @SelectedAuthorLastName = LastName, @SelectedAuthorMiddleName = MiddleName
+		--FROM Writers
+		--WHERE FirstName = @AuthorName AND LastName = @AuthorLastName AND MiddleName = @AuthorMiddleName
+GO
+
+DECLARE @WriterId BIGINT
+
+EXEC GetAuthor 'Mark', 'Twain', @WriterId OUT
+
+PRINT @WriterId
+
 SELECT * FROM BooksOperation
-SELECT * FROM Books
 SELECT * FROM Staff
+SELECT * FROM BooksWriters
+SELECT * FROM Books
+SELECT * FROM Writers
+SELECT * FROM BookCopy
