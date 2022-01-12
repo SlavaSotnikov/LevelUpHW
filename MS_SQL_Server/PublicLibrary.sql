@@ -1179,24 +1179,40 @@ ELSE
 	PRINT @FirstName
 	PRINT @LastName
 
+DROP PROCEDURE AddBook
+
 CREATE PROCEDURE AddBook	
 		@Title			  NVARCHAR(50),
 		@AuthorName       NVARCHAR(15),
 		@AuthorLastName   NVARCHAR(15),
 		@AuthorMiddleName NVARCHAR(15),
-		@Country          NVARCHAR(15),
-		@SelectedAuthorName NVARCHAR(15) = NULL,
-		@SelectedAuthorLastName NVARCHAR(15) = NULL,
-		@SelectedAuthorMiddleName NVARCHAR(15) = NULL,
-		@BookId BIGINT = NULL,
-		@WriterId BIGINT = NULL
+		@Country          NVARCHAR(15)
+		
 AS
+		DECLARE @BookId BIGINT = NULL
+		DECLARE @WriterId BIGINT = NULL
 BEGIN 		
-		SELECT @WriterId = WriterId, @SelectedAuthorName = FirstName, @SelectedAuthorLastName = LastName, @SelectedAuthorMiddleName = MiddleName
-		FROM Writers
-		WHERE FirstName = @AuthorName AND LastName = @AuthorLastName AND MiddleName = @AuthorMiddleName
+		IF EXISTS 
+		(
+			SELECT FirstName, LastName
+			FROM Writers 
+			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName 
+				AND MiddleName IS NULL
+		)
+		BEGIN
+			SELECT @WriterId = WriterId
+			FROM Writers
+			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName
+		END
+		ELSE
+		BEGIN
+			SELECT @WriterId = WriterId
+			FROM Writers
+			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName
+				AND MiddleName = @AuthorMiddleName
+		END
 
-	IF (@AuthorName = @SelectedAuthorName) AND (@AuthorLastName = @SelectedAuthorLastName) AND (@AuthorMiddleName = @SelectedAuthorMiddleName)
+	IF @WriterId IS NOT NULL
 	BEGIN
 		INSERT INTO Books(Title)
 		VALUES(@Title)
@@ -1227,49 +1243,7 @@ BEGIN
 END
 GO
 
-
-
-EXECUTE AddBook 'Adventures of Huckleberry Finn', 'Mark', 'Twain', NULL,'USA'
-
-DELETE FROM Books WHERE BookId = 35
-
-DROP PROCEDURE GetAuthor	
-
-CREATE PROCEDURE GetAuthor	
-
-		@AuthorName       NVARCHAR(30),
-		@AuthorLastName   NVARCHAR(30),
-		--@AuthorMiddleName NVARCHAR(30)
-		@WriterId BIGINT OUT
-		--@SelectedAuthorName NVARCHAR(30) = NULL OUT,
-		--@SelectedAuthorLastName NVARCHAR(30) = NULL,
-		--@SelectedAuthorMiddleName NVARCHAR(30) = NULL
-		
-AS
-		IF EXISTS 
-		(
-			SELECT *
-			FROM Writers 
-			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName
-		)
-		BEGIN
-			SELECT @WriterId = WriterId
-			FROM Writers
-		END
-		ELSE
-		BEGIN
-			PRINT 'NOT Exist'
-		END
-		--SELECT @WriterId = WriterId, @SelectedAuthorName = FirstName, @SelectedAuthorLastName = LastName, @SelectedAuthorMiddleName = MiddleName
-		--FROM Writers
-		--WHERE FirstName = @AuthorName AND LastName = @AuthorLastName AND MiddleName = @AuthorMiddleName
-GO
-
-DECLARE @WriterId BIGINT
-
-EXEC GetAuthor 'Mark', 'Twain', @WriterId OUT
-
-PRINT @WriterId
+EXECUTE AddBook 'Jane Eyre', 'Charlotte', 'Brontë', NULL,'U.K.'
 
 SELECT * FROM BooksOperation
 SELECT * FROM Staff
