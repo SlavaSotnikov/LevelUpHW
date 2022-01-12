@@ -1152,6 +1152,8 @@ IF @Title IS NULL
 ELSE
 	PRINT @Title
 
+------====== CRUD ======------
+
 -- Get Writer's Name, LastName by CopyId
 CREATE PROCEDURE GetWriterData
 		@CopyId INT,
@@ -1181,6 +1183,7 @@ ELSE
 
 DROP PROCEDURE AddBook
 
+-- Add a new book.
 CREATE PROCEDURE AddBook	
 		@Title			  NVARCHAR(50),
 		@AuthorName       NVARCHAR(15),
@@ -1243,11 +1246,86 @@ BEGIN
 END
 GO
 
-EXECUTE AddBook 'Jane Eyre', 'Charlotte', 'Brontë', NULL,'U.K.'
+EXECUTE AddBook N'Jane Eyre', N'Charlotte', N'Brontë', NULL, N'U.K.'
+
+DROP PROCEDURE ModifyBookCopy
+
+-- UPDATE Book copy.
+CREATE PROCEDURE ModifyBookCopy
+		@CopyId BIGINT,
+		@Title NVARCHAR(50) = NULL,
+		@AuthorName NVARCHAR(15) = NULL,
+		@AuthorLastName NVARCHAR(15) = NULL,
+		@AuthorMiddleName NVARCHAR(15) = NULL
+AS
+	DECLARE @BookId BIGINT = NULL
+	DECLARE @WriterId BIGINT = NULL
+	BEGIN
+		SELECT @BookId = BookId
+		FROM BookCopy
+		WHERE CopyId = @CopyId
+	    
+		UPDATE Books
+		SET Title = ISNULL(@Title, Title)
+		WHERE BookId = @BookId
+	END
+
+	IF EXISTS 
+		(
+			SELECT FirstName, LastName
+			FROM Writers 
+			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName 
+				AND MiddleName IS NULL
+		)
+		BEGIN
+		SELECT @WriterId = WriterId
+		FROM Writers
+		WHERE FirstName = @AuthorName AND LastName = @AuthorLastName
+
+		UPDATE BooksWriters
+		SET AuthorId = @WriterId
+		WHERE BookId = @BookId
+		END
+	ELSE
+		BEGIN
+		SELECT @WriterId = WriterId
+		FROM Writers
+		WHERE FirstName = @AuthorName AND LastName = @AuthorLastName 
+			AND MiddleName = @AuthorMiddleName
+
+		UPDATE BooksWriters
+		SET AuthorId = ISNULL(@WriterId, AuthorId)
+		WHERE BookId = @BookId
+		END
+GO
+
+EXECUTE ModifyBookCopy 1, N'Macbeth' 
+
+DROP PROCEDURE DeleteBookCopy		
+
+CREATE PROCEDURE DeleteBookCopy
+		@CopyId BIGINT
+AS
+	DELETE 
+	SELECT COUNT(CopyId) AS Amount
+	FROM BookCopy
+	GROUP BY BookId
+	
+	DELETE FROM BookCopy
+	WHERE CopyId = @CopyId
+GO
+
+DeleteBookCopy 
 
 SELECT * FROM BooksOperation
 SELECT * FROM Staff
 SELECT * FROM BooksWriters
 SELECT * FROM Books
 SELECT * FROM Writers
-SELECT * FROM BookCopy
+SELECT * FROM BookCopy -- 38, 10
+
+SELECT Title, AuthorId
+FROM BooksWriters BW
+RIGHT JOIN Books B ON B.BookId = BW.BookId
+RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+WHERE BC.CopyId = 1
