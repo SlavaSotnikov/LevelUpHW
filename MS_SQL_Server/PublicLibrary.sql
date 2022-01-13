@@ -1303,29 +1303,74 @@ EXECUTE ModifyBookCopy 1, N'Macbeth'
 
 DROP PROCEDURE DeleteBookCopy		
 
+-- Delete Book's copy.
 CREATE PROCEDURE DeleteBookCopy
 		@CopyId BIGINT
 AS
-	DELETE 
-	SELECT COUNT(CopyId) AS Amount
+	DECLARE @Amount BIGINT
+	DECLARE @BookId BIGINT
+
+	SELECT @BookId = BookId 
+	FROM BookCopy 
+	WHERE CopyId = @CopyId
+
+	SELECT @Amount = COUNT(CopyId)
 	FROM BookCopy
+	WHERE BookId = @BookId
 	GROUP BY BookId
+	
+	IF (@Amount > 1)
+	BEGIN
+		DELETE FROM BookCopy
+		WHERE CopyId = @CopyId
+	END
+	ELSE
+	BEGIN
+		DELETE FROM BookCopy
+		WHERE CopyId = @CopyId
+
+		DELETE FROM Books
+		WHERE BookId = @BookId
+	END
+	
 	
 	DELETE FROM BookCopy
 	WHERE CopyId = @CopyId
 GO
 
-DeleteBookCopy 
+EXECUTE DeleteBookCopy 1
+
+-- Get book's Title by CopyId
+CREATE PROCEDURE GetTitleCondition
+		@CopyId BIGINT,
+		@Title NVARCHAR(50) OUT,
+		@Condition INT OUT
+AS		
+		SELECT @Title = Title, @Condition = Condition
+		FROM Books B
+		RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+		WHERE BC.CopyId = @CopyId
+GO
+
+DECLARE @BookTitle NVARCHAR(50)
+DECLARE @Condition INT
+
+EXECUTE GetTitleCondition 10, @BookTitle OUT, @Condition OUT
+
+PRINT @BookTitle
+PRINT @Condition
 
 SELECT * FROM BooksOperation
 SELECT * FROM Staff
 SELECT * FROM BooksWriters
 SELECT * FROM Books
 SELECT * FROM Writers
-SELECT * FROM BookCopy -- 38, 10
+SELECT * FROM BookCopy
 
 SELECT Title, AuthorId
 FROM BooksWriters BW
 RIGHT JOIN Books B ON B.BookId = BW.BookId
 RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
 WHERE BC.CopyId = 1
+
+SELECT @@SERVERNAME
