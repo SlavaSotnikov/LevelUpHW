@@ -1246,7 +1246,7 @@ BEGIN
 END
 GO
 
-EXECUTE AddBook N'Jane Eyre', N'Charlotte', N'Brontë', NULL, N'U.K.'
+EXECUTE AddBook null, N'Yevgeny', N'Petrov', NULL, N'Soviet Union'
 
 DROP PROCEDURE ModifyBookCopy
 
@@ -1301,14 +1301,15 @@ GO
 
 EXECUTE ModifyBookCopy 1, N'Macbeth' 
 
-DROP PROCEDURE DeleteBookCopy		
+DROP PROCEDURE DeleteBook		
 
--- Delete Book's copy.
-CREATE PROCEDURE DeleteBookCopy
+-- Delete BookCopy, Book, Writer.
+CREATE PROCEDURE DeleteBook
 		@CopyId BIGINT
 AS
 	DECLARE @Amount BIGINT
 	DECLARE @BookId BIGINT
+	DECLARE @WriterId BIGINT
 
 	SELECT @BookId = BookId 
 	FROM BookCopy 
@@ -1317,7 +1318,6 @@ AS
 	SELECT @Amount = COUNT(CopyId)
 	FROM BookCopy
 	WHERE BookId = @BookId
-	GROUP BY BookId
 	
 	IF (@Amount > 1)
 	BEGIN
@@ -1327,18 +1327,42 @@ AS
 	ELSE
 	BEGIN
 		DELETE FROM BookCopy
-		WHERE CopyId = @CopyId
-
-		DELETE FROM Books
-		WHERE BookId = @BookId
+		WHERE CopyId = @CopyId			
 	END
-	
-	
-	DELETE FROM BookCopy
-	WHERE CopyId = @CopyId
+	 		
+	SELECT @WriterId = AuthorId
+		FROM BooksWriters
+		WHERE BookId = @BookId
+
+	WHILE @WriterId IS NOT NULL
+	BEGIN		
+		SELECT @Amount = COUNT(BookId)
+		FROM BooksWriters
+		WHERE AuthorId = @WriterId
+
+		IF (@Amount = 1)
+		BEGIN
+			DELETE FROM BooksWriters
+			WHERE AuthorId = @WriterId
+
+			DELETE FROM Books
+		    WHERE BookId = @BookId
+
+			DELETE FROM Writers
+			WHERE WriterId = @WriterId
+			
+			SELECT @WriterId = AuthorId
+			FROM BooksWriters
+			WHERE BookId = @BookId
+		END
+		ELSE
+		BEGIN
+			BREAK
+		END		
+	END
 GO
 
-EXECUTE DeleteBookCopy 1
+EXECUTE DeleteBook 142
 
 -- Get book's Title by CopyId
 CREATE PROCEDURE GetTitleCondition
@@ -1355,7 +1379,7 @@ GO
 DECLARE @BookTitle NVARCHAR(50)
 DECLARE @Condition INT
 
-EXECUTE GetTitleCondition 10, @BookTitle OUT, @Condition OUT
+EXECUTE GetTitleCondition 143, @BookTitle OUT, @Condition OUT
 
 PRINT @BookTitle
 PRINT @Condition
@@ -1371,6 +1395,7 @@ SELECT Title, AuthorId
 FROM BooksWriters BW
 RIGHT JOIN Books B ON B.BookId = BW.BookId
 RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
-WHERE BC.CopyId = 1
+WHERE BC.CopyId = 143
 
 SELECT @@SERVERNAME
+
