@@ -175,14 +175,10 @@ DECLARE @BackupName VARCHAR(100) = 'Full Backup of PublicLibraryDB';
 SET @BackupName = @BackupName + CONVERT(VARCHAR(20), GETDATE());
 --PRINT @BackupName
 BACKUP DATABASE PublicLibrary
-TO DISK = 'D:\SQLBackups\PublicLibraryDB.bak'     
+TO DISK = 'D:\SQLBackups\PublicLibrary.bak'     
    WITH FORMAT,
       MEDIANAME = 'SQLServerBackups',
       NAME = @BackupName
-	 
-
-	  --CONVERT(VARCHAR, datetime [,style])
-	  --CONCAT(string_value1, string_value2 [, string_valueN ]);
 GO
 
 INSERT INTO Staff(FirstName, LastName, MiddleName, Haired, Faired)
@@ -377,23 +373,22 @@ INSERT INTO BookCopy(BookId, Condition)
 GO
 
 INSERT INTO BooksOperation(ReaderId, CopyId, Given, WhoGiven, Back)
-    VALUES--(1, 1, '2021-09-08', 1 , NULL),
-	      --(2, 2, '2021-10-11', 1,  NULL),
-	      --(6, 10, '2021-12-08', 2, NULL),
-	      --(6, 4, '2021-09-08', 3 ,'2021-10-03'),
-	      --(8, 9, '2021-09-03', 2,  NULL),
-	      --(8, 8, '2021-04-08', 2 ,'2021-05-08'),
-	      --(5, 3, '2021-10-08', 3,  NULL),
-		  --(6, 6, '2021-10-09', 4,  NULL),
-		  --(7, 5, '2021-10-10', 3,  NULL),
-		  --(8, 7, '2021-10-11', 3,  NULL),
-		  --(8, 12, '2021-10-11', 3,  NULL),
-		  --(8, 13, '2021-10-11', 3,  NULL),
-		  --(7, 20, '2021-12-12', 4, '2021-12-25'),
-		  --(5, 21, '2021-11-02', 2, '2021-12-20'),
-		  --(2, 47, '2021-09-02', 1, '2021-09-20'),
-		  --(2, 48, '2021-10-05', 1, '2021-11-04')
-		  (1, 17, '2021-10-05', 1, '2021-11-04'),
+    VALUES(1, 1, '2021-09-08', 1 , NULL),
+	      (2, 2, '2021-10-11', 1,  NULL),
+	      (6, 10, '2021-12-08', 2, NULL),
+	      (6, 4, '2021-09-08', 3 ,'2021-10-03'),
+	      (8, 9, '2021-09-03', 2,  NULL),
+	      (8, 8, '2021-04-08', 2 ,'2021-05-08'),
+	      (5, 3, '2021-10-08', 3,  NULL),
+		  (6, 6, '2021-10-09', 4,  NULL),
+		  (7, 5, '2021-10-10', 3,  NULL),
+		  (8, 7, '2021-10-11', 3,  NULL),
+		  (8, 12, '2021-10-11', 3,  NULL),
+		  (8, 13, '2021-10-11', 3,  NULL),
+		  (7, 20, '2021-12-12', 4, '2021-12-25'),
+		  (5, 21, '2021-11-02', 2, '2021-12-20'),
+		  (2, 47, '2021-09-02', 1, '2021-09-20'),
+		  (2, 48, '2021-10-05', 1, '2021-11-04'),
 		  (1, 17, '2021-10-05', 1, '2021-11-04')
 GO
 
@@ -1144,8 +1139,10 @@ END
 GO
 
 DECLARE @Title NVARCHAR(50)
-
-EXEC GetBookTitle 44, @Title OUT --@CopyId = 44 ??? 
+DECLARE @CopyId INT
+SET @Title = 'Test';
+SET @CopyId = 44;
+EXEC GetBookTitle @CopyId, @Title OUT --@CopyId = 44 ??? 
 
 IF @Title IS NULL
 	PRINT 'NULL'
@@ -1189,11 +1186,13 @@ CREATE PROCEDURE AddBook
 		@AuthorName       NVARCHAR(15),
 		@AuthorLastName   NVARCHAR(15),
 		@AuthorMiddleName NVARCHAR(15),
-		@Country          NVARCHAR(15)
+		@Country          NVARCHAR(15),
+		@Condition        TINYINT = 10
 		
 AS
 		DECLARE @BookId BIGINT = NULL
 		DECLARE @WriterId BIGINT = NULL
+		
 BEGIN 		
 		IF EXISTS 
 		(
@@ -1225,7 +1224,7 @@ BEGIN
 		VALUES (@BookId, @WriterId)
 
 		INSERT INTO BookCopy(BookId, Condition)
-		VALUES (@BookId, 10)
+		VALUES (@BookId, @Condition)
 	END
 	ELSE
 	BEGIN
@@ -1241,7 +1240,7 @@ BEGIN
 		VALUES (@BookId, @WriterId)
 
 		INSERT INTO BookCopy(BookId, Condition)
-		VALUES (@BookId, 10)
+		VALUES (@BookId, @Condition)
 	END
 END
 GO
@@ -1362,7 +1361,7 @@ AS
 	END
 GO
 
-EXECUTE DeleteBook 142
+EXECUTE DeleteBook 143
 
 -- Get book's Title by CopyId
 CREATE PROCEDURE GetTitleCondition
@@ -1381,7 +1380,7 @@ DECLARE @Condition INT
 
 EXECUTE GetTitleCondition 143, @BookTitle OUT, @Condition OUT
 
-PRINT @BookTitle
+PRINT @BookTitle                                  
 PRINT @Condition
 
 SELECT * FROM BooksOperation
@@ -1398,4 +1397,4 @@ RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
 WHERE BC.CopyId = 143
 
 SELECT @@SERVERNAME
-
+ 
