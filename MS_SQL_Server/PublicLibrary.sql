@@ -1298,7 +1298,8 @@ CREATE PROCEDURE ModifyBookCopy
 		@Title NVARCHAR(50) = NULL,
 		@AuthorName NVARCHAR(15) = NULL,
 		@AuthorLastName NVARCHAR(15) = NULL,
-		@AuthorMiddleName NVARCHAR(15) = NULL
+		@AuthorMiddleName NVARCHAR(15) = NULL,
+		@Country NVARCHAR(50) = NULL
 AS
 	DECLARE @BookId BIGINT = NULL
 	DECLARE @WriterId BIGINT = NULL
@@ -1322,10 +1323,9 @@ AS
 	END
 	ELSE
 		BEGIN
-		SELECT @WriterId = WriterId
-		FROM Writers
-		WHERE FirstName = @AuthorName AND LastName = @AuthorLastName 
-			AND MiddleName = @AuthorMiddleName
+		INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
+			VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
+			SET @WriterId = @@IDENTITY
 
 		UPDATE BooksWriters
 		SET AuthorId = ISNULL(@WriterId, AuthorId)

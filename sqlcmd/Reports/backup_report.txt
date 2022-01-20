@@ -1,4 +1,4 @@
 Changed database context to 'PublicLibrary'.
 Processed 432 pages for database 'PublicLibrary', file 'PublicLibrary' on file 1.
 Processed 1 pages for database 'PublicLibrary', file 'PublicLibrary_log' on file 1.
-BACKUP DATABASE successfully processed 433 pages in 0.182 seconds (18.552 MB/sec).
+BACKUP DATABASE successfully processed 433 pages in 0.089 seconds (37.937 MB/sec).

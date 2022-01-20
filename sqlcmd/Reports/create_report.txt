@@ -1,0 +1,2 @@
+Msg 1801, Level 16, State 3, Server SLAVAPC, Line 1
+Database 'PublicLibrary' already exists. Choose a different database name.
