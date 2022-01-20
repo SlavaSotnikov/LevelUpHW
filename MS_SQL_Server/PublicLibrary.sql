@@ -1180,27 +1180,13 @@ ELSE
 
 DROP PROCEDURE AddBook
 
--- Add a new book.
-CREATE PROCEDURE AddBook	
-		@Title			  NVARCHAR(50),
+CREATE PROCEDURE GetWriterID
 		@AuthorName       NVARCHAR(15),
 		@AuthorLastName   NVARCHAR(15),
-		@AuthorMiddleName NVARCHAR(15),
-		@Country          NVARCHAR(15),
-		@Condition        TINYINT = 10
-		
+		@AuthorMiddleName NVARCHAR(15) = NULL,
+		@WriterId BIGINT OUT
 AS
-		DECLARE @BookId BIGINT = NULL
-		DECLARE @WriterId BIGINT = NULL
-		
-BEGIN 		
-		IF EXISTS 
-		(
-			SELECT FirstName, LastName
-			FROM Writers 
-			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName 
-				AND MiddleName IS NULL
-		)
+		IF @AuthorMiddleName IS NULL
 		BEGIN
 			SELECT @WriterId = WriterId
 			FROM Writers
@@ -1213,6 +1199,25 @@ BEGIN
 			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName
 				AND MiddleName = @AuthorMiddleName
 		END
+GO
+
+-- Add a new book.
+CREATE PROCEDURE AddBook	
+		@Title			  NVARCHAR(50),
+		@AuthorName       NVARCHAR(15),
+		@AuthorLastName   NVARCHAR(15),
+		@AuthorMiddleName NVARCHAR(15) = NULL,
+		@Country          NVARCHAR(15),
+		@Condition        TINYINT = 10
+		
+AS
+		DECLARE @BookId BIGINT = NULL
+		DECLARE @WriterId BIGINT = NULL
+		
+BEGIN 		
+
+	EXECUTE GetWriterID @AuthorName, @AuthorLastName,
+		@AuthorMiddleName, @WriterId OUT
 
 	IF @WriterId IS NOT NULL
 	BEGIN
@@ -1228,24 +1233,62 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		INSERT INTO Books(Title)
-		VALUES(@Title)
-		SET @BookId = @@IDENTITY 
-		
-		INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
-		VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
-		SET @WriterId = @@IDENTITY
 
-		INSERT INTO BooksWriters(BookId, AuthorId)
-		VALUES (@BookId, @WriterId)
+		SELECT @BookId = BookId 
+		FROM Books 
+		WHERE Title = @Title
 
-		INSERT INTO BookCopy(BookId, Condition)
-		VALUES (@BookId, @Condition)
+		IF @BookId IS NULL
+		BEGIN
+			INSERT INTO Books(Title)
+			VALUES(@Title)
+			SET @BookId = @@IDENTITY 
+			
+			INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
+			VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
+			SET @WriterId = @@IDENTITY
+
+			INSERT INTO BooksWriters(BookId, AuthorId)
+			VALUES (@BookId, @WriterId)
+
+			INSERT INTO BookCopy(BookId, Condition)
+			VALUES (@BookId, @Condition)
+		END
+		ELSE		
+			EXECUTE AddExtraWriter @BookId, @AuthorName, @AuthorLastName, @AuthorMiddleName, @Country		
 	END
 END
 GO
 
-EXECUTE AddBook null, N'Yevgeny', N'Petrov', NULL, N'Soviet Union'
+DROP PROCEDURE AddExtraWriter
+
+CREATE PROCEDURE AddExtraWriter
+		@BookId			  BIGINT,
+		@AuthorName		  NVARCHAR(15),
+		@AuthorLastName	  NVARCHAR(15),
+		@AuthorMiddleName NVARCHAR(15) = NULL,
+		@Country          NVARCHAR(15)
+AS
+		DECLARE @WriterId BIGINT = NULL
+
+		INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
+			VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
+			SET @WriterId = @@IDENTITY	
+
+			INSERT INTO BooksWriters(BookId, AuthorId)
+			VALUES (@BookId, @WriterId)
+GO
+		
+SELECT * FROM BooksOperation
+SELECT * FROM Staff
+SELECT * FROM BooksWriters
+SELECT * FROM Books
+SELECT * FROM Writers
+SELECT * FROM BookCopy
+
+DELETE FROM Writers WHERE WriterId = 44
+
+EXECUTE AddBook 'The Little Golden Calf', N'Yevgeny', N' Petrov', NULL, N'Soviet Union'
 
 DROP PROCEDURE ModifyBookCopy
 
@@ -1259,32 +1302,24 @@ CREATE PROCEDURE ModifyBookCopy
 AS
 	DECLARE @BookId BIGINT = NULL
 	DECLARE @WriterId BIGINT = NULL
-	BEGIN
-		SELECT @BookId = BookId
-		FROM BookCopy
-		WHERE CopyId = @CopyId
-	    
-		UPDATE Books
-		SET Title = ISNULL(@Title, Title)
-		WHERE BookId = @BookId
-	END
+	
+	SELECT @BookId = BookId
+	FROM BookCopy
+	WHERE CopyId = @CopyId
+	   
+	UPDATE Books
+	SET Title = ISNULL(@Title, Title)
+	WHERE BookId = @BookId
 
-	IF EXISTS 
-		(
-			SELECT FirstName, LastName
-			FROM Writers 
-			WHERE FirstName = @AuthorName AND LastName = @AuthorLastName 
-				AND MiddleName IS NULL
-		)
-		BEGIN
-		SELECT @WriterId = WriterId
-		FROM Writers
-		WHERE FirstName = @AuthorName AND LastName = @AuthorLastName
+	EXECUTE GetWriterID @AuthorName, @AuthorLastName,
+		@AuthorMiddleName, @WriterId OUT
 
+	IF @WriterId IS NOT NULL 
+	BEGIN	
 		UPDATE BooksWriters
 		SET AuthorId = @WriterId
 		WHERE BookId = @BookId
-		END
+	END
 	ELSE
 		BEGIN
 		SELECT @WriterId = WriterId
@@ -1394,7 +1429,7 @@ SELECT Title, AuthorId
 FROM BooksWriters BW
 RIGHT JOIN Books B ON B.BookId = BW.BookId
 RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
-WHERE BC.CopyId = 143
+WHERE BC.CopyId = 150
 
 SELECT @@SERVERNAME
  
