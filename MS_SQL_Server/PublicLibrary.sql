@@ -1201,6 +1201,8 @@ AS
 		END
 GO
 
+DROP PROCEDURE AddBook
+
 -- Add a new book.
 CREATE PROCEDURE AddBook	
 		@Title			  NVARCHAR(50),
@@ -1233,14 +1235,7 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-
-		SELECT @BookId = BookId 
-		FROM Books 
-		WHERE Title = @Title
-
-		IF @BookId IS NULL
-		BEGIN
-			INSERT INTO Books(Title)
+		INSERT INTO Books(Title)
 			VALUES(@Title)
 			SET @BookId = @@IDENTITY 
 			
@@ -1252,10 +1247,7 @@ BEGIN
 			VALUES (@BookId, @WriterId)
 
 			INSERT INTO BookCopy(BookId, Condition)
-			VALUES (@BookId, @Condition)
-		END
-		ELSE		
-			EXECUTE AddExtraWriter @BookId, @AuthorName, @AuthorLastName, @AuthorMiddleName, @Country		
+			VALUES (@BookId, @Condition)			
 	END
 END
 GO
@@ -1263,13 +1255,18 @@ GO
 DROP PROCEDURE AddExtraWriter
 
 CREATE PROCEDURE AddExtraWriter
-		@BookId			  BIGINT,
+		@Title			  NVARCHAR(50),
 		@AuthorName		  NVARCHAR(15),
 		@AuthorLastName	  NVARCHAR(15),
 		@AuthorMiddleName NVARCHAR(15) = NULL,
 		@Country          NVARCHAR(15)
 AS
 		DECLARE @WriterId BIGINT = NULL
+		DECLARE @BookId BIGINT = NULL
+
+		SELECT @BookId = BookId
+		FROM Books
+		WHERE Title = @Title
 
 		INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
 			VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
@@ -1288,7 +1285,9 @@ SELECT * FROM BookCopy
 
 DELETE FROM Writers WHERE WriterId = 44
 
-EXECUTE AddBook 'The Little Golden Calf', N'Yevgeny', N' Petrov', NULL, N'Soviet Union'
+EXECUTE AddBook 'The Little Golden Calf', N'Ilya', N'Ilf', NULL, N'Soviet Union'
+
+EXECUTE AddExtraWriter 'The Little Golden Calf', N'Yevgeny', N'Petrov', NULL, N'Soviet Union'
 
 DROP PROCEDURE ModifyBookCopy
 
@@ -1413,7 +1412,7 @@ GO
 DECLARE @BookTitle NVARCHAR(50)
 DECLARE @Condition INT
 
-EXECUTE GetTitleCondition 143, @BookTitle OUT, @Condition OUT
+EXECUTE GetTitleCondition 145, @BookTitle OUT, @Condition OUT
 
 PRINT @BookTitle                                  
 PRINT @Condition
@@ -1429,7 +1428,7 @@ SELECT Title, AuthorId
 FROM BooksWriters BW
 RIGHT JOIN Books B ON B.BookId = BW.BookId
 RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
-WHERE BC.CopyId = 150
+WHERE BC.CopyId = 145
 
 SELECT @@SERVERNAME
  
