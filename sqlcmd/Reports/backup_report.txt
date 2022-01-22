@@ -1,4 +1,5 @@
 Changed database context to 'PublicLibrary'.
-Processed 432 pages for database 'PublicLibrary', file 'PublicLibrary' on file 1.
-Processed 1 pages for database 'PublicLibrary', file 'PublicLibrary_log' on file 1.
-BACKUP DATABASE successfully processed 433 pages in 0.089 seconds (37.937 MB/sec).
+Msg 3201, Level 16, State 1, Server SLAVAPC, Line 5
+Cannot open backup device 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\Backups\PublicLibrary.bak'. Operating system error 3(The system cannot find the path specified.).
+Msg 3013, Level 16, State 1, Server SLAVAPC, Line 5
+BACKUP DATABASE is terminating abnormally.

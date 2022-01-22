@@ -173,7 +173,6 @@ GO
 
 DECLARE @BackupName VARCHAR(100) = 'Full Backup of PublicLibraryDB';
 SET @BackupName = @BackupName + CONVERT(VARCHAR(20), GETDATE());
---PRINT @BackupName
 BACKUP DATABASE PublicLibrary
 TO DISK = 'D:\SQLBackups\PublicLibrary.bak'     
    WITH FORMAT,
@@ -1178,7 +1177,7 @@ ELSE
 	PRINT @FirstName
 	PRINT @LastName
 
-DROP PROCEDURE AddBook
+DROP PROCEDURE GetWriterID
 
 CREATE PROCEDURE GetWriterID
 		@AuthorName       NVARCHAR(15),
@@ -1204,17 +1203,17 @@ GO
 DROP PROCEDURE AddBook
 
 -- Add a new book.
-CREATE PROCEDURE AddBook	
+CREATE PROCEDURE AddBook	 -- OUT BookId
 		@Title			  NVARCHAR(50),
 		@AuthorName       NVARCHAR(15),
 		@AuthorLastName   NVARCHAR(15),
 		@AuthorMiddleName NVARCHAR(15) = NULL,
-		@Country          NVARCHAR(15),
-		@Condition        TINYINT = 10
+		@Country          NVARCHAR(15),		
+		@BookId           BIGINT OUT		
 		
 AS
-		DECLARE @BookId BIGINT = NULL
-		DECLARE @WriterId BIGINT = NULL
+		DECLARE @WriterId  BIGINT = NULL
+		DECLARE @Condition TINYINT = 10
 		
 BEGIN 		
 
@@ -1223,6 +1222,32 @@ BEGIN
 
 	IF @WriterId IS NOT NULL
 	BEGIN
+			EXECUTE AddIntoThreeTables @Title, @AuthorName, @AuthorLastName, @AuthorMiddleName,
+			@WriterId, @BookId OUT				
+	END
+	ELSE
+	BEGIN 			
+			INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
+			VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
+			SET @WriterId = @@IDENTITY
+
+			EXECUTE AddIntoThreeTables @Title, @AuthorName, @AuthorLastName, @AuthorMiddleName,
+			@WriterId, @BookId OUT							
+	END
+END
+GO
+DROP PROCEDURE AddIntoThreeTables
+
+CREATE PROCEDURE AddIntoThreeTables
+		@Title			  NVARCHAR(50),
+		@AuthorName       NVARCHAR(15),
+		@AuthorLastName   NVARCHAR(15),
+		@AuthorMiddleName NVARCHAR(15) = NULL,		
+		@WriterId		  BIGINT,
+		@BookId			  BIGINT OUT
+AS
+		DECLARE @Condition  TINYINT = 10
+
 		INSERT INTO Books(Title)
 		VALUES(@Title)
 		SET @BookId = @@IDENTITY 
@@ -1232,41 +1257,19 @@ BEGIN
 
 		INSERT INTO BookCopy(BookId, Condition)
 		VALUES (@BookId, @Condition)
-	END
-	ELSE
-	BEGIN
-		INSERT INTO Books(Title)
-			VALUES(@Title)
-			SET @BookId = @@IDENTITY 
-			
-			INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
-			VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
-			SET @WriterId = @@IDENTITY
-
-			INSERT INTO BooksWriters(BookId, AuthorId)
-			VALUES (@BookId, @WriterId)
-
-			INSERT INTO BookCopy(BookId, Condition)
-			VALUES (@BookId, @Condition)			
-	END
-END
 GO
+
 
 DROP PROCEDURE AddExtraWriter
 
 CREATE PROCEDURE AddExtraWriter
-		@Title			  NVARCHAR(50),
+		@BookId			  BIGINT,
 		@AuthorName		  NVARCHAR(15),
 		@AuthorLastName	  NVARCHAR(15),
 		@AuthorMiddleName NVARCHAR(15) = NULL,
 		@Country          NVARCHAR(15)
 AS
 		DECLARE @WriterId BIGINT = NULL
-		DECLARE @BookId BIGINT = NULL
-
-		SELECT @BookId = BookId
-		FROM Books
-		WHERE Title = @Title
 
 		INSERT INTO Writers(FirstName, LastName, MiddleName, Country)
 			VALUES (@AuthorName, @AuthorLastName, @AuthorMiddleName, @Country)
@@ -1283,11 +1286,11 @@ SELECT * FROM Books
 SELECT * FROM Writers
 SELECT * FROM BookCopy
 
-DELETE FROM Writers WHERE WriterId = 44
+DELETE FROM Books WHERE BookId = 25
 
-EXECUTE AddBook 'The Little Golden Calf', N'Ilya', N'Ilf', NULL, N'Soviet Union'
-
-EXECUTE AddExtraWriter 'The Little Golden Calf', N'Yevgeny', N'Petrov', NULL, N'Soviet Union'
+DECLARE @BookID BIGINT
+EXECUTE AddBook 'The Little Golden Calf', N'Ilya', N'Ilf', NULL, N'Soviet Union', @BookID OUT
+EXECUTE AddExtraWriter @BookID, N'Yevgeny', N'Petrov', NULL, N'Soviet Union'
 
 DROP PROCEDURE ModifyBookCopy
 
@@ -1428,7 +1431,106 @@ SELECT Title, AuthorId
 FROM BooksWriters BW
 RIGHT JOIN Books B ON B.BookId = BW.BookId
 RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
-WHERE BC.CopyId = 145
+WHERE BC.CopyId = 72
 
 SELECT @@SERVERNAME
- 
+
+------====== CURSOR AND TEMPORARY TABLES ======------
+
+DROP TABLE #TestWriters
+GO
+
+CREATE TABLE #TestWriters
+(
+	FirstName NVARCHAR(10),
+	LastName NVARCHAR(10)
+)
+GO
+
+SET NOCOUNT ON;
+DECLARE CertainWriters CURSOR
+FOR SELECT WriterId, FirstName, LastName
+	FROM Writers
+	WHERE LastName LIKE '%sky%' OR
+		  LastName LIKE '%ov%'
+
+DECLARE @WriterId  BIGINT
+DECLARE @FirstName NVARCHAR(15)
+DECLARE @LastName  NVARCHAR(15)
+DECLARE @message  NVARCHAR(50)
+DECLARE @RowCount  INT
+SET @RowCount = 0
+
+OPEN CertainWriters;
+
+FETCH NEXT FROM CertainWriters 
+INTO @WriterId, @FirstName, @LastName
+
+WHILE @@FETCH_STATUS = 0
+BEGIN	
+	SET @message = 'Id ' + CAST(@WriterId AS NVARCHAR(10))
+		+ N' - ' + TRIM(@FirstName) + ' ' + TRIM(@LastName)
+	PRINT @message
+
+	SET @RowCount = @RowCount + 1
+
+	INSERT INTO #TestWriters(FirstName, LastName)
+	VALUES (@FirstName, @LastName)
+	
+	FETCH NEXT FROM CertainWriters 
+	INTO @WriterId, @FirstName, @LastName
+END
+
+SET @message = 'Amount of writers: ' + CAST(@RowCount AS NVARCHAR(4))
+	PRINT @message
+
+CLOSE CertainWriters;
+DEALLOCATE CertainWriters;
+
+SELECT * FROM #TestWriters
+ORDER BY FirstName
+
+-------------------------
+
+SET NOCOUNT ON;
+DECLARE AllBooks CURSOR
+FOR SELECT B.BookId, Title
+	FROM Books B
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+
+
+DECLARE @WriterId  BIGINT
+DECLARE @FirstName NVARCHAR(15)
+DECLARE @LastName  NVARCHAR(15)
+DECLARE @message  NVARCHAR(50)
+DECLARE @RowCount  INT
+SET @RowCount = 0
+
+OPEN CertainWriters;
+
+FETCH NEXT FROM CertainWriters 
+INTO @WriterId, @FirstName, @LastName
+
+WHILE @@FETCH_STATUS = 0
+BEGIN	
+	SET @message = 'Id ' + CAST(@WriterId AS NVARCHAR(10))
+		+ N' - ' + TRIM(@FirstName) + ' ' + TRIM(@LastName)
+	PRINT @message
+
+	SET @RowCount = @RowCount + 1
+
+	INSERT INTO #TestWriters(FirstName, LastName)
+	VALUES (@FirstName, @LastName)
+	
+	FETCH NEXT FROM CertainWriters 
+	INTO @WriterId, @FirstName, @LastName
+END
+
+SET @message = 'Amount of writers: ' + CAST(@RowCount AS NVARCHAR(4))
+	PRINT @message
+
+CLOSE CertainWriters;
+DEALLOCATE CertainWriters;
+
+
