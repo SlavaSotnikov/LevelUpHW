@@ -1533,4 +1533,79 @@ SET @message = 'Amount of writers: ' + CAST(@RowCount AS NVARCHAR(4))
 CLOSE CertainWriters;
 DEALLOCATE CertainWriters;
 
+SELECT * FROM BooksOperation
+SELECT * FROM BookCopy
 
+DROP PROCEDURE AmountOfBooksPerYear
+
+CREATE PROCEDURE AmountOfBooksPerYear
+		@BookId BIGINT,
+		@Year INT
+AS
+
+DECLARE @CurrentMonth TINYINT
+SET @CurrentMonth = 1
+
+DECLARE @LastMonth TINYINT
+SET @LastMonth = 12
+
+--DROP TABLE #ResultTable
+CREATE TABLE #ResultTable
+(
+	Title NVARCHAR(50) NULL,
+	Jan INT NULL,
+	Feb INT NULL,
+	Mar INT NULL,
+	Apr INT NULL,
+	May INT NULL,
+	Jun INT NULL,
+	Jul INT NULL,
+	Aug INT NULL,
+	Sep INT NULL,
+	Oct INT NULL,
+	Nov INT NULL,
+	Dec INT NULL
+)
+
+INSERT INTO #ResultTable(Title)
+VALUES((		
+		SELECT Title 
+		FROM Books 
+		WHERE BookId = @BookId
+	  ))
+
+DECLARE @RowCount INT
+
+WHILE @CurrentMonth <= @LastMonth
+BEGIN
+	SET @RowCount = 0
+
+	SET NOCOUNT ON;
+DECLARE GivenCopies CURSOR
+FOR SELECT B.BookId
+	FROM Books B
+	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+	WHERE B.BookId = @BookId AND YEAR(Given) = @Year AND MONTH(Given) = @CurrentMonth
+
+	OPEN GivenCopies;
+
+	FETCH NEXT FROM GivenCopies 
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SET @RowCount = @RowCount + 1
+			
+		FETCH NEXT FROM GivenCopies 
+	END
+
+	-- INSERT INTO Temporary Table
+
+	SET @CurrentMonth = @CurrentMonth + 1
+
+	CLOSE GivenCopies;
+	DEALLOCATE GivenCopies;
+END
+
+SELECT * FROM #ResultTable
+GO
