@@ -1549,22 +1549,21 @@ SET @CurrentMonth = 1
 DECLARE @LastMonth TINYINT
 SET @LastMonth = 12
 
---DROP TABLE #ResultTable
 CREATE TABLE #ResultTable
 (
-	Title NVARCHAR(50) NULL,
-	Jan INT NULL,
-	Feb INT NULL,
-	Mar INT NULL,
-	Apr INT NULL,
-	May INT NULL,
-	Jun INT NULL,
-	Jul INT NULL,
-	Aug INT NULL,
-	Sep INT NULL,
-	Oct INT NULL,
-	Nov INT NULL,
-	Dec INT NULL
+	Title     NVARCHAR(50) NULL,
+	January   INT NULL,
+	February  INT NULL,
+	March     INT NULL,
+	April     INT NULL,
+	May		  INT NULL,
+	June	  INT NULL,
+	July	  INT NULL,
+	August    INT NULL,
+	September INT NULL,
+	October   INT NULL,
+	November  INT NULL,
+	December  INT NULL
 )
 
 INSERT INTO #ResultTable(Title)
@@ -1599,7 +1598,14 @@ FOR SELECT B.BookId
 		FETCH NEXT FROM GivenCopies 
 	END
 
-	-- INSERT INTO Temporary Table
+	DECLARE @Month NVARCHAR(10)
+    SET @Month = DATENAME(MONTH, DATEADD(MONTH, @CurrentMonth - 1, CONCAT('01-01-', @Year)));
+
+	DECLARE @DynamicSQL NVARCHAR(100)
+
+	SET @DynamicSQL = CONCAT('UPDATE #ResultTable SET ['+ @Month +'] =', @RowCount)
+
+	EXEC(@DynamicSQL)
 
 	SET @CurrentMonth = @CurrentMonth + 1
 
@@ -1609,3 +1615,6 @@ END
 
 SELECT * FROM #ResultTable
 GO
+
+EXECUTE AmountOfBooksPerYear 1, 2021
+

@@ -1,3 +1,0 @@
-Processed 544 pages for database 'PublicLibrary', file 'PublicLibrary' on file 1.
-Processed 1 pages for database 'PublicLibrary', file 'PublicLibrary_log' on file 1.
-RESTORE DATABASE successfully processed 545 pages in 0.014 seconds (303.676 MB/sec).
