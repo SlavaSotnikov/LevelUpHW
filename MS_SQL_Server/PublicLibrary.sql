@@ -1574,10 +1574,12 @@ VALUES((
 	  ))
 
 DECLARE @RowCount INT
+DECLARE @Id INT
 
 WHILE @CurrentMonth <= @LastMonth
 BEGIN
 	SET @RowCount = 0
+	SET @Id = 0
 
 	SET NOCOUNT ON;
 DECLARE GivenCopies CURSOR
@@ -1589,20 +1591,19 @@ FOR SELECT B.BookId
 
 	OPEN GivenCopies;
 
-	FETCH NEXT FROM GivenCopies 
+	FETCH NEXT FROM GivenCopies INTO @Id
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 		SET @RowCount = @RowCount + 1
 			
-		FETCH NEXT FROM GivenCopies 
+		FETCH NEXT FROM GivenCopies INTO @Id
 	END
 
 	DECLARE @Month NVARCHAR(10)
     SET @Month = DATENAME(MONTH, DATEADD(MONTH, @CurrentMonth - 1, CONCAT('01-01-', @Year)));
 
 	DECLARE @DynamicSQL NVARCHAR(100)
-
 	SET @DynamicSQL = CONCAT('UPDATE #ResultTable SET ['+ @Month +'] =', @RowCount)
 
 	EXEC(@DynamicSQL)
