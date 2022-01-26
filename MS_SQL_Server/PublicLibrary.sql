@@ -1279,12 +1279,12 @@ AS
 			VALUES (@BookId, @WriterId)
 GO
 		
-SELECT * FROM BooksOperation
 SELECT * FROM Staff
 SELECT * FROM BooksWriters
 SELECT * FROM Books
 SELECT * FROM Writers
 SELECT * FROM BookCopy
+SELECT * FROM BooksOperation
 
 DELETE FROM Books WHERE BookId = 25
 
@@ -1539,9 +1539,14 @@ SELECT * FROM BookCopy
 DROP PROCEDURE AnnualReport
 
 CREATE PROCEDURE AnnualReport
-		@BookId BIGINT,
 		@Year INT
 AS
+
+DECLARE @RowCount INT
+DECLARE @Id INT
+
+DECLARE @BookId BIGINT
+DECLARE @Title NVARCHAR(50)
 
 DECLARE @CurrentMonth TINYINT
 SET @CurrentMonth = 1
@@ -1549,8 +1554,11 @@ SET @CurrentMonth = 1
 DECLARE @LastMonth TINYINT
 SET @LastMonth = 12
 
+DECLARE @DynamicSQL NVARCHAR(200) = NULL
+
 CREATE TABLE #ResultTable
 (
+	BookId	  BIGINT NULL,
 	Title     NVARCHAR(50) NULL,
 	January   INT NULL,
 	February  INT NULL,
@@ -1566,56 +1574,66 @@ CREATE TABLE #ResultTable
 	December  INT NULL
 )
 
-INSERT INTO #ResultTable(Title)
-VALUES((		
-		SELECT Title 
-		FROM Books 
-		WHERE BookId = @BookId
-	  ))
+DECLARE GetBooks CURSOR
+FOR SELECT BookId, Title 
+	FROM Books
 
-DECLARE @RowCount INT
-DECLARE @Id INT
+OPEN GetBooks; 
 
-WHILE @CurrentMonth <= @LastMonth
+	FETCH NEXT FROM GetBooks INTO @BookId, @Title
+
+WHILE @@FETCH_STATUS = 0
 BEGIN
-	SET @RowCount = 0
-	SET @Id = 0
-
-	SET NOCOUNT ON;
-DECLARE GivenCopies CURSOR
-FOR SELECT B.BookId
-	FROM Books B
-	RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
-	RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
-	WHERE B.BookId = @BookId AND YEAR(Given) = @Year AND MONTH(Given) = @CurrentMonth
-
-	OPEN GivenCopies;
-
-	FETCH NEXT FROM GivenCopies INTO @Id
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		SET @RowCount = @RowCount + 1
-			
-		FETCH NEXT FROM GivenCopies INTO @Id
-	END
-
-	DECLARE @Month NVARCHAR(10)
-    SET @Month = DATENAME(MONTH, DATEADD(MONTH, @CurrentMonth - 1, CONCAT('01-01-', @Year)));
-
-	DECLARE @DynamicSQL NVARCHAR(100)
-	SET @DynamicSQL = CONCAT('UPDATE #ResultTable SET ['+ @Month +'] =', @RowCount)
-
+	SET @DynamicSQL = CONCAT('INSERT INTO #ResultTable(BookId) VALUES(', @BookId, ')')
 	EXEC(@DynamicSQL)
 
-	SET @CurrentMonth = @CurrentMonth + 1
+	SET @DynamicSQL = CONCAT('UPDATE #ResultTable SET Title = @Title WHERE BookId = ', @BookId)
+	EXEC sp_executesql @DynamicSQL, N'@Title NVARCHAR(50)', @Title = @Title
 
-	CLOSE GivenCopies;
-	DEALLOCATE GivenCopies;
+	WHILE @CurrentMonth <= @LastMonth
+	BEGIN
+		SET @RowCount = 0
+		SET @Id = 0
+	
+		SET NOCOUNT ON;
+	DECLARE GivenCopies CURSOR
+	FOR SELECT B.BookId
+		FROM Books B
+		RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
+		RIGHT JOIN BooksOperation BO ON BC.CopyId = BO.CopyId
+		WHERE B.BookId = @BookId AND YEAR(Given) = @Year AND MONTH(Given) = @CurrentMonth
+	
+		OPEN GivenCopies;
+	
+		FETCH NEXT FROM GivenCopies INTO @Id
+	
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			SET @RowCount = @RowCount + 1
+				
+			FETCH NEXT FROM GivenCopies INTO @Id
+		END
+	
+		DECLARE @Month NVARCHAR(10)
+	    SET @Month = DATENAME(MONTH, DATEADD(MONTH, @CurrentMonth - 1, CONCAT('01-01-', @Year)));
+	
+		SET @DynamicSQL = CONCAT('UPDATE #ResultTable SET ['+ @Month +'] =', @RowCount, 'WHERE BookId =', @BookId)
+		EXEC(@DynamicSQL)
+	
+		SET @CurrentMonth = @CurrentMonth + 1
+	
+		CLOSE GivenCopies;
+		DEALLOCATE GivenCopies;
+	END
+
+	SET @CurrentMonth = 1
+	FETCH NEXT FROM GetBooks INTO @BookId, @Title
 END
+CLOSE GetBooks;
+DEALLOCATE GetBooks;
 
 SELECT * FROM #ResultTable
 GO
 
-EXECUTE AnnualReport 1, 2021
+EXECUTE AnnualReport 2021
 
