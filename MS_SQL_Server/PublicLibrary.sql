@@ -1536,9 +1536,9 @@ DEALLOCATE CertainWriters;
 SELECT * FROM BooksOperation
 SELECT * FROM BookCopy
 
-DROP PROCEDURE AmountOfBooksPerYear
+DROP PROCEDURE AnnualReport
 
-CREATE PROCEDURE AmountOfBooksPerYear
+CREATE PROCEDURE AnnualReport
 		@BookId BIGINT,
 		@Year INT
 AS
@@ -1617,5 +1617,5 @@ END
 SELECT * FROM #ResultTable
 GO
 
-EXECUTE AmountOfBooksPerYear 1, 2021
+EXECUTE AnnualReport 1, 2021
 
