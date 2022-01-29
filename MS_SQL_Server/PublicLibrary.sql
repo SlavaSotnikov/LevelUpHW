@@ -1169,7 +1169,7 @@ GO
 DECLARE @FirstName NVARCHAR(15)
 DECLARE @LastName NVARCHAR(15)
 
-EXEC GetWriterData 40, @FirstName OUT, @LastName OUT 
+EXEC GetWriterData 44, @FirstName OUT, @LastName OUT 
 
 IF (@FirstName IS NULL) AND (@LastName IS NULL)
 	PRINT 'NULL'
@@ -1584,11 +1584,11 @@ OPEN GetBooks;
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-	SET @DynamicSQL = CONCAT('INSERT INTO #ResultTable(BookId) VALUES(', @BookId, ')')
-	EXEC(@DynamicSQL)
+	INSERT INTO #ResultTable(BookId) 
+		VALUES(@BookId)
 
-	SET @DynamicSQL = CONCAT('UPDATE #ResultTable SET Title = @Title WHERE BookId = ', @BookId)
-	EXEC sp_executesql @DynamicSQL, N'@Title NVARCHAR(50)', @Title = @Title
+	UPDATE #ResultTable 
+	SET Title = @Title WHERE BookId = @BookId
 
 	WHILE @CurrentMonth <= @LastMonth
 	BEGIN
@@ -1636,4 +1636,5 @@ SELECT * FROM #ResultTable
 GO
 
 EXECUTE AnnualReport 2021
+
 
