@@ -11,7 +11,7 @@ namespace DataBaseConnection
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var connStr = new SqlConnectionStringBuilder
             {
@@ -40,45 +40,40 @@ namespace DataBaseConnection
 
             //using (var db = new DataBaseAccessor(connStr.ConnectionString))
             //{
-            //long bookId = db.AddBook(title, name, lastName, middleName, country);
+            //    long bookId = db.AddBook(title, name, lastName, middleName, country);
 
-            //db.AddExtraWriter(44, "David", "Copperfield", null, "Ukraine");
+            //    db.AddExtraWriter(44, "David", "Copperfield", null, "Ukraine");
 
-            //db.ModifyBookCopy(1, "New Name");
+            //    db.ModifyBookCopy(1, "New Name");
 
-            //int rowsAffected = db.DeleteBook(79);
-            //Console.WriteLine(rowsAffected);
+            //    int rowsAffected = db.DeleteBook(79);
+            //    Console.WriteLine(rowsAffected);
 
-            //Console.WriteLine("The book was added successfully!\nBookId = {0}", bookId);
+            //    Console.WriteLine("The book was added successfully!\nBookId = {0}", bookId);
             //}
 
-            IAccess db = new DataBaseAccessor(connStr.ConnectionString);
-
-            try
+            using (DataBaseAccessor db = new DataBaseAccessor(connStr.ConnectionString))
             {
+                UI one = new UI(db);
+                //one.GetBooks(writerId:4);
+
                 //long bookId = db.AddBook(title, name, lastName, middleName, country);
 
                 //db.AddExtraWriter(44, "David", "Copperfield", null, "Ukraine");
 
                 //db.ModifyBookCopy(1, "New Name");
 
-                //int rowsAffected = db.DeleteBook(78);
+                //int rowsAffected = db.DeleteBook(45);
                 //Console.WriteLine(rowsAffected);
 
                 //Console.WriteLine("The book was added successfully!\nBookId = {0}", bookId);
 
 
-                foreach (var book in db.GetData())
-                {
-                    Console.WriteLine(book);
-                }
+                //foreach (var book in db.GetData())
+                //{
+                //    Console.WriteLine(book);
+                //}
             }
-            finally
-            {
-                db.Dispose();
-            }
-
-
 
             Console.ReadKey();
         }

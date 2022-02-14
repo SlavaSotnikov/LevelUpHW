@@ -1286,7 +1286,7 @@ SELECT * FROM Writers
 SELECT * FROM BookCopy
 SELECT * FROM BooksOperation
 
-DELETE FROM Books WHERE BookId = 25
+DELETE FROM Writers WHERE WriterId = 43
 
 DECLARE @BookID BIGINT
 EXECUTE AddBook 'The Little Golden Calf', N'Ilya', N'Ilf', NULL, N'Soviet Union', @BookID OUT
@@ -1398,7 +1398,7 @@ AS
 	END
 GO
 
-EXECUTE DeleteBook 143
+EXECUTE DeleteBook 80
 
 -- Get book's Title by CopyId
 CREATE PROCEDURE GetTitleCondition
@@ -1431,7 +1431,12 @@ SELECT Title, AuthorId
 FROM BooksWriters BW
 RIGHT JOIN Books B ON B.BookId = BW.BookId
 RIGHT JOIN BookCopy BC ON B.BookId = BC.BookId
-WHERE BC.CopyId = 72
+WHERE BC.CopyId = 77
+
+SELECT B.BookId, Title, FirstName, LastName, MiddleName
+FROM Books B
+LEFT JOIN BooksWriters BW ON B.BookId = BW.BookId
+LEFT JOIN Writers W ON BW.AuthorId = W.WriterId
 
 SELECT @@SERVERNAME
 
@@ -1637,4 +1642,9 @@ GO
 
 EXECUTE AnnualReport 2021
 
+SELECT Title, FirstName, LastName
+FROM Writers W
+RIGHT JOIN BooksWriters BW ON W.WriterId = BW.AuthorId
+RIGHT JOIN Books B ON BW.BookId = B.BookId
+WHERE WriterId = 1
 

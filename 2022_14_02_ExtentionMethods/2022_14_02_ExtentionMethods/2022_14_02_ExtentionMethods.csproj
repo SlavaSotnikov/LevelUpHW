@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91F883B5-34C5-4E51-BD09-43D1CDA41432}</ProjectGuid>
+    <ProjectGuid>{D4257F53-A4F0-4D65-9A26-C88F3DACA18C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DataBaseConnection</RootNamespace>
-    <AssemblyName>DataBaseConnection</AssemblyName>
+    <RootNamespace>_2022_14_02_ExtentionMethods</RootNamespace>
+    <AssemblyName>2022_14_02_ExtentionMethods</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,12 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Book.cs" />
-    <Compile Include="DataBaseAccessor.cs" />
-    <Compile Include="IAccess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

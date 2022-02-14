@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91F883B5-34C5-4E51-BD09-43D1CDA41432}</ProjectGuid>
+    <ProjectGuid>{F58E3F69-F99A-48F3-894E-83A7E6E4AB73}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DataBaseConnection</RootNamespace>
-    <AssemblyName>DataBaseConnection</AssemblyName>
+    <RootNamespace>Class25_2022_02_04</RootNamespace>
+    <AssemblyName>Class25_2022_02_04</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,12 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Book.cs" />
-    <Compile Include="DataBaseAccessor.cs" />
-    <Compile Include="IAccess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
