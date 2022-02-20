@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LINQ_Schedule_Task
 {
@@ -69,10 +65,16 @@ namespace LINQ_Schedule_Task
         //a) ID любых сущностей не должны повторяться
         public IEnumerable<Person> GetInvalidPersonsID()
         {
-            IEnumerable<IGrouping<int,Person>> result = from person in Persons
-                                                            group person by person.ID into id
-                                                            where id.Count() > 1
-                                                        select id;
+            IEnumerable<IGrouping<int, Person>> result = from person in Persons
+                                                         group person by person.ID into id
+                                                         where id.Count() > 1
+                                                         select id;
+
+            //IEnumerable<Person> result = Persons
+            //                                    .GroupBy(p => p.ID)
+            //                                    .Where(i => i.Count() > 1)
+            //                                    .Select(r => r)
+            //                                    .SelectMany(p => p);
 
             return result.SelectMany(p=>p);
         }
@@ -156,16 +158,12 @@ namespace LINQ_Schedule_Task
         }
 
         // 4a.Подсчёт количества студентов по каждой из групп
-
-        public IEnumerable<GroupStud> GetStudentsAmountByGroups()
+        public IEnumerable<GroupStud> GetStudentsAmountByGroups() 
         {
-            var result = from student in Students
-                join @group in Groups on student.GroupID equals @group.ID
-                group student by student.GroupID
-                into grp
-                select new GroupStud(grp.Key, grp.Count());
-                    
-
+            IEnumerable<GroupStud> result = from student in Students
+                                            join @group in Groups on student.GroupID equals @group.ID
+                                            group @group by @group.GroupName into grp
+                                            select new GroupStud(grp.Key, grp.Count()); // TODO: How Count() works? Why does it count values instead keys?
 
             //foreach (var grp in _groups)
             //{
@@ -179,35 +177,27 @@ namespace LINQ_Schedule_Task
             return result;
         }
 
-        public double GetAerageAmount()
+        public IEnumerable<StatisticTeacher> GetStatisticTeacher()
         {
-            List<double> result = new List<double>();
+            IEnumerable<StatisticTeacher> result = from student in Students
+                                                    join @group in Groups on student.GroupID equals @group.ID
+                                                    join teacher in Teachers on @group.TeacherID equals teacher.ID
+                                               group teacher by teacher into teachers
+                                               select new StatisticTeacher(/*teachers.Key.FirstName, teachers.Min(), teachers.Max(), teachers.Average()*/);
+            
 
-            var teachers = from teacher in _teachers
-                                          select teacher;
-
-            foreach (var teacher in teachers)
-            {
-
-                int amount = (from student in _students
-                                    join @group in _groups on student.GroupID equals @group.ID
-                                    where @group.TeacherID == teacher.ID
-                              select student).Count();
-
-                result.Add(amount);
-            }
-
-            return result.Average();
+            return null;
         }
 
+        // 4c. "тезки"(имена) + количество повторений
         public IEnumerable<Namesakes> GetNamesakes()
         {
-            //var result = from person in Persons
+            //IEnumerable<Namesakes> result = from person in Persons
             //                  group person by person.FirstName into grp
             //                  where grp.Count() > 1
             //             select new Namesakes(grp.Key, grp.Count());
 
-            var result = Persons
+            IEnumerable<Namesakes> result = Persons
                                 .GroupBy(p => p.FirstName)
                                 .Where(p => p.Count() > 1)
                                 .Select(group => new Namesakes(group.Key, group.Count()));

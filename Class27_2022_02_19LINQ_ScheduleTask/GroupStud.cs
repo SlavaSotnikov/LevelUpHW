@@ -8,10 +8,10 @@ namespace LINQ_Schedule_Task
 {
     internal struct GroupStud
     {
-        public int GroupName { get; }
+        public string GroupName { get; }
         public int Amount { get; }
 
-        public GroupStud(int name, int amount)
+        public GroupStud(string name, int amount)
         {
             GroupName = name;
             Amount = amount;

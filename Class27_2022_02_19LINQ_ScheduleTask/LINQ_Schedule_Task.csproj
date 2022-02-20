@@ -51,6 +51,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedule.cs" />
+    <Compile Include="StatisticTeacher.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="StudentGroup.cs" />
     <Compile Include="Teacher.cs" />
