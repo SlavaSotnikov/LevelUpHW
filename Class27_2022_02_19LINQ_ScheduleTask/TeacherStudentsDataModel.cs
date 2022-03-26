@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 
 namespace LINQ_Schedule_Task
 {
@@ -29,7 +30,8 @@ namespace LINQ_Schedule_Task
             _groups.Add(new Group() { ID = 2, GroupName = "Gr_4", TeacherID = 3 });
             _groups.Add(new Group() { ID = 4, GroupName = "Gr_7", TeacherID = 15 });
             _groups.Add(new Group() { ID = 6, GroupName = "Gr_8", TeacherID = 15 });
-            _groups.Add(new Group() { ID = 6, GroupName = "Gr_9", TeacherID = 15 });
+            _groups.Add(new Group() { ID = 6, GroupName = "Gr_9", TeacherID = 16 });
+            _groups.Add(new Group() { ID = 6, GroupName = "Gr_9", TeacherID = 14 });
 
             _students.Add(new Student() { ID = 4, FirstName = "Alexey", LastName = "Simonov", GroupID = 1, RecordBookNumber = 10201 });
             _students.Add(new Student() { ID = 5, FirstName = "Alexander", LastName = "Alexandrov", GroupID = 4, RecordBookNumber = 10202 });
@@ -65,10 +67,20 @@ namespace LINQ_Schedule_Task
         //a) ID любых сущностей не должны повторяться
         public IEnumerable<Person> GetInvalidPersonsID()
         {
-            IEnumerable<IGrouping<int, Person>> result = from person in Persons
-                                                         group person by person.ID into id
-                                                         where id.Count() > 1
-                                                         select id;
+            IEnumerable<int> result = from person in Persons
+                                                            group person by person.ID into groupId
+                                                            where groupId.Count() > 1
+                                                         select groupId.Key;
+
+            IEnumerable<Person> res = from r in result 
+                                        join person in Persons on r equals person.ID 
+                                      select person;
+
+
+            //IEnumerable<Person> res = from person in Persons
+            //                            join person1 in Persons on person.ID equals person1.ID
+            //                            where !ReferenceEquals(person, person1)
+            //                          select person;
 
             //IEnumerable<Person> result = Persons
             //                                    .GroupBy(p => p.ID)
@@ -76,18 +88,25 @@ namespace LINQ_Schedule_Task
             //                                    .Select(r => r)
             //                                    .SelectMany(p => p);
 
-            return result.SelectMany(p=>p);
+            return res;
         }
 
         //b) не должно быть персон с повторяющимися фамилиями и именами
-        public IEnumerable<Person> GetInvalidPersonsName()
+        public IEnumerable<Person> GetInvalidPersons()
         {
-            IEnumerable<IGrouping<string, Person>> result = from person in Persons
-                                                                group person by  person.FirstName into name
+            IEnumerable < IGrouping<string, Person> > result = from person in Persons
+                                                                    group person by person.FirstName into name
+                                                                    where name.Count() > 1
+                                                               select name;
+
+            IEnumerable<IGrouping<string, Person>> result1 = from person in Persons
+                                                                group person by person.LastName into name
                                                                 where name.Count() > 1
                                                             select name;
 
-            return result.SelectMany(p => p);
+            var persons = result.SelectMany(p=>p).Concat(result1.SelectMany(p => p));
+
+            return persons;
         }
         //b) не должно быть персон с повторяющимися фамилиями и именами
         public IEnumerable<Person> GetInvalidPersonsLastName()
@@ -101,14 +120,21 @@ namespace LINQ_Schedule_Task
         }
 
         //c) поле TeacherID(класс Group) не должно ссылаться на несуществующего преподавателя
-        public IEnumerable<GroupTeacher> GetInvalidGroups()
+        public IEnumerable<Group> GetInvalidGroups()
         {
-            IEnumerable<GroupTeacher> result = from @group in Groups
-                                                   join teacher in Teachers on
-                                                   @group.TeacherID equals teacher.ID
-                                               select new GroupTeacher(@group, teacher);
+            //IEnumerable<GroupTeacher> result = from @group in Groups
+            //                                       join teacher in Teachers on
+            //                                       @group.TeacherID equals teacher.ID
+            //                                   select new GroupTeacher(@group, teacher);
 
-            return result;
+
+            var teacherIDs = Groups
+                    .Select(g => g.TeacherID)
+                    .Except(from teacher in Teachers select teacher.ID);
+
+
+
+            return from r in teacherIDs join g in Groups on r equals g.TeacherID select g;
         }
 
         //d) поле GroupID не должно ссылаться на несуществующую группу
@@ -177,16 +203,19 @@ namespace LINQ_Schedule_Task
             return result;
         }
 
+        // b.Минимальное / Среднее / Максимальное количество студентов у каждого из кураторов групп
         public IEnumerable<StatisticTeacher> GetStatisticTeacher()
         {
-            IEnumerable<StatisticTeacher> result = from student in Students
+            var result = from student in Students
                                                     join @group in Groups on student.GroupID equals @group.ID
                                                     join teacher in Teachers on @group.TeacherID equals teacher.ID
-                                               group teacher by teacher into teachers
-                                               select new StatisticTeacher(/*teachers.Key.FirstName, teachers.Min(), teachers.Max(), teachers.Average()*/);
+                                               group teacher by new { teacher.ID, teacher.FirstName, @group.GroupName }  into teachers
+                                                   select new {teachers.Key.FirstName, teachers.Key.GroupName ,StudCount = teachers.Count()};
             
 
-            return null;
+            return from r in result 
+                    group result by r.FirstName into stat
+                   select new StatisticTeacher(stat.Key, "GroupName", result.Min(d=>d.StudCount), result.Max(d=>d.StudCount), result.Average(d=>d.StudCount));
         }
 
         // 4c. "тезки"(имена) + количество повторений

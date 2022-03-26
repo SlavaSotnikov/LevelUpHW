@@ -63,7 +63,7 @@ using System.Threading.Tasks;
 //            RecordBookNumber
 //            StudentName (LastName+FirstName)
 //            GroupName
-//            Mun (LastName+FirstName)
+//            Min (LastName+FirstName)
 //        }
 //        IEnumerable<FullInfo> GetStudentsTeachers()
 //        {
@@ -88,9 +88,9 @@ namespace LINQ_Schedule_Task
             TeacherStudentsDataModel model = new TeacherStudentsDataModel();
 
             ////Console.WriteLine("GetInvalidPersons() : ");
-            foreach (var item in model.GetInvalidPersonsID())
+            foreach (var item in model.GetStatisticTeacher())
             {
-                Console.WriteLine($"{item.FirstName} {item.LastName} ");
+                Console.WriteLine($"{item.TeacherName} {item.GroupName} {item.Max} {item.Min} {item.Average} ");
             }
 
 
@@ -108,7 +108,7 @@ namespace LINQ_Schedule_Task
 
             ////foreach (var info in model.GetFullInfoByStudent())
             ////{
-            ////    Console.WriteLine($"{info.RecordBookNumber} {info.StudentName} {info.GroupName} {info.Mun}");
+            ////    Console.WriteLine($"{info.RecordBookNumber} {info.StudentName} {info.GroupName} {info.Min}");
             ////}
 
             ////foreach (var amount in model.GetStudentsAmount())
