@@ -47,7 +47,19 @@ namespace Game
 
         #endregion
 
-        #region Methods
+        #region Constructor
+
+        public Space(int capacity = 13, int speed = 350000)
+        {
+            _gameObjects = new SpaceCraft[capacity];
+            _amountOfObjects = 0;
+            _counterProduceEnemy = 0;
+            _speed = speed;
+        }
+
+        #endregion
+
+        #region Member Functions
 
         public void Run()
         {
@@ -197,14 +209,6 @@ namespace Game
             return bullet;
         }
 
-        public Space(int capacity = 13, int speed = 350000)
-        {
-            _gameObjects = new SpaceCraft[capacity];
-            _amountOfObjects = 0;
-            _counterProduceEnemy = 0;
-            _speed = speed;
-        }
-
         public void ShotEnemies()
         {
             for (int i = _amountOfObjects; i >= 0; i--)
@@ -228,7 +232,7 @@ namespace Game
                 AddObject(SpaceObject.EnemyShip);
             }
         }
-    }
 
-    #endregion
+        #endregion
+    }
 }

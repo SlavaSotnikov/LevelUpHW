@@ -4,6 +4,8 @@ namespace Game
 {
     class GameField : IGame
     {
+        #region Private Data
+
         protected const int CONST_Y = 1;
         protected const int RESET = 0;
 
@@ -26,6 +28,10 @@ namespace Game
         protected SpaceCraft[] _gameObjects;
         protected int _amountOfObjects;
 
+        #endregion
+
+        #region IGame implementation
+
         ISpaceCraft IGame.this[int index]    // TODO: Explicit implementation.
         {
             get
@@ -41,6 +47,10 @@ namespace Game
                 return _amountOfObjects;
             }
         }
+
+        #endregion
+
+        #region Member Functions
 
         public bool IsGameOver()
         {
@@ -146,6 +156,7 @@ namespace Game
                     && bullet.X < user.X + user.Width;
         }
 
+        #endregion
 
     }
 }
