@@ -38,6 +38,9 @@ namespace _2022_05_02_DinnerPhilosopher
                 {
                     threads[i].Join();
                 }
+
+                Console.WriteLine("Dinner is finished.");
+                Console.ReadKey();
             }
         }
 

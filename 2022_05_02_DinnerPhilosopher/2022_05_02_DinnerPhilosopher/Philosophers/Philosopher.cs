@@ -37,8 +37,9 @@ namespace _2022_05_02_DinnerPhilosopher
                 {
                     AquireForks();
 
-                    Eat();
                     _count++;
+
+                    Eat();
 
                     ReleaseForks();
                 }
@@ -102,7 +103,7 @@ namespace _2022_05_02_DinnerPhilosopher
 
         public void Eat()
         {
-            _logger.Write($"{ToString()} is eating.");
+            _logger.Write($"{ToString()} is eating {_count}.");
             Thread.Sleep(_rnd.Next(Values.MinDuration, Values.MaxDuration));
         }
     }
