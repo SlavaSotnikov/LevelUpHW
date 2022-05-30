@@ -7,7 +7,7 @@ namespace _2022_05_02_DinnerPhilosopher
     {
         private static readonly Random _rnd = new Random();
 
-        private static Semaphore _semaphore;
+        private static Semaphore _waiter;
 
         private readonly ILogger _logger;
 
@@ -17,12 +17,12 @@ namespace _2022_05_02_DinnerPhilosopher
 
         public Fork RightFork { get; set; }
 
-        public Philosopher(Fork left, Fork right, ILogger log)
+        public Philosopher(Fork left, Fork right, ILogger log, Semaphore waiter)
         {
             LeftFork = left;
             RightFork = right;
             _logger = log;
-            _semaphore = new Semaphore(2, 5);
+            _waiter = waiter;
         }
 
         public void HaveDinner()
@@ -31,7 +31,7 @@ namespace _2022_05_02_DinnerPhilosopher
             {
                 Think();
 
-                _semaphore.WaitOne();
+                _waiter.WaitOne();
 
                 if (IsForksAvaliable())
                 {
@@ -44,7 +44,7 @@ namespace _2022_05_02_DinnerPhilosopher
                     ReleaseForks();
                 }
                 
-                _semaphore.Release();
+                _waiter.Release();
             }
         }
 
@@ -80,9 +80,7 @@ namespace _2022_05_02_DinnerPhilosopher
             _logger.Write($"{ToString()} is taking forks.");
 
             RightFork.IsInUse = true;
-            RightFork.WhichPhilosopher = this;
             LeftFork.IsInUse = true;
-            LeftFork.WhichPhilosopher = this;
         }
 
         public void ReleaseForks()
@@ -90,9 +88,7 @@ namespace _2022_05_02_DinnerPhilosopher
             _logger.Write($"{ToString()} is releasing forks.");
 
             LeftFork.IsInUse = false;
-            LeftFork.WhichPhilosopher = null;
             RightFork.IsInUse = false;
-            RightFork.WhichPhilosopher = null;
         }
 
         public void Think()

@@ -63,6 +63,7 @@
     <Compile Include="Philosophers\Sartre.cs" />
     <Compile Include="Factory\SartreCreator.cs" />
     <Compile Include="Values.cs" />
+    <Compile Include="Waiter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

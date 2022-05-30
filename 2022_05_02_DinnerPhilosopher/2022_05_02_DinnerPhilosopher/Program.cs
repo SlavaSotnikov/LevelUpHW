@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace _2022_05_02_DinnerPhilosopher
 {
@@ -12,11 +11,13 @@ namespace _2022_05_02_DinnerPhilosopher
 
         static void Main()
         {
+            var waiter = Waiter.GetInstance();
+
             using (var logger = new Logger())
             {
                 List<Thread> threads = new List<Thread>();
 
-                var philosophers = _rnd.NextPhilosophers(logger).ToList();
+                var philosophers = _rnd.NextPhilosophers(logger, waiter).ToList();
                 var forks = _rnd.NextForks();
 
                 SetTheTable(philosophers, forks);
@@ -38,10 +39,10 @@ namespace _2022_05_02_DinnerPhilosopher
                 {
                     threads[i].Join();
                 }
-
-                Console.WriteLine("Dinner is finished.");
-                Console.ReadKey();
             }
+
+            Console.WriteLine("Dinner is finished.");
+            Console.ReadKey();
         }
 
         public static void SetTheTable(IEnumerable<Philosopher> one, IEnumerable<Fork> two)

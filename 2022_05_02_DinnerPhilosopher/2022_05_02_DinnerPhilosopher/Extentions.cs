@@ -27,7 +27,7 @@ namespace _2022_05_02_DinnerPhilosopher
             "Fork4"
         };
 
-        public static IEnumerable<Philosopher> NextPhilosophers(this Random rnd, ILogger log)
+        public static IEnumerable<Philosopher> NextPhilosophers(this Random rnd, ILogger log, Semaphore sem)
         {
             if (_philosophers.Length <= 0)
             {
@@ -36,30 +36,30 @@ namespace _2022_05_02_DinnerPhilosopher
 
             for (int i = 0; i < _philosophers.Length; i++)
             {
-                yield return GetPhilosopher(_philosophers[i], log);
+                yield return GetPhilosopher(_philosophers[i], log, sem);
             }
         }
 
-        private static Philosopher GetPhilosopher(Philosophers source, ILogger log)
+        private static Philosopher GetPhilosopher(Philosophers source, ILogger log, Semaphore sem)
         {
             Philosopher philosopher = null;
 
             switch (source)
             {
                 case Philosophers.Kant:
-                    philosopher = new KantCreator(log).Create();
+                    philosopher = new KantCreator(log, sem).Create();
                     break;
                 case Philosophers.Aristotle:
-                    philosopher = new AristotleCreator(log).Create();
+                    philosopher = new AristotleCreator(log, sem).Create();
                     break;
                 case Philosophers.Lock:
-                    philosopher = new LockCreator(log).Create();
+                    philosopher = new LockCreator(log, sem).Create();
                     break;
                 case Philosophers.Confucius:
-                    philosopher = new ConfuciusCreator(log).Create();
+                    philosopher = new ConfuciusCreator(log, sem).Create();
                     break;
                 case Philosophers.Sartre:
-                    philosopher = new SartreCreator(log).Create();
+                    philosopher = new SartreCreator(log, sem).Create();
                     break;
                 default:
                     break;
