@@ -9,9 +9,7 @@ namespace Game
             UI.SetBufferSize();
 
             Space game = new Space();
-
-            game.AddObject(UI.AskShipModel());
-
+            
             game.Run();
         }
     }

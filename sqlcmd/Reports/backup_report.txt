@@ -1,0 +1,5 @@
+Changed database context to 'PublicLibrary'.
+Msg 3201, Level 16, State 1, Server SLAVAPC, Line 5
+Cannot open backup device 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\Backups\PublicLibrary.bak'. Operating system error 3(The system cannot find the path specified.).
+Msg 3013, Level 16, State 1, Server SLAVAPC, Line 5
+BACKUP DATABASE is terminating abnormally.

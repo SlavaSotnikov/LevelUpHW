@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Intro
 {
-    class UI
+    class UI    // TODO: Move to DLL.
     {
         static string pilotName = String.Empty;
         static string country = String.Empty;
@@ -33,7 +30,7 @@ namespace Intro
         private static int SelectedIndex = 0;
         private static string[] Options = { "1 PLAYER", "2 PLAYERS", "About", "Exit" };
 
-        private static string Name = @"
+        private static string Title = @"
                          _____                        _____                     _               
                         / ____|                      |_   _|                   | |              
                        | (___  _ __   __ _  ___ ___    | |  _ ____   ____ _  __| | ___ _ __ ___ 
@@ -72,11 +69,6 @@ namespace Intro
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            ConsoleColor prevColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(Name);
-            Console.ForegroundColor = prevColor;
-
             int count = 0;
 
             for (int i = 0; i < Options.Length; i++)
@@ -95,22 +87,31 @@ namespace Intro
                     Console.ResetColor();
                     pointer = " ";
                 }
+
                 Console.SetCursorPosition(50, 8 + count);
                 Console.WriteLine($"{pointer} {currentOption} ");
             }
-            Console.ResetColor();
-
-            Console.SetCursorPosition(47, 25);
-            Console.WriteLine("\xA9 2021 LevelUp\x2122");
         }
 
         private static int GetMenuPointer()
         {
             ConsoleKey keyPressed;
 
+            Console.Clear();
+
+            Console.OutputEncoding = Encoding.UTF8;
+
+            ConsoleColor prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(Title);
+            Console.ForegroundColor = prevColor;
+
+            Console.ResetColor();
+            Console.SetCursorPosition(47, 25);
+            Console.WriteLine("\xA9 2021 LevelUp\x2122");
+
             do
             {
-                Console.Clear();
                 DisplayOptions();
 
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -119,6 +120,7 @@ namespace Intro
                 if (keyPressed == ConsoleKey.UpArrow)
                 {
                     SelectedIndex--;
+
                     if (SelectedIndex == -1)
                     {
                         SelectedIndex = Options.Length - 1;
@@ -127,11 +129,13 @@ namespace Intro
                 else if (keyPressed == ConsoleKey.DownArrow)
                 {
                     SelectedIndex++;
+
                     if (SelectedIndex == Options.Length)
                     {
                         SelectedIndex = 0;
                     }
                 }
+
             } while (keyPressed != ConsoleKey.Enter);
 
             return SelectedIndex;
@@ -374,6 +378,7 @@ namespace Intro
                 {
                     Console.Write(text[i]);
                     Thread.Sleep(sleep);
+                
                 }
 
                 if (Console.KeyAvailable)

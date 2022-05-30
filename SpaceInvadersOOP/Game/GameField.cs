@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -7,7 +8,6 @@ namespace Game
         #region Private Data
 
         protected const int CONST_Y = 1;
-        protected const int RESET = 0;
 
         protected int _leftBorder = 30;
         protected int _rightBorder = 83;
@@ -25,14 +25,63 @@ namespace Game
         protected byte _rightShift = 6;    // This shift tunes the Right bullet.
         protected byte _shotEnemyShift = 3;
 
-        protected SpaceCraft[] _gameObjects;
+        protected List<SpaceCraft> _gameObjects;
         protected int _amountOfObjects;
 
+<<<<<<< HEAD
+=======
+        protected GameStatus _finishGame;
+        public HashSet<Coordinate> _borders;
+
+        public HashSet<Coordinate> Borders => _borders;
+
+        protected void InitBorders()
+        {
+            _borders = new HashSet<Coordinate>(180);
+
+            int y = _topBorder;
+            int x = _leftBorder;
+
+            for (; x <= _rightBorder; x++)
+            {
+                _borders.Add(new Coordinate(x, y));
+            }
+
+            y = _bottomBorder + 4;
+            x = _leftBorder;
+
+            for (; x <= _rightBorder; x++)
+            {
+                _borders.Add(new Coordinate(x, y));
+            }
+            
+            y = _topBorder + 1;
+            x = _leftBorder;
+
+            for (; y < _bottomBorder + 4; y++)
+            {
+                _borders.Add(new Coordinate(x, y));
+            }
+            
+            y = _topBorder + 1;
+            x = _rightBorder;
+
+            for (; y < _bottomBorder + 4; y++)
+            {
+                _borders.Add(new Coordinate(x, y));
+            }
+        }
+
+>>>>>>> 02fac29318224d12fceef996fa04148b7f5997c6
         #endregion
 
         #region IGame implementation
 
+<<<<<<< HEAD
         ISpaceCraft IGame.this[int index]    // TODO: Explicit implementation.
+=======
+        ISpaceCraft IGame.this[int index]
+>>>>>>> 02fac29318224d12fceef996fa04148b7f5997c6
         {
             get
             {
@@ -60,7 +109,7 @@ namespace Game
             {
                 if ((_gameObjects[i] is UserShip user) && !user.Active)
                 {
-                    gameOn = false;
+                    _finishGame?.Invoke(this, EventArgs.Empty);
                     break;
                 }
             }
@@ -72,13 +121,10 @@ namespace Game
         {
             for (int i = 0; i < _amountOfObjects; i++)
             {
-                ++_gameObjects[i].Counter;
+                _gameObjects[i].MoveState();
 
-                if ((_gameObjects[i].Counter % _gameObjects[i].Speed == 0)
-                        && _gameObjects[i].Active)
+                if (_gameObjects[i].IsNeedStep())
                 {
-                    _gameObjects[i].Counter = RESET;
-
                     _gameObjects[i].Step();
                 }
             }
@@ -92,71 +138,134 @@ namespace Game
                 {
                     if (i != j)
                     {
-                        if (_gameObjects[i] is UserShip user && _gameObjects[j] is EnemyShip enemy)
+                        //if (_gameObjects[i] is Star star && star.Y == _bottomBorder + 4)
+                        //{
+                        //    star.X = BL_Random.GetX();
+                        //    star.Y = BL_Random.GetY();
+                        //    star.Active = true;
+                        //    continue;
+                        //}
+
+                        //if (_gameObjects[i] is UserShip user && _gameObjects[j] is EnemyShip enemy)
+                        //{
+                        //    if (IsClash(user, enemy))
+                        //    {
+                        //        int x = user.X;
+                        //        int y = user.Y;
+
+                        //        user.Y += 2;
+                        //        enemy.Y -= 2;
+
+                        //        throw new ClashException("BOOM!!!", x, y);
+                        //    }
+                        //}
+
+                        if (_gameObjects[i] is UserShip usr
+                                && _gameObjects[j] is Star str)
                         {
-                            if (IsClash(user, enemy))
-                            {
-                                int x = user.X;
-                                int y = user.Y;
+                            //if (IsNear(usr, str))
+                            //{
+                            //    //str.Y += 5;
+                            //}
+                        }
 
-                                user.Y = user.Y + 2;
-                                enemy.Y = enemy.Y - 2;
-
-                                throw new ClashException("BOOM!!!", x, y);
-                            }
+                        if (_gameObjects[i] is EnemyShip usr1
+                                && _gameObjects[j] is Star str1)
+                        {
+                            //if (IsNear(usr1, str1))
+                            //{
+                            //    //str1.Y += 3;
+                            //}
                         }
 
                         if (_gameObjects[i] is Shot bullet && _gameObjects[j] is Ship ship)
                         {
                             if (bullet.Active && ship.Active)
                             {
-                                if (IsHit(bullet, ship))
+                                if (ship.Position.Overlaps(bullet.Position))
                                 {
                                     bullet.Active = false;
-                                    --ship.HitPoints;
+                                    --ship.HP;
 
-                                    if (ship.HitPoints <= 0)
+                                    if (ship.HP <= 0)
                                     {
                                         ship.Active = false;
                                         ship.Step();
+                                        continue;
                                     }
                                 }
+
+                                //if (IsHit(bullet, ship))
+                                //{
+                                //    bullet.Active = false;
+                                //    --ship.HP;
+
+                                //    if (ship.HP <= 0)
+                                //    {
+                                //        ship.Active = false;
+                                //        ship.Step();
+                                //        continue;
+                                //    }
+                                //}
                             }
                         }
 
                         if (_gameObjects[i] is EnemyShip one)
                         {
-                            if (one.Y == _bottomBorder)
+                            if (one.Position.Overlaps(Borders))
                             {
                                 one.Active = false;
+                                continue;
                             }
+
+                            //if (one.Y == _bottomBorder)
+                            //{
+                            //    one.Active = false;
+                            //    continue;
+                            //}
                         }
 
                         if (_gameObjects[i] is Shot two)
                         {
-                            if (two.Y == _topBorder || two.Y == _bottomBorder)
+                            if (two.Position.Overlaps(Borders))
                             {
                                 two.Active = false;
+                                continue;
                             }
+
+                            //if (two.Y == _topBorder || two.Y == _bottomBorder)
+                            //{
+                            //    two.Active = false;
+                            //    continue;
+                            //}
                         }
                     }
                 }
             }
         }
 
-        private bool IsClash(UserShip user, EnemyShip enemy)
-        {
-            return user.Y - 1 == enemy.Y && enemy.X >= user.X
-                    && enemy.X + enemy.Width <= user.X + user.Width;
-        }
+        //private bool IsNear(Ship user, Star star)
+        //{
+        //    return user.Y == star.Y && star.X >= user.X
+        //            && star.X <= user.X + user.Width;
+        //}
 
-        private bool IsHit(Shot bullet, Ship user)
-        {
-            return bullet.Y == user.Y && user.X < bullet.X
-                    && bullet.X < user.X + user.Width;
-        }
+        //private bool IsClash(UserShip user, EnemyShip enemy)
+        //{
+        //    return user.Y - 1 == enemy.Y && enemy.X >= user.X
+        //            && enemy.X + enemy.Width <= user.X + user.Width;
+        //}
+
+<<<<<<< HEAD
+        #endregion
+=======
+        //private bool IsHit(Shot bullet, Ship user)
+        //{
+        //    return bullet.Y == user.Y && user.X < bullet.X
+        //            && bullet.X < user.X + user.Width;
+        //}
+>>>>>>> 02fac29318224d12fceef996fa04148b7f5997c6
 
         #endregion
-
     }
 }

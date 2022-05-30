@@ -1,17 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MenuLibrary;
 
-namespace Menu
+namespace GameMenu
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Game myGame = new Game();
-            myGame.Start();
+            Menu gameMenu = new Menu();
+            gameMenu.Run();
+
+            Data one = Meth(gameMenu);
+
+            Console.WriteLine();
+        }
+
+        public static Data Meth(IMenu source)
+        {
+            return source.GetUserData();
         }
     }
 }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Intro
+﻿namespace Intro
 {
-    enum Menu : byte
+    public enum Menu : byte
     {
+        None,
         OnePlayer,
         TwoPlayers,
         About,

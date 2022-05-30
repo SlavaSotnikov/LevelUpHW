@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    enum SpaceObject
+    public enum SpaceObject
     {
         None,
         LightShip,
@@ -10,6 +10,8 @@ namespace Game
         EnemyShip,
         ShotLeft,
         ShotRight,
-        ShotEnemy
+        ShotEnemy,
+        UserShip,
+        Star
     }
 }

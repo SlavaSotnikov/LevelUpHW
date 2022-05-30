@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
 namespace Game
 {
-    static class UI    // TODO: 1 - Ask a question, what's going on?
+    static class UI
     {
         #region Constants
-
-        private const int WIDTH = 120;         // Width buffer of consol window.
-        private const int HEIGHT = 40;         // Height buffer of console window.
+        private const int WIDTH = 120;    // Width buffer of consol window.
+        private const int HEIGHT = 40;    // Height buffer of console window.
 
         #endregion
 
@@ -17,19 +17,41 @@ namespace Game
 
         private static string[] _shot;
 
+        private static string[] _star;
+
         private static string[] _lightShip;
 
         private static string[] _heavyShip;
 
         private static string[] _enemyShip;
 
+        private static string _gameOver;
+
+        private static HashSet<char> _userShip;
+
+        private static char _enemy;
+
+        private static char _light;
+
+        private static char _shot1;
+
         #endregion
 
         #region Constructor
 
-        static UI()    // TODO: 2 - Ask a question, what's going on?
+        static UI()
         {
+            _light = '║';
+
+            _enemy = '│';
+
+            _shot1 = '|';
+
+            _userShip = new HashSet<char>(30);
+
             _shot = new string[] { "|" };
+
+            _star = new string[] { "." };
 
             _lightShip = new string[5]
             {
@@ -55,6 +77,11 @@ namespace Game
               "˂=-O-=˃",
               "   ˅   "
             };
+
+            _gameOver = @"
+                                       ____ ____ _  _ ____    ____ _  _ ____ ____ 
+                                       | __ |__| |\/| |___    |  | |  | |___ |__/ 
+                                       |__] |  | |  | |___    |__|  \/  |___ |  \ ";
         }
 
         #endregion
@@ -107,36 +134,36 @@ namespace Game
             return shipModel;
         }
 
-        public static GameAction AskConsole()
+        public static Action PressKey()
         {
-            GameAction userEvent = GameAction.NoAction;
+            Action userEvent = Action.NoAction;
 
             if (Console.KeyAvailable)
             {
-                ConsoleKey key = Console.ReadKey(true).Key;
+                ConsoleKeyInfo key = Console.ReadKey(true);
 
-                switch (key)
+                switch (key.Key)
                 {
                     case ConsoleKey.LeftArrow:
-                        userEvent = GameAction.LeftMove;
+                        userEvent = Action.LeftMove;
                         break;
                     case ConsoleKey.RightArrow:
-                        userEvent = GameAction.RightMove;
+                        userEvent = Action.RightMove;
                         break;
                     case ConsoleKey.UpArrow:
-                        userEvent = GameAction.UpMove;
+                        userEvent = Action.UpMove;
                         break;
                     case ConsoleKey.DownArrow:
-                        userEvent = GameAction.DownMove;
+                        userEvent = Action.DownMove;
                         break;
                     case ConsoleKey.Spacebar:
-                        userEvent = GameAction.Shooting;
+                        userEvent = Action.Shooting;
                         break;
                     case ConsoleKey.Escape:
-                        userEvent = GameAction.Exit;
+                        userEvent = Action.Exit;
                         break;
                     default:
-                        userEvent = GameAction.NoAction;
+                        userEvent = Action.NoAction;
                         break;
                 }
             }
@@ -146,44 +173,104 @@ namespace Game
 
         public static void Hide(ISpaceCraft source)
         {
-            if (source.X != source.OldX
-                        || source.Y != source.OldY)
+            bool res = source.Position.SetEquals(source.OldPosition);
+
+            if (!res)
             {
-                Print(source.OldX, source.OldY, ConsoleColor.Black, GetImage(source));
+                foreach (var item in source.OldPosition)
+                {
+                    Print(item, ConsoleColor.Black, ' ' /*GetImage(source)*/); 
+                }
             }
+
+            //if (source.X != source.OldX
+            //            || source.Y != source.OldY)
+            //{
+            //    Print(source.OldX, source.OldY, ConsoleColor.Black, GetImage(source));
+            //}
         }
 
         public static void Show(ISpaceCraft source)
         {
-            if ((source.X != source.OldX
-                    || source.Y != source.OldY) && source.Active)
+            bool res = source.Position.SetEquals(source.OldPosition);
+
+            if (!res)
             {
-                string[] image = GetImage(source);
-
-                Print(source.X, source.Y, ConsoleColor.White, image);
-
-                if ((source is Ship one) && one.HitPoints <= 2)
+                if (source.Active)
                 {
-                    Print(one.X, one.Y, ConsoleColor.DarkRed, image);
-                    Console.ResetColor();
+                    char image = GetChar(source);
+
+                    ConsoleColor color = ConsoleColor.White;
+
+                    if ((source is Ship one) && one.HP <= 2)
+                    {
+                        color = ConsoleColor.DarkRed;
+                    }
+
+                    foreach (var item in source.Position)
+                    {
+                        Print(item, color, image);
+                    } 
                 }
             }
+
+            //if ((source.X != source.OldX
+            //        || source.Y != source.OldY) && source.Active)
+            //{
+            //    string[] image = GetImage(source);
+
+            //    ConsoleColor color = ConsoleColor.White;
+
+            //    if ((source is Ship one) && one.HP <= 2)
+            //    {
+            //        color = ConsoleColor.DarkRed;
+            //    }
+
+            //    Print(source.X, source.Y, color, image);
+            //}
         }
 
-        public static void Print(int x, int y, ConsoleColor color, params string[] view)
+        public static void Print(Coordinate source, ConsoleColor color, char view)
         {
-            for (int i = 0; i < view.Length; i++)
+            Console.SetCursorPosition(source.X, source.Y);
+
+            Console.ForegroundColor = color;
+            Console.Write(view);
+
+            //for (int i = 0; i < view.Length; i++)
+            //{
+            //    Console.SetCursorPosition(source.X, source.Y + i);
+
+            //    Console.ForegroundColor = color;
+            //    Console.Write(view[i]);
+            //}
+        }
+
+        private static char GetChar(ISpaceCraft source)
+        {
+            char image = _shot1;
+
+            if (source is LightShip)
             {
-                Console.SetCursorPosition(x, y + i);
-
-                Console.ForegroundColor = color;
-                Console.Write(view[i]);
+                image = _light;
             }
+
+            if (source is HeavyShip)
+            {
+                
+            }
+
+            if (source is EnemyShip)
+            {
+                image = _enemy;
+            }
+
+            return image;
         }
 
-        private static string[] GetImage(ISpaceCraft source)    // TODO: Static constructor.
+        private static string[] GetImage(ISpaceCraft source)
         {
-            string[] image = _shot;
+            string[] image = _star;
 
             if (source is LightShip)
             {
@@ -200,16 +287,28 @@ namespace Game
                 image = _enemyShip;
             }
 
+            if (source is Shot)
+            {
+                image = _shot;
+            }
+
             return image;
         }
 
-        //public static void ShowDisplay(int hp, Space source)
-        //{
-        //    Console.SetCursorPosition(source.LeftBorder, source.BottomBorder);
-        //    Console.Write("HP: {0}%", hp);
-        //    Console.SetCursorPosition(40, source.BottomBorder);
-        //    Console.Write("Life: {0}");
-        //}
+        public static void ShowDisplay(IUserShip source)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(54, 38);
+            Console.Write("HP: {0, -2}", source.HP);
+            Console.SetCursorPosition(54, 39);
+            Console.Write("Life: {0}", source.Life);
+        }
+
+        public static void PrintGameOver(object sender, EventArgs e)
+        {
+            Console.SetCursorPosition(0, 18);
+            Console.WriteLine("{0}", _gameOver);
+        }
 
         #endregion
     }

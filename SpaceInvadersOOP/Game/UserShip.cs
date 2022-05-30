@@ -2,24 +2,54 @@
 
 namespace Game
 {
-    abstract class UserShip : Ship
+    internal abstract class UserShip : Ship, IUserShip
     {
-        private byte _life;
+        protected UIListener _keyEvent;
 
-        public UserShip(ISpace game, int coordX, int coordY, bool active, 
-                uint speed, uint counter, byte hitpoints, byte lifes, int oldCoordX=0, int oldCoordY=0)
+        #region Properties
+
+        public override byte HP { get; set; }
+
+        public override byte OldHP { get; set; }
+
+        public byte Life { get; set; }
+
+        public byte OldLife { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        protected UserShip(ISpace game, int coordX, int coordY, bool active,
+                uint speed, uint counter, byte hitpoints, byte lifes, SpaceObject source)
+        :base(source)
         {
             _game = game;
-            _coordX = coordX;
-            _coordY = coordY;
-            _oldCoordX = oldCoordX;
-            _oldCoordY = oldCoordY;
-            _active = active;
-            _speed = speed;
-            _counter = counter;
-            _hitPoints = hitpoints;
-            _life = lifes;
-            _width = 9;
+            //X = coordX;
+            //Y = coordY;
+            //OldX = 0;
+            //OldY = 0;
+            Active = active;
+            Speed = speed;
+            Counter = counter;
+            HP = hitpoints;
+            Life = lifes;
+            //Width = 9;
+            _keyEvent += UI.PressKey;
         }
+
+        #endregion
+
+        #region Member Functions
+
+        public override void MoveState()
+        {
+            base.MoveState();
+
+            OldHP = HP;
+            OldLife = Life;
+        }
+
+        #endregion
     }
 }

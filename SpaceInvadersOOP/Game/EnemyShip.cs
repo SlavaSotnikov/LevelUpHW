@@ -1,78 +1,72 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game
 {
-    class EnemyShip : Ship
+    internal class EnemyShip : Ship
     {
-        private byte _shot;
+        #region Private Data
 
-        public byte Shot 
-        {
-            get
-            {
-                return _shot;
-            }
-            set
-            {
-                _shot = value;
-            }
-        }
+        #endregion
 
-        public override byte HitPoints
-        {
-            get
-            {
-                return _hitPoints;
-            }
+        #region Properties
 
-            set
-            {
-                _hitPoints = value;
-            }
-        }
+        public byte Shot { get; set; }
 
-        public override byte OldHitPoints
-        {
-            get
-            {
-                return _oldHitPoints;
-            }
+        public override byte HP { get; set; }
 
-            set
-            {
-                _oldHitPoints = value;
-            }
-        }
+        public override byte OldHP { get; set; }
 
-        public override byte Width
-        {
-            get
-            {
-                return _width;
-            }
-        }
+        //public override byte Width {  get; set; }
 
-        public EnemyShip(ISpace game, int coordX, int coordY, bool active, 
-                uint speed, sbyte step, byte rndY, uint counter=0,
-                    int oldCoordX=0, int oldCoordY=0, byte hitPoints = 6)
+        #endregion
+
+        #region Constructor
+
+        public EnemyShip(ISpace game, HashSet<Coordinate> position, int x, int y, bool active,
+                uint speed, sbyte step, byte rndY, byte hitPoints = 6)
+        :base(SpaceObject.EnemyShip)
         {
             _game = game;
-            _coordX = coordX;
-            _coordY = coordY;
-            _oldCoordX = oldCoordX;
-            _oldCoordY = oldCoordY;
-            _active = true;
-            _counter = 0;
-            _speed = speed;
-            _hitPoints = hitPoints;
-            _shot = rndY;
+            //X = coordX;
+            //Y = coordY;
+            //OldX = 0;
+            //OldY = 0;
+            Active = true;
+            Counter = 0;
+            Speed = speed;
+            HP = hitPoints;
+            Shot = rndY;
             _step = step;
-            _width = 7;
+            //Width = 7;
+
+            Position = position;
+
+            OldPosition = new HashSet<Coordinate>(16);
+
+            NextPosition = new HashSet<Coordinate>(16);
         }
+
+        #endregion
+
+        #region Member Functions
 
         public override void Step()
         {
-            _coordY += _step;
+            //Y += _step;
+
+            int y;
+            foreach (var item in Position)
+            {
+                y = item.Y;
+                NextPosition.Add(new Coordinate(item.X, ++y));
+            }
+
+            Position.Clear();
+            Position.UnionWith(NextPosition);
+            NextPosition.Clear();
         }
+
+        #endregion
     }
 }

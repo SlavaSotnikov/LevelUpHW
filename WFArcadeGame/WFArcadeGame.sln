@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFArcadeGame", "WFArcadeGame\WFArcadeGame.csproj", "{087227AB-6757-4E73-BF36-92126E268A39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{FE790AD4-B41A-4CFE-B66E-F9167AD15831}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{087227AB-6757-4E73-BF36-92126E268A39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{087227AB-6757-4E73-BF36-92126E268A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{087227AB-6757-4E73-BF36-92126E268A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{087227AB-6757-4E73-BF36-92126E268A39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE790AD4-B41A-4CFE-B66E-F9167AD15831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE790AD4-B41A-4CFE-B66E-F9167AD15831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE790AD4-B41A-4CFE-B66E-F9167AD15831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE790AD4-B41A-4CFE-B66E-F9167AD15831}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53FD79DB-D3CF-4FA2-B992-4FD1937B5F7E}
+	EndGlobalSection
+EndGlobal

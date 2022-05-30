@@ -1,18 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game
 {
-    abstract class SpaceCraft : ISpaceCraft
+    abstract class SpaceCraft : ISpaceCraft, IView
     {
         #region Private Data
-
-        protected int _coordX;
-        protected int _coordY;
-        protected int _oldCoordX;
-        protected int _oldCoordY;
-        protected bool _active;
-        protected uint _speed;
-        protected uint _counter;
+        
         protected sbyte _step;
 
         protected ISpace _game;
@@ -21,95 +15,67 @@ namespace Game
 
         #region Properties
 
-        public int X
-        {
-            get
-            {
-                return _coordX;
-            }
-            set
-            {
-                _coordX = value;
-            }
-        }
+        //public int X { get; set; }
 
-        public int Y
-        {
-            get
-            {
-                return _coordY;
-            }
-            set
-            {
-                _coordY = value;
-            }
-        }
+        //public int Y { get; set; }
 
-        public int OldX
-        {
-            get
-            {
-                return _oldCoordX;
-            }
-            set
-            {
-                _oldCoordX = value;
-            }
-        }
+        //public int OldX { get; set; }
 
-        public int OldY
-        {
-            get
-            {
-                return _oldCoordY;
-            }
-            set
-            {
-                _oldCoordY = value;
-            }
-        }
+        //public int OldY { get; set; }
 
-        public bool Active
-        {
-            get
-            {
-                return _active;
-            }
-            set
-            {
-                _active = value;
-            }
-        }
+        public SpaceObject View { get; }
 
-        public uint Counter
-        {
-            get 
-            { 
-                return _counter; 
-            }
-            set 
-            { 
-                _counter = value; 
-            }
-        }
+        public bool Active { get; set; }
 
-        public uint Speed
-        {
-            get 
-            {
-                return _speed; 
-            }
-            set
-            {
-                _speed = value; 
-            }
-        }
+        public uint Counter { get; set; }
 
+        public uint Speed { get; set; }
+
+        public HashSet<Coordinate> Position { get; set; }
+
+        public HashSet<Coordinate> OldPosition { get; set; }
+
+        public HashSet<Coordinate> NextPosition { get; set; }
+        
         #endregion
+
+        internal SpaceCraft(SpaceObject source)
+        {
+            View = source;
+        }
 
         #region Methods
 
+        public bool IsNeedStep()
+        {
+            bool result = false;
+
+            ++Counter;
+
+            if ((Counter % Speed == 0) && Active)
+            {
+                Counter = 0;
+
+                result = true;
+            }
+
+            return result;
+        }
+
         public abstract void Step();
+
+        public virtual void MoveState()
+        {
+            //OldX = X;
+            //OldY = Y;
+
+            OldPosition.Clear();
+
+            foreach (var item in Position)
+            {
+                OldPosition.Add(new Coordinate(item));
+            }
+        }
 
         #endregion
     }

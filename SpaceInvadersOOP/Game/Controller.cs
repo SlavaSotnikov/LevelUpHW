@@ -1,10 +1,20 @@
-﻿namespace Game
+﻿using System;
+
+namespace Game
 {
     class Controller
     {
-        public static GameAction GetEvent()
+        //public static GameAction GetEvent()
+        //{
+        //    return UI.AskConsole();
+        //}
+
+        public static void ShowBorders(IGame source)
         {
-            return UI.AskConsole();
+            foreach (var item in source.Borders)
+            {
+                UI.Print(item, ConsoleColor.White, '|');
+            }
         }
 
         public static void Hide(IGame source)
@@ -20,15 +30,28 @@
             for (int i = 0; i < source.Amount; i++)
             {
                 UI.Show(source[i]);
-
-                source[i].OldX = source[i].X;
-                source[i].OldY = source[i].Y;
             }
         }
 
         public static void ShowExplosion(ClashException ex)
         {
             UI.ShowExplosion(ex);
+        }
+
+        public static void ShowDisplay(IGame source)
+        {
+            for (int i = 0; i < source.Amount; i++)
+            {
+                if (source[i] is IUserShip one)
+                {
+                    if (one.Life != one.OldLife || one.HP != one.OldHP)
+                    {
+                        UI.ShowDisplay(one);
+                    }
+
+                    break;
+                } 
+            }
         }
     }
 }

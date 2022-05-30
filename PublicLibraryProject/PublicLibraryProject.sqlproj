@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>PublicLibraryProject</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{a90444f7-cc7f-4f4e-919f-ede53f3054eb}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>PublicLibraryProject</RootNamespace>
+    <AssemblyName>PublicLibraryProject</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Books.sql" />
+    <Build Include="dbo\Tables\Writers.sql" />
+    <Build Include="dbo\Tables\BooksOperation.sql" />
+    <Build Include="dbo\Tables\BooksWriters.sql" />
+    <Build Include="dbo\Tables\Staff.sql" />
+    <Build Include="dbo\Tables\WorkerPosition.sql" />
+    <Build Include="dbo\Tables\Occupation.sql" />
+    <Build Include="dbo\Tables\BookCopy.sql" />
+    <Build Include="dbo\Tables\Readers.sql" />
+    <Build Include="dbo\Views\BookGivenWorker.sql" />
+    <Build Include="dbo\Views\ReadWriters.sql" />
+    <Build Include="dbo\Views\WorkersPrevYears.sql" />
+    <Build Include="dbo\Views\SimilarTiles.sql" />
+    <Build Include="dbo\Views\WhenBackWhoGiven.sql" />
+    <Build Include="dbo\Views\FavoriteWriters.sql" />
+    <Build Include="dbo\Views\WriterReader.sql" />
+    <Build Include="dbo\Views\WriterWhoTookNotBack.sql" />
+    <Build Include="dbo\Views\BadCondition.sql" />
+    <Build Include="dbo\Views\BritishWriters.sql" />
+    <Build Include="dbo\Stored Procedures\GetBookBetween.sql" />
+    <Build Include="dbo\Stored Procedures\GetTitleWriter.sql" />
+    <Build Include="dbo\Stored Procedures\GetGivenBooksForQuarter.sql" />
+    <Build Include="dbo\Stored Procedures\TakenWriters.sql" />
+    <Build Include="dbo\Stored Procedures\TakenWriters2.sql" />
+    <Build Include="dbo\Stored Procedures\GetReaders.sql" />
+    <Build Include="dbo\Stored Procedures\GetBookTitle.sql" />
+    <Build Include="dbo\Stored Procedures\GetWriterData.sql" />
+    <Build Include="dbo\Stored Procedures\GetAuthor.sql" />
+    <Build Include="dbo\Stored Procedures\ModifyBookCopyTitle.sql" />
+    <Build Include="dbo\Stored Procedures\ModifyBookCopy.sql" />
+    <Build Include="dbo\Stored Procedures\GetTitleCondition.sql" />
+    <Build Include="dbo\Stored Procedures\DeleteBook.sql" />
+    <Build Include="dbo\Stored Procedures\GetWorkers.sql" />
+    <Build Include="dbo\Stored Procedures\GetWorkers2.sql" />
+  </ItemGroup>
+</Project>

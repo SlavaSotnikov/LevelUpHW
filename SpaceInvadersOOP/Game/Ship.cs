@@ -2,16 +2,17 @@
 
 namespace Game
 {
-    abstract class Ship : SpaceCraft
+    internal abstract class Ship : SpaceCraft
     {
-        protected byte _hitPoints;
-        protected byte _oldHitPoints;
-        protected byte _width;
+        public abstract byte HP { get; set; }
 
-        public abstract byte HitPoints { get; set; }
+        public abstract byte OldHP { get; set; }
 
-        public abstract byte OldHitPoints { get; set; }
+        //public abstract byte Width { get; set; }
 
-        public abstract byte Width { get; }
+        internal Ship(SpaceObject source)
+        : base(source)
+        {
+        }
     }
 }

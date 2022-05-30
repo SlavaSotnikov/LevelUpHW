@@ -1,0 +1,7 @@
+Changed database context to 'master'.
+Msg 5011, Level 14, State 5, Server SLAVAPC, Line 2
+User does not have permission to alter database 'PublicLibrary', the database does not exist, or the database is not in a state that allows access checks.
+Msg 5069, Level 16, State 1, Server SLAVAPC, Line 2
+ALTER DATABASE statement failed.
+Msg 3701, Level 11, State 1, Server SLAVAPC, Line 2
+Cannot drop the database 'PublicLibrary', because it does not exist or you do not have permission.
